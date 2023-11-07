@@ -1,15 +1,23 @@
-import CategorySection from "@/components/core/CategorySection";
-import RecentPost from "@/components/core/RecentPost";
+import Cta from "@/components/home/Cta";
+import Hero from "@/components/home/Hero";
+import Projects from "@/components/home/Projects";
+import Services from "@/components/home/Services";
+import Team from "@/components/home/Team";
+import Testimonial from "@/components/home/Testimonial";
+import Tools from "@/components/home/Tools";
+import { Contract } from "@/components/layout/Contract";
 
 export default function Home() {
   return (
     <main>
-      <div className="flex flex-col w-full gap-16">
-        <RecentPost />
-        <div className="lg:hidden">
-          <CategorySection />
-        </div>
-      </div>
+      <Hero />
+      <Services />
+      <Tools />
+      <Projects />
+      <Team />
+      <Cta />
+      <Testimonial />
+      <Contract />
     </main>
   );
 }
