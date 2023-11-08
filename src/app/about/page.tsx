@@ -18,7 +18,7 @@ export default function ProjectHead() {
   };
 
   return (
-    <div className="my-28 flex mx-2 md:mx-10 flex-col gap-10">
+    <div className=" mt-8 flex mx-2 md:mx-10 flex-col gap-10">
       <div className="flex flex-col md:flex-row gap-10">
         <div className="md:w-7/12">
           <Image

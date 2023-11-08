@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 interface Author {
   name: string;
@@ -14,7 +13,7 @@ function AuthorCard({ id, name, image }: Author) {
         Author Info
       </span>
       <div className="pt-2 flex flex-col gap-4">
-        <Link href={`/users/${id}`} className="h-32 w-full">
+        <div className="h-32 w-full">
           <Image
             src={image}
             alt=""
@@ -22,12 +21,12 @@ function AuthorCard({ id, name, image }: Author) {
             height={500}
             width={500}
           />
-        </Link>
-        <Link href={`/users/${id}`} className="flex justify-center px-2">
+        </div>
+        <div className="flex justify-center px-2">
           <span className="font-extrabold text-xl dark:text-primary-100 text-primary-200">
             {name}
           </span>
-        </Link>
+        </div>
       </div>
     </div>
   );

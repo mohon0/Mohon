@@ -54,7 +54,7 @@ export default function Blog() {
   );
 
   return (
-    <div className="my-24 md:my-40 mx-4 lg:mx-20 flex items-center justify-center flex-col gap-20">
+    <div className=" lg:my-10 mx-4 lg:mx-20 flex items-center justify-center flex-col gap-20">
       <div className="text-3xl md:text-5xl font-bold">My Latest Updates</div>
       <div className="flex flex-col md:flex-row items-center w-full gap-10 lg:gap-20">
         {/* Filter by category dropdown */}

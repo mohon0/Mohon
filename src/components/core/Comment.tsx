@@ -61,7 +61,7 @@ function CommentForm({ postId }: CommentFormProps) {
 
   return (
     <div className="flex flex-col gap-4 overflow-hidden ">
-      <div className="flex flex-col gap-4  rounded-lg border dark:border-darkgray-200 p-4">
+      <div className="flex flex-col gap-4  rounded-lg border p-4">
         <span className="text-2xl font-semibold">Leave A Reply</span>
         {name ? (
           <div className="flex flex-col gap-6">
@@ -76,13 +76,13 @@ function CommentForm({ postId }: CommentFormProps) {
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label
-                  className="mb-2 block font-bold text-gray-700 dark:text-gray-300"
+                  className="mb-2 block font-bold text-gray-400"
                   htmlFor="comment"
                 >
                   Comment
                 </label>
                 <textarea
-                  className="focus:shadow-outline h-32 w-full appearance-none rounded border py-2 px-3 leading-tight  focus:outline-none dark:bg-slate-800 md:h-40"
+                  className="focus:shadow-outline h-32 w-full appearance-none rounded border py-2 px-3 leading-tight  focus:outline-none bg-slate-800 md:h-40"
                   id="comment"
                   placeholder="Enter your comment here"
                   value={comment}

@@ -81,7 +81,7 @@ export default function NewPost() {
   }
 
   return (
-    <div className="flex gap-10 items-center justify-center my-20  flex-col border mx-1 lg:mx-10 lg:p-10 bg-slate-100 rounded-lg dark:bg-gray-800">
+    <div className="flex gap-10 items-center justify-center  flex-col border mx-1 lg:mx-10 lg:p-10 bg-slate-100 rounded-lg dark:bg-gray-800">
       <div className="flex flex-col gap-2 justify-center items-center">
         <p className="font-bold text-3xl text-primary-200 dark:text-lightgray-100">
           Create New Post{" "}

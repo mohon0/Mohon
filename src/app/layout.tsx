@@ -9,8 +9,46 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PrimeTech",
-  description: "PrimeTech is a technology-based blog site.",
+  title: "FreeLancer MOHON",
+  description: "Graphics Designer and video editor specialist",
+  generator: "Next js",
+  applicationName: "FreeLancer MOHON",
+  keywords: ["Mohon", "graphics", "video", "Photoshop", "Illustration"],
+  authors: [{ name: "Md Mohon", url: "https://freelancermohon.online" }],
+  creator: "SEJAR PARVEZ",
+  openGraph: {
+    title: "FreeLancer MOHON",
+    description: "Graphics Designer and video editor",
+    url: "https://freelancermohon.online",
+    siteName: "FreeLancer MOHON",
+    images: [
+      {
+        url: "https://freelancermohon.online/home.jpeg",
+        alt: "home page banner image",
+      },
+    ],
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Freelancer Mohon",
+    description: "Graphics Designer and video editor",
+    creator: "@mohongraphics",
+    images: ["https://freelancermohon.online/home.jpeg"],
+  },
 };
 
 interface RootLayoutProps {

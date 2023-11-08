@@ -36,9 +36,13 @@ export default function Post({ params }: PageProps) {
   const router = useRouter();
   const [post, setPost] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [postUrl, setPostUrl] = useState<string>("");
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    setPostUrl(currentUrl);
+  }, []);
 
   const { data: session, status } = useSession();
 
@@ -172,11 +176,8 @@ export default function Post({ params }: PageProps) {
   return (
     <>
       <Head>
-        <title>{post.title}</title>
-        <meta
-          name="description"
-          content="Your concise post description here."
-        />
+        <title>Freelancer Mohon || {post.title}</title>
+        <meta name={post.title} content={dynamicDescription} />
         {/* Open Graph tags for Facebook */}
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={dynamicDescription} />
@@ -190,13 +191,13 @@ export default function Post({ params }: PageProps) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@yourtwitterhandle" />
       </Head>
-      <div className="my-20">
+      <div>
         <div className="flex flex-col-reverse lg:flex-row">
           <div className="flex w-full relative">
             <div className="flex flex-col lg:gap-4 mx-1 lg:mx-4">
               <div className="rounded-2xl py-1">
                 <div className="mb-10 rounded-lg  py-4 px-2 md:px-4">
-                  <h1 className="mb-4 text-3xl md:text-4xl text-primary-200 dark:text-lightgray-100 font-extrabold">
+                  <h1 className="mb-4 text-3xl md:text-4xl text-primary-200  font-extrabold">
                     {post.title}
                   </h1>
                   <div className="flex flex-col gap-4 md:flex-row md:justify-between">
@@ -271,6 +272,7 @@ export default function Post({ params }: PageProps) {
                     </div>
                   </div>
                 </div>
+
                 <Image
                   className="mx-auto rounded-lg w-full h-fit"
                   src={`${post.coverImage}`}
@@ -283,6 +285,7 @@ export default function Post({ params }: PageProps) {
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
               </div>
+
               <div className="my-20">
                 <CommentForm postId={post.id} />
               </div>
@@ -303,7 +306,7 @@ export default function Post({ params }: PageProps) {
             </div>
             <div className=" hidden h-[20rem] lg:h-[35rem] lg:block right-2 rounded-lg lg:sticky md:top-14 mb-6 border dark:border-bdr-200">
               <div className="flex flex-col justify-between w-[14rem] h-[70%]">
-                <div className=" h-[76%] rounded-2xl ">
+                <div className=" h-[66%] rounded-2xl ">
                   <AuthorCard
                     id={post.author.id}
                     name={post.author.name}

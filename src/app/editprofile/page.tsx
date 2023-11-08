@@ -85,7 +85,7 @@ export default function EditProfile() {
         <Loading />
       ) : (
         <div className="flex flex-col gap-20 items-center justify-center">
-          <div className="border-primary-200 bg-blue-950 border w-1/2 p-10 flex flex-col gap-10 rounded-xl">
+          <div className="border-primary-200 bg-blue-950 border w-11/12 md:w-9/12 lg:w-1/2 p-10 flex flex-col gap-10 rounded-xl">
             <div className="text-3xl font-bold flex items-center justify-center">
               Edit Profile
             </div>
@@ -107,7 +107,7 @@ export default function EditProfile() {
               Edit Profile
             </button>
           </div>
-          <div className="border-primary-200 bg-blue-950 flex flex-col gap-10 border w-1/2 p-10 rounded-xl">
+          <div className="border-primary-200 bg-blue-950 flex flex-col gap-10 border w-11/12 md:w-9/12 lg:w-1/2 p-10 rounded-xl">
             <div className="text-3xl font-bold flex items-center justify-center">
               Change Password
             </div>

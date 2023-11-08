@@ -13,7 +13,7 @@ import Intro from "./Intro";
 
 export default function Hero() {
   return (
-    <div className="mt-20 md:mt-28 mx-3 lg:mt-32 md:mx-4 lg:mx-28 relative flex flex-col min-w-screen mb-20 justify-center items-center">
+    <div className=" mt-12 mx-3 lg:mt-12 md:mx-4 lg:mx-28 relative flex flex-col min-w-screen mb-20 justify-center items-center">
       <div className="flex justify-center gap-8 md:gap-0 flex-col-reverse md:flex-row md:justify-between ">
         <div className="flex md:w-1/2 flex-col gap-6 justify-center">
           <div className="md:hidden">Hello, i am</div>

@@ -60,7 +60,7 @@ export default function Dashboard() {
   const admin = process.env.NEXT_PUBLIC_ADMIN;
 
   return (
-    <div className="flex flex-col md:gap-10 my-20">
+    <div className="flex flex-col md:gap-10">
       {!isLoading && status === "authenticated" ? (
         <div className="flex flex-col gap-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 p-6  w-full  bg-slate-100 dark:bg-gray-900">

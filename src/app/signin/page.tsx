@@ -78,7 +78,7 @@ export default function Login() {
   if (session) {
     router.push("/dashboard");
     return (
-      <div className="mt-40 mx-auto flex items-center justify-center">
+      <div className="mt-20 mx-auto flex items-center justify-center">
         You are already logged in. Go to{" "}
         <Link href={"/dashboard"} className="font-bold">
           Dashboard
@@ -88,7 +88,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center w-screen mt-20 md:mt-32 lg:mt-48 ">
+    <div className="flex items-center justify-center w-screen mt-20 md:mt-12 lg:mt-28 ">
       <div className="grid md:grid-cols-5 grid-cols-1 rounded-2xl justify-around shadow-2xl md:w-10/12 w-11/12">
         <div className="col-span-3 p-6 bg-blue-950  md:rounded-l-2xl">
           <section className="flex gap-4 items-center justify-center flex-col my-8">
