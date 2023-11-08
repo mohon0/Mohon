@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Button } from "../ui/button";
 import CommentsList from "./CommentList";
 
 interface CommentFormProps {
@@ -92,9 +91,12 @@ function CommentForm({ postId }: CommentFormProps) {
                 ></textarea>
               </div>
               <div>
-                <Button size="lg" type="submit">
+                <button
+                  className="px-6 py-2 border-primary-200 hover:border-primary-100"
+                  type="submit"
+                >
                   Submit
-                </Button>
+                </button>
               </div>
             </form>
           </div>

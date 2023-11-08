@@ -1,13 +1,13 @@
 "use client";
 import FileInput from "@/components/common/input/FileInput";
 import Input from "@/components/common/input/Input";
+import Loading from "@/components/common/loading/Loading";
 import EditProfileValidation from "@/components/validation/EditProfileValidation";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loading from "@/components/common/loading/Loading";
 
 export default function EditProfile() {
   const { data: session } = useSession();
@@ -16,13 +16,15 @@ export default function EditProfile() {
   const router = useRouter();
 
   const [name, setName] = useState<string>("");
+  const [oldPassword, setOldPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
   const [files, setFiles] = useState<FileList | null>(null);
   const [errors, setErrors] = useState<any>({});
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Initialize as true
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
 
   useEffect(() => {
     if (!session) {
-      router.replace("/signin"); // Redirect to login page if user is not authenticated
       return;
     }
 
@@ -31,11 +33,11 @@ export default function EditProfile() {
         .then((response) => response.json())
         .then((userInfo) => {
           setName(userInfo.name);
-          setIsLoading(false); // Set loading to false once user data is fetched
+          setIsLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
-          setIsLoading(false); // Set loading to false on error as well
+          setIsLoading(false);
         });
     }
   }, [session, id, router]);
@@ -57,6 +59,13 @@ export default function EditProfile() {
 
     if (files) {
       formData.append("image", files![0]);
+    }
+    if (oldPassword) {
+      formData.append("password", oldPassword);
+    }
+
+    if (newPassword) {
+      formData.append("newPassword", newPassword);
     }
     const updateProfile = () => {
       toast.loading("Please wait while we update your profile");
@@ -95,30 +104,80 @@ export default function EditProfile() {
   };
 
   return (
-    <div className="flex items-center justify-center flex-col max-w-4xl md:mx-10 mx-1 lg:mx-auto rounded-lg bg-slate-100  m-10 p-5 shadow-md dark:bg-gray-800">
+    <div className="flex mt-32 items-center justify-center flex-col max-w-4xl md:mx-10 mx-1 lg:mx-auto rounded-lg bg-blue-950  m-10 p-5 shadow-md ">
       {isLoading ? (
         <Loading />
       ) : (
         <>
-          <h1 className="mb-5 text-2xl font-bold">Edit Profile</h1>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-10 w-full">
-            <Input
-              label="Name"
-              id="name"
-              type="text"
-              value={name}
-              onChange={(ev) => setName(ev.target.value)}
-              error={errors.name}
-            />
+          <div className="flex gap-6 md:gap-20 my-10">
+            <button
+              onClick={() => setIsChangingPassword(false)}
+              className={`px-4 py-2 bg-slate-800 text-white border-b-2 ${
+                !isChangingPassword ? "border-primary-200" : "border-blue-950"
+              }`}
+            >
+              Edit Profile
+            </button>
+            <button
+              onClick={() => setIsChangingPassword(true)}
+              className={`px-4 py-2 bg-slate-800 text-white border-b-2 ${
+                isChangingPassword ? "border-primary-200" : "border-blue-950"
+              }`}
+            >
+              Change Password
+            </button>
+          </div>
+          {isChangingPassword ? (
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-10 w-full"
+            >
+              <Input
+                label="Old Password"
+                id="oldPassword"
+                type="text"
+                value={oldPassword}
+                onChange={(ev) => setOldPassword(ev.target.value)}
+                error={errors.old}
+              />
+              <Input
+                label="New Password"
+                id="newPassword"
+                type="text"
+                value={newPassword}
+                onChange={(ev) => setNewPassword(ev.target.value)}
+                error={errors.new}
+              />
 
-            <FileInput onChange={(ev) => setFiles(ev.target.files)} />
+              <div className="mt-10 flex items-center">
+                <button className="px-6 py-2 rounded-lg text-black bg-primary-200 hover:bg-primary-100">
+                  Change Password
+                </button>
+              </div>
+            </form>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-10 w-full"
+            >
+              <Input
+                label="Name"
+                id="name"
+                type="text"
+                value={name}
+                onChange={(ev) => setName(ev.target.value)}
+                error={errors.name}
+              />
 
-            <div className="mt-10 flex items-center">
-              <button className="flex items-center justify-center rounded bg-black py-2 px-4 font-bold text-white dark:border">
-                Update Profile
-              </button>
-            </div>
-          </form>
+              <FileInput onChange={(ev) => setFiles(ev.target.files)} />
+
+              <div className="mt-10 flex items-center">
+                <button className="px-6 py-2 rounded-lg text-black bg-primary-200 hover:bg-primary-100">
+                  Update Profile
+                </button>
+              </div>
+            </form>
+          )}
         </>
       )}
       <ToastContainer position="top-center" autoClose={3000} />

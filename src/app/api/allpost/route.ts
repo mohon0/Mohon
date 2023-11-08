@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
@@ -13,12 +13,36 @@ export async function GET(req: NextRequest, res: NextResponse) {
       : 1;
     const pageSize = queryParams.get("pageSize")
       ? parseInt(queryParams.get("pageSize")!, 10)
-      : 2; // Change the page size to 2 posts per page
+      : 6;
+
+    const sortBy = queryParams.get("sortBy");
+    const category = queryParams.get("category");
+    const search = queryParams.get("search"); // Add search query parameter
 
     const skipCount = (page - 1) * pageSize;
 
+    // Build the where condition for filtering by category and searching by title
+    const where: Prisma.PostWhereInput = {
+      ...(category && category !== "all" ? { category } : {}),
+      ...(search
+        ? {
+            title: {
+              contains: search,
+              mode: "insensitive",
+            },
+          }
+        : {}),
+    };
+
     // Calculate the total number of posts without pagination
-    const totalPostsCount = await prisma.post.count();
+    const totalPostsCount = await prisma.post.count({ where });
+
+    if (totalPostsCount === 0) {
+      return new NextResponse("No posts to display in this category.", {
+        status: 404,
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
 
     const allPosts = await prisma.post.findMany({
       select: {
@@ -36,10 +60,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
         },
       },
       orderBy: {
-        updatedAt: "desc",
+        updatedAt: sortBy === "oldest" ? "asc" : "desc",
       },
       skip: skipCount,
       take: pageSize,
+      where, // Apply the where condition here
     });
 
     if (allPosts.length > 0) {
