@@ -24,7 +24,7 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
       <body className={inter.className}>
         <Provider session={session}>
           <Navbar />
-          <div className="min-h-screen mt-20">{children}</div>
+          <div className="min-h-screen mt-20 overflow-x-hidden">{children}</div>
           <Footer />
         </Provider>
       </body>

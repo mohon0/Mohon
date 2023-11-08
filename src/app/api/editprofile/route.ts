@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import {
   deleteObject,
   getDownloadURL,
+  getMetadata,
   ref,
   uploadBytes,
 } from "firebase/storage";
@@ -12,12 +13,36 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 const secret = process.env.NEXTAUTH_SECRET;
 
+// Function to check if an image exists in Firebase Storage
+async function checkIfImageExists(imagePath: string | undefined) {
+  const storageRef = ref(storage, imagePath);
+
+  try {
+    // Get metadata for the file
+    const metadata = await getMetadata(storageRef);
+    return metadata.size > 0; // If size is greater than 0, the file exists.
+  } catch (error) {
+    if ((error as any).code === "storage/object-not-found") {
+      // If the error code is "object-not-found," the file doesn't exist.
+      return false;
+    } else {
+      // Handle other errors here
+      console.error("Error checking image existence:", error);
+      throw error;
+    }
+  }
+}
+
 export async function GET(req: NextRequest, res: NextResponse) {
-  const { search } = req.nextUrl;
-  const id = search.slice(1);
+  const token = await getToken({ req, secret });
+  if (!token) {
+    return new NextResponse("Token not found");
+  }
+
+  const id = token.sub;
 
   const userInfo = await prisma.user.findUnique({
-    where: { id },
+    where: { id: id },
     select: {
       name: true,
       email: true,
@@ -62,10 +87,14 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       return new NextResponse("User not found", { status: 404 });
     }
 
-    // Delete the previous cover image if it exists
+    // Check if the user has an image in Firebase Storage
     if (existingUser.image) {
-      const storageRefToDelete = ref(storage, existingUser.image);
-      await deleteObject(storageRefToDelete);
+      const imageExists = await checkIfImageExists(existingUser.image);
+      if (imageExists) {
+        // Delete the previous cover image
+        const storageRefToDelete = ref(storage, existingUser.image);
+        await deleteObject(storageRefToDelete);
+      }
     }
 
     // Upload the new cover image

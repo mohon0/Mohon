@@ -3,7 +3,6 @@ import Loading from "@/components/common/loading/Loading";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BiSolidEdit } from "react-icons/bi";
 import { FaPowerOff, FaUserEdit } from "react-icons/fa";
@@ -97,7 +96,7 @@ export default function Dashboard() {
               )}
               {id && (
                 <div>
-                  <Link href={`/editprofile/?userid=${id}`}>
+                  <Link href={`/editprofile`}>
                     <button className="font-bold flex gap-4 items-center justify-center px-6 py-2 rounded-lg bg-blue-950 hover:bg-gray-800 text-white border">
                       Edit Profile
                       <FaUserEdit size={20} />
