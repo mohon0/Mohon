@@ -1,22 +1,12 @@
 "use client";
-import { ThemeProvider } from "@/app/ThemeProvider";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaTwitter } from "react-icons/fa";
-import { GrFacebook } from "react-icons/gr";
-import ProfileMenu from "../profile/ProfileMenu";
-import { Button } from "../ui/button";
+import Btn from "../common/button/Btn";
 import Menu from "./Menu";
-import { NavigationMenuDemo } from "./Navigation";
-import SearchBar from "./SearchBar";
-import { ThemeSwitcher } from "./ThemeSwitcher";
 
 export default function Navbar() {
   const { data: session } = useSession();
-  const email = session?.user?.email;
-  const image = session?.user?.image;
-
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
 
@@ -39,51 +29,33 @@ export default function Navbar() {
   return (
     <header
       className={`z-50 flex h-14 w-full justify-between ${
-        visible ? "opacity-100 backdrop-blur-md" : "opacity-0"
-      } transition-transform duration-500 ease-in-out bg-white dark:bg-black bg-opacity-80 dark:bg-opacity-80 items-center border-b border-bdr-100 dark:border-bdr-200 lg:px-7 px-2 fixed top-0 left-0`}
+        visible ? " backdrop-blur-md translate-y-0" : " -translate-y-20"
+      } transition-transform duration-500 ease-in-out items-center   lg:px-7 px-2 fixed top-0 left-0`}
     >
-      <nav className=" text-sm font-medium flex space-x-4 [&>*]:p-2  items-center ">
-        <span>
-          <Link
-            href={"/"}
-            className="flex text-primary-200 items-center space-x-2 text-lg md:text-lg"
-          >
-            <span className=" text-primary text-2xl font-extrabold dark:text-lightgray-100">
-              PrimeTech
-            </span>
-          </Link>
-        </span>
-        <span className="hidden xl:flex items-center space-x-4 [&>*]:cursor-pointer hover:[&>*]:text-primary-200 dark:hover:[&>*]:text-lightgray-100">
-          <NavigationMenuDemo />
-        </span>
-      </nav>
+      <Link href="/" className="text-primary-200 font-bold text-2xl">
+        MOHON
+      </Link>
+      <div className="flex gap-10 items-center">
+        <div className="hidden lg:flex gap-10 items-center font-semibold hover:[&>*]:text-primary-200 [&>*]:cursor-pointer ">
+          <Link href="/">Home</Link>
+          <Link href="/blog">Blog</Link>
+          <Link href="/projects">Projects</Link>
+          <Link href="/about">About Me</Link>
+          <Link href="/contact">Contact Me</Link>
 
-      <div className="flex space-x-3 md:space-x-6 items-center">
-        <SearchBar />
-        <Link target="_blank" href={"https://facebook.com/sejarparvez"}>
-          <Button variant="ghost" size="icon">
-            <GrFacebook />
-          </Button>
-        </Link>
-        <Link target="_blank" href={"https://twitter.com/sejarparvez"}>
-          <Button variant="ghost" size="icon">
-            <FaTwitter />
-          </Button>
-        </Link>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ThemeSwitcher />
-        </ThemeProvider>
-        <div className="hidden md:block">
-          {email && image ? (
-            <ProfileMenu />
+          {session?.user ? (
+            <Link href="/dashboard">Dashboard</Link>
           ) : (
-            <Link href="/signin">
-              <Button size="lg">Log In</Button>
-            </Link>
+            <Link href="/signin">LogIn</Link>
           )}
         </div>
-        <div className="lg:hidden z-50">
-          <Menu email={email} />
+        <div className="flex items-center gap-10">
+          <div className="hidden md:block">
+            <Btn />
+          </div>
+          <div>
+            <Menu />
+          </div>
         </div>
       </div>
     </header>

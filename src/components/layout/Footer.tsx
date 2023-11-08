@@ -1,104 +1,95 @@
 import Link from "next/link";
-import { FaLinkedin, FaTwitterSquare } from "react-icons/fa";
+import { BiCopyright } from "react-icons/bi";
+import { BsInstagram, BsLinkedin } from "react-icons/bs";
 import { GrFacebook } from "react-icons/gr";
-import { TbBrandAzure } from "react-icons/tb";
-function Footer() {
+import { SiFreelancer, SiUpwork } from "react-icons/si";
+import { TbBrandFiverr, TbBrandTwitter } from "react-icons/tb";
+
+export default function Footer() {
+  const time = new Date();
+  const year = time.getFullYear();
+
   return (
-    <footer className="divide-y bg-slate-100 px-4 dark:bg-gray-900">
-      <div className="container mx-auto flex flex-col justify-between space-y-8 py-10 lg:flex-row lg:space-y-0">
-        <div className="lg:w-1/3">
-          <Link
-            href="/"
-            className="flex justify-center space-x-3 lg:justify-start"
-          >
-            <div className="flex h-10 w-10 ring-blue-600  items-center justify-center rounded-full dark:bg-black ring bg-white">
-              <TbBrandAzure />
-            </div>
-            <span className="self-center text-2xl font-semibold">
-              PrimeTech
-            </span>
+    <div className="flex flex-col gap-10 mt-10 border-t border-gray-600 pt-10">
+      <div className="px-3 lg:px-20 text-xl md:text-3xl lg:text-5xl flex-wrap flex items-center justify-around">
+        <Link
+          href="https://facebook.com/www.md.mohon"
+          target="_blank"
+          className="text-gray-500 hover:text-blue-600  p-4"
+        >
+          <GrFacebook />
+        </Link>
+        <div className="w-6 md:w-10 h-0.5 block bg-gray-600 rotate-[120deg]"></div>
+        <Link
+          href="https://twitter.com/mohongraphics"
+          target="_blank"
+          className="text-gray-500 hover:text-sky-600  p-4"
+        >
+          <TbBrandTwitter />
+        </Link>
+        <div className="w-6 md:w-10 h-0.5 block bg-gray-600 rotate-[120deg]"></div>
+        <Link
+          href="https://instagram.com/mohongraphics"
+          target="_blank"
+          className="text-gray-500 hover:text-pink-600  p-4"
+        >
+          <BsInstagram />
+        </Link>
+        <div className="w-6 md:w-10 h-0.5 block bg-gray-600 rotate-[120deg]"></div>
+        <Link
+          href="https://linkedin.com/in/md-mohon-794830291"
+          target="_blank"
+          className="text-gray-500 hover:text-sky-600  p-4"
+        >
+          <BsLinkedin />
+        </Link>
+        <div className="w-6 md:w-10 h-0.5 block bg-gray-600 rotate-[120deg]"></div>
+        <Link
+          href="https://freelancer.com/demo"
+          target="_blank"
+          className="text-gray-500 hover:text-sky-600  p-4"
+        >
+          <SiFreelancer />
+        </Link>
+        <div className="w-6 md:w-10 h-0.5 block bg-gray-600 rotate-[120deg]"></div>
+        <Link
+          href="https://upwork.com/demo"
+          target="_blank"
+          className="text-gray-500 hover:text-green-600  p-4"
+        >
+          <SiUpwork />
+        </Link>
+        <div className="w-6 md:w-10 h-0.5 block bg-gray-600 rotate-[120deg]"></div>
+        <Link
+          href="https://fiverr.com/demo"
+          target="_blank"
+          className="text-gray-500 hover:text-green-600  p-4"
+        >
+          <TbBrandFiverr />
+        </Link>
+      </div>
+      <div className="flex justify-center md:justify-between bg-black py-3 px-3 lg:px-20">
+        <div className="hidden md:flex items-center gap-10">
+          <Link href="/blog" className="hover:text-primary-200">
+            Blog
+          </Link>
+          <Link href="/project" className="hover:text-primary-200">
+            Projects
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-x-3 gap-y-8 text-sm sm:grid-cols-4 lg:w-2/3">
-          <div className="space-y-3">
-            <h3 className="uppercase tracking-wide dark:text-gray-50">
-              Product
-            </h3>
-            <ul className="space-y-1">
-              <li>
-                <a rel="noopener noreferrer" href="#a">
-                  Features
-                </a>
-              </li>
-              <li>
-                <a rel="noopener noreferrer" href="#a">
-                  Integrations
-                </a>
-              </li>
-              <li>
-                <a rel="noopener noreferrer" href="#a">
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a rel="noopener noreferrer" href="#a">
-                  FAQ
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-3">
-            <h3 className="uppercase tracking-wide dark:text-gray-50">
-              Company
-            </h3>
-            <ul className="space-y-1">
-              <li>
-                <a rel="noopener noreferrer" href="#a">
-                  Privacy
-                </a>
-              </li>
-              <li>
-                <a rel="noopener noreferrer" href="#a">
-                  Terms of Service
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-3">
-            <h3 className="uppercase dark:text-gray-50">Developers</h3>
-            <ul className="space-y-1">
-              <li>
-                <a rel="noopener noreferrer" href="#a">
-                  Public API
-                </a>
-              </li>
-              <li>
-                <a rel="noopener noreferrer" href="#a">
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a rel="noopener noreferrer" href="#a">
-                  Guides
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-3">
-            <div className="uppercase dark:text-gray-50">Social media</div>
-            <div className="flex justify-start space-x-3">
-              <GrFacebook size={18} />
-              <FaTwitterSquare size={18} />
-              <FaLinkedin size={18} />
-            </div>
-          </div>
+        <div className="flex items-center gap-2 justify-center">
+          <BiCopyright />
+          {year}
+        </div>
+        <div className="hidden md:flex items-center justify-center gap-10">
+          <Link href="/blog" className="hover:text-primary-200">
+            About Me
+          </Link>
+          <Link href="/project" className="hover:text-primary-200">
+            Contact Me
+          </Link>
         </div>
       </div>
-      {/* <div className="py-6 text-center text-sm dark:text-gray-400">
-        © 1968 Company Co. All rights reserved.
-      </div> */}
-    </footer>
+    </div>
   );
 }
-
-export default Footer;

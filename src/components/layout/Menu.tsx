@@ -1,12 +1,13 @@
 "use client";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { TbBrandAzure } from "react-icons/tb";
 import Btn from "../common/button/Btn";
 
-export default function Menu({ email }: { email: string | null | undefined }) {
+export default function Menu() {
   const [NavOpen, setNavOpen] = useState(false);
+  const { data: session } = useSession();
 
   const HandleClick = () => {
     setNavOpen((prev) => !prev);
@@ -21,17 +22,17 @@ export default function Menu({ email }: { email: string | null | undefined }) {
         onClick={HandleClick}
       >
         <span
-          className={`h-0.5 w-6 bg-primary-200 dark:bg-darkgray-100 duration-300 ${
+          className={`h-0.5 w-6 bg-primary-200  duration-300 ${
             NavOpen ? " translate-y-1.5 rotate-45 " : ""
           } `}
         ></span>
         <span
-          className={`h-0.5 w-6 bg-primary-200 dark:bg-darkgray-100 duration-300  ${
+          className={`h-0.5 w-6 bg-primary-200  duration-300  ${
             NavOpen ? "hidden" : ""
           } `}
         ></span>
         <span
-          className={`h-0.5 w-6 bg-primary-200 dark:bg-darkgray-100 duration-300 ${
+          className={`h-0.5 w-6 bg-primary-200  duration-300 ${
             NavOpen ? "-rotate-45 duration-300 ease-in-out" : ""
           } `}
         ></span>
@@ -41,33 +42,44 @@ export default function Menu({ email }: { email: string | null | undefined }) {
           NavOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex w-9/12 flex-col gap-4 bg-white dark:bg-gray-900 z-50">
-          <div className="flex items-center justify-between px-8 py-5 text-primary-200 dark:text-primary-100">
-            <Link href={"/"}>
-              <TbBrandAzure size={30} />
+        <div className="flex w-9/12 flex-col gap-4 bg-[#000119] z-50">
+          <div className="flex items-center justify-between px-8 py-5 text-primary-200 ">
+            <Link href={"/"} className="font-bold text-xl">
+              MOHON
             </Link>
             <AiOutlineClose size={24} onClick={HandleClick} />
           </div>
           <hr />
           <div className="my-4 flex flex-col gap-4 px-8 [&>*]:hover:underline [&>*]:hover:font-semibold">
-            <Link href={"/categories"} onClick={HandleClick}>
-              Categories
+            <Link href="/" onClick={HandleClick}>
+              Home
             </Link>
-            <Link href={"/category/hotpost"} onClick={HandleClick}>
-              Trending
+            <Link href="/blog" onClick={HandleClick}>
+              Blog
             </Link>
-            <Link href={"/documentation"} onClick={HandleClick}>
-              Documentation
+            <Link href="/projects" onClick={HandleClick}>
+              Projects
             </Link>
-          </div>
-          <hr />
-          <div className="px-8 py-6" onClick={HandleClick}>
-            {email ? (
-              <Btn text="Dashboard" link="/dashboard" />
+            <Link href="/about" onClick={HandleClick}>
+              About Me
+            </Link>
+            <Link href="/contact" onClick={HandleClick}>
+              Contact Me
+            </Link>
+
+            {session?.user ? (
+              <Link href="/dashboard" onClick={HandleClick}>
+                Dashboard
+              </Link>
             ) : (
-              <Btn text="Log in" link="/signin" />
+              <Link href="/signin" onClick={HandleClick}>
+                LogIn
+              </Link>
             )}
           </div>
+
+          <hr />
+          <Btn />
         </div>
       </div>
     </div>
