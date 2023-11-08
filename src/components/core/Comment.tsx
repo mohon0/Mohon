@@ -92,7 +92,7 @@ function CommentForm({ postId }: CommentFormProps) {
               </div>
               <div>
                 <button
-                  className="px-6 py-2 border-primary-200 hover:border-primary-100"
+                  className="px-6 py-2 border rounded-lg border-primary-200 hover:border-primary-100"
                   type="submit"
                 >
                   Submit

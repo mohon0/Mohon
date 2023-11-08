@@ -184,7 +184,8 @@ function CommentsList({ postId, onCommentAdded }: CommentsListProps) {
               {(session?.user?.email === adminEmail ||
                 session?.user?.name === comment.author.name) && (
                 <button
-                  className="bg-primary-200 px-3 h-8 rounded-md text-white dark:bg-primary-200 border"
+                  title="delete comment"
+                  className="bg-red-600 px-3 h-8 rounded-md text-white"
                   onClick={() => handleDelete(comment.id)}
                 >
                   Delete

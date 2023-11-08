@@ -16,7 +16,7 @@ type DashboardDataProps = {
 export default function Dashboard() {
   const { status, data: session } = useSession();
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const router = useRouter();
+
   const [dashboardData, setDashboardData] = useState<DashboardDataProps>({
     user: {
       id: "",
@@ -45,8 +45,6 @@ export default function Dashboard() {
         setIsLoading(false);
       });
   }, [status]);
-
-  const posts = dashboardData.user.posts || [];
 
   const handleDelete = async () => {
     setShowConfirmation(true);
