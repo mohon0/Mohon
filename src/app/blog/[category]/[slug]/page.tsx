@@ -168,6 +168,13 @@ export default function Post({ params }: PageProps) {
     return formattedString;
   }
 
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = post.coverImage;
+    link.download = "downloaded_image.jpg";
+    link.click();
+  };
+
   const inputString = post.category;
   const formattedCategory = formatString(inputString);
 
@@ -267,6 +274,12 @@ export default function Post({ params }: PageProps) {
                   width={1000}
                   height={1000}
                 />
+                <button
+                  onClick={handleDownload}
+                  className="px-5 mx-auto my-6 flex items-center justify-center py-2 rounded-md text-sm font-bold text-primary-200 border border-primary-200"
+                >
+                  Download Image
+                </button>
                 <div
                   className={`mt-10 mb-12 rounded-lg md:mx-0 md:mt-16 md:text-lg ${styles["post-content"]}`}
                   dangerouslySetInnerHTML={{ __html: post.content }}
