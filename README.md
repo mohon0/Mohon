@@ -1,6 +1,6 @@
 # PrimeTech
 
-[Projects Live Link](https://primetech.cf)
+[Projects Live Link](https://freelancermohon.online)
 
 ## Technologies Used
 
@@ -12,10 +12,12 @@
 - Firebase
 - Bcrypt
 - React-Quill
+- Emailjs
+- ThreeJs
 
 ## Project Overview
 
-Your overview of the blog website and its key features.
+This is a full stack portfolio site. It includes a blog page, where admin can post about his updates.
 
 ## Development Environment
 
@@ -43,7 +45,7 @@ npm install
 
 3. **Configure Environment Variables:**
 
-Explain which environment variables need to be set and how to obtain their values (e.g., API keys, database URLs).
+Make sure the environment variable is correctly set.
 
 4. **Run the development server:**
 
@@ -63,7 +65,7 @@ Explain how different technologies are integrated:
 
 ## Features
 
-- User authentication using Firebase Auth.
+- User authentication using Next Auth.
 - Storing blog posts in MongoDB using Prisma.
 - Real-time updates on the user dashboard.
 - Secure password storage using Bcrypt.
