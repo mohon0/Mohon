@@ -2,6 +2,7 @@
 import AuthorCard from "@/components/card/AuthorCard";
 import Loading from "@/components/common/loading/Loading";
 import CommentForm from "@/components/core/Comment";
+import SocialShare from "@/components/core/SocialShare";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
@@ -124,12 +125,15 @@ export default function Post({ params }: PageProps) {
     // Perform the delete operation
     toast.loading("Please wait while deleting this post");
     try {
-      const response = await fetch(`/api/singlepost?postId=${post.id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `/api/${post.category}/${params.slug}?${post.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.ok) {
         toast.dismiss();
@@ -184,7 +188,7 @@ export default function Post({ params }: PageProps) {
         <meta property="og:image" content={post.coverImage} />
         <meta
           property="og:url"
-          content={`${process.env.SITE_URL}/${params.category}/${params.slug}`}
+          content={`${process.env.NEXT_PUBLIC_SITE_URL}/${params.category}/${params.slug}`}
         />
         <meta property="og:type" content="article" />
         {/* Twitter Card tags */}
@@ -229,7 +233,7 @@ export default function Post({ params }: PageProps) {
                         <div className="mx-auto flex items-center justify-center md:justify-end gap-4">
                           <div>
                             <Link
-                              href={`/editpost/${post.id}`}
+                              href={`/editpost/${params.category}/${params.slug}`}
                               className="px-8 h-10 flex items-center justify-center rounded-md bg-blue-700 hover:bg-blue-800"
                             >
                               Edit Post
@@ -283,6 +287,11 @@ export default function Post({ params }: PageProps) {
                 <div
                   className={`mt-10 mb-12 rounded-lg md:mx-0 md:mt-16 md:text-lg ${styles["post-content"]}`}
                   dangerouslySetInnerHTML={{ __html: post.content }}
+                />
+              </div>
+              <div className="my-8">
+                <SocialShare
+                  yourPostUrl={`${process.env.NEXT_PUBLIC_SITE_URL}/${params.category}/${params.slug}`}
                 />
               </div>
 

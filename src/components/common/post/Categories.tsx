@@ -19,13 +19,13 @@ const Categories: FC<CategoriesProps> = ({
   return (
     <div className="mb-4">
       <label
-        className="mb-2 block font-bold text-gray-700 dark:text-gray-300"
+        className="mb-2 block font-bold text-gray-300"
         htmlFor="categories"
       >
         Categories
       </label>
       <select
-        className="mt-2 block w-10/12 rounded-md border border-gray-300 bg-slate-200 px-4 py-2 text-gray-700 dark:bg-slate-400"
+        className="mt-2 block w-10/12 rounded-md border border-gray-300 bg-slate-800 px-4 py-2 "
         id="categories"
         onChange={onChange}
         value={selectedCategory}

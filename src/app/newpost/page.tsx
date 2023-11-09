@@ -29,7 +29,7 @@ export default function NewPost() {
 
     if (!session) {
       // User is not logged in, show a message or redirect
-      router.push("/login"); // Redirect to the login page or another appropriate page
+      router.push("/signin"); // Redirect to the login page or another appropriate page
     }
   }, [status, session, router]);
 
@@ -81,12 +81,10 @@ export default function NewPost() {
   }
 
   return (
-    <div className="flex gap-10 items-center justify-center  flex-col border mx-1 lg:mx-10 lg:p-10 bg-slate-100 rounded-lg dark:bg-gray-800">
+    <div className="flex gap-10 items-center justify-center  flex-col border mx-1 lg:mx-10 lg:p-10 bg-blue-950 rounded-lg">
       <div className="flex flex-col gap-2 justify-center items-center">
-        <p className="font-bold text-3xl text-primary-200 dark:text-lightgray-100">
-          Create New Post{" "}
-        </p>
-        <span className="flex h-1 w-40 bg-primary-200 dark:bg-lightgray-100"></span>
+        <p className="font-bold text-3xl text-primary-200">Create New Post </p>
+        <span className="flex h-1 w-40 bg-primary-200 "></span>
       </div>
       <form
         className="flex flex-col gap-10 w-full justify-center p-2 md:p-10 lg:p-20"
@@ -118,7 +116,7 @@ export default function NewPost() {
         />
 
         <button
-          className={`flex items-center justify-center rounded bg-primary-200 hover:bg-gray-900 py-2 px-4 font-bold text-white dark:bg-primary-200 border ${
+          className={`flex items-center justify-center rounded bg-black border-primary-200 text-primary-200 hover:bg-gray-950 py-2 px-4 font-bold  border ${
             validationFailed ? "animate-shake" : ""
           }`}
         >

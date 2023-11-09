@@ -29,3 +29,4 @@ body {
   -webkit-text-stroke-width: calc(1em / 16);
   @apply text-[#000119] bg-clip-text;
 }
+

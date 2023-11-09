@@ -41,46 +41,46 @@ export default function SocialShare({ yourPostUrl }: { yourPostUrl: string }) {
       <div className="font-bold text-xl text-primary-200">
         Share On Social Media
       </div>
-      <div className="flex items-center gap-10 flex-wrap">
+      <div className="flex items-center gap-4 md:gap-10 flex-wrap text-sm">
         <FacebookShareButton url={yourPostUrl}>
-          <div className="px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#2566b7]">
+          <div className="px-2 md:px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#2566b7]">
             <BiLogoFacebook />
             <span>Facebook</span>
           </div>
         </FacebookShareButton>
         <TwitterShareButton url={yourPostUrl}>
-          <div className="px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#00adf5]">
+          <div className="px-2 md:px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#00adf5]">
             <BsTwitter />
             <span>Twitter</span>
           </div>
         </TwitterShareButton>
         <LinkedinShareButton url={yourPostUrl}>
-          <div className="px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#037fb1]">
+          <div className="px-2 md:px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#037fb1]">
             <FaLinkedinIn />
             <span>Linkedin</span>
           </div>
         </LinkedinShareButton>
         <WhatsappShareButton url={yourPostUrl}>
-          <div className="px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#24d366]">
+          <div className="px-2 md:px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#24d366]">
             <BsWhatsapp />
             <span>WhatsApp</span>
           </div>
         </WhatsappShareButton>
         <TelegramShareButton url={yourPostUrl}>
-          <div className="px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#36ade1]">
+          <div className="px-2 md:px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#36ade1]">
             <LiaTelegram />
             <span>Telegram</span>
           </div>
         </TelegramShareButton>
         <EmailShareButton url={yourPostUrl}>
-          <div className="px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#535353]">
+          <div className="px-2 md:px-4 rounded-md py-2 flex items-center justify-center gap-2 bg-[#535353]">
             <AiOutlineMail />
             <span>Email</span>
           </div>
         </EmailShareButton>
         <div
           onClick={handleCopyLink}
-          className="px-4 rounded-md cursor-pointer py-2 flex items-center justify-center gap-2 bg-black border border-1"
+          className="px-2 md:px-4 rounded-md cursor-pointer py-2 flex items-center justify-center gap-2 bg-black border border-1"
         >
           <AiOutlineMail />
           <span>{copyButtonText}</span>

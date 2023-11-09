@@ -108,8 +108,8 @@ function EditPost({ params }: PageProps) {
   }
 
   return (
-    <div className="flex flex-col-reverse lg:flex-row">
-      <div className="flex  items-center justify-center mb-20  flex-col border mx-1 lg:mx-10 lg:p-10 rounded-xl">
+    <div className="flex items-center justify-center flex-col-reverse lg:flex-row ">
+      <div className="flex  items-center justify-center mb-20  flex-col border mx-1 lg:mx-10 lg:p-10 rounded-xl bg-blue-950">
         <span className="text-2xl font-bold">Edit Post</span>
         <form
           className="flex flex-col gap-10 w-full justify-center p-2 md:p-10 lg:py-20"
@@ -140,7 +140,7 @@ function EditPost({ params }: PageProps) {
           />
 
           <button
-            className={` px-6 py-2 rounded-lg border-primary-200 ${
+            className={` px-6 py-2 rounded-lg border text-primary-200 bg-black hover:bg-gray-950 border-primary-200 ${
               validationFailed ? "animate-shake" : ""
             }`}
           >

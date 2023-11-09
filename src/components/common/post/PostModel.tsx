@@ -16,7 +16,11 @@ export default function PostModel({ title, des, img, category }: props) {
 
   const encodedTitle = title ? encodeForUrl(title) : "";
   const plainTextContent = des ? des.replace(/<[^>]+>/g, "") : "";
-  const sum = plainTextContent.slice(0, 150);
+  const sum = plainTextContent
+    .slice(0, 150)
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&");
+
   return (
     <div className="border border-gray-600 rounded-lg">
       <Link href={`/blog/${category}/${encodedTitle}`} className="">

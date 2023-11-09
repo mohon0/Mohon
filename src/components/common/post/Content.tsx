@@ -1,13 +1,12 @@
-import dynamic from "next/dynamic"; // Import dynamic from next/dynamic
+import dynamic from "next/dynamic";
 import { FC, useEffect } from "react";
-
+import "react-quill/dist/quill.snow.css";
+import Toolbar from "./ReactQuill";
+import "./Quill.css";
 // Use dynamic to import ReactQuill dynamically
 const ReactQuill = dynamic(() => import("react-quill"), {
   ssr: false, // Set ssr to false to prevent SSR for this component
 });
-
-import "react-quill/dist/quill.snow.css";
-import Toolbar from "./ReactQuill";
 
 interface Props {
   value: string;
@@ -27,7 +26,7 @@ const Content: FC<Props> = ({ value, onChange, error }) => {
   return (
     <div className="mb-4 h-[30rem]">
       <label
-        className="mb-2 block font-bold text-gray-700 dark:text-gray-300"
+        className="mb-2 block font-bold"
         htmlFor="content"
       >
         Content

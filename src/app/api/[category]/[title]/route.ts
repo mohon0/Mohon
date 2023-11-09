@@ -1,9 +1,31 @@
+import storage from "@/utils/firebaseConfig";
 import { PrismaClient } from "@prisma/client";
+import { deleteObject, getMetadata, ref } from "firebase/storage";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 const secret = process.env.NEXTAUTH_SECRET;
+
+// Function to check if an image exists in Firebase Storage
+async function checkIfImageExists(imagePath: string | undefined) {
+  const storageRef = ref(storage, imagePath);
+
+  try {
+    // Get metadata for the file
+    const metadata = await getMetadata(storageRef);
+    return metadata.size > 0; // If size is greater than 0, the file exists.
+  } catch (error) {
+    if ((error as any).code === "storage/object-not-found") {
+      // If the error code is "object-not-found," the file doesn't exist.
+      return false;
+    } else {
+      // Handle other errors here
+      console.error("Error checking image existence:", error);
+      throw error;
+    }
+  }
+}
 
 function decodeFromUrl(encodedStr: string) {
   return decodeURIComponent(encodedStr.replace(/_/g, " "));
@@ -106,9 +128,19 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
       where: {
         id: postId,
       },
+      select: {
+        coverImage: true,
+      },
     });
 
     if (deletedPost) {
+      if (deletedPost.coverImage) {
+        const imageExist = checkIfImageExists(deletedPost.coverImage);
+        if (await imageExist) {
+          const storageRefToDelete = ref(storage, deletedPost.coverImage);
+          await deleteObject(storageRefToDelete);
+        }
+      }
       return new NextResponse("Post deleted successfully");
     } else {
       return new NextResponse("Post not found", { status: 404 });
