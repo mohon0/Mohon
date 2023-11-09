@@ -4,7 +4,6 @@ import Loading from "@/components/common/loading/Loading";
 import CommentForm from "@/components/core/Comment";
 import SocialShare from "@/components/core/SocialShare";
 import { useSession } from "next-auth/react";
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -179,22 +178,6 @@ export default function Post({ params }: PageProps) {
 
   return (
     <>
-      <Head>
-        <title>Freelancer Mohon || {post.title}</title>
-        <meta name={post.title} content={dynamicDescription} />
-        {/* Open Graph tags for Facebook */}
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={dynamicDescription} />
-        <meta property="og:image" content={post.coverImage} />
-        <meta
-          property="og:url"
-          content={`${process.env.NEXT_PUBLIC_SITE_URL}/${params.category}/${params.slug}`}
-        />
-        <meta property="og:type" content="article" />
-        {/* Twitter Card tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@yourtwitterhandle" />
-      </Head>
       <div>
         <div className="flex flex-col-reverse lg:flex-row">
           <div className="flex w-full relative">
@@ -322,7 +305,7 @@ export default function Post({ params }: PageProps) {
                     image={post.author.image}
                   />
                 </div>
-                <div className=" rounded-xl  h-80 flex items-center justify-center">
+                <div className=" rounded-xl h-80 flex items-center justify-center">
                   Advertise
                 </div>
               </div>

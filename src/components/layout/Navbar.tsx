@@ -38,7 +38,7 @@ export default function Navbar() {
       <div className="flex gap-10 items-center">
         <div className="hidden lg:flex gap-10 items-center font-semibold hover:[&>*]:text-primary-200 [&>*]:cursor-pointer ">
           <Link href="/">Home</Link>
-          <Link href="/blog">Blog</Link>
+          <Link href="/blog">Blog & Design</Link>
           <Link href="/projects">Projects</Link>
           <Link href="/about">About Me</Link>
           <Link href="/contact">Contact Me</Link>

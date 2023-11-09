@@ -55,7 +55,7 @@ export default function Menu() {
               Home
             </Link>
             <Link href="/blog" onClick={HandleClick}>
-              Blog
+              Blog & Design
             </Link>
             <Link href="/projects" onClick={HandleClick}>
               Projects
