@@ -3,11 +3,11 @@ const Toolbar = () => {
     toolbar: {
       container: [
         [{ size: ["small", false, "large", "huge"] }],
-        ["bold", "italic", "underline", "strike"],
-        ["blockquote", "code-block"],
+        ["bold", "italic", "underline"],
+        ["blockquote"],
+        ["link"],
         [{ list: "ordered" }, { list: "bullet" }],
-        [{ script: "sub" }, { script: "super" }],
-        [{ indent: "-1" }, { indent: "+1" }],
+
         [{ color: [] }, { background: [] }],
         ["clean"],
       ],
