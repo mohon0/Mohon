@@ -33,7 +33,7 @@ export const Contract: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center bg-main-100" id="contact">
-      <div className="my-20 mx-4 grid h-full w-full grid-cols-1 gap-10 rounded-3xl bg-slate-800 p-6 md:h-[84%]  md:grid-cols-2 md:gap-0 lg:w-[65%]">
+      <div className="my-20 mx-1 grid h-full w-full grid-cols-1 gap-10 rounded-lg md:rounded-3xl bg-slate-800 p-2 md:p-6 md:h-[84%]  md:grid-cols-2 md:gap-0 lg:w-[65%]">
         <ContractLeft />
         <form
           ref={form}

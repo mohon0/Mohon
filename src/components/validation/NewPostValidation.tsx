@@ -23,10 +23,10 @@ export default function NewPostValidation({
   // validate title field
   if (!title.trim()) {
     errors.title = "Title is required";
-  } else if (title.trim().length < 40) {
-    errors.title = "Title must be at least 40 characters long";
-  } else if (title.trim().length > 70) {
-    errors.title = "Title can not be longer than 70 characters";
+  } else if (title.trim().length < 4) {
+    errors.title = "Title must be at least 4 characters long";
+  } else if (title.trim().length > 300) {
+    errors.title = "Title cannot be longer than 300 characters";
   } else if (title.includes("_")) {
     errors.title = "Title cannot contain underscores";
   }
@@ -37,10 +37,8 @@ export default function NewPostValidation({
   }
 
   // validate content field
-  if (!content.trim()) {
-    errors.content = "Content is required";
-  } else if (content.trim().length < 200) {
-    errors.content = "Content can not be less than 200 characters";
+  if (content.trim().length > 5000) {
+    errors.content = "Content cannot be longer than 5000 characters";
   }
 
   // validate image field

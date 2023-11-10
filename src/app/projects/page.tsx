@@ -52,7 +52,7 @@ export default function Blog() {
   );
 
   return (
-    <div className="my-4 md:my-20 mx-4 lg:mx-20 flex items-center justify-center flex-col gap-20">
+    <div className="my-4 md:my-20 mx-4 lg:mx-28 flex items-center justify-center flex-col gap-20">
       <div className="text-3xl md:text-5xl font-bold">All Projects</div>
       <div className="flex flex-col md:flex-row items-center justify-center w-full gap-10 lg:gap-20">
         {/* Sort by dropdown */}
@@ -91,14 +91,13 @@ export default function Blog() {
           <Loading />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {posts.length > 0 ? (
             posts.map((post) => (
               <div key={post.id}>
                 <PostModel
                   title={post.title}
                   img={post.coverImage}
-                  des={post.content}
                   category={post.category}
                 />
               </div>

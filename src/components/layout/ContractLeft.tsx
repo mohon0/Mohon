@@ -17,19 +17,19 @@ export default function ContractLeft() {
         </span>
       </div>
       <div className="flex flex-col gap-4">
-        <div className="flex gap-8 font-semibold">
+        <div className="flex gap-3 md:gap-8 font-semibold">
           <IoLocationOutline color="#09f1b8" size="32" />
 
           <div>
             Rofi Tower 4th Floor Paira Chattra, Jhenaidah, Dhaka, Bangladesh
           </div>
         </div>
-        <div className="flex items-center gap-8 font-semibold">
+        <div className="flex items-center gap-3 md:gap-8 font-semibold">
           <TfiEmail color="#09f1b8" size="20" />
 
-          <div className="overflow-x-scroll">freelancermohon01@gmail.com</div>
+          <div>freelancermohon01@gmail.com</div>
         </div>
-        <div className="flex items-center gap-8 font-semibold">
+        <div className="flex items-center gap-3 md:gap-8 font-semibold">
           <AiOutlinePhone color="#09f1b8" size="24" />
 
           <div>+8801989-491248</div>

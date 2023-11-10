@@ -40,6 +40,11 @@ const Options = [
   "Data Entry",
   "Class",
   "Projects",
+  "Plugin",
+  "Music",
+  "Movies",
+  "Writing Blog",
+  "My Data",
 ];
 
 const optionsWithLinks = Options.map((option) => ({

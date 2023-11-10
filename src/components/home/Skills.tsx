@@ -93,8 +93,8 @@ export default function Skills() {
           >
             <motion.div
               variants={lineVariants}
-              className="h-2 w-[85%] bg-primary-200 rounded-full"
-              title="85%"
+              className="h-2 w-[98%] bg-primary-200 rounded-full"
+              title="98%"
             ></motion.div>
           </motion.div>
         </div>
