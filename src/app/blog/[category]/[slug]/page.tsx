@@ -204,7 +204,7 @@ export default function Post({ params }: PageProps) {
   return (
     <>
       <div>
-        <div className="m-10 flex gap-6">
+        <div className="lg:m-10 m-2 flex-col lg:flex-row flex gap-6">
           <div className="flex-1">
             <div className="mb-8">
               <h1 className="mb-4 text-3xl md:text-4xl text-primary-200  font-extrabold">
@@ -304,7 +304,7 @@ export default function Post({ params }: PageProps) {
               />
             </div>
           </div>
-          <div className="h-fit border border-gray-600 rounded-lg w-60 sticky top-20 right-4">
+          <div className="h-fit border mx-auto my-10 lg:my-0 border-gray-600 rounded-lg  w-full md:w-80 lg:w-60 lg:sticky top-20 right-4">
             <AuthorCard
               name={post.author.name}
               image={post.author.image}
