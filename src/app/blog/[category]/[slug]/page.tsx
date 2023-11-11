@@ -3,6 +3,7 @@ import AuthorCard from "@/components/card/AuthorCard";
 import Loading from "@/components/common/loading/Loading";
 import CommentForm from "@/components/core/Comment";
 import SocialShare from "@/components/core/SocialShare";
+import { Metadata, ResolvingMetadata } from "next";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,6 +31,26 @@ interface Post {
   updatedAt: string;
   category: string;
   coverImage: string;
+}
+
+export async function generateMetadata(
+  { params }: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // Fetch the post data
+  const apiUrl = `/api/${params.category}/${params.slug}`;
+  const response = await fetch(apiUrl);
+  const post: Post = await response.json();
+
+  // Access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: post.title,
+    openGraph: {
+      images: [post.coverImage, ...previousImages],
+    },
+  };
 }
 
 export default function Post({ params }: PageProps) {
