@@ -109,7 +109,7 @@ function EditPost({ params }: PageProps) {
 
   return (
     <div className="flex items-center justify-center flex-col-reverse lg:flex-row ">
-      <div className="flex  items-center justify-center mb-20  flex-col border mx-1 lg:mx-10 lg:p-10 rounded-xl bg-blue-950">
+      <div className="flex  items-center justify-center mb-20  flex-col border mx-1 lg:mx-10 lg:p-10 rounded-xl bg-blue-950 md:w-10/12">
         <span className="text-2xl font-bold">Edit Post</span>
         <form
           className="flex flex-col gap-10 w-full justify-center p-2 md:p-10 lg:py-20"

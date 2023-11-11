@@ -124,15 +124,12 @@ export default function Post({ params }: PageProps) {
     // Perform the delete operation
     toast.loading("Please wait while deleting this post");
     try {
-      const response = await fetch(
-        `/api/${post.category}/${params.slug}?${post.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/post?postId=${post.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.ok) {
         toast.dismiss();
@@ -186,144 +183,116 @@ export default function Post({ params }: PageProps) {
   return (
     <>
       <div>
-        <div className="flex flex-col-reverse lg:flex-row">
-          <div className="flex w-full relative">
-            <div className="flex flex-col lg:gap-4 mx-1 lg:mx-4">
-              <div className="rounded-2xl py-1">
-                <div className="mb-10 rounded-lg  py-4 px-2 md:px-4">
-                  <h1 className="mb-4 text-3xl md:text-4xl text-primary-200  font-extrabold">
-                    {post.title}
-                  </h1>
-                  <div className="flex flex-col gap-4 md:flex-row md:justify-between">
-                    <div>
-                      <span className="flex text-sm">
-                        <span className="text-sm ">
-                          This Post Last Was Updated By{" "}
-                          <Link href={`/users/${post.author.id}`}>
-                            <span className="px-1 text-lg font-medium ">
-                              {post.author.name}
-                            </span>{" "}
-                          </Link>
-                          At{" "}
-                          <span className=" font-medium">
-                            {formatDate(post.updatedAt)}
-                          </span>
-                        </span>
+        <div className="m-10 flex gap-6">
+          <div className="flex-1">
+            <div className="mb-8">
+              <h1 className="mb-4 text-3xl md:text-4xl text-primary-200  font-extrabold">
+                {post.title}
+              </h1>
+              <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+                <div>
+                  <span className="flex text-sm">
+                    <span className="text-sm ">
+                      This Post Last Was Updated By{" "}
+                      <Link href={`/users/${post.author.id}`}>
+                        <span className="px-1 text-lg font-medium ">
+                          {post.author.name}
+                        </span>{" "}
+                      </Link>
+                      At{" "}
+                      <span className=" font-medium">
+                        {formatDate(post.updatedAt)}
                       </span>
-                    </div>
-                    <div>
+                    </span>
+                  </span>
+                </div>
+                <div>
+                  <div>
+                    <button className="mr-10 rounded-tl-2xl rounded-br-2xl border-2 border-primary-200 px-4 py-1">
+                      {formattedCategory}
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-6 flex flex-col items-center gap-6 md:flex-row">
+                  {userInfo === post.author.email && (
+                    <div className="mx-auto flex items-center justify-center md:justify-end gap-4">
                       <div>
-                        <button className="mr-10 rounded-tl-2xl rounded-br-2xl border-2 border-primary-200 px-4 py-1">
-                          {formattedCategory}
-                        </button>
+                        <Link
+                          href={`/editpost/${params.category}/${params.slug}`}
+                          className="px-8 h-10 flex items-center justify-center rounded-md bg-blue-700 hover:bg-blue-800"
+                        >
+                          Edit Post
+                        </Link>
                       </div>
+                      <button
+                        onClick={handleDelete}
+                        className="px-7 h-10 flex items-center justify-center rounded-md bg-red-500 hover:bg-red-600"
+                      >
+                        Delete Post
+                      </button>
                     </div>
-                    <div className="mt-6 flex flex-col items-center gap-6 md:flex-row">
-                      {userInfo === post.author.email && (
-                        <div className="mx-auto flex items-center justify-center md:justify-end gap-4">
-                          <div>
-                            <Link
-                              href={`/editpost/${params.category}/${params.slug}`}
-                              className="px-8 h-10 flex items-center justify-center rounded-md bg-blue-700 hover:bg-blue-800"
-                            >
-                              Edit Post
-                            </Link>
-                          </div>
+                  )}
+
+                  {showConfirmation && (
+                    <div className="fixed w-screen inset-0  h-screen flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50  z-50">
+                      <div className="bg-blue-950 p-6 w-11/12 md:w-3/4 lg:w-2/6 rounded-lg shadow-md">
+                        <p className="text-xl">
+                          Are you sure you want to delete this post? This Action
+                          can not be undone.
+                        </p>
+                        <div className="flex justify-end mt-8">
                           <button
-                            onClick={handleDelete}
-                            className="px-7 h-10 flex items-center justify-center rounded-md bg-red-500 hover:bg-red-600"
+                            onClick={() => setShowConfirmation(false)}
+                            className="px-4 py-2 mr-4 bg-gray-600 hover:bg-gray-700 rounded"
                           >
-                            Delete Post
+                            Cancel
+                          </button>
+                          <button
+                            onClick={confirmDelete}
+                            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+                          >
+                            Confirm Delete
                           </button>
                         </div>
-                      )}
-
-                      {/* Confirmation Modal */}
-                      {showConfirmation && (
-                        <div className="fixed w-screen inset-0  h-screen flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50  z-50">
-                          <div className="bg-blue-950 p-6 w-11/12 md:w-3/4 lg:w-2/6 rounded-lg shadow-md">
-                            <p className="text-xl">
-                              Are you sure you want to delete this post? This
-                              Action can not be undone.
-                            </p>
-                            <div className="flex justify-end mt-8">
-                              <button
-                                onClick={() => setShowConfirmation(false)}
-                                className="px-4 py-2 mr-4 bg-gray-600 hover:bg-gray-700 rounded"
-                              >
-                                Cancel
-                              </button>
-                              <button
-                                onClick={confirmDelete}
-                                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
-                              >
-                                Confirm Delete
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      )}
+                      </div>
                     </div>
-                  </div>
-                </div>
-
-                <Image
-                  className="mx-auto rounded-lg w-full h-fit"
-                  src={`${post.coverImage}`}
-                  alt=""
-                  width={1000}
-                  height={1000}
-                />
-                <button
-                  onClick={handleDownload}
-                  className="px-5 mx-auto my-6 flex items-center justify-center py-2 rounded-md text-sm font-bold text-primary-200 border border-primary-200"
-                >
-                  Download Image
-                </button>
-                <div
-                  className={`mt-10 mb-12 rounded-lg md:mx-0 md:mt-16 md:text-lg ${styles["post-content"]}`}
-                  dangerouslySetInnerHTML={{ __html: post.content }}
-                />
-              </div>
-              <div className="my-8">
-                <SocialShare
-                  yourPostUrl={`${process.env.NEXT_PUBLIC_SITE_URL}/${params.category}/${params.slug}`}
-                />
-              </div>
-
-              <div className="my-20">
-                <CommentForm postId={post.id} />
-              </div>
-              <div className="w-full lg:hidden -right-10 rounded-lg  md:top-14 md:h-[86%] border dark:border-bdr-200">
-                <div className="flex flex-col justify-between h-[70%]">
-                  <div className=" h-[76%] rounded-2xl ">
-                    <AuthorCard
-                      id={post.author.id}
-                      name={post.author.name}
-                      image={post.author.image}
-                    />
-                  </div>
-                  <div className=" rounded-xl  h-80 flex items-center justify-center">
-                    Advertise
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
-            <div className=" hidden h-[20rem] lg:h-[35rem] lg:block right-2 rounded-lg lg:sticky md:top-14 mb-6 border dark:border-bdr-200">
-              <div className="flex flex-col justify-between w-[14rem] h-[70%]">
-                <div className=" h-[66%] rounded-2xl ">
-                  <AuthorCard
-                    id={post.author.id}
-                    name={post.author.name}
-                    image={post.author.image}
-                  />
-                </div>
-                <div className=" rounded-xl h-80 flex items-center justify-center">
-                  Advertise
-                </div>
-              </div>
+            <Image
+              className="mx-auto rounded-lg w-full h-fit"
+              src={`${post.coverImage}`}
+              alt=""
+              width={1000}
+              height={1000}
+            />
+            <button
+              onClick={handleDownload}
+              className="px-5 mx-auto my-6 flex items-center justify-center py-2 rounded-md text-sm font-bold text-primary-200 border border-primary-200"
+            >
+              Download Image
+            </button>
+            <div
+              className={`mt-10 mb-12 rounded-lg md:mx-0 md:mt-16 md:text-lg ${styles["post-content"]}`}
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+            <div className="my-8">
+              <SocialShare
+                yourPostUrl={`${process.env.NEXT_PUBLIC_SITE_URL}/${params.category}/${params.slug}`}
+              />
             </div>
           </div>
+          <div className="h-fit border border-gray-600 rounded-lg w-60 sticky top-20 right-4">
+            <AuthorCard
+              name={post.author.name}
+              image={post.author.image}
+              id={post.author.id}
+            />
+          </div>
+        </div>
+        <div>
+          <CommentForm postId={post.id} />
         </div>
         <ToastContainer position="top-center" autoClose={3000} />
       </div>

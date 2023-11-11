@@ -27,8 +27,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const categoriesEntry = data.get("categories");
     const contentEntry = data.get("content");
 
-    if (!titleEntry || !cover || !categoriesEntry || !contentEntry) {
-      return new NextResponse("Missing title, file, categories, or content", {
+    if (!titleEntry || !cover || !categoriesEntry) {
+      return new NextResponse("Missing title, file or categories", {
         status: 400,
       });
     }

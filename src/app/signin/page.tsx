@@ -54,8 +54,7 @@ export default function Login() {
 
       const response = await signIn("credentials", {
         ...data,
-        redirect: true,
-        callbackUrl: "/dashboard",
+        redirect: false,
       });
 
       toast.dismiss(loadingToastId);
@@ -75,10 +74,33 @@ export default function Login() {
     }
   };
 
+  const handleGitHubLogin = async () => {
+    try {
+      const loadingToastId = toast.loading("Logging in with GitHub...", {
+        autoClose: false,
+        theme: "dark",
+      });
+
+      const response = await signIn("github", {
+        callbackUrl: `${window.location.origin}/dashboard`,
+      });
+
+      toast.dismiss(loadingToastId);
+
+      if (response?.error) {
+        toast.error("GitHub sign-in failed.");
+      }
+
+      return response;
+    } catch (error) {
+      console.error("GitHub sign-in error:", error);
+      throw error;
+    }
+  };
+
   if (session) {
-    router.push("/dashboard");
     return (
-      <div className="mt-20 mx-auto flex items-center justify-center">
+      <div>
         You are already logged in. Go to{" "}
         <Link href={"/dashboard"} className="font-bold">
           Dashboard
@@ -88,14 +110,14 @@ export default function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center w-screen mt-20 md:mt-12 lg:mt-28 ">
+    <div className="flex items-center justify-center w-screen mt-20 md:mt-32 lg:mt-48 ">
       <div className="grid md:grid-cols-5 grid-cols-1 rounded-2xl justify-around shadow-2xl md:w-10/12 w-11/12">
-        <div className="col-span-3 p-6 bg-blue-950  md:rounded-l-2xl">
+        <div className="col-span-3 p-6 bg-blue-950 border dark:border-none  md:rounded-l-2xl">
           <section className="flex gap-4 items-center justify-center flex-col my-8">
             <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl text-center text-primary-200">
               Log in to Continue
             </h1>
-            <span className="h-1 w-40 rounded-full bg-primary-100 flex"></span>
+            <span className="h-1 w-20 rounded-full bg-primary-200 flex"></span>
 
             <form
               className="flex flex-col gap-8 my-6 w-full md:w-2/3 lg:w-1/2"
@@ -117,7 +139,7 @@ export default function Login() {
                 onChange={handlePasswordChange}
                 value={data.password}
               />
-              <button className="flex items-center justify-center w-full h-10 border-primary-200 bg-black border rounded-lg text-primary-200 font-bold hover:bg-gray-900">
+              <button className="border border-primary-200 text-primary-200 hover:bg-gray-950 bg-black px-4 py-2 rounded-lg">
                 Log In
               </button>
               <p className="md:hidden text-center">
@@ -129,7 +151,7 @@ export default function Login() {
             </form>
           </section>
         </div>
-        <div className="hidden md:flex bg-gray-800 col-span-2  md:rounded-r-2xl gap-4 p-16 items-center justify-center text-center flex-col">
+        <div className="hidden md:flex bg-primary-200 dark:bg-gray-800 col-span-2  md:rounded-r-2xl gap-4 p-16 items-center justify-center text-center flex-col">
           <span className="font-bold text-3xl text-lightgray-100">
             Hi, There!
           </span>
@@ -139,7 +161,7 @@ export default function Login() {
             us.
           </span>
           <Link href="/signup">
-            <button className=" border border-primary-200 px-8 py-2 rounded-md text-sm text-primary-200 hover:bg-gray-900 font-bold">
+            <button className="border border-primary-200 text-primary-200 hover:bg-gray-950 bg-black px-4 py-2 rounded-lg">
               Registration
             </button>
           </Link>

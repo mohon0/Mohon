@@ -10,7 +10,7 @@ import { Contract } from "@/components/layout/Contract";
 
 export default function Home() {
   return (
-    <main>
+    <main className=" overflow-x-hidden">
       <div className="fixed h-screen -z-50 left-0 top-0">
         <StarsCanvas />
       </div>
