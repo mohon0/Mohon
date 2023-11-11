@@ -132,7 +132,6 @@ function CommentsList({ postId, onCommentAdded }: CommentsListProps) {
       toast.error("You must be logged in to like comments.");
     }
   }
-  console.log(comments);
 
   return (
     <div className="flex w-full flex-col gap-4">
