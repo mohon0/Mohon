@@ -33,7 +33,7 @@ interface Post {
   coverImage: string;
 }
 
-export async function generateMetadata(
+async function generateMetadata(
   { params }: PageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
