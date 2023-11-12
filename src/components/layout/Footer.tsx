@@ -13,7 +13,7 @@ export default function Footer() {
     <div className="flex flex-col gap-10 mt-10 border-t border-gray-600 pt-10">
       <div className="px-3 lg:px-20 text-xl md:text-3xl lg:text-5xl flex-wrap flex items-center justify-around">
         <Link
-          href="https://facebook.com/www.md.mohon"
+          href="https://facebook.com/md.freelancermohon"
           target="_blank"
           className="text-gray-500 hover:text-blue-600  p-4"
         >

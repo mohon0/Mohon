@@ -42,7 +42,10 @@ export default function Hero() {
             animate={{ opacity: 1, x: 0 }}
             className="flex flex-wrap gap-10 text-slate-300 my-4"
           >
-            <Link href="https://facebook.com/www.md.mohon" target="_blank">
+            <Link
+              href="https://facebook.com/md.freelancermohon"
+              target="_blank"
+            >
               <AiFillFacebook size="40" />
             </Link>
             <Link href="https://twitter.com/mohongraphics" target="_blank">
