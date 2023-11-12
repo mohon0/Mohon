@@ -42,7 +42,7 @@ export async function generateMetadata(
         title: post.title || "Blog Post",
         description: dynamicDescription || "This is a blog post",
         type: "article",
-        url: `${siteurl}/category/${category}/${slug}`,
+        url: `${siteurl}/blog/${category}/${slug}`,
         authors: post.author.name,
         publishedTime: post.createdAt,
         modifiedTime: post.updatedAt,
