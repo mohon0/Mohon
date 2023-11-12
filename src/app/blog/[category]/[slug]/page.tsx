@@ -7,6 +7,10 @@ interface PageProps {
 
 const siteurl = process.env.NEXT_PUBLIC_SITE_URL;
 
+function stripHtmlTags(html: string) {
+  return html.replace(/(<([^>]+)>)/gi, "");
+}
+
 export async function generateMetadata(
   { params }: PageProps,
   parent: ResolvingMetadata
@@ -24,15 +28,19 @@ export async function generateMetadata(
 
     const post = await response.json();
 
+    const cleanedContent = stripHtmlTags(post.content);
+
+    const dynamicDescription = cleanedContent.substring(0, 150);
+
     // Optionally access and extend (rather than replace) parent metadata
     const previousImages = (await parent).openGraph?.images || [];
 
     return {
       title: post.title || "Blog Post",
-      description: post.content.slice(0, 100) || "This is a blog post",
+      description: dynamicDescription || "This is a blog post",
       openGraph: {
         title: post.title || "Blog Post",
-        description: post.content.slice(0, 100) || "This is a blog post",
+        description: dynamicDescription || "This is a blog post",
         type: "article",
         url: `${siteurl}/category/${category}/${slug}`,
         authors: post.author.name,
@@ -51,6 +59,7 @@ export async function generateMetadata(
       twitter: {
         card: "summary_large_image",
         title: post.title,
+        description: dynamicDescription,
       },
     };
   } catch (error) {

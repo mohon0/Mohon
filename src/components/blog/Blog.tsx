@@ -38,13 +38,7 @@ export default function Blog({ params }: PageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [postUrl, setPostUrl] = useState<string>("");
-  useEffect(() => {
-    const currentUrl = window.location.href;
-    setPostUrl(currentUrl);
-  }, []);
-
-  const { data: session, status } = useSession();
+  const { data: session} = useSession();
 
   useEffect(() => {
     setIsLoading(true);
@@ -149,9 +143,7 @@ export default function Blog({ params }: PageProps) {
     setShowConfirmation(false);
   };
 
-  function stripHtmlTags(html: string) {
-    return html.replace(/(<([^>]+)>)/gi, "");
-  }
+ 
 
   function formatString(inputString: string) {
     // Split the inputString by underscores
@@ -175,10 +167,10 @@ export default function Blog({ params }: PageProps) {
   const inputString = post.category;
   const formattedCategory = formatString(inputString);
 
-  const cleanedContent = stripHtmlTags(post.content);
+  
 
   const userInfo = session?.user?.email;
-  const dynamicDescription = cleanedContent.substring(0, 150);
+  
   return (
     <>
       <div>
