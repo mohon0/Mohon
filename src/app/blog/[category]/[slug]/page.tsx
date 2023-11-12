@@ -39,7 +39,14 @@ export async function generateMetadata(
         publishedTime: post.createdAt,
         modifiedTime: post.updatedAt,
         section: post.category,
-        images: [post.coverImage, ...previousImages],
+        images: [
+          {
+            url: new URL(post.coverImage, siteurl).toString(),
+            width: 1200,
+            height: 630,
+            alt: post.title,
+          },
+        ],
       },
       twitter: {
         card: "summary_large_image",
