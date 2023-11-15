@@ -30,3 +30,16 @@ body {
   @apply text-[#000119] bg-clip-text;
 }
 
+.wrong {
+  @apply bg-red-500
+}
+
+.correct {
+  @apply bg-green-500
+  
+}
+
+.active {
+  @apply border-b-2 border-primary-200
+ 
+}
