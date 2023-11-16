@@ -11,6 +11,7 @@ export const Contract: React.FC = () => {
 
   const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    toast.loading("Please wait...");
 
     emailjs
       .sendForm(
@@ -21,11 +22,11 @@ export const Contract: React.FC = () => {
       )
       .then(
         (result) => {
-          console.log(result.text);
+          toast.dismiss();
           toast.success("Your message was successfully sent");
         },
         (error) => {
-          console.log(error.text);
+          toast.dismiss();
           toast.error("An error occurred");
         }
       );
@@ -47,7 +48,7 @@ export const Contract: React.FC = () => {
               type="text"
               className="h-10 w-full rounded-full bg-slate-900 pl-4 outline-none lg:w-52"
               placeholder="First Name"
-              name="user_firstname"
+              name="user_name"
               required={true}
             />
             <input
@@ -63,6 +64,7 @@ export const Contract: React.FC = () => {
               className="h-10 w-full rounded-full bg-slate-900 pl-4 outline-none lg:w-52"
               placeholder="Phone"
               name="number"
+              required={true}
             />
             <input
               type="text"
