@@ -23,6 +23,7 @@ export const Contract: React.FC = () => {
       .then(
         (result) => {
           toast.dismiss();
+          form.current!.reset();
           toast.success("Your message was successfully sent");
         },
         (error) => {
