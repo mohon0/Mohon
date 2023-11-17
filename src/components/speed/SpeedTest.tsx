@@ -160,15 +160,15 @@ export default function SpeedTest() {
     };
   }, [isTyping, timeLeft]);
   return (
-    <div className="mx-20 flex flex-col gap-10 items-center justify-center">
-      <div className="flex gap-16">
+    <div className="mx-2 lg:mx-20 flex flex-col gap-10 items-center justify-center">
+      <div className="flex flex-wrap items-center justify-center md:items-start gap-4 lg:gap-16">
         <Seconds seconds={timeLeft} />
         <Words words={WPM} />
         <Character char={CPM} />
         <Accuracy accuracy={mistakes} />
       </div>
       <div className="w-full">
-        <div className="m-1 w-11/12 mx-auto p-8 rounded-lg bg-gray-900 text-white">
+        <div className="m-1 lg:w-11/12 mx-auto p-8 rounded-lg bg-gray-900 text-white">
           <input
             type="text"
             className="input-field absolute -z-50 opacity-0"

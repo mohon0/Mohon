@@ -16,7 +16,7 @@ const Seconds: React.FC<SecondsProps> = ({ seconds }) => {
 
   return (
     <div>
-      <div className="relative h-32 w-32 bg-black rounded-full overflow-hidden">
+      <div className="relative scale-75 lg:scale-100 h-32 w-32 bg-black rounded-full overflow-hidden">
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div className="text-white text-6xl font-extrabold mb-1">
             {seconds}
