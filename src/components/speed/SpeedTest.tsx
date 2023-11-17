@@ -2,9 +2,9 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import Accuracy from "./Accuracy";
 import Character from "./Character";
-import { Paragraph } from "./Paragraphs";
+import { Paragraphs } from "./Paragraphs";
 import Seconds from "./Seconds";
-import SpeedTypingGame from "./TypingSpeedGame";
+import TypingArea from "./TypingArea";
 import Words from "./Words";
 
 export default function SpeedTest() {
@@ -17,15 +17,14 @@ export default function SpeedTest() {
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [WPM, setWPM] = useState<number>(0);
   const [CPM, setCPM] = useState<number>(0);
-  const [accuracy, setAccuracy] = useState<number>(0);
 
   const loadParagraph = () => {
-    const ranIndex = Math.floor(Math.random() * Paragraph.length);
+    const ranIndex = Math.floor(Math.random() * Paragraphs.length);
     const inputField = document.getElementsByClassName(
       "input-field"
     )[0] as HTMLInputElement;
     document.addEventListener("keydown", () => inputField.focus());
-    const content = Array.from(Paragraph[ranIndex]).map((letter, index) => (
+    const content = Array.from(Paragraphs[ranIndex]).map((letter, index) => (
       <span
         key={index}
         style={{ color: letter !== " " ? "white" : "transparent" }}
@@ -149,14 +148,6 @@ export default function SpeedTest() {
         );
         wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
         setWPM(wpm);
-
-        if (charIndex > 0) {
-          const accuracyValue =
-            charIndex > 0
-              ? Math.round(((charIndex - mistakes) / charIndex) * 100)
-              : 100;
-          setAccuracy(accuracyValue);
-        }
       }, 1000);
     } else if (timeLeft === 0 && interval !== null) {
       clearInterval(interval);
@@ -167,36 +158,27 @@ export default function SpeedTest() {
         clearInterval(interval);
       }
     };
-  }, [isTyping, timeLeft, charIndex, accuracy, mistakes]);
-
+  }, [isTyping, timeLeft]);
   return (
-    <div>
-      <div className="flex gap-16 items-center">
-        <div>
-          <Seconds seconds={timeLeft} />
-        </div>
-        <div>
-          <Words words={WPM} />
-        </div>
-        <div>
-          <Character char={CPM} />
-        </div>
-        <div>
-          <Accuracy accuracy={accuracy} />
-        </div>
+    <div className="mx-20 flex flex-col gap-10 items-center justify-center">
+      <div className="flex gap-16">
+        <Seconds seconds={timeLeft} />
+        <Words words={WPM} />
+        <Character char={CPM} />
+        <Accuracy accuracy={mistakes} />
       </div>
-      <div>
-        <SpeedTypingGame
-          inpFieldValue={inpFieldValue}
-          initTyping={initTyping}
-          typingText={typingText}
-          timeLeft={timeLeft}
-          mistakes={mistakes}
-          WPM={WPM}
-          CPM={CPM}
-          resetGame={resetGame}
-          handleKeyDown={handleKeyDown}
-        />
+      <div className="w-full">
+        <div className="m-1 w-11/12 mx-auto p-8 rounded-lg bg-gray-900 text-white">
+          <input
+            type="text"
+            className="input-field absolute -z-50 opacity-0"
+            value={inpFieldValue}
+            onChange={initTyping}
+            onKeyDown={handleKeyDown}
+          />
+          {/* Render the TypingArea child component */}
+          <TypingArea typingText={typingText} resetGame={resetGame} />
+        </div>
       </div>
     </div>
   );

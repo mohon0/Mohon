@@ -70,8 +70,8 @@ export default function Footer() {
       </div>
       <div className="flex justify-center md:justify-between bg-black py-3 px-3 lg:px-20">
         <div className="hidden md:flex items-center gap-10">
-          <Link href="/blog" className="hover:text-primary-200">
-            Blog
+          <Link href="/speed-test" className="hover:text-primary-200">
+            Speed Test
           </Link>
           <Link href="/project" className="hover:text-primary-200">
             Projects
