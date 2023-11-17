@@ -45,6 +45,7 @@ const Options = [
   "Movies",
   "Writing Blog",
   "My Data",
+  "Course Module",
 ];
 
 const optionsWithLinks = Options.map((option) => ({

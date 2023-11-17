@@ -60,11 +60,11 @@ export default function Menu() {
             <Link href="/projects" onClick={HandleClick}>
               Projects
             </Link>
+            <Link href="/course" onClick={HandleClick}>
+              Our Course
+            </Link>
             <Link href="/about" onClick={HandleClick}>
               About Me
-            </Link>
-            <Link href="/contact" onClick={HandleClick}>
-              Contact Me
             </Link>
 
             {session?.user ? (

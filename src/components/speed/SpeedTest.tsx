@@ -17,6 +17,8 @@ export default function SpeedTest() {
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [WPM, setWPM] = useState<number>(0);
   const [CPM, setCPM] = useState<number>(0);
+  const [correctChars, setCorrectChars] = useState<number>(0);
+  const [accuracyPercentage, setAccuracyPercentage] = useState<number>(0);
 
   const loadParagraph = () => {
     const ranIndex = Math.floor(Math.random() * Paragraphs.length);
@@ -42,6 +44,7 @@ export default function SpeedTest() {
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     const characters = document.querySelectorAll(".char");
+
     if (
       event.key === "Backspace" &&
       charIndex > 0 &&
@@ -49,21 +52,32 @@ export default function SpeedTest() {
       timeLeft > 0
     ) {
       if (characters[charIndex - 1].classList.contains("correct")) {
+        // If the user is correcting a previously correct character
         characters[charIndex - 1].classList.remove("correct");
+        setCorrectChars(correctChars - 1); // Update correctChars count
       }
+
       if (characters[charIndex - 1].classList.contains("wrong")) {
+        // If the user is correcting a previously wrong character
         characters[charIndex - 1].classList.remove("wrong");
-        setMistakes(mistakes - 1);
+        setMistakes(mistakes - 1); // Update mistakes count
       }
+
       characters[charIndex].classList.remove("active");
       characters[charIndex - 1].classList.add("active");
       setCharIndex(charIndex - 1);
+
+      // Recalculate accuracy percentage
+      const newAccuracyPercentage =
+        charIndex > 0 ? Math.round((correctChars / charIndex) * 100) : 0;
+      setAccuracyPercentage(newAccuracyPercentage);
+
       let cpm = (charIndex - mistakes - 1) * (60 / (maxTime - timeLeft));
       cpm = cpm < 0 || !cpm || cpm === Infinity ? 0 : cpm;
       setCPM(cpm);
 
       let wpm = Math.round(
-        ((charIndex - mistakes) / 5 / (maxTime - timeLeft)) * 60
+        ((charIndex - mistakes - 1) / 5 / (maxTime - timeLeft)) * 60
       );
       wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
       setWPM(wpm);
@@ -73,28 +87,49 @@ export default function SpeedTest() {
   const initTyping = (event: ChangeEvent<HTMLInputElement>) => {
     const characters = document.querySelectorAll(".char");
     let typedChar = event.target.value;
+
     if (charIndex < characters.length && timeLeft > 0) {
       let currentChar = (characters[charIndex] as HTMLElement).innerText;
+
       if (currentChar === "_") currentChar = " ";
+
       if (!isTyping) {
         setIsTyping(true);
       }
+
       if (typedChar === currentChar) {
+        setCorrectChars(correctChars + 1);
         setCharIndex(charIndex + 1);
-        if (charIndex + 1 < characters.length)
+
+        if (charIndex + 1 < characters.length) {
           (characters[charIndex + 1] as HTMLElement).classList.add("active");
+        }
+
         (characters[charIndex] as HTMLElement).classList.remove("active");
         (characters[charIndex] as HTMLElement).classList.add("correct");
       } else {
         setCharIndex(charIndex + 1);
-        setMistakes(mistakes + 1);
+        setMistakes((prevMistakes) => {
+          // Update accuracy percentage within the callback
+          const newAccuracyPercentage =
+            charIndex > 0 ? Math.round((correctChars / charIndex) * 100) : 0;
+          setAccuracyPercentage(newAccuracyPercentage);
+
+          return prevMistakes + 1;
+        });
+
         (characters[charIndex] as HTMLElement).classList.remove("active");
-        if (charIndex + 1 < characters.length)
+
+        if (charIndex + 1 < characters.length) {
           (characters[charIndex + 1] as HTMLElement).classList.add("active");
+        }
+
         (characters[charIndex] as HTMLElement).classList.add("wrong");
       }
 
-      if (charIndex === characters.length - 1) setIsTyping(false);
+      if (charIndex === characters.length - 1) {
+        setIsTyping(false);
+      }
 
       let wpm = Math.round(
         ((charIndex - mistakes) / 5 / (maxTime - timeLeft)) * 60
@@ -158,14 +193,15 @@ export default function SpeedTest() {
         clearInterval(interval);
       }
     };
-  }, [isTyping, timeLeft]);
+  }, [isTyping, timeLeft, mistakes, charIndex]);
+
   return (
     <div className="mx-2 lg:mx-20 flex flex-col gap-10 items-center justify-center">
       <div className="flex flex-wrap items-center justify-center md:items-start gap-4 lg:gap-16">
         <Seconds seconds={timeLeft} />
         <Words words={WPM} />
         <Character char={CPM} />
-        <Accuracy accuracy={mistakes} />
+        <Accuracy accuracy={accuracyPercentage} />
       </div>
       <div className="w-full">
         <div className="m-1 lg:w-11/12 mx-auto p-8 rounded-lg bg-gray-900 text-white">

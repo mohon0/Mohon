@@ -40,8 +40,8 @@ export default function Navbar() {
           <Link href="/">Home</Link>
           <Link href="/blog">Blog & Design</Link>
           <Link href="/projects">Projects</Link>
+          <Link href="/course">Our Course</Link>
           <Link href="/about">About Me</Link>
-          <Link href="/contact">Contact Me</Link>
 
           {session?.user ? (
             <Link href="/dashboard">Dashboard</Link>

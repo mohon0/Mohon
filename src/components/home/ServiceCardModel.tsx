@@ -40,7 +40,7 @@ export default function ServicesCardModel({ data }: Props) {
             style={{ background: `${data.bg}` }}
           ></div>
 
-          <div className="relative z-10 font-bold text-3xl">{data.name}</div>
+          <div className="relative z-10 font-bold text-2xl md:text-3xl">{data.name}</div>
         </div>
       </motion.div>
     </motion.div>

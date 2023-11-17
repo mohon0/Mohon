@@ -1,5 +1,5 @@
 "use client";
-import HeroImg from "@/images/hero/Hero.png";
+import HeroImg from "@/images/hero/logo1.png";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -16,7 +16,7 @@ export default function HeroImage() {
           <Image
             src={HeroImg}
             alt=""
-            className=" scale-[0.83] mx-auto object-cover"
+            className=" scale-[0.91] mt-12 mx-auto object-cover"
           />
         </div>
       </motion.div>

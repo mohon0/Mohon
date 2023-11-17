@@ -143,7 +143,7 @@ function CommentsList({ postId, onCommentAdded }: CommentsListProps) {
         comments.map((comment) => (
           <div
             key={comment.id}
-            className="flex flex-col p-2 gap-3 bg-slate-100 dark:bg-gray-900 rounded-md"
+            className="flex flex-col p-2 gap-3 bg-gray-900 rounded-md"
           >
             <div className="flex  md:flex-row md:justify-between">
               <div className="flex flex-wrap md:flex-row gap-4 items-center">
@@ -156,7 +156,7 @@ function CommentsList({ postId, onCommentAdded }: CommentsListProps) {
                     className="rounded-full h-12 w-12 object-cover"
                   />
                 ) : (
-                  <div className="h-12 w-12 rounded-full bg-gray-300  p-0.5 text-center text-sm">
+                  <div className="h-12 w-12 rounded-full bg-gray-600  p-0.5 text-center text-sm">
                     No image
                   </div>
                 )}
