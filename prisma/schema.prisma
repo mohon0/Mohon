@@ -45,6 +45,7 @@ model User {
   sessions      Session[]
   posts         Post[]
   comments      Comment[]
+  applications  Application[] 
  
 }
 
@@ -86,3 +87,35 @@ model Notification {
 
   post Post @relation(fields: [postId], references: [id])
 }
+
+
+model Application {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName    String
+  lastName     String
+  fatherName   String
+  motherName   String
+  dateOfBirth  DateTime
+  bloodGroups  String
+  mobileNumber String
+  guardianNumber String
+  gender       String
+  religion     String
+  fullAddress  String
+  district     String
+  education    String
+  board        String
+  rollNumber   String
+  regNumber    String
+  passingYear  String
+  gpa          String
+  nid          String
+  nationality  String
+  course       String
+  duration     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  userId       String   @db.ObjectId
+  user         User     @relation(fields: [userId], references: [id])
+}
+
