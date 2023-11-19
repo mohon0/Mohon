@@ -10,12 +10,15 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Freelancer Mohon",
-  description: "Graphics Designer and video editor specialist",
+  description:
+    "Professional Graphics Desinger & IT Teacher. Jhenaidah, Khulna, Bangladesh.",
   generator: "Next js",
   applicationName: "FreeLancer MOHON",
-  keywords: ["Mohon", "graphics", "video", "Photoshop", "Illustration"],
-  authors: [{ name: "Md Mohon", url: "https://freelancermohon.online" }],
-  creator: "SEJAR PARVEZ",
+  keywords: [
+    "graphic,logo, anydesigne, mohon, freelancermohon, best_graphic_designe_in jhenaidah, best_graphic_designe_in_bangladesh, logodesigner, logo, logodesigne, bestlogodesign, mdmohon, freelancermohonjhenaidah, Graphic design portfolio, Poster and flyer design, Social media graphics, Vector graphics design, Creative branding agency, Affordable graphic design, Corporate identity design, UI/UX design services, Visual communication design, Typography specialists, Digital illustration, Print design services, Branding and identity design, Web graphics design, Logo design experts, Freelance graphic designer, Custom graphic design, Creative design solutions, Professional graphic designer, Graphic design services, freelancermohon",
+  ],
+  authors: [{ name: "freelancermohon", url: "https://freelancermohon.online" }],
+  creator: "md mohon",
   openGraph: {
     title: "FreeLancer MOHON",
     description: "Graphics Designer and video editor",

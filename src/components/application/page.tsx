@@ -112,10 +112,10 @@ export default function Application() {
     if (!isNaN(dayNumber) && !isNaN(monthNumber) && !isNaN(yearNumber)) {
       const birthDay = new Date(yearNumber, monthNumber - 1, dayNumber);
       setDateOfBirth(birthDay.toISOString());
-    } else {
-      console.error("Invalid date values");
     }
   }, [day, month, year]);
+
+  console.log(dateOfBirth);
 
   const handleSubmit = () => {
     const formData = {
