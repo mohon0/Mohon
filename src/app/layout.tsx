@@ -29,6 +29,10 @@ export const metadata: Metadata = {
     ],
     type: "website",
   },
+  verification: {
+    google: "TMr7owx3VxtN03KJtxIgqV3NCg0z_CRhvq69_U1lB1Y",
+  },
+
   robots: {
     index: true,
     follow: true,

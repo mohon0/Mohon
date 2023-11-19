@@ -1,48 +1,93 @@
-"use client";
-
-import { format } from "date-fns";
-import { FaCalendarAlt } from "react-icons/fa";
-
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
-type DatePickerProps = {
-  dateOfBirth: Date | undefined;
-  setDateOfBirth: (date: Date | undefined) => void;
-};
+interface SelectDemoProps {
+  onDayValueChange: (value: string) => void;
+  onMonthValueChange: (value: string) => void;
+  onYearValueChange: (value: string) => void;
+  dayValue: string | undefined;
+  monthValue: string | undefined;
+  yearValue: string | undefined;
+}
 
-export function DatePickerDemo({
-  dateOfBirth,
-  setDateOfBirth,
-}: DatePickerProps) {
+export default function DatePicker({
+  onDayValueChange,
+  onMonthValueChange,
+  onYearValueChange,
+}: SelectDemoProps) {
+  const handleDayChange = (value: string) => {
+    onDayValueChange(value);
+  };
+  const handleMonthChange = (value: string) => {
+    onMonthValueChange(value);
+  };
+  const handleYearChange = (value: string) => {
+    onYearValueChange(value);
+  };
+
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
-          className={cn(
-            "w-[280px] justify-start text-left font-normal",
-            !dateOfBirth && "text-muted-foreground"
-          )}
-        >
-          <FaCalendarAlt className="mr-2 h-4 w-4" />
-          {dateOfBirth ? format(dateOfBirth, "PPP") : <span>Pick a date</span>}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
-        <Calendar
-          mode="single"
-          selected={dateOfBirth}
-          onSelect={setDateOfBirth}
-          initialFocus
-        />
-      </PopoverContent>
-    </Popover>
+    <div className="grid grid-cols-3 gap-4">
+      <div className="grid gap-2">
+        <Select onValueChange={handleDayChange}>
+          <SelectTrigger id="day">
+            <SelectValue placeholder="Day" />
+          </SelectTrigger>
+          <SelectContent>
+            {Array.from({ length: 31 }, (_, i) => (
+              <SelectItem
+                key={i}
+                value={`${i + 1}`}
+                onSelect={() => handleDayChange(`${i + 1}`)}
+              >
+                {i + 1}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="grid gap-2">
+        <Select onValueChange={handleMonthChange}>
+          <SelectTrigger id="month">
+            <SelectValue placeholder="Month" />
+          </SelectTrigger>
+          <SelectContent>
+            {Array.from({ length: 12 }, (_, i) => (
+              <SelectItem
+                key={i}
+                value={`${i + 1}`}
+                onSelect={() => handleMonthChange(`${i + 1}`)}
+              >
+                {new Date(0, i).toLocaleString("en", { month: "long" })}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="grid gap-2">
+        <Select onValueChange={handleYearChange}>
+          <SelectTrigger id="year">
+            <SelectValue placeholder="Year" />
+          </SelectTrigger>
+          <SelectContent>
+            {Array.from({ length: 50 }, (_, i) => (
+              <SelectItem
+                key={i}
+                value={`${new Date().getFullYear() - i}`}
+                onSelect={() =>
+                  handleYearChange(`${new Date().getFullYear() - i}`)
+                }
+              >
+                {new Date().getFullYear() - i}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
   );
 }

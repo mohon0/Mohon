@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CourseSelect } from "./CourseSelect";
-import { DatePickerDemo } from "./DatePicker";
+import DatePicker from "./DatePicker";
 import { DurationSelect } from "./DurationSelect";
 import { EducationSelect } from "./EducationSelect";
 import { FileSelect } from "./FileSelect";
@@ -15,7 +15,7 @@ export default function Application() {
   const [lastName, setLastName] = useState("");
   const [fatherName, setFatherName] = useState("");
   const [motherName, setMotherName] = useState("");
-  const [dateOfBirth, setDateOfBirth] = React.useState<Date>();
+  const [dateOfBirth, setDateOfBirth] = React.useState("");
   const [bloodGroups, setBloodGroups] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [guardianNumber, setGuardianNumber] = useState("");
@@ -33,6 +33,9 @@ export default function Application() {
   const [nationality, setNationality] = useState("");
   const [course, setCourse] = useState("");
   const [duration, setDuration] = useState("");
+  const [day, setDay] = useState("");
+  const [year, setYear] = useState("");
+  const [month, setMonth] = useState("");
 
   const handelGenderChange = (value: string) => {
     if (value.trim() !== "") {
@@ -74,6 +77,45 @@ export default function Application() {
       console.error("Year cannot be empty");
     }
   };
+  const handleDay = (value: string) => {
+    if (value.trim() !== "") {
+      setDay(value);
+    } else {
+      toast.error("day cannot be empty cannot be empty");
+      console.error("day cannot be empty cannot be empty");
+    }
+  };
+  const handleMonth = (value: string) => {
+    if (value.trim() !== "") {
+      setMonth(value);
+    } else {
+      toast.error("Month cannot be empty cannot be empty");
+      console.error("Month cannot be empty cannot be empty");
+    }
+  };
+  const handleYear = (value: string) => {
+    if (value.trim() !== "") {
+      setYear(value);
+    } else {
+      toast.error("Year cannot be empty cannot be empty");
+      console.error("Year cannot be empty cannot be empty");
+    }
+  };
+
+  useEffect(() => {
+    // Make sure day, month, and year are valid numbers
+    const dayNumber = parseInt(day);
+    const monthNumber = parseInt(month);
+    const yearNumber = parseInt(year);
+
+    // Check if all values are valid numbers
+    if (!isNaN(dayNumber) && !isNaN(monthNumber) && !isNaN(yearNumber)) {
+      const birthDay = new Date(yearNumber, monthNumber - 1, dayNumber);
+      setDateOfBirth(birthDay.toISOString());
+    } else {
+      console.error("Invalid date values");
+    }
+  }, [day, month, year]);
 
   const handleSubmit = () => {
     const formData = {
@@ -175,9 +217,13 @@ export default function Application() {
             </div>
             <div className="flex justify-between items-center">
               <div>Date Of Birth:</div>
-              <DatePickerDemo
-                setDateOfBirth={setDateOfBirth}
-                dateOfBirth={dateOfBirth}
+              <DatePicker
+                onMonthValueChange={handleMonth}
+                onYearValueChange={handleYear}
+                onDayValueChange={handleDay}
+                dayValue={day}
+                monthValue={month}
+                yearValue={year}
               />
             </div>
             <div className="flex justify-between items-center">
