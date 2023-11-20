@@ -1,11 +1,38 @@
 import storage from "@/utils/firebaseConfig";
 import { PrismaClient } from "@prisma/client";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  getMetadata,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 const secret = process.env.NEXTAUTH_SECRET;
+const admin = process.env.NEXT_PUBLIC_ADMIN;
+
+// Function to check if an image exists in Firebase Storage
+async function imageExists(imagePath: string | undefined) {
+  const storageRef = ref(storage, imagePath);
+
+  try {
+    // Get metadata for the file
+    const metadata = await getMetadata(storageRef);
+    return metadata.size > 0; // If size is greater than 0, the file exists.
+  } catch (error) {
+    if ((error as any).code === "storage/object-not-found") {
+      // If the error code is "object-not-found," the file doesn't exist.
+      return false;
+    } else {
+      // Handle other errors here
+      console.error("Error checking image existence:", error);
+      throw error;
+    }
+  }
+}
 
 function getStringValue(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -120,6 +147,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const token = await getToken({ req, secret });
     const userId = token?.sub;
+    const email = token?.email;
 
     if (!token || !userId) {
       // User is not authenticated or authorId is missing
@@ -155,13 +183,61 @@ export async function GET(req: NextRequest, res: NextResponse) {
 }
 
 export async function DELETE(req: NextRequest, res: NextResponse) {
-  const token = await getToken({ req, secret });
-  const userId = token?.sub;
+  try {
+    const token = await getToken({ req, secret });
+    const userId = token?.sub;
+    const userEmail = token?.email;
 
-  if (!token || !userId) {
-    // User is not authenticated or authorId is missing
-    return new NextResponse("User not logged in or authorId missing");
+    if (!token || (!userId && !userEmail)) {
+      return new NextResponse("User not logged in or userId/userEmail missing");
+    }
+
+    const search = req.nextUrl.searchParams;
+    const applicationId = search.get("applicationId");
+
+    if (!applicationId) {
+      return new NextResponse("Application ID not provided", { status: 400 });
+    }
+
+    const application = await prisma.application.findUnique({
+      where: {
+        id: applicationId,
+      },
+      select: {
+        userId: true,
+        image: true,
+      },
+    });
+
+    if (!application) {
+      return new NextResponse("Application not found", { status: 404 });
+    }
+
+    // Check if the user has the right to delete the application
+    if (userId === application.userId || userEmail === admin) {
+      if (await imageExists(application.image)) {
+        // Delete the previous cover image
+        const storageRefToDelete = ref(storage, application.image);
+        await deleteObject(storageRefToDelete);
+      }
+
+      await prisma.application.delete({
+        where: {
+          id: applicationId,
+        },
+      });
+
+      return new NextResponse("Application deleted successfully", {
+        status: 200,
+      });
+    } else {
+      // User does not have the right to delete the application
+      return new NextResponse("Unauthorized to delete this application", {
+        status: 403,
+      });
+    }
+  } catch (error) {
+    console.error("Error deleting application:", error);
+    return new NextResponse("Error deleting application", { status: 500 });
   }
-
-  return new NextResponse("api is working");
 }

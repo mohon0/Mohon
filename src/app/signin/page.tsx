@@ -64,36 +64,14 @@ export default function Login() {
       } else {
         toast.success("Successful sign-in");
 
-        router.push("/dashboard");
+        setTimeout(() => {
+          router.back();
+        }, 2000);
       }
 
       return response;
     } catch (error) {
       console.error("Sign-in error:", error);
-      throw error;
-    }
-  };
-
-  const handleGitHubLogin = async () => {
-    try {
-      const loadingToastId = toast.loading("Logging in with GitHub...", {
-        autoClose: false,
-        theme: "dark",
-      });
-
-      const response = await signIn("github", {
-        callbackUrl: `${window.location.origin}/dashboard`,
-      });
-
-      toast.dismiss(loadingToastId);
-
-      if (response?.error) {
-        toast.error("GitHub sign-in failed.");
-      }
-
-      return response;
-    } catch (error) {
-      console.error("GitHub sign-in error:", error);
       throw error;
     }
   };

@@ -1,6 +1,7 @@
 "use client";
 import logo from "@/images/hero/logo3.png";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -39,6 +40,8 @@ export default function Application() {
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const router = useRouter();
 
   const handelGenderChange = (value: string) => {
     if (value.trim() !== "") {
@@ -164,6 +167,9 @@ export default function Application() {
       toast.dismiss();
       if (response.ok) {
         toast.success("Your application was successfully submitted");
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 2000);
       } else {
         toast.error("Couldn't save your post. Please try again later");
       }
