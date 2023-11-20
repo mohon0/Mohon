@@ -26,15 +26,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
         name: true,
         email: true,
         image: true,
-        posts: {
-          include: {
-            author: true,
-          },
-          orderBy: {
-            updatedAt: "desc",
+        applications: {
+          select: {
+            id: true,
+            status: true,
+            course: true,
           },
         },
-        comments: true,
       },
     });
 

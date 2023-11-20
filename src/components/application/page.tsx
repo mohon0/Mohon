@@ -1,4 +1,6 @@
 "use client";
+import logo from "@/images/hero/logo3.png";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,6 +38,7 @@ export default function Application() {
   const [day, setDay] = useState("");
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handelGenderChange = (value: string) => {
     if (value.trim() !== "") {
@@ -102,6 +105,10 @@ export default function Application() {
     }
   };
 
+  const handleFileSelect = (file: File) => {
+    setSelectedFile(file);
+  };
+
   useEffect(() => {
     // Make sure day, month, and year are valid numbers
     const dayNumber = parseInt(day);
@@ -115,63 +122,67 @@ export default function Application() {
     }
   }, [day, month, year]);
 
-  console.log(dateOfBirth);
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("fatherName", fatherName);
+      formData.append("motherName", motherName);
+      formData.append("dateOfBirth", dateOfBirth);
+      formData.append("bloodGroups", bloodGroups);
+      formData.append("mobileNumber", mobileNumber);
+      formData.append("guardianNumber", guardianNumber);
+      formData.append("gender", gender);
+      formData.append("religion", religion);
+      formData.append("fullAddress", fullAddress);
+      formData.append("district", district);
+      formData.append("education", education);
+      formData.append("board", board);
+      formData.append("rollNumber", rollNumber);
+      formData.append("regNumber", regNumber);
+      formData.append("passingYear", passingYear);
+      formData.append("gpa", gpa);
+      formData.append("nid", nid);
+      formData.append("nationality", nationality);
+      formData.append("course", course);
+      formData.append("duration", duration);
+      formData.append("dateOfBirth", dateOfBirth);
+      if (selectedFile) {
+        formData.append("image", selectedFile);
+      }
 
-  const handleSubmit = () => {
-    const formData = {
-      firstName,
-      lastName,
-      fatherName,
-      motherName,
-      dateOfBirth,
-      bloodGroups,
-      mobileNumber,
-      guardianNumber,
-      gender,
-      religion,
-      fullAddress,
-      district,
-      education,
-      board,
-      rollNumber,
-      regNumber,
-      passingYear,
-      gpa,
-      nid,
-      nationality,
-      course,
-      duration,
-    };
-    toast.loading("Please wait...");
-    fetch("api/application", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          toast.error("There was an error");
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        toast.success("Your application was successfully submitted");
-      })
-      .catch((error) => {
-        toast.error("There was an error");
-        console.error("Error submitting form:", error);
+      toast.loading("Please wait...");
+
+      const response = await fetch("/api/application", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
       });
+
+      toast.dismiss();
+      if (response.ok) {
+        toast.success("Your application was successfully submitted");
+      } else {
+        toast.error("Couldn't save your post. Please try again later");
+      }
+    } catch (error) {
+      toast.dismiss();
+      toast.error("There was an error");
+    }
   };
 
   return (
-    <div className="mx-2 lg:mx-20 my-28">
+    <div className="mx-2 lg:mx-24 my-28">
       <form onSubmit={handleSubmit}>
         <div className="md:grid grid-cols-12">
           <div className="md:col-span-10 text-center flex flex-col gap-6 items-center justify-center">
+            <Image
+              src={logo}
+              alt="logo"
+              className="h-16 w-16 md:h-20 md:w-20"
+            />
             <div className="text-3xl lg:text-4xl font-bold">
               Best Computer Training Center, Jhenaidah
             </div>
@@ -180,13 +191,13 @@ export default function Application() {
             </div>
           </div>
           <div className="col-span-2 border flex items-center justify-center h-48 md:h-32 lg:h-48 flex-col">
-            <FileSelect />
+            <FileSelect onFileSelect={handleFileSelect} />
           </div>
         </div>
-        <div className="md:grid grid-cols-2 gap-10 lg:gap-28 mt-6">
+        <div className="md:grid grid-cols-2 gap-10 md:gap-10 lg:gap-40 mt-6">
           <div className="col-span-1 flex flex-col gap-6">
             <div className="flex justify-between items-center">
-              <div>First Name:</div>
+              <div>Student First Name:</div>
               <input
                 type="text"
                 required={true}
@@ -196,7 +207,7 @@ export default function Application() {
               />
             </div>
             <div className="flex md:hidden justify-between items-center">
-              <div>Last Name:</div>
+              <div>Student Last Name:</div>
               <input
                 type="text"
                 required={true}
@@ -212,6 +223,16 @@ export default function Application() {
                 value={fatherName}
                 onChange={(e) => setFatherName(e.target.value)}
                 required={true}
+                className="bg-slate-700 w-80 h-8 outline-none rounded-lg px-2"
+              />
+            </div>
+            <div className="flex md:hidden justify-between items-center">
+              <div>Mother&#39;s Name:</div>
+              <input
+                type="text"
+                required={true}
+                value={motherName}
+                onChange={(e) => setMotherName(e.target.value)}
                 className="bg-slate-700 w-80 h-8 outline-none rounded-lg px-2"
               />
             </div>
@@ -297,7 +318,7 @@ export default function Application() {
           </div>
           <div className="col-span-1 flex flex-col gap-6">
             <div className="md:flex hidden justify-between items-center">
-              <div>Last Name:</div>
+              <div>Student Last Name:</div>
               <input
                 type="text"
                 required={true}
@@ -306,7 +327,7 @@ export default function Application() {
                 className="bg-slate-700 w-80 h-8 outline-none rounded-lg px-2"
               />
             </div>
-            <div className="flex justify-between items-center">
+            <div className="hidden md:flex justify-between items-center">
               <div>Mother&#39;s Name:</div>
               <input
                 type="text"
@@ -405,31 +426,14 @@ export default function Application() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row gap-10 md:gap-0 md:justify-between mt-28">
-          <div>
-            <div className="bg-primary-200 w-44 h-0.5"></div>
-            <div className="font-bold text-xl">Director Signature</div>
-            <div className="font-bold text-xl">Date: </div>
-          </div>
-          <div>
-            <div className="bg-primary-200 w-44 h-0.5"></div>
-            <div className="font-bold text-xl">Student Signature</div>
-            <div className="font-bold text-xl">Date: </div>
-          </div>
-        </div>
-        <div className="mt-10 flex items-center flex-col md:flex-row md:justify-end">
-          <div className="flex md:justify-between md:w-1/2 flex-col md:flex-row gap-16 md:gap-3">
-            <button
-              type="submit"
-              className="px-10 py-3 rounded-full text-xl font-bold border border-primary-200 hover:text-primary-200"
-            >
-              Submit
-            </button>
-            <div className="bg-blue-600 px-4 py-2 h-fit rounded-lg">
-              Download
-            </div>
-          </div>
-        </div>
+
+        <button
+          onClick={handleSubmit}
+          type="submit"
+          className="px-20 flex items-center justify-center mx-auto mt-20 py-3 rounded-full text-xl font-bold border border-primary-200 hover:text-primary-200"
+        >
+          Submit
+        </button>
       </form>
       <ToastContainer position="top-center" autoClose={3000} />
     </div>

@@ -53,6 +53,8 @@ export default function Dashboard() {
     signOut({ redirect: true, callbackUrl: "/" });
   };
 
+  console.log(dashboardData);
+
   const name = dashboardData.user.name;
   const email = dashboardData?.user?.email;
   const id = dashboardData.user.id;
@@ -63,7 +65,7 @@ export default function Dashboard() {
     <div className="flex flex-col md:gap-10">
       {!isLoading && status === "authenticated" ? (
         <div className="flex flex-col gap-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 p-6  w-full  bg-slate-100 dark:bg-gray-900">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 p-6  w-full  bg-gray-900">
             <div className="flex items-center border justify-center col-span-3 md:col-span-1 h-full w-full">
               {image ? (
                 <Image

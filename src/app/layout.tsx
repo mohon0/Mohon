@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import { ReactNode } from "react";
 import Provider from "../../context/Provider";
 import Footer from "../components/layout/Footer";
@@ -66,6 +67,22 @@ interface RootLayoutProps {
 export default function RootLayout({ children, session }: RootLayoutProps) {
   return (
     <html lang="en">
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-N6SRGXKBYL"
+      ></Script>
+      <Script
+        id="google-analytics"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-N6SRGXKBYL');
+          `,
+        }}
+      />
+
       <body className={inter.className}>
         <Provider session={session}>
           <Navbar />

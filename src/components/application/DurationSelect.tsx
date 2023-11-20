@@ -28,7 +28,7 @@ export function DurationSelect({ onValueChange }: DurationSelectProps) {
         <SelectGroup>
           <SelectLabel>Course Duration</SelectLabel>
           <SelectItem value="free" onSelect={() => handleSelectChange("free")}>
-            Free(conditions)
+            Free (conditions applies)
           </SelectItem>
           <SelectItem
             value="3 month"

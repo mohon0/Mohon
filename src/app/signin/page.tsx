@@ -112,7 +112,7 @@ export default function Login() {
   return (
     <div className="flex items-center justify-center w-screen mt-20 md:mt-32 lg:mt-48 ">
       <div className="grid md:grid-cols-5 grid-cols-1 rounded-2xl justify-around shadow-2xl md:w-10/12 w-11/12">
-        <div className="col-span-3 p-6 bg-blue-950 border dark:border-none  md:rounded-l-2xl">
+        <div className="col-span-3 p-6 bg-blue-950 md:rounded-l-2xl">
           <section className="flex gap-4 items-center justify-center flex-col my-8">
             <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl text-center text-primary-200">
               Log in to Continue
@@ -151,7 +151,7 @@ export default function Login() {
             </form>
           </section>
         </div>
-        <div className="hidden md:flex bg-primary-200 dark:bg-gray-800 col-span-2  md:rounded-r-2xl gap-4 p-16 items-center justify-center text-center flex-col">
+        <div className="hidden md:flex bg-gray-800 col-span-2  md:rounded-r-2xl gap-4 p-16 items-center justify-center text-center flex-col">
           <span className="font-bold text-3xl text-lightgray-100">
             Hi, There!
           </span>
