@@ -193,7 +193,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     }
 
     const search = req.nextUrl.searchParams;
-    const applicationId = search.get("applicationId");
+    const applicationId = search.get("id");
 
     if (!applicationId) {
       return new NextResponse("Application ID not provided", { status: 400 });
@@ -239,5 +239,47 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
   } catch (error) {
     console.error("Error deleting application:", error);
     return new NextResponse("Error deleting application", { status: 500 });
+  }
+}
+
+export async function PUT(req: NextRequest, res: NextResponse) {
+  try {
+    const token = await getToken({ req, secret });
+    const userId = token?.sub;
+    const userEmail = token?.email;
+
+    if (!token || (!userId && !userEmail)) {
+      return new NextResponse("User not logged in or userId/userEmail missing");
+    }
+
+    const formData = await req.formData();
+
+    const status = getStringValue(formData, "status");
+    const id = getStringValue(formData, "id");
+
+    if (userEmail === admin) {
+      const response = await prisma.application.update({
+        where: {
+          id: id,
+        },
+        data: {
+          status: status,
+        },
+      });
+
+      if (response) {
+        return new NextResponse(JSON.stringify(response), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+    } else {
+      return new NextResponse(
+        "You do not have permission to update this item.",
+        { status: 403 }
+      );
+    }
+  } catch (error) {
+    return new NextResponse("Error updating application");
   }
 }

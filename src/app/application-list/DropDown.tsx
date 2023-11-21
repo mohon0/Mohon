@@ -28,7 +28,7 @@ export function ActionSelect({ onValueChange }: DurationSelectProps) {
         <SelectGroup>
           <SelectLabel>Course Duration</SelectLabel>
           <SelectItem
-            value="Approve"
+            value="Approved"
             onSelect={() => handleSelectChange("free")}
           >
             Approve
@@ -40,7 +40,7 @@ export function ActionSelect({ onValueChange }: DurationSelectProps) {
             Pending
           </SelectItem>
           <SelectItem
-            value="Reject"
+            value="Rejected"
             onSelect={() => handleSelectChange("Reject")}
           >
             Reject

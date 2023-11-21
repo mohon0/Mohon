@@ -3,7 +3,8 @@ import Loading from "@/components/common/loading/Loading";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ActionSelect } from "./DropDown";
 
 interface Post {
@@ -22,6 +23,7 @@ export default function List() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [action, setAction] = useState("");
+  const [key, setKey] = useState(0);
 
   const email = session?.user?.email;
   const admin = process.env.NEXT_PUBLIC_ADMIN;
@@ -40,16 +42,16 @@ export default function List() {
       })
       .then((data) => {
         setApplications(data.application);
-        setError(null); // Reset error state on successful fetch
+        setError(null);
       })
       .catch((error) => {
         console.error("Error fetching application data:", error);
-        setError("Error fetching application data. Please try again."); // Set error state
+        setError("Error fetching application data. Please try again.");
       })
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [key]);
 
   const handelActionChange = (value: string) => {
     if (value.trim() !== "") {
@@ -59,6 +61,66 @@ export default function List() {
       console.error("Action cannot be empty");
     }
   };
+
+  async function UpdateApplication({
+    status,
+    id,
+  }: {
+    status: string;
+    id: string;
+  }) {
+    const data = new FormData();
+    data.set("status", status);
+    if (id) {
+      data.set("id", id);
+    }
+
+    // Use window.confirm to show a confirmation dialog
+    const shouldDelete =
+      action === "Delete"
+        ? window.confirm("Are you sure you want to delete this application?")
+        : true;
+
+    if (!shouldDelete) {
+      return; // If the user cancels, do nothing
+    }
+
+    toast.loading("Please wait while we update.");
+
+    try {
+      let response;
+
+      if (action === "Delete") {
+        response = await fetch(`/api/application?id=${id}`, {
+          method: "DELETE",
+          credentials: "include",
+        });
+      } else {
+        response = await fetch(`/api/application`, {
+          method: "PUT",
+          body: data,
+          credentials: "include",
+        });
+      }
+
+      if (response.ok) {
+        toast.dismiss();
+        toast.success("Application Updated successfully");
+        setKey((prevKey) => prevKey + 1);
+      } else {
+        console.error(
+          "Failed to update the Application. Status:",
+          response.status
+        );
+        toast.dismiss();
+        toast.error("Application Updating failed");
+      }
+    } catch (error) {
+      console.error("An error occurred while updating the post:", error);
+      toast.dismiss();
+      toast.error("An error occurred");
+    }
+  }
 
   return (
     <div className="mx-2 lg:mx-20">
@@ -107,9 +169,9 @@ export default function List() {
                           className={
                             app.status === "Pending"
                               ? "text-yellow-500 font-bold"
-                              : app.status === "approved"
+                              : app.status === "Approved"
                               ? "text-green-500 font-bold"
-                              : app.status === "rejected"
+                              : app.status === "Rejected"
                               ? "text-red-500 font-bold"
                               : "font-bold"
                           }
@@ -125,13 +187,19 @@ export default function List() {
                             onValueChange={handelActionChange}
                           />
                         </div>
-                        <button className="bg-primary-200 text-black rounded py-1.5 px-4">
+                        <button
+                          onClick={() =>
+                            UpdateApplication({ status: action, id: app.id })
+                          }
+                          className="bg-primary-200 text-black rounded py-1.5 px-4"
+                        >
                           Submit
                         </button>
                       </div>
                     </div>
                   </div>
                 ))}
+                <ToastContainer position="top-center" autoClose={3000} />
               </div>
             </div>
           ) : error ? (
