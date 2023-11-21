@@ -26,7 +26,7 @@ export function ActionSelect({ onValueChange }: DurationSelectProps) {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Course Duration</SelectLabel>
+          <SelectLabel>Action</SelectLabel>
           <SelectItem
             value="Approved"
             onSelect={() => handleSelectChange("free")}

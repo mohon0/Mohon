@@ -2,6 +2,7 @@
 import Loading from "@/components/common/loading/Loading";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -196,6 +197,13 @@ export default function List() {
                           Submit
                         </button>
                       </div>
+
+                      <Link
+                        href={`/application-list/singleapplication/${app.id}`}
+                        className="border w-full py-2 hover:text-primary-200 px-4 mt-6 flex items-center justify-center border-primary-100 rounded-md"
+                      >
+                        View Details
+                      </Link>
                     </div>
                   </div>
                 ))}

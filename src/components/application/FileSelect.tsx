@@ -17,7 +17,7 @@ export function FileSelect({ onFileSelect }: FileSelectProps) {
 
   return (
     <div className="flex flex-col justify-center items-center gap-1.5">
-      <Label htmlFor="picture">Picture</Label>
+      <Label htmlFor="picture">Upload Your Image</Label>
       <Input
         id="picture"
         type="file"

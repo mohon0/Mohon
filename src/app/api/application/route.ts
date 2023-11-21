@@ -150,11 +150,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const email = token?.email;
 
     if (!token || !userId) {
-      // User is not authenticated or authorId is missing
       return new NextResponse("User not logged in or authorId missing");
     }
 
-    // Check if the user has already submitted an application
     const existingApplication = await prisma.application.findFirst({
       where: {
         userId: userId,
@@ -171,7 +169,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     });
 
     if (existingApplication) {
-      // User has already submitted an application
       return new NextResponse(JSON.stringify(existingApplication), {
         status: 201,
         headers: { "Content-Type": "application/json" },
