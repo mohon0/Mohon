@@ -24,13 +24,21 @@
 }
 
 .post-content a {
-  @apply underline text-[#007bff] font-semibold;
+  @apply underline text-primary-200 font-semibold;
 }
 
 .post-content ul,
 .post-content ol {
   margin-left: 20px;
   margin-bottom: 16px;
+}
+
+.post-content ol {
+  list-style-type: decimal;
+}
+
+.post-content ul {
+  list-style-type: disc;
 }
 
 .post-content li {
@@ -71,5 +79,3 @@
 .post-content del {
   text-decoration: line-through;
 }
-
-/* Add more styles for other HTML elements as needed */

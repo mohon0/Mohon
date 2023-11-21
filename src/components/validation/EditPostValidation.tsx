@@ -31,11 +31,6 @@ function EditPostValidation({
     errors.categories = "Category is required";
   }
 
-  // validate content field
-  if (content.trim().length > 5000) {
-    errors.content = "Content cannot be longer than 5000 characters";
-  }
-
   return errors;
 }
 

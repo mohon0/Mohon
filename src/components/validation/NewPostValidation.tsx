@@ -36,11 +36,6 @@ export default function NewPostValidation({
     errors.categories = "Category is required";
   }
 
-  // validate content field
-  if (content.trim().length > 5000) {
-    errors.content = "Content cannot be longer than 5000 characters";
-  }
-
   // validate image field
   if (!files || files.length === 0) {
     errors.files = "Image is required";
