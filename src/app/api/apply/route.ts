@@ -12,7 +12,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const userId = token?.sub;
     const userEmail = token?.email;
 
-    if (!token || (!userId && !userEmail)) {
+    if (!userId) {
       return new NextResponse("User not logged in or userId/userEmail missing");
     }
 
@@ -20,6 +20,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       const application = await prisma.application.findMany({});
       return new NextResponse(JSON.stringify({ application }));
     }
+    return new NextResponse("You are not allowed to access this");
   } catch (error) {
     return new NextResponse("Error while getting application");
   }
