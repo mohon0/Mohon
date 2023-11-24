@@ -78,8 +78,8 @@ const SignupForm: React.FC = () => {
             .nullable()
             .required("Required")
             .test(
-              "is-over-16",
-              "Must be at least 16 years old",
+              "is-over-5",
+              "Must be at least 5 years old",
               function (value) {
                 // Check if the user is at least 16 years old
                 const currentDate = new Date();
@@ -93,10 +93,10 @@ const SignupForm: React.FC = () => {
                   (currentDate.getMonth() === userBirthDate.getMonth() &&
                     currentDate.getDate() < userBirthDate.getDate())
                 ) {
-                  return userAge - 1 >= 16;
+                  return userAge - 1 >= 5;
                 }
 
-                return userAge >= 16;
+                return userAge >= 5;
               }
             )
             .transform((originalValue, originalObject) => {
