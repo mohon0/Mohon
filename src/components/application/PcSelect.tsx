@@ -27,8 +27,14 @@ export function PcSelect() {
         <SelectContent className="bg-gray-900 text-slate-200">
           <SelectGroup>
             <SelectLabel>Select</SelectLabel>
-            <SelectItem value="yes" onSelect={() => handleSelectChange("yes")}>
-              Yes
+            <SelectItem
+              value="laptop"
+              onSelect={() => handleSelectChange("laptop")}
+            >
+              Laptop
+            </SelectItem>
+            <SelectItem value="pc" onSelect={() => handleSelectChange("pc")}>
+              PC
             </SelectItem>
             <SelectItem value="no" onSelect={() => handleSelectChange("no")}>
               No

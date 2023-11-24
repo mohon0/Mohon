@@ -53,8 +53,6 @@ export default function Dashboard() {
     signOut({ redirect: true, callbackUrl: "/" });
   };
 
-  console.log(dashboardData);
-
   const name = dashboardData.user.name;
   const email = dashboardData?.user?.email;
   const id = dashboardData.user.id;

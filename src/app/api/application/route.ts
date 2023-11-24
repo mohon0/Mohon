@@ -195,7 +195,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     }
 
     const search = req.nextUrl.searchParams;
-    const applicationId = search.get("id");
+    const applicationId = search.get("applicationId");
 
     if (!applicationId) {
       return new NextResponse("Application ID not provided", { status: 400 });

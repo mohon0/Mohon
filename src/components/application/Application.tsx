@@ -180,7 +180,7 @@ const SignupForm: React.FC = () => {
         }}
       >
         <Form className="w-11/12 lg:w-3/4 mx-auto flex flex-col gap-6">
-          <div className=" absolute top-28 right-20">
+          <div className=" lg:absolute top-28 right-20">
             {imageError && <span>Image Must Be Provided</span>}
             <FileSelect onFileSelect={handleFileSelect} />
           </div>
@@ -189,14 +189,14 @@ const SignupForm: React.FC = () => {
               label="Student First Name"
               name="firstName"
               type="text"
-              placeholder="Jane"
+              placeholder="Md"
             />
 
             <MyTextInput
               label="Student Last Name"
               name="lastName"
               type="text"
-              placeholder="Doe"
+              placeholder="Mohon"
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
@@ -276,7 +276,7 @@ const SignupForm: React.FC = () => {
               placeholder="Inter your email address"
             />
             <div>
-              <div>Do you have computer/laptop/pc</div>
+              <div>Do you have computer?</div>
               <Field as={PcSelect} name="pc" />
             </div>
           </div>
