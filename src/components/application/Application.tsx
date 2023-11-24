@@ -35,7 +35,6 @@ const SignupForm: React.FC = () => {
         initialValues={{
           firstName: "",
           lastName: "",
-          picture: null,
           fatherName: "",
           motherName: "",
           birthDay: "",

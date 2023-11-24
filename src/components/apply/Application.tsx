@@ -1,6 +1,6 @@
 "use client";
 
-import SignupForm from "../formik/page";
+import SignupForm from "../application/Application";
 
 export default function Application() {
   return (

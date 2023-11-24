@@ -1,7 +1,8 @@
 "use client";
-import Application from "@/components/application/page";
+import Application from "@/components/application/Application";
 import Loading from "@/components/common/loading/Loading";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -104,7 +105,7 @@ export default function Apply() {
               Your application has already been submitted
             </p>
 
-            <div className="bg-gray-900 w-1/4 border rounded-lg mt-16 flex p-3 flex-col gap-2">
+            <div className="bg-gray-950 border-primary-200 w-1/4 border rounded-lg mt-16 flex p-3 flex-col gap-2">
               <div className="flex justify-between mb-3">
                 <Image
                   src={application.image}
@@ -120,12 +121,40 @@ export default function Apply() {
                   Delete
                 </button>
               </div>
-              <p>
+
+              <p className="font-bold text-xl mb-2 text-primary-100">
                 Name: {application.firstName} {application.lastName}
               </p>
-              <p>Course: {application.course}</p>
-              <p>Type: {application.duration}</p>
-              <p>Status: {application.status}</p>
+              <p>
+                <span className="text-primary-200 font-bold">Course: </span>
+                <span>{application.course}</span>{" "}
+              </p>
+              <p>
+                <span className="text-primary-200 font-bold">Type: </span>
+                <span>{application.duration}</span>
+              </p>
+              <p>
+                <span>Status: </span>
+                <span
+                  className={
+                    application.status === "Pending"
+                      ? "text-yellow-500 font-bold"
+                      : application.status === "Approved"
+                      ? "text-green-500 font-bold"
+                      : application.status === "Rejected"
+                      ? "text-red-500 font-bold"
+                      : "font-bold"
+                  }
+                >
+                  {application.status}
+                </span>
+              </p>
+              <Link
+                href={`/application-list/singleapplication/${application.id}`}
+                className="border-primary-100 border px-4 py-1.5 rounded bg-black hover:text-primary-100"
+              >
+                View Details
+              </Link>
             </div>
           </div>
           {showConfirmation && (

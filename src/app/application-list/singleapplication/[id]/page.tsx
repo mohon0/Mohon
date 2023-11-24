@@ -1,6 +1,6 @@
 "use client";
 
-import SingleApplication from "@/components/application/singleApplication/SingleApplication";
+import SingleApplication from "@/components/singleApplication/SingleApplication";
 import Loading from "@/components/common/loading/Loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";

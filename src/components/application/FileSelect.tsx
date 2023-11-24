@@ -16,13 +16,13 @@ export function FileSelect({ onFileSelect }: FileSelectProps) {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-1.5">
+    <div className="flex flex-col pt-2 items-center gap-1.5 border h-40">
       <Label htmlFor="picture">Upload Your Image</Label>
       <Input
         id="picture"
         type="file"
         required={true}
-        className="px-0 items-start"
+        className="px-0 items-start flex h-full"
         onChange={handleFileChange}
       />
     </div>
