@@ -9,6 +9,11 @@ export default function Header() {
         <div className="text-3xl lg:text-4xl font-bold">
           Best Computer Training Center, Jhenaidah
         </div>
+        <div className="flex flex-col gap-2">
+          <div>Rofi Tower, 4th Floor, Paira chattor, Jhenaidah</div>
+          <div>Mobile: 01989491248</div>
+          <div>Email: bestcomputer.jhenaidah@gmail.com</div>
+        </div>
         <div className="border border-primary-200 py-3 px-6 rounded-2xl text-2xl mb-10 md:mb-0 md:text-4xl font-bold">
           Application Form
         </div>

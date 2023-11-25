@@ -11,7 +11,7 @@ export default function Btn() {
         <span className="absolute block right-0 w-0.5 h-full bg-gradient-midnight animate-animate2"></span>
         <span className="absolute block bottom-0 right-0 h-0.5 w-full bg-gradient-midnight animate-animate3 "></span>
         <span className="absolute block -bottom-6 left-0 w-0.5 h-full bg-gradient-midnight animate-animate4"></span>
-        Apply
+        Apply Now
       </Link>
     </div>
   );

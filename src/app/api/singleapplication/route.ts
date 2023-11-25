@@ -9,6 +9,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const search = req.nextUrl.searchParams;
     const id = search.get("id");
+    if (!id) {
+      return new NextResponse("Error id not specified", { status: 404 });
+    }
 
     if (id) {
       const response = await prisma.application.findFirst({
