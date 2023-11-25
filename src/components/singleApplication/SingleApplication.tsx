@@ -8,8 +8,8 @@ interface SingleApplicationProps {
     lastName: string;
     fatherName: string;
     motherName: string;
-    dateOfBirth: string;
-    bloodGroups: string;
+    birthDay: string;
+    bloodGroup: string;
     mobileNumber: string;
     guardianNumber: string;
     gender: string;
@@ -67,8 +67,8 @@ export default function SingleApplication({
         <Model
           name1="Date Of Birth"
           name2="Blood Group"
-          value1={application.dateOfBirth}
-          value2={application.bloodGroups}
+          value1={application.birthDay}
+          value2={application.bloodGroup}
         />
         <Model
           name1="Mobile Number"

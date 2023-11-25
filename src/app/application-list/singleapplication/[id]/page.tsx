@@ -11,8 +11,8 @@ interface SingleApplicationProps {
     lastName: string;
     fatherName: string;
     motherName: string;
-    dateOfBirth: string;
-    bloodGroups: string;
+    birthDay: string;
+    bloodGroup: string;
     mobileNumber: string;
     guardianNumber: string;
     gender: string;
@@ -57,7 +57,7 @@ export default function Application() {
         return response.json();
       })
       .then((data) => {
-        setApplication(data.response);
+        setApplication(data.application);
         setError(null);
       })
       .catch((error) => {
@@ -69,6 +69,7 @@ export default function Application() {
       });
   }, [id]);
 
+  console.log(application);
   return (
     <div>
       {loading && <Loading />}
