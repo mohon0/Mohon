@@ -66,15 +66,12 @@ export default function Apply() {
       toast.loading("Please wait while deleting this application");
 
       try {
-        const response = await fetch(
-          `/api/application?applicationId=${application.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch(`/api/application?id=${application.id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         if (response.ok) {
           toast.dismiss();

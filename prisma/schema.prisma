@@ -95,8 +95,8 @@ model Application {
   lastName     String
   fatherName   String
   motherName   String
-  dateOfBirth  String
-  bloodGroups  String
+  birthDay     String
+  bloodGroup   String
   mobileNumber String
   guardianNumber String
   gender       String

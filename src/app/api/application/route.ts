@@ -72,8 +72,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const email = getStringValue(formData, "email");
     const fatherName = getStringValue(formData, "fatherName");
     const motherName = getStringValue(formData, "motherName");
-    const dateOfBirth = getStringValue(formData, "dateOfBirth");
-    const bloodGroups = getStringValue(formData, "bloodGroups");
+    const birthDay = getStringValue(formData, "birthDay");
+    const bloodGroup = getStringValue(formData, "bloodGroup");
     const mobileNumber = getStringValue(formData, "mobileNumber");
     const guardianNumber = getStringValue(formData, "guardianNumber");
     const gender = getStringValue(formData, "gender");
@@ -112,8 +112,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
           lastName,
           fatherName,
           motherName,
-          dateOfBirth,
-          bloodGroups,
+          birthDay,
+          bloodGroup,
           mobileNumber,
           guardianNumber,
           gender,

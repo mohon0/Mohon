@@ -2,27 +2,31 @@ import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
-const secret = process.env.NEXTAUTH_SECRET;
-const admin = process.env.NEXT_PUBLIC_ADMIN;
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const search = req.nextUrl.searchParams;
-    const id = search.get("id");
-    if (!id) {
-      return new NextResponse("Error id not specified", { status: 404 });
+    const postId = search.get("id");
+
+    if (!postId) {
+      return new NextResponse("Error: Post ID not specified", { status: 400 });
     }
 
-    if (id) {
-      const response = await prisma.application.findFirst({
-        where: {
-          id: id,
-        },
-      });
-      return new NextResponse(JSON.stringify({ response }));
+    const application = await prisma.application.findUnique({
+      where: {
+        id: postId,
+      },
+    });
+
+    if (!application) {
+      return new NextResponse("Error: Post not found", { status: 404 });
     }
-    return new NextResponse("only admin has access to this");
+
+    return new NextResponse(JSON.stringify({ application }));
   } catch (error) {
-    return new NextResponse("api is unavailable");
+    console.error("Error fetching post:", error);
+    return new NextResponse("Error: Internal server error", { status: 500 });
+  } finally {
+    await prisma.$disconnect();
   }
 }
