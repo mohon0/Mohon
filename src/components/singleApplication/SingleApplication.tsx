@@ -25,6 +25,9 @@ interface SingleApplicationProps {
     district: string;
     courseName: string;
     duration: string;
+    education: string;
+    board: string;
+    course: string;
   };
 }
 
@@ -73,14 +76,24 @@ export default function SingleApplication({
           value1={application.mobileNumber}
           value2={application.guardianNumber}
         />
-        <Model name1="Gender" name2="Religion" value1="Sejar" value2="Parvez" />
+        <Model
+          name1="Gender"
+          name2="Religion"
+          value1={application.gender}
+          value2={application.religion}
+        />
         <Model
           name1="Full Address"
           name2="District"
           value1={application.fullAddress}
           value2={application.district}
         />
-        <Model name1="Education" name2="Board" value1="Sejar" value2="Parvez" />
+        <Model
+          name1="Education"
+          name2="Board"
+          value1={application.education}
+          value2={application.board}
+        />
         <Model
           name1="Roll Number"
           name2="Reg. Number"
@@ -102,7 +115,7 @@ export default function SingleApplication({
         <Model
           name1="Course Name"
           name2="Course Durations"
-          value1={application.courseName}
+          value1={application.course}
           value2={application.duration}
         />
       </div>

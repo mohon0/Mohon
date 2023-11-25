@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ActionSelect } from "./DropDown";
@@ -25,13 +26,19 @@ export default function List() {
   const [error, setError] = useState<string | null>(null);
   const [action, setAction] = useState("");
   const [key, setKey] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortBy, setSortBy] = useState("newest");
+  const [searchInput, setSearchInput] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const email = session?.user?.email;
   const admin = process.env.NEXT_PUBLIC_ADMIN;
+  const pageSize = 9;
 
   useEffect(() => {
-    const apiUrl = `/api/apply`;
-
+    const apiUrl = `/api/apply?page=${currentPage}&pageSize=${pageSize}&category=${selectedCategory}&sortBy=${sortBy}&search=${searchInput}`;
+    setApplications([]);
     setLoading(true);
 
     fetch(apiUrl)
@@ -46,13 +53,13 @@ export default function List() {
         setError(null);
       })
       .catch((error) => {
-        console.error("Error fetching application data:", error);
-        setError("Error fetching application data. Please try again.");
+        console.error("Error fetching application data:");
+        setError("No Post to display");
       })
       .finally(() => {
         setLoading(false);
       });
-  }, [key]);
+  }, [currentPage, key, searchInput, selectedCategory, sortBy]);
 
   const handelActionChange = (value: string) => {
     if (value.trim() !== "") {
@@ -123,8 +130,60 @@ export default function List() {
     }
   }
 
+  const jumpToPageOptions = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
   return (
     <div className="mx-2 lg:mx-20">
+      <div className="mt-28">
+        <div className="text-3xl md:text-5xl font-bold text-center">
+          All Application
+        </div>
+        <div className="flex justify-center flex-col md:flex-row items-center w-full gap-10 my-10">
+          {/* Filter by category dropdown */}
+          <div className="rounded-full flex items-center justify-center gap-2 border px-4 py-2">
+            <label htmlFor="filter">FilterBy:</label>
+            <select
+              id="filter"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="bg-[#000119] px-2 py-2 w-32"
+            >
+              <option value="all">All</option>
+              <option value="Approved">Approved</option>
+              <option value="Pending">Pending</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+          {/* Sort by dropdown */}
+          <div className="rounded-full flex items-center justify-center  gap-2 border px-4 py-2">
+            <label htmlFor="sortPosts">SortBy:</label>
+            <select
+              id="sortPosts"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-[#000119] px-2 py-2 w-24"
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+            </select>
+          </div>
+          <div className="relative flex items-center md:w-1/2">
+            <input
+              type="text"
+              className="w-full bg-transparent border h-[3.2rem] focus-within:border-primary-200 rounded-full focus-within:outline-none outline-none px-4"
+              placeholder="Search..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+
+            <div className=" absolute right-4 text-xl">
+              <FaSearch />
+            </div>
+          </div>
+        </div>
+      </div>
       {email === admin ? (
         <>
           {loading ? (
@@ -132,8 +191,8 @@ export default function List() {
               <Loading />
             </div>
           ) : applications && applications.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
-              <div>
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:gap-20 gap-10">
                 {applications.map((app) => (
                   <div
                     key={app.id}
@@ -207,8 +266,61 @@ export default function List() {
                     </div>
                   </div>
                 ))}
-                <ToastContainer position="top-center" autoClose={3000} />
               </div>
+              {/* Pagination controls */}
+              {totalPages > 1 && (
+                <div className="mt-10 flex gap-4 justify-center items-center">
+                  <button
+                    onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`px-4 py-2 rounded-md ${
+                      currentPage === 1
+                        ? "bg-gray-500 cursor-not-allowed"
+                        : "bg-gray-700 text-white cursor-pointer"
+                    }`}
+                  >
+                    Prev
+                  </button>
+                  <div className="relative">
+                    <select
+                      value={currentPage}
+                      onChange={(e) => setCurrentPage(Number(e.target.value))}
+                      className="px-4 py-2 rounded-md bg-gray-600 focus:outline-none"
+                    >
+                      {jumpToPageOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentPage(index + 1)}
+                      className={`px-4 py-2 rounded-md ${
+                        currentPage === index + 1
+                          ? "bg-blue-950 border"
+                          : "bg-gray-600"
+                      }`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`px-4 py-2 rounded-md ${
+                      currentPage === totalPages
+                        ? "bg-gray-500 cursor-not-allowed"
+                        : "bg-gray-700 text-white cursor-pointer"
+                    }`}
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+              <ToastContainer position="top-center" autoClose={3000} />
             </div>
           ) : error ? (
             <p>{error}</p>

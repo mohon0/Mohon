@@ -107,7 +107,7 @@ export default function Apply() {
                 Your application has already been submitted
               </p>
 
-              <div className="bg-gray-950 border-primary-200 w-1/4 border rounded-lg mt-16 flex p-3 flex-col gap-2">
+              <div className="bg-gray-950 border-primary-200 w-full mx-2 md:w-1/3 lg:w-1/4 border rounded-lg mt-16 flex p-3 flex-col gap-2">
                 <div className="flex justify-between mb-3">
                   <Image
                     src={application.image}

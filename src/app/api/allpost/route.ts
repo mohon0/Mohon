@@ -17,7 +17,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     const sortBy = queryParams.get("sortBy");
     const category = queryParams.get("category");
-    const search = queryParams.get("search"); // Add search query parameter
+    const search = queryParams.get("search");
 
     const skipCount = (page - 1) * pageSize;
 

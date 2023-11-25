@@ -64,7 +64,7 @@ export function NavigationMenuDemo() {
   const handleLogout = () => {
     signOut({ redirect: true, callbackUrl: "/" });
   };
-  console.log(session);
+
   return (
     <NavigationMenu>
       <NavigationMenuList>

@@ -1,7 +1,7 @@
 "use client";
 
-import SingleApplication from "@/components/singleApplication/SingleApplication";
 import Loading from "@/components/common/loading/Loading";
+import SingleApplication from "@/components/singleApplication/SingleApplication";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -28,6 +28,9 @@ interface SingleApplicationProps {
     district: string;
     courseName: string;
     duration: string;
+    education: string;
+    board: string;
+    course: string;
   };
 }
 

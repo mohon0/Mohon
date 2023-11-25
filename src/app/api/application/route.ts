@@ -152,7 +152,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const token = await getToken({ req, secret });
     const userId = token?.sub;
-    const email = token?.email;
+
+    const url = new URL(req.url);
 
     if (!token || !userId) {
       return new NextResponse("User not logged in or authorId missing");
