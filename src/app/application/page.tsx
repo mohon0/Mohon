@@ -1,5 +1,5 @@
 "use client";
-import Application from "@/components/apply/Application";
+import Application from "@/components/application/Application";
 import Loading from "@/components/common/loading/Loading";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -16,6 +16,17 @@ interface Post {
   image: string;
   course: string;
   status: string;
+  createdAt: string;
+}
+
+function formatDate(isoDateString: string): string {
+  const options: Intl.DateTimeFormatOptions = {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  };
+  const date: Date = new Date(isoDateString);
+  return date.toLocaleDateString("en-US", options).replace(/\//g, "-");
 }
 
 export default function Apply() {
@@ -131,6 +142,10 @@ export default function Apply() {
                 <p>
                   <span className="text-primary-200 font-bold">Type: </span>
                   <span>{application.duration}</span>
+                </p>
+                <p>
+                  <span className="text-primary-200 font-bold">Date: </span>
+                  <span>{formatDate(application.createdAt)}</span>
                 </p>
                 <p>
                   <span>Status: </span>

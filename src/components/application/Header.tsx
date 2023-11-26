@@ -18,7 +18,6 @@ export default function Header() {
           Application Form
         </div>
       </div>
-      <div className="col-span-2"></div>
     </div>
   );
 }

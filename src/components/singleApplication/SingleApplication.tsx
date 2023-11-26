@@ -28,13 +28,18 @@ interface SingleApplicationProps {
     education: string;
     board: string;
     course: string;
+    pc: string;
+    email: string;
   };
 }
 
 export default function SingleApplication({
   application,
 }: SingleApplicationProps) {
-  console.log(application);
+  const duration =
+    application.duration === "free"
+      ? "Free (conditions applied)"
+      : application.course;
   return (
     <div className="mx-2 lg:mx-20 my-32">
       <div className="lg:grid lg:grid-cols-12 gap-10">
@@ -89,6 +94,12 @@ export default function SingleApplication({
           value2={application.district}
         />
         <Model
+          name1="Email Address"
+          name2="Computer"
+          value1={application.email}
+          value2={application.pc}
+        />
+        <Model
           name1="Education"
           name2="Board"
           value1={application.education}
@@ -116,7 +127,7 @@ export default function SingleApplication({
           name1="Course Name"
           name2="Course Durations"
           value1={application.course}
-          value2={application.duration}
+          value2={duration}
         />
       </div>
       <div className="md:mx-12 lg:mx-20 mt-24 flex justify-between">

@@ -17,6 +17,17 @@ interface Post {
   course: string;
   image: string;
   status: string;
+  createdAt: string;
+}
+
+function formatDate(isoDateString: string): string {
+  const options: Intl.DateTimeFormatOptions = {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  };
+  const date: Date = new Date(isoDateString);
+  return date.toLocaleDateString("en-US", options).replace(/\//g, "-");
 }
 
 export default function List() {
@@ -223,6 +234,13 @@ export default function List() {
                         </span>
                         <span>{app.duration}</span>
                       </p>
+                      <p>
+                        <span className="text-primary-200 font-bold">
+                          Date:{" "}
+                        </span>
+                        <span>{formatDate(app.createdAt)}</span>
+                      </p>
+
                       <p>
                         <span>Status: </span>
                         <span

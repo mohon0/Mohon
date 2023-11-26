@@ -171,6 +171,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         image: true,
         status: true,
         course: true,
+        createdAt: true,
       },
     });
 

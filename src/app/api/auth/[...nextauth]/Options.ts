@@ -26,7 +26,6 @@ export const authOptions = {
           },
         });
 
-        console.log(credentials.email);
         if (!user) {
           return null;
         }

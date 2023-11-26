@@ -54,6 +54,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         status: true,
         course: true,
         duration: true,
+        createdAt: true,
       },
       orderBy: {
         updatedAt: sortBy === "oldest" ? "asc" : "desc",

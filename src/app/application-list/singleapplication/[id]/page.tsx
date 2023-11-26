@@ -31,6 +31,8 @@ interface SingleApplicationProps {
     education: string;
     board: string;
     course: string;
+    email: string;
+    pc: string;
   };
 }
 
@@ -69,7 +71,6 @@ export default function Application() {
       });
   }, [id]);
 
-  console.log(application);
   return (
     <div>
       {loading && <Loading />}

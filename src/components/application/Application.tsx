@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
-import Header from "../apply/Header";
+import Header from "../application/Header";
 import BirthDay from "./BirthDay";
 import { CourseSelect } from "./CourseSelect";
 import { DurationSelect } from "./DurationSelect";
@@ -15,7 +15,7 @@ import { Gender } from "./Gender";
 import MyTextInput from "./MyTextInput";
 import { PcSelect } from "./PcSelect";
 
-const SignupForm: React.FC = () => {
+const Application: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imageError, setImageError] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -360,4 +360,4 @@ const SignupForm: React.FC = () => {
   );
 };
 
-export default SignupForm;
+export default Application;
