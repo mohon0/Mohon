@@ -16,47 +16,87 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPowerOff } from "react-icons/fa";
 
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Projects",
-    href: "/project",
-    description: "Our Projects section, that showcase all of your recent work.",
-  },
-  {
-    title: "Course",
-    href: "/docs/primitives/hover-card",
-    description: "We provide some of the best course module that have known.",
-  },
-  {
-    title: "Blog",
-    href: "/blog",
-    description: "Follow our blog section for some of the amazing work i do.",
-  },
-  {
-    title: "Contact Me",
-    href: "/docs/primitives/scroll-area",
-    description: "Let's know each other better. Contact me now.",
-  },
-  {
-    title: "Application",
-    href: "/application",
-    description:
-      "If you want to enroll in our course, than this is the section you are looking for.",
-  },
-  {
-    title: "Home",
-    href: "/",
-    description: "Let's take you back to the homepage.",
-  },
-];
+type Component = {
+  title: string;
+  href: string;
+  description: string;
+};
 
 export function NavigationMenuDemo() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { data: session } = useSession();
+  const [notice, setNotice] = useState<Array<{ title: string }>>([]);
+  const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    setNotice([]);
+    setLoading(true);
+    const apiUrl = `api/allpost?page=1&pageSize=1&category=notice`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.posts.length > 0) setNotice(data.posts);
+
+        setLoading(false);
+      })
+      .catch(() => {
+        console.log("error");
+        setLoading(false);
+      });
+  }, []);
+
+  const components: Component[] = [
+    {
+      title: "Projects",
+      href: "/project",
+      description:
+        "Our Projects section, that showcase all of your recent work.",
+    },
+    {
+      title: "Course",
+      href: "/docs/primitives/hover-card",
+      description:
+        "We provide some of the best course modules that have known.",
+    },
+    {
+      title: "Blog",
+      href: "/blog",
+      description: "Follow our blog section for some of the amazing work I do.",
+    },
+    {
+      title: "Contact Me",
+      href: "/docs/primitives/scroll-area",
+      description: "Let's know each other better. Contact me now.",
+    },
+    {
+      title: "Application",
+      href: "/application",
+      description:
+        "If you want to enroll in our course, then this is the section you are looking for.",
+    },
+    {
+      title: "Home",
+      href: "/",
+      description: "Let's take you back to the homepage.",
+    },
+  ];
+
+  const componentsWithNotice: Component[] = [
+    ...(notice.length > 0
+      ? [
+          {
+            title: "Notice",
+            href: "/notice",
+            description: notice[0].title,
+          },
+        ]
+      : []),
+    ...components,
+  ];
   const handleDelete = async () => {
     setShowConfirmation(true);
   };
@@ -171,7 +211,7 @@ export function NavigationMenuDemo() {
           <NavigationMenuTrigger>Services</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
+              {componentsWithNotice.map((component) => (
                 <ListItem
                   key={component.title}
                   title={component.title}

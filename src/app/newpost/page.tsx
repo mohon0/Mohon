@@ -20,16 +20,13 @@ export default function NewPost() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [validationFailed, setValidationFailed] = useState(false);
 
-  // Use useEffect to ensure that code only runs on the client side
   useEffect(() => {
     if (status === "loading") {
-      // Loading state while session data is being fetched
       return;
     }
 
     if (!session) {
-      // User is not logged in, show a message or redirect
-      router.push("/signin"); // Redirect to the login page or another appropriate page
+      router.push("/signin");
     }
   }, [status, session, router]);
 

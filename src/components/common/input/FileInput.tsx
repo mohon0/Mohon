@@ -14,7 +14,7 @@ const FileInput: React.FC<FormInputProps> = ({ onChange, error }) => {
           className="flex px-2.5 border pb-2.5 pt-4 w-full text-sm text-white bg-transparent rounded-lg border-1 border-gray-300 appearance-none  focus:outline-none  peer"
           placeholder=" "
         />
-        <label className="absolute text-sm text-gray-200 dark:text-lightgray-100 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-100 dark:bg-blue-950 px-2 peer-focus:px-2 peer-focus:text-white  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-0 peer-focus:scale-75  left-1">
+        <label className="absolute text-sm text-gray-200  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-blue-950 px-2 peer-focus:px-2 peer-focus:text-white  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-0 peer-focus:scale-75  left-1">
           Featured Image
         </label>
       </div>
