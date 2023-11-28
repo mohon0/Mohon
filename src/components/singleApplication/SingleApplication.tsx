@@ -1,4 +1,4 @@
-import logo from "@/images/hero/logo3.png";
+import logo from "@/images/hero/logo2.png";
 import Image from "next/image";
 import { useRef } from "react";
 import { IoMdPrint } from "react-icons/io";
@@ -167,7 +167,7 @@ export default function SingleApplication({
       <Image
         src={logo}
         alt=""
-        className="hidden print:block absolute top-[28rem] left-1/2 transform -translate-x-1/2  -z-30 opacity-20"
+        className="hidden print:block absolute top-[28rem] left-1/2 transform -translate-x-1/2  -z-30 opacity-20 w-96"
       />
     </div>
   );
