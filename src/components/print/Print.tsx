@@ -38,6 +38,10 @@ interface SingleApplicationProps {
 }
 
 export default function Print({ application }: SingleApplicationProps) {
+  const duration =
+    application.duration === "free"
+      ? "Free (conditions applied)"
+      : application.duration;
   const componentRef = useRef<HTMLDivElement | null>(null);
 
   const handlePrint = useReactToPrint({
@@ -200,7 +204,7 @@ export default function Print({ application }: SingleApplicationProps) {
             </div>
             <div className="col-span-1 p-2">
               <span className="font-bold">Course Duration: </span>
-              <span>{application.duration}</span>
+              <span>{duration}</span>
             </div>
           </div>
         </div>
