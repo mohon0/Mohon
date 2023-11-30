@@ -1,9 +1,5 @@
-import logo from "@/images/hero/logo2.png";
 import Image from "next/image";
-import { useRef } from "react";
-import { IoMdPrint } from "react-icons/io";
-import { useReactToPrint } from "react-to-print";
-import { Button } from "../ui/button";
+import Print from "../print/Print";
 import Header from "./Header";
 import Model from "./Model";
 
@@ -44,18 +40,10 @@ export default function SingleApplication({
   const duration =
     application.duration === "free"
       ? "Free (conditions applied)"
-      : application.course;
+      : application.duration;
 
-  const componentRef = useRef<HTMLDivElement | null>(null);
-
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
   return (
-    <div
-      className="mx-2 lg:mx-20 my-32 print:text-black print:p-4 print:my-10"
-      ref={componentRef}
-    >
+    <div className="mx-2 lg:mx-20 my-32 print:text-black print:p-4 print:my-10">
       <div className="lg:grid lg:grid-cols-12 gap-10 print:flex">
         <div className=" lg:col-span-9 print:col-span-9 flex items-center gap-6 flex-col justify-center">
           <Header />
@@ -144,31 +132,7 @@ export default function SingleApplication({
           value2={duration}
         />
       </div>
-      <div className="md:mx-12 lg:mx-20 mt-24 print:mt-16 flex justify-between">
-        <div>
-          <div className="w-40 h-0.5 bg-primary-200"></div>
-          <div>Director Signature</div>
-          <div>Date:</div>
-        </div>
-        <div>
-          <div className="w-40 h-0.5 bg-primary-200"></div>
-          <div>Student Signature</div>
-          <div>Date:</div>
-        </div>
-      </div>
-      <Button
-        onClick={handlePrint}
-        variant="secondary"
-        className="flex gap-3 items-center mx-auto mt-10 print:hidden"
-      >
-        <IoMdPrint />
-        Print
-      </Button>
-      <Image
-        src={logo}
-        alt=""
-        className="hidden print:block absolute top-[28rem] left-1/2 transform -translate-x-1/2  -z-30 opacity-20 w-96"
-      />
+      <Print application={application} />
     </div>
   );
 }

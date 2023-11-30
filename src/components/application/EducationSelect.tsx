@@ -38,21 +38,6 @@ export function EducationSelect({ onValueChange }: SelectDemoProps) {
             <SelectItem value="ssc" onSelect={() => handleSelectChange("ssc")}>
               SSC
             </SelectItem>
-            <SelectItem value="hsc" onSelect={() => handleSelectChange("hsc")}>
-              HSC
-            </SelectItem>
-            <SelectItem
-              value="honours"
-              onSelect={() => handleSelectChange("honours")}
-            >
-              Honours
-            </SelectItem>
-            <SelectItem
-              value="masters"
-              onSelect={() => handleSelectChange("masters")}
-            >
-              Masters
-            </SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
