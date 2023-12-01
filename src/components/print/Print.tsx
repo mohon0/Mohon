@@ -50,19 +50,21 @@ export default function Print({ application }: SingleApplicationProps) {
   return (
     <div>
       <div ref={componentRef} className="hidden print:block">
-        <div className="print:flex flex items-center justify-center gap-6 px-10 py-8 bg-green-700">
+        <div className="print:flex flex items-center justify-center gap-6 px-10 py-8 bg-cyan-500">
           <div className="print:w-2/12 w-2/12 ">
-            <Image src={logo} alt="" className="w-32 h-32" />
+            <Image src={logo} alt="" className="" />
           </div>
           <div className="print:w-8/12 w-8/12 flex items-center justify-center flex-col">
             <div className="text-black text-center text-3xl font-bold">
-              Best computer training center
+              Best Computer Training Center
             </div>
-            <div>Rofi Tower, 4th Floor, Paira chattor, Jhenaidah</div>
-            <div>
+            <div className="text-gray-900">
+              Rofi Tower, 4th Floor, Paira chattor, Jhenaidah
+            </div>
+            <div className="text-gray-900">
               <span className="font-bold">Mobile: </span> 01989491248
             </div>
-            <div>
+            <div className="text-gray-900">
               <span className="font-bold">Email: </span>{" "}
               bestcomputer.jhenaidah@gmail.com
             </div>
@@ -77,11 +79,12 @@ export default function Print({ application }: SingleApplicationProps) {
             />
           </div>
         </div>
+        <div className="h-1 w-full bg-black mt-3"></div>
         <div className="flex items-center justify-center">
           <Button
             variant="secondary"
             size="lg"
-            className="mx-auto my-8 bg-green-700 text-xl font-bold text-white"
+            className="mx-auto my-8 bg-cyan-700 text-xl font-bold text-white"
           >
             Admission Form
           </Button>
@@ -210,12 +213,12 @@ export default function Print({ application }: SingleApplicationProps) {
         </div>
         <div className="md:mx-12 lg:mx-20 mt-24 print:mx-20 print:mt-16 flex justify-between print:text-black font-bold">
           <div>
-            <div className="w-40 h-0.5 bg-green-700"></div>
+            <div className="w-40 h-0.5 bg-cyan-700"></div>
             <div>Director Signature</div>
             <div>Date:</div>
           </div>
           <div>
-            <div className="w-40 h-0.5 bg-green-700"></div>
+            <div className="w-40 h-0.5 bg-cyan-700"></div>
             <div>Student Signature</div>
             <div>Date:</div>
           </div>
