@@ -138,7 +138,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
         },
       });
 
-      return new NextResponse("Applications created successfully");
+      return new NextResponse(JSON.stringify(newPost), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
       return new NextResponse("Applications creation failed", { status: 400 });
     }

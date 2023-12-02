@@ -1,5 +1,4 @@
 "use client";
-import Application from "@/components/application/Application";
 import Loading from "@/components/common/loading/Loading";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -29,7 +28,7 @@ function formatDate(isoDateString: string): string {
   return date.toLocaleDateString("en-US", options).replace(/\//g, "-");
 }
 
-export default function Apply() {
+export default function ApplicationModel() {
   const [isLoading, setIsLoading] = useState(true);
   const [application, setApplication] = useState<Post | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -89,8 +88,8 @@ export default function Apply() {
           toast.success("Application deleted successfully");
           console.log(response);
           setTimeout(() => {
-            router.push("/dashboard");
-          }, 2000);
+            router.push("/");
+          }, 1000);
         } else {
           toast.error("Error deleting post");
           console.error("Error deleting the Application");
@@ -200,7 +199,7 @@ export default function Apply() {
             )}
           </>
         ) : (
-          <Application />
+          ""
         )
       ) : status !== "authenticated" ? (
         <div className="text-center font-bold flex flex-col gap-10 text-2xl">

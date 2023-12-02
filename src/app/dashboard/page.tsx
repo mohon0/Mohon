@@ -1,4 +1,5 @@
 "use client";
+import ApplicationModel from "@/components/application/ApplicationModel";
 import Loading from "@/components/common/loading/Loading";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -154,6 +155,7 @@ export default function Dashboard() {
               </Link>
             </div>
           ) : null}
+          <ApplicationModel />
         </>
       ) : status !== "authenticated" ? (
         <div className="text-center font-bold flex flex-col gap-10 text-2xl">

@@ -3,7 +3,6 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Btn from "../common/button/Btn";
-import { Button } from "../ui/button";
 import Menu from "./Menu";
 import { NavigationMenuDemo } from "./NavigationMenu";
 
@@ -39,17 +38,7 @@ export default function Navbar() {
       </Link>
       <div className="flex gap-10 items-center">
         <div className="hidden lg:flex gap-6 items-center [&>*]:cursor-pointer ">
-          <Link href="/">
-            <Button variant="ghost">Home</Button>
-          </Link>
-
           <NavigationMenuDemo />
-
-          {session?.user ? (
-            <Link href="/dashboard">Dashboard</Link>
-          ) : (
-            <Link href="/signin">LogIn</Link>
-          )}
         </div>
         <div className="flex items-center gap-10">
           <div className="hidden md:block">

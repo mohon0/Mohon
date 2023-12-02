@@ -19,11 +19,24 @@ const Application: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imageError, setImageError] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
 
+  const MAX_IMAGE_SIZE_KB = 500;
+
   const handleFileSelect = (file: File) => {
-    setImage(file);
+    // Check if the file size exceeds the maximum allowed size
+    if (file.size > MAX_IMAGE_SIZE_KB * 1024) {
+      // Display an error message or handle it as needed
+      setImageError(true);
+      toast.error(
+        `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`
+      );
+    } else {
+      setImage(file);
+      setImageError(false);
+    }
   };
 
   return (
@@ -118,17 +131,21 @@ const Application: React.FC = () => {
           pc: Yup.string().required("Required"),
           education: Yup.string().required("Required"),
           board: Yup.string().required("Required"),
-          rollNumber: Yup.string().required("Required"),
-          regNumber: Yup.string().required("Required"),
-          passingYear: Yup.string().required("Required"),
+          rollNumber: Yup.number().required("Required"),
+          regNumber: Yup.number().required("Required"),
+          passingYear: Yup.number().required("Required").max(2023).min(1990),
           gpa: Yup.string().required("Required"),
-          nid: Yup.string().required("Required"),
+          nid: Yup.number().required("Required"),
           nationality: Yup.string().required("Required"),
           course: Yup.string().required("Required"),
           duration: Yup.string().required("Required"),
         })}
         onSubmit={async (values, { setSubmitting }) => {
           setHasError(false);
+          setIsSubmitting(true);
+          setHasError(true);
+
+          setSubmitting(false);
 
           const { birthDay, ...otherValues } = values;
 
@@ -171,9 +188,13 @@ const Application: React.FC = () => {
           toast.dismiss();
           if (response.ok) {
             toast.success("Your application was successfully submitted");
+            const responseData = await response.json();
+
             setTimeout(() => {
-              router.push("/dashboard");
-            }, 2000);
+              router.push(
+                `/application-list/singleapplication/${responseData.id}`
+              );
+            }, 500);
           } else {
             toast.error("Couldn't save your post. Please try again later");
           }
@@ -349,9 +370,10 @@ const Application: React.FC = () => {
 
           <button
             type="submit"
-            className="px-20 flex items-center justify-center mx-auto mt-20 py-3 rounded-full text-xl font-bold border border-primary-200 hover:text-primary-200"
+            disabled={isSubmitting}
+            className="px-20 flex items-center justify-center mx-auto mt-20 py-3 rounded-full text-xl font-bold border border-primary-200 hover:text-primary-200 "
           >
-            Submit
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </Form>
       </Formik>
