@@ -65,7 +65,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     });
 
     // Return a success response
-    return new NextResponse(JSON.stringify({ application }), {
+    return new NextResponse(JSON.stringify({ application, totalPostsCount }), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
