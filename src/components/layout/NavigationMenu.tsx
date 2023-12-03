@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaPowerOff } from "react-icons/fa";
 
 type Component = {
@@ -28,31 +28,16 @@ type Component = {
 export function NavigationMenuDemo() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { data: session } = useSession();
-  const [notice, setNotice] = useState<Array<{ title: string }>>([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setNotice([]);
-    setLoading(true);
-    const apiUrl = `api/allpost?page=1&pageSize=1&category=notice`;
-
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.posts.length > 0) setNotice(data.posts);
-
-        setLoading(false);
-      })
-      .catch(() => {
-        console.log("error");
-        setLoading(false);
-      });
-  }, []);
 
   const components: Component[] = [
     {
+      title: "Notice",
+      href: "/notice",
+      description: "All the information you need to know.",
+    },
+    {
       title: "Projects",
-      href: "/project",
+      href: "/blog/projects",
       description:
         "Our Projects section, that showcase all of your recent work.",
     },
@@ -69,7 +54,7 @@ export function NavigationMenuDemo() {
     },
     {
       title: "Contact Me",
-      href: "/docs/primitives/scroll-area",
+      href: "/contact",
       description: "Let's know each other better. Contact me now.",
     },
     {
@@ -78,25 +63,8 @@ export function NavigationMenuDemo() {
       description:
         "If you want to enroll in our course, then this is the section you are looking for.",
     },
-    {
-      title: "Home",
-      href: "/",
-      description: "Let's take you back to the homepage.",
-    },
   ];
 
-  const componentsWithNotice: Component[] = [
-    ...(notice.length > 0
-      ? [
-          {
-            title: "Notice",
-            href: "/notice",
-            description: notice[0].title,
-          },
-        ]
-      : []),
-    ...components,
-  ];
   const handleDelete = async () => {
     setShowConfirmation(true);
   };
@@ -218,7 +186,7 @@ export function NavigationMenuDemo() {
           <NavigationMenuTrigger>Services</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {componentsWithNotice.map((component) => (
+              {components.map((component) => (
                 <ListItem
                   key={component.title}
                   title={component.title}

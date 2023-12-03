@@ -1,8 +1,13 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
 import PostModel from "@/components/common/post/PostModel";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+
+interface PageProps {
+  params: { category: string };
+}
 
 interface Post {
   id: number;
@@ -17,7 +22,9 @@ interface Post {
   category: string;
 }
 
-export default function Blog() {
+export default function Category({ params }: PageProps) {
+  const router = useParams();
+
   const [posts, setPosts] = useState<Post[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -30,7 +37,7 @@ export default function Blog() {
   useEffect(() => {
     setPosts([]);
     setLoading(true);
-    const apiUrl = `api/allpost?page=${currentPage}&pageSize=${pageSize}&category=projects&sortBy=${sortBy}&search=${searchInput}`;
+    const apiUrl = `/api/allpost?page=${currentPage}&pageSize=${pageSize}&category=${router.category}&sortBy=${sortBy}&search=${searchInput}`;
 
     fetch(apiUrl)
       .then((response) => response.json())
@@ -44,7 +51,7 @@ export default function Blog() {
         console.log("error");
         setLoading(false); // Set loading state to false on error
       });
-  }, [currentPage, sortBy, searchInput]);
+  }, [currentPage, sortBy, searchInput, router.category]);
 
   const jumpToPageOptions = Array.from(
     { length: totalPages },
@@ -53,7 +60,9 @@ export default function Blog() {
 
   return (
     <div className="my-4 md:my-20 mx-4 lg:mx-28 flex items-center justify-center flex-col gap-20">
-      <div className="text-3xl md:text-5xl font-bold">All Projects</div>
+      <div className="text-3xl md:text-5xl font-bold uppercase">
+        {router.category}
+      </div>
       <div className="flex flex-col md:flex-row items-center justify-center w-full gap-10 lg:gap-20">
         {/* Sort by dropdown */}
         <div className="rounded-full flex items-center justify-center  gap-2 border px-4 py-2">

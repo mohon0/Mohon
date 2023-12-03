@@ -23,7 +23,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     // Build the where condition for filtering by category and searching by title
     const where: Prisma.PostWhereInput = {
-      ...(category && category !== "all" ? { category } : {}),
+      ...(category && category !== "all"
+        ? { category }
+        : { category: { not: "notice" } }),
       ...(search
         ? {
             title: {
