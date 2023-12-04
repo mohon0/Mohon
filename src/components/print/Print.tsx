@@ -49,12 +49,12 @@ export default function Print({ application }: SingleApplicationProps) {
   });
   return (
     <div>
-      <div ref={componentRef} className="hidden print:block">
-        <div className="print:flex flex items-center justify-center gap-6 px-10 py-8 bg-cyan-500">
-          <div className="print:w-2/12 w-2/12 ">
-            <Image src={logo} alt="" className="" />
+      <div ref={componentRef} className="">
+        <div className="print:flex flex flex-col print:flex-row md:flex-row items-center justify-center gap-6 print:px-10 md:px-10 px-2 print:py-8 py-2 md:py-8 bg-cyan-500">
+          <div className="print:w-2/12 md:w-2/12 w-4/12">
+            <Image src={logo} alt="" />
           </div>
-          <div className="print:w-8/12 w-8/12 flex items-center justify-center flex-col">
+          <div className="print:w-8/12 w-11/12 text-center md:w-8/12 flex items-center justify-center flex-col">
             <div className="text-black text-center text-3xl font-bold">
               Best Computer Training Center
             </div>
@@ -69,13 +69,13 @@ export default function Print({ application }: SingleApplicationProps) {
               bestcomputer.jhenaidah@gmail.com
             </div>
           </div>
-          <div className="print:w-2/12 w-21 ring w-2/12  ">
+          <div className="print:w-2/12 md:w-2/12">
             <Image
               src={application.image}
               alt=""
               width={200}
               height={200}
-              className="w-full h-32 object-cover"
+              className="w-full h-32 md:h-48 print:h-32 object-cover"
             />
           </div>
         </div>
@@ -89,8 +89,8 @@ export default function Print({ application }: SingleApplicationProps) {
             Admission Form
           </Button>
         </div>
-        <div className="relative mx-10 print:text-black ">
-          <div className="grid grid-cols-2 gap-10 ml-10">
+        <div className="relative mx-2 print:mx-10 md:mx-10 print:text-black ">
+          <div className="md:grid print:grid grid-cols-2  print:gap-10 md:gap-10 ml-3 print:ml-10 gap-3 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Student First Name: </span>
               <span>{application.firstName}</span>
@@ -100,7 +100,7 @@ export default function Print({ application }: SingleApplicationProps) {
               <span>{application.lastName}</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 ml-10">
+          <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Father Name: </span>
               <span>{application.fatherName}</span>
@@ -110,7 +110,7 @@ export default function Print({ application }: SingleApplicationProps) {
               <span>{application.motherName}</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 ml-10">
+          <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Date Of Birth: </span>
               <span>{application.birthDay}</span>
@@ -120,7 +120,7 @@ export default function Print({ application }: SingleApplicationProps) {
               <span>{application.bloodGroup}</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 ml-10">
+          <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Mobile Number: </span>
               <span>{application.mobileNumber}</span>
@@ -130,7 +130,7 @@ export default function Print({ application }: SingleApplicationProps) {
               <span>{application.guardianNumber}</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 ml-10">
+          <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Gender: </span>
               <span>{application.gender}</span>
@@ -140,7 +140,7 @@ export default function Print({ application }: SingleApplicationProps) {
               <span>{application.religion}</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 ml-10">
+          <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Full Address: </span>
               <span>{application.fullAddress}</span>
@@ -150,7 +150,7 @@ export default function Print({ application }: SingleApplicationProps) {
               <span>{application.district}</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 ml-10">
+          <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Email Address: </span>
               <span>{application.email}</span>
@@ -160,7 +160,7 @@ export default function Print({ application }: SingleApplicationProps) {
               <span>{application.pc}</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 ml-10">
+          <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Education: </span>
               <span>{application.education}</span>
@@ -170,7 +170,7 @@ export default function Print({ application }: SingleApplicationProps) {
               <span>{application.board}</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 ml-10">
+          <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Roll Number: </span>
               <span>{application.rollNumber}</span>
@@ -180,7 +180,7 @@ export default function Print({ application }: SingleApplicationProps) {
               <span>{application.regNumber}</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 ml-10">
+          <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Passing Year: </span>
               <span>{application.passingYear}</span>
@@ -190,7 +190,7 @@ export default function Print({ application }: SingleApplicationProps) {
               <span>{application.gpa}</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 ml-10">
+          <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Birth Reg/NID: </span>
               <span>{application.nid}</span>
@@ -200,7 +200,7 @@ export default function Print({ application }: SingleApplicationProps) {
               <span>{application.nationality}</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 ml-10">
+          <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Course Name: </span>
               <span>{application.course}</span>
