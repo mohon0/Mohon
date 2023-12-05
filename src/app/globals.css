@@ -81,27 +81,24 @@
   }
 }
 
-
-/* Application.module.css */
-
-.shake {
-  animation: shake 0.5s;
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-@keyframes shake {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 5px;
+}
 
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
-  }
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 5px;
+}
 
-  30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-
-  40%, 60% {
-    transform: translate3d(4px, 0, 0);
-  }
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

@@ -47,6 +47,10 @@ export default function Print({ application }: SingleApplicationProps) {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
   return (
     <div>
       <div ref={componentRef} className="">
@@ -90,24 +94,23 @@ export default function Print({ application }: SingleApplicationProps) {
           </Button>
         </div>
         <div className="relative mx-2 print:mx-10 md:mx-10 print:text-black ">
-          <div className="md:grid print:grid grid-cols-2  print:gap-10 md:gap-10 ml-3 print:ml-10 gap-3 md:ml-10">
+          <div className="flex items-center justify-center">
             <div className="col-span-1 p-2">
-              <span className="font-bold">Student First Name: </span>
-              <span>{application.firstName}</span>
-            </div>
-            <div className="col-span-1 p-2">
-              <span className="font-bold">Student Last Name: </span>
-              <span>{application.lastName}</span>
+              <span className="font-bold">Student full Name: </span>
+              <span>
+                {capitalizeFirstLetter(application.firstName)}{" "}
+                {application.lastName}
+              </span>
             </div>
           </div>
           <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Father Name: </span>
-              <span>{application.fatherName}</span>
+              <span>{capitalizeFirstLetter(application.fatherName)}</span>
             </div>
             <div className="col-span-1 p-2">
               <span className="font-bold">Mother Name: </span>
-              <span>{application.motherName}</span>
+              <span>{capitalizeFirstLetter(application.motherName)}</span>
             </div>
           </div>
           <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
@@ -133,21 +136,21 @@ export default function Print({ application }: SingleApplicationProps) {
           <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Gender: </span>
-              <span>{application.gender}</span>
+              <span>{capitalizeFirstLetter(application.gender)}</span>
             </div>
             <div className="col-span-1 p-2">
               <span className="font-bold">Religion: </span>
-              <span>{application.religion}</span>
+              <span>{capitalizeFirstLetter(application.religion)}</span>
             </div>
           </div>
           <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Full Address: </span>
-              <span>{application.fullAddress}</span>
+              <span>{capitalizeFirstLetter(application.fullAddress)}</span>
             </div>
             <div className="col-span-1 p-2">
               <span className="font-bold">District: </span>
-              <span>{application.district}</span>
+              <span>{capitalizeFirstLetter(application.district)}</span>
             </div>
           </div>
           <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
@@ -163,11 +166,11 @@ export default function Print({ application }: SingleApplicationProps) {
           <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Education: </span>
-              <span>{application.education}</span>
+              <span>{capitalizeFirstLetter(application.education)}</span>
             </div>
             <div className="col-span-1 p-2">
               <span className="font-bold">Board: </span>
-              <span>{application.board}</span>
+              <span>{capitalizeFirstLetter(application.board)}</span>
             </div>
           </div>
           <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
@@ -197,13 +200,13 @@ export default function Print({ application }: SingleApplicationProps) {
             </div>
             <div className="col-span-1 p-2">
               <span className="font-bold">Nationality: </span>
-              <span>{application.nationality}</span>
+              <span>{capitalizeFirstLetter(application.nationality)}</span>
             </div>
           </div>
           <div className="md:grid print:grid grid-cols-2 gap-10 ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Course Name: </span>
-              <span>{application.course}</span>
+              <span>{capitalizeFirstLetter(application.course)}</span>
             </div>
             <div className="col-span-1 p-2">
               <span className="font-bold">Course Duration: </span>
