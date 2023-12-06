@@ -123,3 +123,7 @@ model Application {
   user         User     @relation(fields: [userId], references: [id])
 }
 
+model ApplyVisibility {
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  button          String
+}

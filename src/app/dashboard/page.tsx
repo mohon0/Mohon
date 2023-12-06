@@ -1,5 +1,6 @@
 "use client";
 import ApplicationModel from "@/components/application/ApplicationModel";
+import Toggle from "@/components/common/Toggle";
 import Loading from "@/components/common/loading/Loading";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -146,13 +147,18 @@ export default function Dashboard() {
             </div>
           </div>
           {admin === email ? (
-            <div className="flex items-center justify-center">
-              <Link
-                href="/application-list"
-                className="bg-primary-200 text-black px-6 py-2 rounded-lg hover:bg-primary-100"
-              >
-                Application List
-              </Link>
+            <div className="border flex items-center justify-center md:w-1/3 lg:w-1/4 mx-auto flex-col-reverse gap-10 p-4 rounded-lg">
+              <div className="flex items-center justify-center">
+                <Link
+                  href="/application-list"
+                  className="bg-primary-200 text-black px-6 py-2 rounded-lg hover:bg-primary-100"
+                >
+                  Application List
+                </Link>
+              </div>
+              <div>
+                <Toggle />
+              </div>
             </div>
           ) : null}
           <ApplicationModel />

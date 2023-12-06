@@ -34,11 +34,6 @@ interface SingleApplicationProps {
 export default function SingleApplication({
   application,
 }: SingleApplicationProps) {
-  const duration =
-    application.duration === "free"
-      ? "Free (conditions applied)"
-      : application.duration;
-
   return (
     <div className="mx-2 lg:mx-20 my-32 print:text-black print:p-4 print:my-10">
       <Print application={application} />
