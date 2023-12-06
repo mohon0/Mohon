@@ -11,12 +11,7 @@ import {
 
 import { useField } from "formik";
 
-interface SelectDemoProps {
-  onValueChange: (value: string) => void;
-  selectedValue: string | undefined;
-}
-
-export function CourseSelect({ onValueChange }: SelectDemoProps) {
+export function CourseSelect() {
   const [field, meta, helpers] = useField("course");
 
   const handleSelectChange = (value: string) => {

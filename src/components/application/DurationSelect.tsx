@@ -11,12 +11,7 @@ import {
 
 import { useField } from "formik";
 
-interface DurationSelectProps {
-  onValueChange: (value: string) => void;
-  selectedValue: string | undefined;
-}
-
-export function DurationSelect({ onValueChange }: DurationSelectProps) {
+export function DurationSelect() {
   const [field, meta, helpers] = useField("duration");
 
   const handleSelectChange = (value: string) => {

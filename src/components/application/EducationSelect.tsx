@@ -16,7 +16,7 @@ interface SelectDemoProps {
   selectedValue: string | undefined;
 }
 
-export function EducationSelect({ onValueChange }: SelectDemoProps) {
+export function EducationSelect() {
   const [field, meta, helpers] = useField("education");
 
   const handleSelectChange = (value: string) => {

@@ -7,13 +7,17 @@ import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 import Header from "../application/Header";
 import BirthDay from "./BirthDay";
+import { BloodGroup } from "./BloodGroup";
+import { Board } from "./Board";
 import { CourseSelect } from "./CourseSelect";
+import { District } from "./District";
 import { DurationSelect } from "./DurationSelect";
 import { EducationSelect } from "./EducationSelect";
 import { FileSelect } from "./FileSelect";
 import { Gender } from "./Gender";
 import MyTextInput from "./MyTextInput";
 import { PcSelect } from "./PcSelect";
+import { Religion } from "./Religion";
 
 const Application: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -149,7 +153,6 @@ const Application: React.FC = () => {
 
           const { birthDay, ...otherValues } = values;
 
-          // Format the birthDay before sending it to the API
           const formattedBirthDay = new Date(birthDay).toLocaleDateString(
             "en-GB",
             {
@@ -161,7 +164,6 @@ const Application: React.FC = () => {
 
           const formData = new FormData();
 
-          // append other form values to the FormData object
           Object.keys(values).forEach((key) => {
             if (key === "birthDay") {
               formData.append(key, formattedBirthDay);
@@ -170,12 +172,16 @@ const Application: React.FC = () => {
             }
           });
 
-          // append the picture file to the FormData object
           if (image) {
             formData.append("picture", image);
           } else {
             setImageError(true);
           }
+
+          // console.log("Form Data:");
+          // formData.forEach((value, key) => {
+          //   console.log(`${key}: ${value}`);
+          // });
 
           toast.loading("Please wait...");
 
@@ -190,11 +196,9 @@ const Application: React.FC = () => {
             toast.success("Your application was successfully submitted");
             const responseData = await response.json();
 
-            setTimeout(() => {
-              router.push(
-                `/application-list/singleapplication/${responseData.id}`
-              );
-            }, 500);
+            router.push(
+              `/application-list/singleapplication/${responseData.id}`
+            );
           } else {
             toast.error("Couldn't save your post. Please try again later");
           }
@@ -240,12 +244,10 @@ const Application: React.FC = () => {
               <div>Date of Birth</div>
               <Field as={BirthDay} name="birthDay" />
             </div>
-            <MyTextInput
-              label="Blood Group"
-              name="bloodGroup"
-              type="text"
-              placeholder="Blood Group"
-            />
+            <div>
+              <div>Blood Group</div>
+              <Field as={BloodGroup} name="bloodGroup" />
+            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
             <MyTextInput
@@ -267,12 +269,10 @@ const Application: React.FC = () => {
 
               <Field as={Gender} name="gender" />
             </div>
-            <MyTextInput
-              label="Religion"
-              name="religion"
-              type="text"
-              placeholder="Religion"
-            />
+            <div>
+              <div>Religion</div>
+              <Field as={Religion} name="religion" />
+            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
             <MyTextInput
@@ -281,12 +281,10 @@ const Application: React.FC = () => {
               type="text"
               placeholder="Full Address"
             />
-            <MyTextInput
-              label="District"
-              name="district"
-              type="text"
-              placeholder="District"
-            />
+            <div>
+              <div>District</div>
+              <Field as={District} name="District" />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
@@ -307,12 +305,14 @@ const Application: React.FC = () => {
               <div>Education</div>
               <Field as={EducationSelect} name="education" />
             </div>
-            <MyTextInput
-              label="Board"
-              name="board"
-              type="text"
-              placeholder="Board"
-            />
+            <div>
+              <div>Education Board</div>
+              <Field
+                as={Board}
+                name="board"
+                onValueChange={(value: any) => {}}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
