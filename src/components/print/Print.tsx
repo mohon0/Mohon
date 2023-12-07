@@ -94,7 +94,7 @@ export default function Print({ application }: SingleApplicationProps) {
           </Button>
         </div>
         <div className="relative mx-2 print:mx-10 md:mx-10 print:text-black ">
-          <div className="flex items-center justify-center">
+          <div className="flex items-center ml-3 print:ml-10 md:ml-10">
             <div className="col-span-1 p-2">
               <span className="font-bold">Student full Name: </span>
               <span>
@@ -214,7 +214,7 @@ export default function Print({ application }: SingleApplicationProps) {
             </div>
           </div>
         </div>
-        <div className="md:mx-12 lg:mx-20 mt-24 print:mx-20 print:mt-16 flex justify-between print:text-black font-bold">
+        <div className="md:mx-12 lg:mx-20 mt-24 print:mx-20 print:mt-16 md:flex print:flex hidden justify-between print:text-black font-bold">
           <div>
             <div className="w-40 h-0.5 bg-cyan-700"></div>
             <div>Director Signature</div>
@@ -226,8 +226,18 @@ export default function Print({ application }: SingleApplicationProps) {
             <div>Date:</div>
           </div>
         </div>
-        <div className="flex items-center justify-center mt-20 text-gray-600">
-          www.freelancermohon.com
+        <div className="print:text-black text-sm md:ml-20 ml-3 print:ml-20 my-6">
+          <p>ভর্তির জন্য প্রয়োজনীয় কাগজ পত্র ও শর্তাবলীঃ</p>
+          <p>১. পাসপোর্ট সাইজের ২ কপি রঙিন ছবি</p>
+          <p>২. এস.এস.সি/জে.এস.সি মার্কশীটের ফটোকপি (যে কোন একটা)</p>
+          <p>৩. এন.আই.ডি/জন্ম নিবন্ধনের ফটোকপি (যে কোন একটা)</p>
+          <p>
+            ৪. ভর্তি হওয়ার পর, পরবর্তীতে ভর্তি বাতিল করতে চাইলে সে ক্ষেত্র কোন
+            টাকা ফেরত দেওয়া হবে না।
+          </p>
+        </div>
+        <div className="footer hidden print:block">
+          <p>www.freelancermohon.online</p>
         </div>
         <Image
           src={logo2}

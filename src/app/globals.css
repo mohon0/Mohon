@@ -94,11 +94,32 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: white;
+  background: gainsboro;
   border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+@media print {
+  body {
+    font-size: 12pt;
+  }
+
+  .no-print {
+    display: none;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  .print-content {
+    max-width: 100%;
+  }
+  .footer {
+    @apply bg-cyan-600 p-2 text-white fixed bottom-0 w-full text-center border-t-primary-200;
+  }
 }

@@ -69,6 +69,9 @@ export default function Menu() {
             <Link href="/application" onClick={HandleClick}>
               Application
             </Link>
+            <Link href="/blog/notice" onClick={HandleClick}>
+              Notice
+            </Link>
 
             {session?.user ? (
               <Link href="/dashboard" onClick={HandleClick}>
