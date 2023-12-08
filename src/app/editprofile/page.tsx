@@ -79,6 +79,24 @@ export default function EditProfile() {
     }
   }
 
+  const handleFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = ev.target.files?.[0];
+
+    if (selectedFile) {
+      const fileSize = selectedFile.size; // size in bytes
+      const maxSize = 500 * 1024; // 500 KB in bytes
+
+      if (fileSize > maxSize) {
+        toast.error("File size exceeds 500 KB limit");
+        // Optionally reset the file input
+        ev.target.value = "";
+        return;
+      }
+
+      setFiles(ev.target.files);
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -98,7 +116,7 @@ export default function EditProfile() {
                 value={name}
                 onChange={(ev) => setName(ev.target.value)}
               />
-              <FileInput onChange={(ev) => setFiles(ev.target.files)} />
+              <FileInput onChange={handleFileChange} />
             </div>
             <button
               onClick={updateUser}

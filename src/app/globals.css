@@ -104,14 +104,6 @@
 }
 
 @media print {
-  body {
-    font-size: 12pt;
-  }
-
-  .no-print {
-    display: none;
-  }
-
   .page-break {
     page-break-before: always;
   }
@@ -120,6 +112,9 @@
     max-width: 100%;
   }
   .footer {
-    @apply bg-cyan-600 p-2 text-white fixed bottom-0 w-full text-center border-t-primary-200;
+    @apply bg-cyan-600 p-2 text-white fixed bottom-0 w-full text-center;
+  }
+  .border-for-print {
+    box-shadow: 0 0 0 1px black, 0 0 0 2px black;
   }
 }

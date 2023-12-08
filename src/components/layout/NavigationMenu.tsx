@@ -32,7 +32,7 @@ export function NavigationMenuDemo() {
   const components: Component[] = [
     {
       title: "Notice",
-      href: "/notice",
+      href: "/blog/notice",
       description: "All the information you need to know.",
     },
     {
