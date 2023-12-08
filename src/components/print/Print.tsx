@@ -92,7 +92,7 @@ export default function Print({ application }: SingleApplicationProps) {
             Admission Form
           </Button>
         </div>
-        <div className="flex items-center gap-3 absolute top-48 left-10">
+        <div className="hidden print:flex items-center gap-3 absolute top-48 left-10">
           <div className="text-black font-bold">SL No: </div>
           <div className="border w-20 h-7"></div>
         </div>
@@ -134,12 +134,12 @@ export default function Print({ application }: SingleApplicationProps) {
               value1={application.fullAddress}
               value2={application.district}
             />
-            <tr>
-              <td className="border px-2 w-1/2 p-1">
+            <tr className="flex flex-col md:flex-row print:flex-row">
+              <td className="border px-2 print:w-1/2 w-full md:w-1/2 p-1">
                 <span className="font-bold">Email Address: </span>
                 <span className="pl-3">{application.email}</span>
               </td>
-              <td className="border px-2 w-1/2 p-1">
+              <td className="border px-2 print:w-1/2 w-full md:w-1/2 p-1">
                 <span className="font-bold">Computer: </span>
                 <span className="pl-3">{application.pc}</span>
               </td>
@@ -168,12 +168,12 @@ export default function Print({ application }: SingleApplicationProps) {
               value1={application.nid}
               value2={application.nationality}
             />
-            <tr>
-              <td className="border px-2 w-1/2 p-1">
+            <tr className="flex flex-col md:flex-row print:flex-row">
+              <td className="border px-2 print:w-1/2 w-full md:w-1/2 p-1">
                 <span className="font-bold">Course Name: </span>
-                <span className="pl-3">{application.courseName}</span>
+                <span className="pl-3 uppercase">{application.course}</span>
               </td>
-              <td className="border px-2 w-1/2 p-1">
+              <td className="border px-2 print:w-1/2 w-full md:w-1/2 p-1">
                 <span className="font-bold">Duration: </span>
                 <span className="pl-3">{duration}</span>
               </td>
@@ -201,7 +201,7 @@ export default function Print({ application }: SingleApplicationProps) {
           alt=""
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 -z-50 opacity-10"
         />
-        <div className="print:text-black border mx-10 p-2 mt-3 text-sm">
+        <div className="print:text-black border print:mx-10 md:mx-10 p-2 mt-3 text-sm">
           <div>
             আমি এতদ্বারা অঙ্গীকার করিতেছি যে, আমি প্রতিষ্ঠানের নিয়ম অনুযায়ী আমার
             সন্তান/পোষ্য, এর যাবতীয় ব্যয়ভার এবং আমার সন্তান/পোষ্য প্রতিষ্ঠানের
@@ -210,9 +210,11 @@ export default function Print({ application }: SingleApplicationProps) {
             থাকিব।
           </div>
         </div>
-        <div className="mx-10 flex justify-between items-end">
+        <div className="md:mx-10 print:mx-10 flex flex-col md:flex-row print:flex-row gap-8 md:gap-0 print:gap-0 justify-between items-end">
           <div className="print:text-black border p-2 w-fit mt-2 text-sm">
-            <p>ভর্তির জন্য প্রয়োজনীয় কাগজ পত্র ও শর্তাবলীঃ</p>
+            <p className="font-bold underline">
+              ভর্তির জন্য প্রয়োজনীয় কাগজ পত্র ও শর্তাবলীঃ
+            </p>
             <p>১. পাসপোর্ট সাইজের ২ কপি রঙিন ছবি</p>
             <p>২. এস.এস.সি/জে.এস.সি মার্কশীটের ফটোকপি (যে কোন একটা)</p>
             <p>৩. এন.আই.ডি/জন্ম নিবন্ধনের ফটোকপি (যে কোন একটা)</p>
