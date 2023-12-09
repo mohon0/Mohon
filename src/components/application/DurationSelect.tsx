@@ -10,13 +10,28 @@ import {
 } from "@/components/ui/select";
 
 import { useField } from "formik";
+import { useEffect, useState } from "react";
 
 export function DurationSelect() {
   const [field, meta, helpers] = useField("duration");
+  const [data, setData] = useState("");
 
   const handleSelectChange = (value: string) => {
     helpers.setValue(value);
   };
+
+  useEffect(() => {
+    const apiUrl = `api/duration`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data.button);
+      })
+      .catch(() => {
+        console.log("error");
+      });
+  }, []);
 
   return (
     <div className={meta.touched && meta.error ? "error" : ""}>
@@ -27,12 +42,14 @@ export function DurationSelect() {
         <SelectContent className="bg-gray-900 text-slate-200">
           <SelectGroup>
             <SelectLabel>Course Duration</SelectLabel>
-            <SelectItem
-              value="free"
-              onSelect={() => handleSelectChange("free")}
-            >
-              Free (conditions apply)
-            </SelectItem>
+            {data === "On" && (
+              <SelectItem
+                value="free"
+                onSelect={() => handleSelectChange("free")}
+              >
+                Free (conditions apply)
+              </SelectItem>
+            )}
             <SelectItem
               value="3 month"
               onSelect={() => handleSelectChange("3 month")}

@@ -127,3 +127,7 @@ model ApplyVisibility {
   id              String  @id @default(auto()) @map("_id") @db.ObjectId
   button          String
 }
+model duration {
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  button          String
+}

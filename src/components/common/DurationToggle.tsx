@@ -5,17 +5,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 
-export default function Toggle() {
+export default function DurationToggle() {
   const [visibility, setVisibility] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const apiUrl = `api/visibility`;
+    const apiUrl = `api/duration`;
 
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        setVisibility(data.button === "Apply");
+        setVisibility(data.button === "On");
         setLoading(false);
       })
       .catch(() => {
@@ -29,13 +29,13 @@ export default function Toggle() {
 
     try {
       toast.loading("Please wait...");
-      const response = await fetch("api/visibility", {
+      const response = await fetch("api/duration", {
         method: "PUT",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ button: newData ? "Apply" : "Contact" }),
+        body: JSON.stringify({ button: newData ? "On" : "Off" }),
       });
       if (response.ok) {
         toast.dismiss();
@@ -56,11 +56,11 @@ export default function Toggle() {
       ) : (
         <div className="flex items-center space-x-2">
           <Switch
-            id="apply"
+            id="free"
             checked={visibility}
             onCheckedChange={handleSwitchChange}
           />
-          <Label htmlFor="apply">Apply Open</Label>
+          <Label htmlFor="free">Free Apply Open</Label>
           <ToastContainer position="top-center" autoClose={3000} />
         </div>
       )}

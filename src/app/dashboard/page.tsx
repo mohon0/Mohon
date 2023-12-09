@@ -1,5 +1,6 @@
 "use client";
 import ApplicationModel from "@/components/application/ApplicationModel";
+import DurationToggle from "@/components/common/DurationToggle";
 import Toggle from "@/components/common/Toggle";
 import Loading from "@/components/common/loading/Loading";
 import { signOut, useSession } from "next-auth/react";
@@ -156,8 +157,9 @@ export default function Dashboard() {
                   Application List
                 </Link>
               </div>
-              <div>
+              <div className="flex flex-col gap-6">
                 <Toggle />
+                <DurationToggle />
               </div>
             </div>
           ) : null}
