@@ -90,7 +90,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center w-screen  md:mt-12 lg:mt-28 ">
+    <div className="flex items-center justify-center md:mt-12 lg:mt-28 ">
       <div className="grid md:grid-cols-5 grid-cols-1 rounded-2xl justify-around shadow-2xl md:w-10/12 w-11/12">
         <div className="col-span-3 p-6 bg-blue-950   md:rounded-l-2xl">
           <section className="flex gap-4 items-center justify-center flex-col my-8">
@@ -126,7 +126,7 @@ export default function Login() {
                 onChange={handlePasswordChange}
                 value={data.password}
               />
-              <button className="flex items-center justify-center w-full h-10 bg-black border rounded-lg text-primary-100 font-bold hover:bg-gray-900">
+              <button className="flex items-center justify-center w-full h-10 bg-black border rounded-lg text-primary-100 font-bold hover:bg-gray-900 border-primary-200">
                 Registration
               </button>
             </form>
@@ -152,7 +152,7 @@ export default function Login() {
             Already have an account?
           </span>
           <Link href="/signin">
-            <button className="bg-btn-100 px-8 py-2 rounded-md text-sm bg-black border text-primary-200 hover:bg-gray-900 font-bold">
+            <button className="bg-btn-100 px-8 py-2 rounded-md text-sm bg-black border text-primary-200 hover:bg-gray-900 font-bold border-primary-200">
               Log In
             </button>
           </Link>

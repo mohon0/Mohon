@@ -88,7 +88,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center w-screen mt-20 md:mt-32 lg:mt-48 ">
+    <div className="flex items-center justify-center mt-20 md:mt-32 lg:mt-48 ">
       <div className="grid md:grid-cols-5 grid-cols-1 rounded-2xl justify-around shadow-2xl md:w-10/12 w-11/12">
         <div className="col-span-3 p-6 bg-blue-950 md:rounded-l-2xl">
           <section className="flex gap-4 items-center justify-center flex-col my-8">
@@ -109,14 +109,24 @@ export default function Login() {
                 onChange={handleEmailChange}
                 value={data.email}
               />
-              <SigninInput
-                label="Input Your Password"
-                id="password"
-                type="password"
-                error={errors.password}
-                onChange={handlePasswordChange}
-                value={data.password}
-              />
+              <div>
+                <SigninInput
+                  label="Input Your Password"
+                  id="password"
+                  type="password"
+                  error={errors.password}
+                  onChange={handlePasswordChange}
+                  value={data.password}
+                />
+                <div className="flex items-center justify-end">
+                  <Link
+                    href="/resetpassword"
+                    className="text-primary-200 text-sm"
+                  >
+                    Forget Password
+                  </Link>
+                </div>
+              </div>
               <button className="border border-primary-200 text-primary-200 hover:bg-gray-950 bg-black px-4 py-2 rounded-lg">
                 Log In
               </button>
