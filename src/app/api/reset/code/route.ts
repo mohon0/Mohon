@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const search = req.nextUrl.searchParams;
-    const email = search.get("userEmail");
+    const email = search.get("email");
     const code = search.get("code");
 
     if (!email) {

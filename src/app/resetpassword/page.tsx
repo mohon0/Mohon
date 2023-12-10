@@ -1,7 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FormEvent, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,6 +18,18 @@ export default function PasswordResetPage(props: PasswordResetProps) {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
+
+  const router = useRouter();
+  const { status, data: session } = useSession();
+  useEffect(() => {
+    if (session) {
+      router.replace("/dashboard");
+    }
+  }, [session, router]);
+
+  if (session) {
+    return null; // Return null to avoid rendering the rest of the component
+  }
 
   const handleEmailSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,15 +80,46 @@ export default function PasswordResetPage(props: PasswordResetProps) {
         toast.error("Verification failed");
       }
     } catch (error) {
-      setShowPasswordReset(false);
+      toast.error("Verification failed. Please try again.");
     }
   };
 
-  const handlePasswordResetSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handlePasswordResetSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Simulate resetting the password
-    // In a real scenario, this would be an API call to your server
-    console.log("Password reset successful!");
+
+    if (newPassword !== confirmPassword) {
+      toast.error("Passwords do not match. Please check and try again.");
+      return;
+    }
+
+    try {
+      toast.loading("Please wait...");
+
+      const response = await fetch("/api/reset/password", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          password: newPassword,
+          code: code,
+        }),
+      });
+
+      toast.dismiss();
+
+      if (response.ok) {
+        toast.success("Password reset successful!");
+        router.push("/signin");
+      } else {
+        toast.error("Password reset failed. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.dismiss();
+      toast.error("Password reset failed. Please try again.");
+    }
   };
 
   const togglePasswordVisibility = () => {

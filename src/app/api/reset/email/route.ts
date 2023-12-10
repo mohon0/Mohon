@@ -40,7 +40,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         }
 
         const mailData = {
-          from: process.env.SMTP_USER, // Sender email
+          from: process.env.SMTP_USER,
           to: email,
           subject: `Password Reset Verification Code`,
           text: `Your verification code for password reset: ${verificationCode} | Sent from: freelancermohon.online`,
