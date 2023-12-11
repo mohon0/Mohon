@@ -127,7 +127,7 @@ export default function PasswordResetPage(props: PasswordResetProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className=" mt-32 flex items-center justify-center mx-2">
       <div className="p-8 shadow-md rounded-md w-96 border">
         <h2 className="text-2xl font-bold mb-6 ">Password Reset</h2>
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BiCopyright } from "react-icons/bi";
 import { BsInstagram, BsLinkedin } from "react-icons/bs";
-import { GrFacebook } from "react-icons/gr";
+import { FaFacebookF } from "react-icons/fa6";
 import { SiFreelancer, SiUpwork } from "react-icons/si";
 import { TbBrandFiverr, TbBrandTwitter } from "react-icons/tb";
 
@@ -17,7 +17,7 @@ export default function Footer() {
           target="_blank"
           className="text-gray-500 hover:text-blue-600  p-4"
         >
-          <GrFacebook />
+          <FaFacebookF />
         </Link>
         <div className="w-6 md:w-10 h-0.5 block bg-gray-600 rotate-[120deg]"></div>
         <Link

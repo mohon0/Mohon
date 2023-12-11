@@ -40,11 +40,11 @@ export default function Blog() {
         if (data.posts.length > 0) setPosts(data.posts);
 
         setTotalPages(Math.ceil(data.totalPostsCount / pageSize));
-        setLoading(false); // Set loading state to false when data is fetched
+        setLoading(false);
       })
       .catch(() => {
         console.log("error");
-        setLoading(false); // Set loading state to false on error
+        setLoading(false);
       });
   }, [currentPage, selectedCategory, sortBy, searchInput]);
 
