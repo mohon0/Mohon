@@ -251,7 +251,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     });
 
     if (await imageExists(post.coverImage)) {
-      // Delete the previous cover image
+    
       const storageRefToDelete = ref(storage, post.coverImage);
       await deleteObject(storageRefToDelete);
     }

@@ -151,6 +151,14 @@ export default function Dashboard() {
             <div className="border flex items-center justify-center md:w-1/3 lg:w-1/4 mx-auto flex-col-reverse gap-10 p-4 rounded-lg">
               <div className="flex items-center justify-center">
                 <Link
+                  href="/user"
+                  className="bg-primary-200 text-black px-6 py-2 rounded-lg hover:bg-primary-100"
+                >
+                  User List
+                </Link>
+              </div>
+              <div className="flex items-center justify-center">
+                <Link
                   href="/application-list"
                   className="bg-primary-200 text-black px-6 py-2 rounded-lg hover:bg-primary-100"
                 >

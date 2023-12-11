@@ -43,7 +43,7 @@ export function NavigationMenuDemo() {
     },
     {
       title: "Course",
-      href: "/docs/primitives/hover-card",
+      href: "/blog/our_course",
       description:
         "We provide some of the best course modules that have known.",
     },

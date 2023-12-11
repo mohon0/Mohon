@@ -68,26 +68,10 @@ export default function Footer() {
           <TbBrandFiverr />
         </Link>
       </div>
-      <div className="flex justify-center md:justify-between bg-black py-3 px-3 lg:px-20">
-        <div className="hidden md:flex items-center gap-10">
-          <Link href="/speed-test" className="hover:text-primary-200">
-            Speed Test
-          </Link>
-          <Link href="/project" className="hover:text-primary-200">
-            Projects
-          </Link>
-        </div>
+      <div className="flex justify-center  bg-black py-3 px-3 lg:px-20">
         <div className="flex items-center gap-2 justify-center">
           <BiCopyright />
-          {year}
-        </div>
-        <div className="hidden md:flex items-center justify-center gap-10">
-          <Link href="/blog" className="hover:text-primary-200">
-            About Me
-          </Link>
-          <Link href="/project" className="hover:text-primary-200">
-            Contact Me
-          </Link>
+          {year} all rights reserved
         </div>
       </div>
     </div>

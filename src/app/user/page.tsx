@@ -2,12 +2,16 @@
 import Loading from "@/components/common/loading/Loading";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface UserData {
-  id: number;
+  id: string;
   name: string;
   email: string;
   image: string;
@@ -19,10 +23,13 @@ const Users: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortBy, setSortBy] = useState("newest");
   const [searchInput, setSearchInput] = useState("");
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [id, setId] = useState("");
+  const [random, setRandom] = useState(Number);
 
   const pageSize = 18;
+  const router = useRouter();
 
   useEffect(() => {
     if (status !== "authenticated") {
@@ -33,7 +40,7 @@ const Users: React.FC = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `/api/user?page=${currentPage}&pageSize=${pageSize}&sortBy=${sortBy}&search=${searchInput}`
+          `/api/user?page=${currentPage}&pageSize=${pageSize}&search=${searchInput}`
         );
 
         if (!response.ok) {
@@ -59,7 +66,7 @@ const Users: React.FC = () => {
     };
 
     fetchData();
-  }, [currentPage, searchInput, sortBy, status]);
+  }, [currentPage, searchInput, status, random]);
 
   const jumpToPageOptions = Array.from(
     { length: totalPages },
@@ -69,6 +76,35 @@ const Users: React.FC = () => {
   const admin = process.env.NEXT_PUBLIC_ADMIN;
   const email = session?.user?.email;
 
+  function generateRandomNumber() {
+    return Math.floor(Math.random() * 100) + 1;
+  }
+
+  async function handleDelete() {
+    try {
+      toast.loading("Deleting user...");
+      const response = await fetch(`/api/user/singleuser?userId=${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      toast.dismiss();
+      setShowConfirmation(false);
+      if (response.ok) {
+        toast.success("User was successfully deleted");
+        setRandom(generateRandomNumber());
+      } else {
+        toast.error("Failed to delete user");
+      }
+    } catch (error) {
+      toast.error("Failed to delete user");
+    }
+  }
+
+  async function handlePopUp(id: string) {
+    setId(id);
+    setShowConfirmation(true);
+  }
+
   return (
     <div className="mx-2 md:mx-10 lg:mx-16">
       {status === "authenticated" && email === admin ? (
@@ -77,19 +113,6 @@ const Users: React.FC = () => {
             All Users
           </h1>
           <div className="flex mb-20  flex-col md:flex-row items-center justify-center w-full gap-10">
-            {/* Sort by dropdown */}
-            <div className="rounded-full flex items-center justify-center  gap-2 border px-4 py-2">
-              <label htmlFor="sortPosts">SortBy:</label>
-              <select
-                id="sortPosts"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="bg-[#000119] px-2 py-2 w-24"
-              >
-                <option value="newest">Newest</option>
-                <option value="oldest">Oldest</option>
-              </select>
-            </div>
             <div className="relative flex items-center md:w-1/2">
               <input
                 type="text"
@@ -133,10 +156,48 @@ const Users: React.FC = () => {
                     </p>
                     <p className="text-gray-300">{user.email}</p>
                     {user.email !== admin && (
-                      <button className=" absolute top-2 right-2 flex gap-1 items-center bg-red-600 text-sm p-2 rounded-lg">
+                      <button
+                        className=" absolute top-2 right-2 flex gap-1 items-center bg-red-600 text-sm p-2 rounded-lg"
+                        onClick={() => handlePopUp(user.id)}
+                      >
                         <MdDelete /> Delete User
                       </button>
                     )}
+
+                    {showConfirmation && (
+                      <div className="fixed w-screen inset-0  h-screen flex items-center justify-center backdrop-blur-sm bg-opacity-95 z-50">
+                        <div className="bg-blue-950 p-6 w-11/12 lg:w-2/6 rounded-lg shadow-md">
+                          <p className="text-xl text-red-500 font-b">
+                            Are you sure you want to Delete this user.
+                          </p>
+                          <p className="text-sm ">
+                            This action can not be undone And everything
+                            associate with is account including application and
+                            comments are going to be deleted.
+                          </p>
+                          <div className="flex justify-end mt-8">
+                            <button
+                              onClick={() => setShowConfirmation(false)}
+                              className="px-4 py-2 mr-4 bg-gray-600 hover:bg-gray-700 rounded"
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              onClick={() => handleDelete()}
+                              className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+                            >
+                              Delete User
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <Link
+                      href={`/user/${user.id}`}
+                      className="border w-full p-1.5 border-primary-200 text-sm text-primary-200 flex items-center justify-center rounded-md"
+                    >
+                      View Details
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -199,6 +260,7 @@ const Users: React.FC = () => {
       ) : (
         "You are not authenticated"
       )}
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };
