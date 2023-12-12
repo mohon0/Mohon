@@ -178,11 +178,6 @@ const Application: React.FC = () => {
             setImageError(true);
           }
 
-          // console.log("Form Data:");
-          // formData.forEach((value, key) => {
-          //   console.log(`${key}: ${value}`);
-          // });
-
           toast.loading("Please wait...");
 
           const response = await fetch("/api/application", {
@@ -205,7 +200,7 @@ const Application: React.FC = () => {
         }}
       >
         <Form className="w-11/12 lg:w-3/4 mx-auto flex flex-col gap-6">
-          <div className=" lg:absolute top-28 right-20">
+          <div className=" lg:absolute top-52 border-primary-200 border right-20">
             {imageError && <span>Image Must Be Provided</span>}
             <FileSelect onFileSelect={handleFileSelect} />
           </div>

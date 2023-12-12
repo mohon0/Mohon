@@ -1,5 +1,6 @@
 "use client";
 import Application from "@/components/application/Application";
+import Notice from "@/components/application/Notice";
 import Loading from "@/components/common/loading/Loading";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -218,7 +219,12 @@ export default function Apply() {
                 )}
               </>
             ) : (
-              <Application />
+              <div>
+                <div className=" mb-10 mt-24 font-bold text-xl">
+                  <Notice />
+                </div>
+                <Application />
+              </div>
             )
           ) : status !== "authenticated" ? (
             <div className="text-center font-bold flex flex-col gap-10 text-2xl">

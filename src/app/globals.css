@@ -118,3 +118,7 @@
     box-shadow: 0 0 0 1px black, 0 0 0 2px black;
   }
 }
+
+.scroller[data-animated="true"] .scroller__inner {
+  width: max-content;
+}

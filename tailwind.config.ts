@@ -68,6 +68,11 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        scroll: {
+          to: {
+            transform: "translate(calc(-50% - 0.5rem))",
+          },
+        },
         "accordion-down": {
           from: { height: 0 },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -119,6 +124,7 @@ module.exports = {
         animate3: "animate3 1s linear infinite 0.5s",
         animate4: "animate4 1s linear infinite 0.75s",
         mouse: "mouse 2s infinite",
+        scroll: "scroll forwards 70s linear infinite",
       },
     },
   },
