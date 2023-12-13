@@ -28,11 +28,11 @@ const Notice: React.FC = () => {
   }, []);
 
   return (
-    <div className="mt-20">
+    <div className="mt-20 mx-2 md:mx-10 lg:mx-20 border py-2 border-primary-400">
       <div className="scroller overflow-hidden">
         <div className="scroller__inner flex animate-scroll gap-4 text-primary-200">
           <p>সবাইকে দক্ষ করে গড়ে তোলায় আমাদের একমাত্র লক্ষ্য।</p>
-          <p>ঝিনাইদহ শহরে একমাত্র আপনাদের সার্বক্ষণিক পাশে আছি।</p>
+          <p>ঝিনাইদহ শহরে একমাত্র আমরাই আপনাদের সার্বক্ষণিক পাশে আছি।</p>
           <p>আপনাদের যে কোন সমস্যা জানাতে সরাসরি চলে আসুন আমাদের অফিসে।</p>
           <p>ঠিকানাঃ রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা)</p>
           <p>অথবা কল করুনঃ 01989-491248। </p>
