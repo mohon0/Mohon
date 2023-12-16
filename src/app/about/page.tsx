@@ -1,5 +1,4 @@
 "use client";
-import Payment from "@/components/payment/Payment";
 import pic1 from "@/images/hero/1.jpg";
 import pic3 from "@/images/hero/2.jpg";
 import pic2 from "@/images/hero/3.jpg";
@@ -146,8 +145,6 @@ export default function ProjectHead() {
           </Link>
         </div>
       </div>
-
-      <Payment />
     </div>
   );
 }
