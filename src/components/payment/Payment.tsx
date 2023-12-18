@@ -1,9 +1,12 @@
 "use client";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Button } from "../ui/button";
 
 export default function Payment() {
   const makePaymentRequest = async () => {
     try {
+      toast.loading("Please wait...");
       const username = "your-username"; // Replace with your actual username
       const password = "your-password"; // Replace with your actual password
 
@@ -19,10 +22,13 @@ export default function Payment() {
 
         body: JSON.stringify({ amount: 10, orderId: "randomId" }),
       });
+      toast.dismiss();
 
       if (!response.ok) {
+        toast.error("Payment unsuccessful.");
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      toast.success("Payment successful");
 
       const responseData = await response.json();
       console.log("Payment response:", responseData);
@@ -36,6 +42,7 @@ export default function Payment() {
       <Button size="lg" variant="default" onClick={makePaymentRequest}>
         Pay With Bkash
       </Button>
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 }

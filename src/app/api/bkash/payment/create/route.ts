@@ -10,8 +10,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          username: process.env.bkash_username || "", // Provide a default value or handle the undefined case
-          password: process.env.bkash_password || "", // Provide a default value or handle the undefined case
+          username: process.env.bkash_username || "",
+          password: process.env.bkash_password || "",
         },
         body: JSON.stringify({
           app_key: process.env.bkash_api_key,
