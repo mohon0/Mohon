@@ -35,6 +35,7 @@ interface SingleApplicationProps {
     course: string;
     pc: string;
     email: string;
+    transactionId: string;
   };
 }
 
@@ -176,6 +177,14 @@ export default function Print({ application }: SingleApplicationProps) {
               <td className="border px-2 print:w-1/2 w-full md:w-1/2 p-1">
                 <span className="font-bold">Duration: </span>
                 <span className="pl-3">{duration}</span>
+              </td>
+            </tr>
+            <tr className="flex flex-col md:flex-row print:flex-row">
+              <td className="border px-2 print:w-1/2 w-full md:w-1/2 p-1">
+                <span className="font-bold">Transaction Id: </span>
+                <span className="pl-3 uppercase">
+                  {application.transactionId}
+                </span>
               </td>
             </tr>
           </table>

@@ -33,6 +33,7 @@ interface SingleApplicationProps {
     course: string;
     email: string;
     pc: string;
+    transactionId: string;
   };
 }
 

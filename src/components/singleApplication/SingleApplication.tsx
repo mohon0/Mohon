@@ -28,6 +28,7 @@ interface SingleApplicationProps {
     course: string;
     pc: string;
     email: string;
+    transactionId: string;
   };
 }
 

@@ -1,5 +1,8 @@
 "use client";
+import bkash from "@/images/tools/bkash.svg";
 import { Field, Form, Formik } from "formik";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -74,6 +77,7 @@ const Application: React.FC = () => {
           nationality: "",
           course: "",
           duration: "",
+          transactionId: "",
         }}
         validationSchema={Yup.object({
           firstName: Yup.string()
@@ -143,6 +147,7 @@ const Application: React.FC = () => {
           nationality: Yup.string().required("Required"),
           course: Yup.string().required("Required"),
           duration: Yup.string().required("Required"),
+          transactionId: Yup.string().required("Required"),
         })}
         onSubmit={async (values, { setSubmitting }) => {
           setHasError(false);
@@ -362,11 +367,32 @@ const Application: React.FC = () => {
               <Field as={DurationSelect} name="duration" />
             </div>
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+            <Link
+              href="/"
+              className="border relative flex items-center gap-2 px-2 mt-2 bg-primary-300 rounded-lg w-fit"
+            >
+              <Image src={bkash} alt="bkash" className=" w-20" />
+              <span>Pay with bkash</span>
+              <div className="h-3 w-3 rounded-full bg-primary-400 animate-ping absolute top-0 -right-6"></div>
+            </Link>
+            <MyTextInput
+              label="TransactionId"
+              name="transactionId"
+              type="text"
+              placeholder="Bkash TransactionId"
+            />
+          </div>
+          <div className="">
+            ১০০/= টাকা আবেদন ফি সহ- নির্ধারিত কোর্স ফি বিকাশ পেমেন্ট করে,
+            Transaction ID লিখুন। তারপর Submit করুন। অবশ্যই পেমেন্ট রিসিট মূল
+            ফরম এর সাথে সংযুক্ত করতে হবে
+          </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-20 flex items-center justify-center mx-auto mt-20 py-3 rounded-full text-xl font-bold border border-primary-200 hover:text-primary-200 "
+            className="px-20 flex items-center justify-center mx-auto mt-10 py-3 rounded-full text-xl font-bold border border-primary-200 hover:text-primary-200 "
           >
             {isSubmitting ? "Submitting..." : "Submit"}
           </button>

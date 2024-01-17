@@ -91,6 +91,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const course = getStringValue(formData, "course");
     const duration = getStringValue(formData, "duration");
     const pc = getStringValue(formData, "pc");
+    const transactionId = getStringValue(formData, "transactionId");
     const picture = formData.get("picture");
 
     try {
@@ -133,6 +134,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
           email,
           pc,
           userId,
+          transactionId,
           image: downloadURL,
           status: "Pending",
         },

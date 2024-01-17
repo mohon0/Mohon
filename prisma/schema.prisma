@@ -117,7 +117,8 @@ model Application {
   status       String
   image        String
   email        String
-  pc           String 
+  pc           String
+  transactionId String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   userId       String   @db.ObjectId
