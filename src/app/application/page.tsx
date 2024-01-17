@@ -242,7 +242,6 @@ export default function Apply() {
         </div>
       ) : (
         <div className="flex items-center justify-center mx-auto border w-full m-2 lg:m-10 lg:w-1/4">
-          {" "}
           Application date is over. Please wait for next circular or you can
           contact us.
         </div>

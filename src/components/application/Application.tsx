@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 import Header from "../application/Header";
+import Preview from "../preview/Privew";
 import BirthDay from "./BirthDay";
 import { BloodGroup } from "./BloodGroup";
 import { Board } from "./Board";
@@ -18,6 +19,7 @@ import { DurationSelect } from "./DurationSelect";
 import { EducationSelect } from "./EducationSelect";
 import { FileSelect } from "./FileSelect";
 import { Gender } from "./Gender";
+import { MaritelSelect } from "./MaritalSelect";
 import MyTextInput from "./MyTextInput";
 import { PcSelect } from "./PcSelect";
 import { Religion } from "./Religion";
@@ -78,6 +80,8 @@ const Application: React.FC = () => {
           course: "",
           duration: "",
           transactionId: "",
+          fatherOccupation: "",
+          maritalStatus: "",
         }}
         validationSchema={Yup.object({
           firstName: Yup.string()
@@ -148,6 +152,8 @@ const Application: React.FC = () => {
           course: Yup.string().required("Required"),
           duration: Yup.string().required("Required"),
           transactionId: Yup.string().required("Required"),
+          fatherOccupation: Yup.string().required("Required"),
+          maritalStatus: Yup.string().required("Required"),
         })}
         onSubmit={async (values, { setSubmitting }) => {
           setHasError(false);
@@ -238,6 +244,18 @@ const Application: React.FC = () => {
               type="text"
               placeholder="Mother name"
             />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+            <MyTextInput
+              label="Father's Occupation"
+              name="fatherOccupation"
+              type="text"
+              placeholder="Father's Occupation"
+            />
+            <div>
+              <div>Marital Status</div>
+              <Field as={MaritelSelect} name="maritalStatus" />
+            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
             <div>
@@ -369,7 +387,9 @@ const Application: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
             <Link
-              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://shop.bkash.com/mia-store01779120023/paymentlink"
               className="border relative flex items-center gap-2 px-2 mt-2 bg-primary-300 rounded-lg w-fit"
             >
               <Image src={bkash} alt="bkash" className=" w-20" />
@@ -388,14 +408,16 @@ const Application: React.FC = () => {
             Transaction ID লিখুন। তারপর Submit করুন। অবশ্যই পেমেন্ট রিসিট মূল
             ফরম এর সাথে সংযুক্ত করতে হবে
           </div>
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="px-20 flex items-center justify-center mx-auto mt-10 py-3 rounded-full text-xl font-bold border border-primary-200 hover:text-primary-200 "
-          >
-            {isSubmitting ? "Submitting..." : "Submit"}
-          </button>
+          <div className="flex items-center md:flex-row justify-center md:gap-20 mt-10 flex-col gap-6">
+            <Preview />
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="px-20 flex items-center justify-center py-3 rounded-full text-xl font-bold border border-primary-200 hover:text-primary-200 "
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </button>
+          </div>
         </Form>
       </Formik>
       <ToastContainer position="top-center" autoClose={3000} />

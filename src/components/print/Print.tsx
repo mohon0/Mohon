@@ -36,6 +36,8 @@ interface SingleApplicationProps {
     pc: string;
     email: string;
     transactionId: string;
+    fatherOccupation: string;
+    maritalStatus: string;
   };
 }
 
@@ -110,6 +112,12 @@ export default function Print({ application }: SingleApplicationProps) {
               item2="Mother Name"
               value1={application.fatherName}
               value2={application.motherName}
+            />
+            <Model
+              item1="Father's Occupation"
+              item2="Marital Status"
+              value1={application.fatherOccupation}
+              value2={application.maritalStatus}
             />
             <Model
               item1="Date Of Birth"
@@ -188,7 +196,7 @@ export default function Print({ application }: SingleApplicationProps) {
               </td>
             </tr>
           </table>
-          <div className="md:mx-12 lg:mx-10 mt-24  print:mt-16 md:flex print:flex hidden justify-between print:text-black font-bold">
+          <div className="md:mx-12 lg:mx-10 mt-24  print:mt-10 md:flex print:flex hidden justify-between print:text-black font-bold">
             <div>
               <div className="w-40 h-0.5 bg-cyan-700"></div>
               <div>Director Signature</div>

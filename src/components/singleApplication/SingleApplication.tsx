@@ -29,6 +29,8 @@ interface SingleApplicationProps {
     pc: string;
     email: string;
     transactionId: string;
+    fatherOccupation: string;
+    maritalStatus: string;
   };
 }
 

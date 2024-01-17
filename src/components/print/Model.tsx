@@ -7,8 +7,9 @@ type props = {
 
 export default function Model({ item1, value1, value2, item2 }: props) {
   const capitalizeFirstLetter = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str ? str.charAt(0).toUpperCase() + str.slice(1) : "";
   };
+
   return (
     <>
       <tr className="flex flex-col md:flex-row print:flex-row">
