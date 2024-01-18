@@ -397,13 +397,13 @@ const Application: React.FC = () => {
               <div className="h-3 w-3 rounded-full bg-primary-400 animate-ping absolute top-0 -right-6"></div>
             </Link>
             <MyTextInput
-              label="TransactionId"
+              label="TransactionID"
               name="transactionId"
               type="text"
-              placeholder="Bkash TransactionId"
+              placeholder="Bkash TransactionID"
             />
           </div>
-          <div className="">
+          <div className="border p-2 rounded-sm border-primary-400">
             ১০০/= টাকা আবেদন ফি সহ- নির্ধারিত কোর্স ফি বিকাশ পেমেন্ট করে,
             Transaction ID লিখুন। তারপর Submit করুন। অবশ্যই পেমেন্ট রিসিট মূল
             ফরম এর সাথে সংযুক্ত করতে হবে
