@@ -1,8 +1,5 @@
 "use client";
-import bkash from "@/images/tools/bkash.svg";
 import { Field, Form, Formik } from "formik";
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -21,6 +18,7 @@ import { FileSelect } from "./FileSelect";
 import { Gender } from "./Gender";
 import { MaritelSelect } from "./MaritalSelect";
 import MyTextInput from "./MyTextInput";
+import PayButton from "./PayButton";
 import { PcSelect } from "./PcSelect";
 import { Religion } from "./Religion";
 
@@ -386,16 +384,7 @@ const Application: React.FC = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
-            <Link
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://shop.bkash.com/mia-store01779120023/paymentlink"
-              className="border relative flex items-center gap-2 px-2 mt-2 bg-primary-300 rounded-lg w-fit"
-            >
-              <Image src={bkash} alt="bkash" className=" w-20" />
-              <span>Pay with bkash</span>
-              <div className="h-3 w-3 rounded-full bg-primary-400 animate-ping absolute top-0 -right-6"></div>
-            </Link>
+            <PayButton />
             <MyTextInput
               label="TransactionID"
               name="transactionId"
@@ -404,9 +393,8 @@ const Application: React.FC = () => {
             />
           </div>
           <div className="border p-2 rounded-sm border-primary-400">
-            ১০০/= টাকা আবেদন ফি সহ- নির্ধারিত কোর্স ফি বিকাশ পেমেন্ট করে,
-            Transaction ID লিখুন। তারপর Submit করুন। অবশ্যই পেমেন্ট রিসিট মূল
-            ফরম এর সাথে সংযুক্ত করতে হবে
+            ১০০/= টাকা আবেদন ফি বিকাশ পেমেন্ট করে, Transaction ID লিখুন। তারপর
+            Submit করুন। অবশ্যই পেমেন্ট রিসিট মূল ফরম এর সাথে সংযুক্ত করতে হবে
           </div>
           <div className="flex items-center md:flex-row justify-center md:gap-20 mt-10 flex-col gap-6">
             <Preview />

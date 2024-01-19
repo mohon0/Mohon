@@ -51,6 +51,12 @@ export function DurationSelect() {
               </SelectItem>
             )}
             <SelectItem
+              value="1 month"
+              onSelect={() => handleSelectChange("1 month")}
+            >
+              1 Month
+            </SelectItem>
+            <SelectItem
               value="3 month"
               onSelect={() => handleSelectChange("3 month")}
             >

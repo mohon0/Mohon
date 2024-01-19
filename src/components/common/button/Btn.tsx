@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
+import { memo } from "react";
 
 interface RepoData {
   id: string;
   button: string;
 }
 
-export default function Btn() {
+export function Btn() {
   const { isFetching, error, data } = useQuery<RepoData>({
     queryKey: ["repoData"],
     queryFn: () =>
@@ -35,3 +36,5 @@ export default function Btn() {
     </div>
   );
 }
+
+export default memo(Btn);

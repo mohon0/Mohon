@@ -1,3 +1,5 @@
+import { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
@@ -7,7 +9,6 @@ import { ReactQueryClientProvider } from "../../context/ReactQueryClientProvider
 import Footer from "../components/layout/Footer";
 import Navbar from "../components/layout/Navbar";
 import "./globals.css";
-import { QueryClient } from "@tanstack/react-query";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -67,8 +68,7 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children, session }: RootLayoutProps) {
-
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient();
   return (
     <ReactQueryClientProvider>
       <html lang="en">
@@ -94,6 +94,7 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
             <div className="min-h-screen mt-20">{children}</div>
             <Footer />
           </Provider>
+          <ReactQueryDevtools initialIsOpen={false} />
         </body>
       </html>
     </ReactQueryClientProvider>
