@@ -3,9 +3,11 @@ import { Inter } from "next/font/google";
 import Script from "next/script";
 import { ReactNode } from "react";
 import Provider from "../../context/Provider";
+import { ReactQueryClientProvider } from "../../context/ReactQueryClientProvider";
 import Footer from "../components/layout/Footer";
 import Navbar from "../components/layout/Navbar";
 import "./globals.css";
+import { QueryClient } from "@tanstack/react-query";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -65,31 +67,35 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children, session }: RootLayoutProps) {
-  return (
-    <html lang="en">
-      <Script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-N6SRGXKBYL"
-      ></Script>
-      <Script
-        id="google-analytics"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-N6SRGXKBYL');
-          `,
-        }}
-      />
 
-      <body className={inter.className}>
-        <Provider session={session}>
-          <Navbar />
-          <div className="min-h-screen mt-20">{children}</div>
-          <Footer />
-        </Provider>
-      </body>
-    </html>
+  const queryClient = new QueryClient()
+  return (
+    <ReactQueryClientProvider>
+      <html lang="en">
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-N6SRGXKBYL"
+        ></Script>
+        <Script
+          id="google-analytics"
+          dangerouslySetInnerHTML={{
+            __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-N6SRGXKBYL');
+          `,
+          }}
+        />
+
+        <body className={inter.className}>
+          <Provider session={session}>
+            <Navbar />
+            <div className="min-h-screen mt-20">{children}</div>
+            <Footer />
+          </Provider>
+        </body>
+      </html>
+    </ReactQueryClientProvider>
   );
 }

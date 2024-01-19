@@ -1,5 +1,4 @@
 "use client";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Btn from "../common/button/Btn";
@@ -7,7 +6,6 @@ import Menu from "./Menu";
 import { NavigationMenuDemo } from "./NavigationMenu";
 
 export default function Navbar() {
-  const { data: session } = useSession();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
 
@@ -26,6 +24,7 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [prevScrollPos]);
+  
 
   return (
     <header
