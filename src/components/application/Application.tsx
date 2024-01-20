@@ -15,6 +15,7 @@ import { District } from "./District";
 import { DurationSelect } from "./DurationSelect";
 import { EducationSelect } from "./EducationSelect";
 import { FileSelect } from "./FileSelect";
+import FooterNotice from "./FooterNotice";
 import { Gender } from "./Gender";
 import { MaritelSelect } from "./MaritalSelect";
 import MyTextInput from "./MyTextInput";
@@ -392,10 +393,7 @@ const Application: React.FC = () => {
               placeholder="Bkash TransactionID"
             />
           </div>
-          <div className="border p-2 rounded-sm border-primary-400">
-            ১০০/= টাকা আবেদন ফি বিকাশ পেমেন্ট করে, Transaction ID লিখুন। তারপর
-            Submit করুন। অবশ্যই পেমেন্ট রিসিট মূল ফরম এর সাথে সংযুক্ত করতে হবে
-          </div>
+          <FooterNotice />
           <div className="flex items-center md:flex-row justify-center md:gap-20 mt-10 flex-col gap-6">
             <Preview />
             <button
