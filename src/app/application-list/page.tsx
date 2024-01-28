@@ -1,9 +1,10 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
+import { FetchAllApplication } from "@/components/fetch/FetchAllApplication";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,46 +33,32 @@ function formatDate(isoDateString: string): string {
 
 export default function List() {
   const { status, data: session } = useSession();
-  const [applications, setApplications] = useState<Post[] | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+
   const [action, setAction] = useState("");
   const [key, setKey] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [searchInput, setSearchInput] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
 
   const email = session?.user?.email;
   const admin = process.env.NEXT_PUBLIC_ADMIN;
   const pageSize = 9;
 
-  useEffect(() => {
-    const apiUrl = `/api/apply?page=${currentPage}&pageSize=${pageSize}&category=${selectedCategory}&sortBy=${sortBy}&search=${searchInput}`;
-    setApplications([]);
-    setLoading(true);
+  const { data, isLoading, isError } = FetchAllApplication({
+    currentPage,
+    pageSize,
+    selectedCategory,
+    sortBy,
+    searchInput,
+  });
 
-    fetch(apiUrl)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setApplications(data.application);
-        setTotalPages(Math.ceil(data.totalPostsCount / pageSize));
-        setError(null);
-      })
-      .catch((error) => {
-        console.error("Error fetching application data:");
-        setError("No Post to display");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [currentPage, key, searchInput, selectedCategory, sortBy]);
+  console.log(data);
+
+  const totalPostsCount = data?.totalPostsCount || 1;
+  const totalPages = Math.ceil(totalPostsCount / pageSize);
+
+  console.log(totalPages);
 
   const handelActionChange = (value: string) => {
     if (value.trim() !== "") {
@@ -198,14 +185,18 @@ export default function List() {
       </div>
       {email === admin ? (
         <>
-          {loading ? (
-            <div className="loading-spinner">
+          {isLoading ? (
+            <div>
               <Loading />
             </div>
-          ) : applications && applications.length > 0 ? (
+          ) : isError ? (
+            <div>
+              <p>Error loading applications. No Application Found.</p>
+            </div>
+          ) : data.application && data.application.length > 0 ? (
             <div>
               <div className="grid grid-cols-1 md:grid-cols-3 lg:gap-20 gap-10">
-                {applications.map((app) => (
+                {data.application.map((app: Post) => (
                   <div
                     key={app.id}
                     className="border border-gray-500  rounded-lg p-4 w-full"
@@ -341,8 +332,8 @@ export default function List() {
               )}
               <ToastContainer position="top-center" autoClose={3000} />
             </div>
-          ) : error ? (
-            <p>{error}</p>
+          ) : isError ? (
+            <p>{"Error Loading Application"}</p>
           ) : (
             <p>No application data available.</p>
           )}
