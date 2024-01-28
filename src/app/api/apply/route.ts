@@ -26,10 +26,36 @@ export async function GET(req: NextRequest, res: NextResponse) {
       ...(status && status !== "all" ? { status } : {}),
       ...(search
         ? {
-            course: {
-              contains: search,
-              mode: "insensitive",
-            },
+            OR: [
+              {
+                firstName: {
+                  contains: search,
+                  mode: "insensitive",
+                },
+              },
+              {
+                lastName: {
+                  contains: search,
+                  mode: "insensitive",
+                },
+              },
+              {
+                AND: [
+                  {
+                    firstName: {
+                      contains: search,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    lastName: {
+                      contains: search,
+                      mode: "insensitive",
+                    },
+                  },
+                ],
+              },
+            ],
           }
         : {}),
     };

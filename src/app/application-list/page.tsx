@@ -185,7 +185,7 @@ export default function List() {
             <input
               type="text"
               className="w-full bg-transparent border h-[3.2rem] focus-within:border-primary-200 rounded-full focus-within:outline-none outline-none px-4"
-              placeholder="Search by course name"
+              placeholder="Search by applicant name"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />
