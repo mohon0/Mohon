@@ -53,8 +53,6 @@ export default function List() {
     searchInput,
   });
 
-  console.log(data);
-
   const totalPostsCount = data?.totalPostsCount || 1;
   const totalPages = Math.ceil(totalPostsCount / pageSize);
 
@@ -133,6 +131,7 @@ export default function List() {
     { length: totalPages },
     (_, index) => index + 1
   );
+
   return (
     <div className="mx-2 lg:mx-20">
       <div className="mt-28">

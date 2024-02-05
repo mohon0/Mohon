@@ -1,12 +1,12 @@
 "use client";
 import SigninInput from "@/components/common/input/SigninInput";
+import LoginValidation from "@/components/validation/LoginValidation";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LoginValidation from "../../components/validation/LoginValidation";
 
 export default function Login() {
   const { data: session } = useSession();

@@ -1,5 +1,7 @@
 "use client";
+import Input from "@/components/common/input/Input";
 import SigninInput from "@/components/common/input/SigninInput";
+import RegistrationValidation from "@/components/validation/RegistrationValidation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -7,8 +9,6 @@ import { useState } from "react";
 import { SiPolkadot } from "react-icons/si";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Input from "../../components/common/input/Input";
-import RegistrationValidation from "../../components/validation/RegistrationValidation";
 
 export default function Login() {
   const { data: session } = useSession();

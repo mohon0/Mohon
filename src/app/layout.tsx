@@ -7,7 +7,6 @@ import { ReactNode } from "react";
 import Provider from "../../context/Provider";
 import { ReactQueryClientProvider } from "../../context/ReactQueryClientProvider";
 import Footer from "../components/layout/Footer";
-import Navbar from "../components/layout/Navbar";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -90,8 +89,7 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
 
         <body className={inter.className}>
           <Provider session={session}>
-            <Navbar />
-            <div className="min-h-screen mt-20">{children}</div>
+            <div className="min-h-screen">{children}</div>
             <Footer />
           </Provider>
           <ReactQueryDevtools initialIsOpen={false} />
