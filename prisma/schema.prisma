@@ -42,12 +42,13 @@ model User {
   emailVerified      DateTime?
   image              String?
   verificationCode   String?
+  createdAt          DateTime? @default(now())
   accounts           Account[]
   sessions           Session[]
   posts              Post[]
   comments           Comment[]
-  applications       Application[] 
- 
+  applications       Application[]
+
 }
 
 model Post {
@@ -75,14 +76,14 @@ model Comment {
   author    User     @relation(fields: [authorId], references: [id])
   post      Post     @relation(fields: [postId], references: [id])
   likedBy   String[]
- 
+
 }
 
 model Notification {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   type       String
   senderId   String   @db.ObjectId
-  receiverId String   @db.ObjectId  
+  receiverId String   @db.ObjectId
   postId     String   @db.ObjectId
   createdAt  DateTime @default(now())
 

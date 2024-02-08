@@ -8,8 +8,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const url = new URL(req.url);
     const queryParams = new URLSearchParams(url.search);
     const searchName = queryParams.get("search") || "";
-    // Get the total count of all posts
-    const totalPosts = await prisma.post.count();
+    // Get the total count of all comments
+    const totalComments = await prisma.comment.count();
 
     // Calculate the start and end date of this month
     const startDateThisMonth = new Date();
@@ -21,8 +21,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     endDateThisMonth.setMonth(endDateThisMonth.getMonth() + 1);
     endDateThisMonth.setHours(0, 0, 0, 0);
 
-    // Get the count of posts created between start and end date of this month
-    const thisMonthPosts = await prisma.post.count({
+    // Get the count of comments created between start and end date of this month
+    const thisMonthComments = await prisma.comment.count({
       where: {
         createdAt: {
           gte: startDateThisMonth,
@@ -41,8 +41,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     endDateLastMonth.setDate(1);
     endDateLastMonth.setHours(0, 0, 0, 0);
 
-    // Get the count of posts created between start and end date of last month
-    const lastMonthPosts = await prisma.post.count({
+    // Get the count of comments created between start and end date of last month
+    const lastMonthComments = await prisma.comment.count({
       where: {
         createdAt: {
           gte: startDateLastMonth,
@@ -51,18 +51,25 @@ export async function GET(req: NextRequest, res: NextResponse) {
       },
     });
 
-    // Calculate the percentage of posts from this month compared to total posts from last month
-    let percentage;
-    if (lastMonthPosts === 0) {
-      percentage = 0; // Handle division by zero
+    // Calculate the percentage change in comments between this month and last month
+    let percentageChange;
+    if (lastMonthComments === 0) {
+      if (thisMonthComments === 0) {
+        percentageChange = 0; // Handle division by zero
+      } else {
+        percentageChange = 100; // All comments created this month are new
+      }
     } else {
-      percentage = ((thisMonthPosts / lastMonthPosts) * 100).toFixed(2);
+      percentageChange = (
+        ((thisMonthComments - lastMonthComments) / lastMonthComments) *
+        100
+      ).toFixed(2);
     }
 
-    // Prepare response object with totalPosts and percentage only
+    // Prepare response object with total comments and percentage change only
     const responseData = {
-      totalPosts,
-      percentage,
+      totalComments,
+      percentageChange,
     };
 
     return new NextResponse(JSON.stringify(responseData));

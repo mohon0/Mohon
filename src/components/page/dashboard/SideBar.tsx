@@ -6,7 +6,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BsGridFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { FaPowerOff } from "react-icons/fa6";
+import { FaClipboardList, FaUserEdit, FaUsers } from "react-icons/fa";
+import { FaPenToSquare, FaPowerOff } from "react-icons/fa6";
 
 export default function SideBar() {
   const pathname = usePathname();
@@ -42,41 +43,51 @@ export default function SideBar() {
                 }
               ></div>
             </Button>
-            <Button
-              className="flex items-center justify-start gap-4"
-              variant="outline"
-            >
-              <CgProfile />
-              <span>Profile</span>
-            </Button>
-            <Button
-              className="flex items-center justify-start gap-4"
-              variant="outline"
-            >
-              <CgProfile />
-              <span>New Post</span>
-            </Button>
-            <Button
-              className="flex items-center justify-start gap-4"
-              variant="outline"
-            >
-              <CgProfile />
-              <span>Edit Profile</span>
-            </Button>
-            <Button
-              className="flex items-center justify-start gap-4"
-              variant="outline"
-            >
-              <CgProfile />
-              <span>Application</span>
-            </Button>
-            <Button
-              className="flex items-center justify-start gap-4"
-              variant="outline"
-            >
-              <CgProfile />
-              <span>User</span>
-            </Button>
+            <Link href="/dashboard">
+              <Button
+                className="flex w-full items-center justify-start gap-4"
+                variant="outline"
+              >
+                <CgProfile />
+                <span>Profile</span>
+              </Button>
+            </Link>
+            <Link href="/newpost">
+              <Button
+                className="flex w-full items-center justify-start gap-4"
+                variant="outline"
+              >
+                <FaPenToSquare />
+                <span>New Post</span>
+              </Button>
+            </Link>
+            <Link href="/editprofile">
+              <Button
+                className="flex w-full items-center justify-start gap-4"
+                variant="outline"
+              >
+                <FaUserEdit />
+                <span>Edit Profile</span>
+              </Button>
+            </Link>
+            <Link href="application-list">
+              <Button
+                className="flex w-full items-center justify-start gap-4"
+                variant="outline"
+              >
+                <FaClipboardList />
+                <span>Application</span>
+              </Button>
+            </Link>
+            <Link href="/user">
+              <Button
+                className="flex w-full items-center justify-start gap-4"
+                variant="outline"
+              >
+                <FaUsers />
+                <span>User</span>
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

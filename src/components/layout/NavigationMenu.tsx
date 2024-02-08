@@ -28,6 +28,7 @@ type Component = {
 export function NavigationMenuDemo() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { data: session } = useSession();
+  const admin = process.env.NEXT_PUBLIC_ADMIN;
 
   const components: Component[] = [
     {
@@ -120,7 +121,7 @@ export function NavigationMenuDemo() {
                 <div className="flex items-center justify-center">
                   <button
                     onClick={handleDelete}
-                    className="font-bold flex gap-4 items-center justify-center px-10 py-2 rounded-lg bg-red-600 text-white hover:bg-red-500"
+                    className="flex items-center justify-center gap-4 rounded-lg bg-red-600 px-10 py-2 font-bold text-white hover:bg-red-500"
                   >
                     Log Out
                     <FaPowerOff size={14} />
@@ -128,19 +129,19 @@ export function NavigationMenuDemo() {
                 </div>
               </ul>
               {showConfirmation && (
-                <div className="fixed w-screen inset-0  h-screen flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50  z-50">
-                  <div className="bg-blue-950 p-6 w-11/12 lg:w-2/6 rounded-lg shadow-md">
+                <div className="fixed inset-0 z-50  flex h-screen w-screen items-center justify-center bg-black bg-opacity-50  backdrop-blur-sm">
+                  <div className="w-11/12 rounded-lg bg-blue-950 p-6 shadow-md lg:w-2/6">
                     <p className="text-xl">Are you sure you want to Log Out</p>
-                    <div className="flex justify-end mt-8">
+                    <div className="mt-8 flex justify-end">
                       <button
                         onClick={() => setShowConfirmation(false)}
-                        className="px-4 py-2 mr-4 bg-gray-600 hover:bg-gray-700 rounded"
+                        className="mr-4 rounded bg-gray-600 px-4 py-2 hover:bg-gray-700"
                       >
                         Cancel
                       </button>
                       <button
                         onClick={handleLogout}
-                        className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+                        className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
                       >
                         Log Out
                       </button>
@@ -214,7 +215,13 @@ export function NavigationMenuDemo() {
         </NavigationMenuItem>
         {session?.user ? (
           <NavigationMenuItem>
-            <Link href="/dashboard" legacyBehavior passHref>
+            <Link
+              href={
+                session.user.email === admin ? "/admin-dashboard" : "/dashboard"
+              }
+              legacyBehavior
+              passHref
+            >
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Dashboard
               </NavigationMenuLink>
@@ -245,7 +252,7 @@ const ListItem = React.forwardRef<
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
+            className,
           )}
           {...props}
         >

@@ -8,9 +8,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const url = new URL(req.url);
     const queryParams = new URLSearchParams(url.search);
     const searchName = queryParams.get("search") || "";
-    // Get the total count of all posts
-    const totalPosts = await prisma.post.count();
-
     // Calculate the start and end date of this month
     const startDateThisMonth = new Date();
     startDateThisMonth.setDate(1);
@@ -21,8 +18,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
     endDateThisMonth.setMonth(endDateThisMonth.getMonth() + 1);
     endDateThisMonth.setHours(0, 0, 0, 0);
 
-    // Get the count of posts created between start and end date of this month
-    const thisMonthPosts = await prisma.post.count({
+    // Get the total user count
+
+    const totalUser = await prisma.user.count();
+
+    // Get the count of users created between start and end date of this month
+    const thisMonthUser = await prisma.user.count({
       where: {
         createdAt: {
           gte: startDateThisMonth,
@@ -41,8 +42,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     endDateLastMonth.setDate(1);
     endDateLastMonth.setHours(0, 0, 0, 0);
 
-    // Get the count of posts created between start and end date of last month
-    const lastMonthPosts = await prisma.post.count({
+    // Get the count of users created between start and end date of last month
+    const lastMonthUser = await prisma.user.count({
       where: {
         createdAt: {
           gte: startDateLastMonth,
@@ -51,17 +52,24 @@ export async function GET(req: NextRequest, res: NextResponse) {
       },
     });
 
-    // Calculate the percentage of posts from this month compared to total posts from last month
+    // Calculate the percentage change in users between this month and last month
     let percentage;
-    if (lastMonthPosts === 0) {
-      percentage = 0; // Handle division by zero
+    if (lastMonthUser === 0) {
+      if (thisMonthUser === 0) {
+        percentage = 0; // Handle division by zero
+      } else {
+        percentage = 100; // All users created this month are new
+      }
     } else {
-      percentage = ((thisMonthPosts / lastMonthPosts) * 100).toFixed(2);
+      percentage = (
+        ((thisMonthUser - lastMonthUser) / lastMonthUser) *
+        100
+      ).toFixed(2);
     }
 
-    // Prepare response object with totalPosts and percentage only
+    // Prepare response object with total users and percentage only
     const responseData = {
-      totalPosts,
+      totalUser,
       percentage,
     };
 

@@ -1,19 +1,41 @@
+import Loading from "@/components/common/loading/Loading";
+import { FetchUserCount } from "@/components/fetch/admin/FetchUserCount";
 import { Card } from "@/components/ui/card";
 import { FaUsers } from "react-icons/fa";
 
 export default function UserCard() {
+  const { isLoading, data, isError } = FetchUserCount();
   return (
-    <Card className="p-3">
-      <div className="flex items-center gap-6">
-        <div className="flex flex-col gap-2">
-          <div className="text-4xl font-bold">20</div>
-          <div>Total User</div>
-          <div>0.4% More Then Last Month</div>
+    <>
+      {isLoading ? (
+        <div className="m-3">
+          <Loading />
         </div>
-        <div className="mx-auto flex items-center justify-center text-primary-200">
-          <FaUsers size={60} />
-        </div>
-      </div>
-    </Card>
+      ) : isError ? (
+        <p>Error loading data. Please try again later.</p>
+      ) : (
+        <Card className="p-3">
+          <div className="flex items-center gap-6">
+            <div className="flex flex-col gap-2">
+              <div className="text-4xl font-bold">{data.totalUser}</div>
+              <div>Total User</div>
+              <div className="flex flex-wrap gap-1">
+                <span
+                  className={
+                    data.percentage > 0 ? "text-primary-200" : "text-red-500"
+                  }
+                >
+                  {data.percentage} % {data.percentage >= 0 ? "More" : "less"}
+                </span>
+                <span>Then Last Month</span>
+              </div>
+            </div>
+            <div className="mx-auto flex items-center justify-center text-primary-200">
+              <FaUsers size={60} />
+            </div>
+          </div>
+        </Card>
+      )}
+    </>
   );
 }

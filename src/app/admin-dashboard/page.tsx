@@ -4,8 +4,8 @@ import CommentCard from "@/components/page/dashboard/CommentCard";
 import Navbar from "@/components/page/dashboard/Navbar";
 import PostCard from "@/components/page/dashboard/PostCard";
 import SideBar from "@/components/page/dashboard/SideBar";
+import SwitchCard from "@/components/page/dashboard/SwitchCard";
 import UserCard from "@/components/page/dashboard/UserCard";
-import { Card } from "@/components/ui/card";
 
 export default function AdminDashboard() {
   return (
@@ -26,7 +26,7 @@ export default function AdminDashboard() {
                   <PostCard />
                   <CommentCard />
                 </div>
-                <Card className="h-80 w-full border"></Card>
+                <SwitchCard />
               </div>
             </div>
           </div>
