@@ -1,7 +1,7 @@
 "use client";
-import { NavigationMenuDemo } from "@/components/layout/NavigationMenu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession } from "next-auth/react";
+import NavigationMenuUi from "./NavigationMenu";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -11,7 +11,7 @@ export default function Navbar() {
   const image = session?.user?.image;
   return (
     <div className="flex h-16 items-center justify-between border-b px-10">
-      <NavigationMenuDemo />
+      <NavigationMenuUi />
       <>
         {session && (
           <Avatar className="cursor-pointer">

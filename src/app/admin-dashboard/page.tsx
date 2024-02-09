@@ -1,7 +1,9 @@
 "use client";
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
 import ApplicationCard from "@/components/page/dashboard/ApplicationCard";
 import CommentCard from "@/components/page/dashboard/CommentCard";
-import Navbar from "@/components/page/dashboard/Navbar";
+import Navbarui from "@/components/page/dashboard/Navbar";
 import PostCard from "@/components/page/dashboard/PostCard";
 import SideBar from "@/components/page/dashboard/SideBar";
 import SwitchCard from "@/components/page/dashboard/SwitchCard";
@@ -10,17 +12,22 @@ import UserCard from "@/components/page/dashboard/UserCard";
 export default function AdminDashboard() {
   return (
     <>
-      <div className="grid grid-cols-12">
+      <div>
         <SideBar />
-        <div className="col-span-10">
-          <Navbar />
-          <div className="mx-10 mt-6">
+        <div className="min-h-screen md:ml-52">
+          <div className="md:hidden">
+            <Navbar />
+          </div>
+          <div className="hidden md:block">
+            <Navbarui />
+          </div>
+          <div className="mx-10 md:mt-6 mt-20">
             <div className="flex items-center justify-center">
               <p className="text-2xl font-extrabold">Dashboard</p>
             </div>
             <div className="mt-6">
-              <div className="grid grid-cols-3 gap-8">
-                <div className="col-span-2 grid grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                <div className="col-span-2 grid grid-cols-1 gap-8 md:grid-cols-2">
                   <UserCard />
                   <ApplicationCard />
                   <PostCard />
@@ -30,6 +37,7 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
+          <Footer />
         </div>
       </div>
     </>

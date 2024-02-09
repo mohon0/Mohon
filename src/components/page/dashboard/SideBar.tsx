@@ -18,7 +18,7 @@ export default function SideBar() {
   const image = session?.user?.image;
 
   return (
-    <div className="col-span-2 flex min-h-screen flex-col justify-between overflow-clip bg-gradient-to-tr from-gray-800 via-black to-slate-800">
+    <div className="fixed hidden h-screen w-52 flex-col justify-between overflow-clip bg-gradient-to-tr from-gray-800 via-black to-slate-800 md:flex">
       <div>
         <Link href="/">
           <p className="my-3 text-center text-2xl font-bold text-primary-200">
