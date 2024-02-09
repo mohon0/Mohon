@@ -1,4 +1,4 @@
-import SectionHeader from "../common/animation/SectionHeader";
+import SectionHeader from "../../common/animation/SectionHeader";
 
 export default function ServicesHeader() {
   return (

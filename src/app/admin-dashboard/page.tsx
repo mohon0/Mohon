@@ -21,7 +21,7 @@ export default function AdminDashboard() {
           <div className="hidden md:block">
             <Navbarui />
           </div>
-          <div className="mx-10 md:mt-6 mt-20">
+          <div className="mx-10 mt-20 md:mt-6">
             <div className="flex items-center justify-center">
               <p className="text-2xl font-extrabold">Dashboard</p>
             </div>

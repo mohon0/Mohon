@@ -1,8 +1,8 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
+import { FetchRecentProject } from "@/components/fetch/get/FetchRecentProject";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, FreeMode, Pagination } from "swiper/modules";
@@ -22,26 +22,7 @@ interface Post {
 }
 
 export default function ProjectSlider() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setPosts([]);
-    setLoading(true);
-    const apiUrl = `api/allpost?page=1&pageSize=5&category=projects`;
-
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.posts.length > 0) setPosts(data.posts);
-
-        setLoading(false);
-      })
-      .catch(() => {
-        console.log("error");
-        setLoading(false);
-      });
-  }, []);
+  const { isLoading, isError, data } = FetchRecentProject();
 
   const encodeForUrl = (str: string) => {
     return encodeURIComponent(str).replace(/%20/g, "_");
@@ -49,11 +30,15 @@ export default function ProjectSlider() {
 
   return (
     <div className="w-full px-3 md:px-0">
-      {loading ? (
-        <Loading />
+      {isLoading ? (
+        <div className="m-3">
+          <Loading />
+        </div>
+      ) : isError ? (
+        <p>Error loading posts. Please try again later.</p>
       ) : (
         <div>
-          {posts.length > 0 ? (
+          {data.posts.length > 0 ? (
             <Swiper
               modules={[Autoplay, FreeMode, Pagination]}
               grabCursor={true}
@@ -91,23 +76,23 @@ export default function ProjectSlider() {
                 dynamicBullets: true,
               }}
             >
-              {posts.map((post) => {
+              {data.posts.map((post: Post) => {
                 const encodedTitle = post.title ? encodeForUrl(post.title) : "";
 
                 return (
                   <SwiperSlide
                     key={post.id}
-                    className="relative group w-full md:w-1/3 lg:w-1/4 h-60 md:h-96 mb-16 overflow-hidden rounded-2xl"
+                    className="group relative mb-16 h-60 w-full overflow-hidden rounded-2xl md:h-96 md:w-1/3 lg:w-1/4"
                   >
                     <Link href={`/blog/${post.category}/${encodedTitle}`}>
                       <Image
                         src={post.coverImage}
                         alt=""
-                        className=" w-full h-60 md:h-96 object-cover rounded-2xl"
+                        className=" h-60 w-full rounded-2xl object-cover md:h-96"
                         height={500}
                         width={500}
                       />
-                      <div className=" absolute bottom-0 gradientbackground px-2 py-3 left-0 flex w-full  text-xl font-medium group-hover:text-primary-200">
+                      <div className=" gradientbackground absolute bottom-0 left-0 flex w-full px-2 py-3  text-xl font-medium group-hover:text-primary-200">
                         {post.title}
                       </div>
                     </Link>

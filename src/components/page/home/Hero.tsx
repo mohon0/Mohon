@@ -6,16 +6,16 @@ import { AiFillFacebook } from "react-icons/ai";
 import { FaLinkedin } from "react-icons/fa";
 import { SiFreelancer, SiUpwork } from "react-icons/si";
 import { TbBrandFiverr, TbBrandTwitter } from "react-icons/tb";
-import AnimatedTextWord from "../common/animation/AnimatedText";
-import TypeEffect from "../common/animation/TypeEffect";
+import AnimatedTextWord from "../../common/animation/AnimatedText";
+import TypeEffect from "../../common/animation/TypeEffect";
 import HeroImage from "./HeroImage";
 import Intro from "./Intro";
 
 export default function Hero() {
   return (
-    <div className=" mt-12 mx-3 lg:mt-12 md:mx-4 lg:mx-28 relative flex flex-col min-w-screen mb-20 justify-center items-center">
-      <div className="flex justify-center gap-8 md:gap-0 flex-col-reverse md:flex-row md:justify-between ">
-        <div className="flex md:w-1/2 flex-col gap-6 justify-center">
+    <div className=" min-w-screen relative mx-3 mb-20 mt-12 flex flex-col items-center justify-center md:mx-4 lg:mx-28 lg:mt-12">
+      <div className="flex flex-col-reverse justify-center gap-8 md:flex-row md:justify-between md:gap-0 ">
+        <div className="flex flex-col justify-center gap-6 md:w-1/2">
           <div className="md:hidden">Hello, i am</div>
           <div className="hidden md:block">
             <AnimatedTextWord
@@ -40,7 +40,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex flex-wrap gap-10 text-slate-300 my-4"
+            className="my-4 flex flex-wrap gap-10 text-slate-300"
           >
             <Link
               href="https://facebook.com/md.freelancermohon"
@@ -69,7 +69,7 @@ export default function Hero() {
           </motion.div>
           <Time />
         </div>
-        <div className="flex items-center justify-center md:justify-end scale-90 md:scale-100 md:w-1/2">
+        <div className="flex scale-90 items-center justify-center md:w-1/2 md:scale-100 md:justify-end">
           <HeroImage />
         </div>
       </div>

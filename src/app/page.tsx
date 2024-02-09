@@ -1,19 +1,20 @@
 import StarsCanvas from "@/components/common/animation/Star";
-import Cta from "@/components/home/Cta";
-import Hero from "@/components/home/Hero";
-import Projects from "@/components/home/Projects";
-import Services from "@/components/home/Services";
-import Team from "@/components/home/Team";
-import Testimonial from "@/components/home/Testimonial";
-import Tools from "@/components/home/Tools";
 import { Contract } from "@/components/layout/Contract";
+import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import Cta from "@/components/page/home/Cta";
+import Hero from "@/components/page/home/Hero";
+import Projects from "@/components/page/home/Projects";
+import Services from "@/components/page/home/Services";
+import Team from "@/components/page/home/Team";
+import Testimonial from "@/components/page/home/Testimonial";
+import Tools from "@/components/page/home/Tools";
 
 export default function Home() {
   return (
     <main className=" overflow-x-hidden">
       <Navbar />
-      <div className="fixed h-screen -z-50 left-0 top-0">
+      <div className="fixed left-0 top-0 -z-50 h-screen">
         <StarsCanvas />
       </div>
       <div className="mt-20">
@@ -26,6 +27,7 @@ export default function Home() {
       <Cta />
       <Testimonial />
       <Contract />
+      <Footer />
     </main>
   );
 }

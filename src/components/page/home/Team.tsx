@@ -6,13 +6,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, FreeMode, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SectionHeader from "../common/animation/SectionHeader";
+import SectionHeader from "../../common/animation/SectionHeader";
 import { TeamData } from "./TeamData";
 import "./TeamStyle.css";
 
 export default function Team() {
   return (
-    <div className="md:my-28  flex items-center justify-center flex-col md:gap-20">
+    <div className="flex  flex-col items-center justify-center md:my-28 md:gap-20">
       <SectionHeader text="Team Members" title="My Team" />
       <div className="w-full px-3 md:px-0">
         <Swiper
@@ -42,7 +42,7 @@ export default function Team() {
             },
           }}
           centeredSlides={true}
-          className="my-12 pb-10 w-full "
+          className="my-12 w-full pb-10 "
           centerInsufficientSlides={true}
           freeMode={true}
           pagination={{
@@ -52,22 +52,22 @@ export default function Team() {
           {TeamData.map((data) => (
             <SwiperSlide
               key={data.id}
-              className="w-full md:w-1/3 lg:w-1/4 border-gray-600 rounded-2xl border mb-16"
+              className="mb-16 w-full rounded-2xl border border-gray-600 md:w-1/3 lg:w-1/4"
             >
               <div className=" flex w-full">
                 <Image
                   src={data.img}
                   alt=""
-                  className=" h-80 object-cover rounded-t-2xl"
+                  className=" h-80 rounded-t-2xl object-cover"
                 />
               </div>
-              <div className="flex flex-col gap-2 my-5 items-center justify-center">
-                <div className="text-primary-200 font-bold text-2xl">
+              <div className="my-5 flex flex-col items-center justify-center gap-2">
+                <div className="text-2xl font-bold text-primary-200">
                   {data.name}
                 </div>
                 <div className="text-slate-400">{data.post}</div>
               </div>
-              <div className="flex justify-center gap-5 text-slate-300 text-2xl mb-4">
+              <div className="mb-4 flex justify-center gap-5 text-2xl text-slate-300">
                 <Link href={data.facebook} target="_blank">
                   <FaFacebook />
                 </Link>
