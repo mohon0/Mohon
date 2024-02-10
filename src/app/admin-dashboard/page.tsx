@@ -3,15 +3,12 @@ import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import ApplicationCard from "@/components/page/dashboard/ApplicationCard";
 import ApplicationChart from "@/components/page/dashboard/ApplicationChart";
-import BlogChart from "@/components/page/dashboard/BlogChart";
 import CommentCard from "@/components/page/dashboard/CommentCard";
-import CommentChart from "@/components/page/dashboard/CommentChart";
 import Navbarui from "@/components/page/dashboard/Navbar";
 import PostCard from "@/components/page/dashboard/PostCard";
 import SideBar from "@/components/page/dashboard/SideBar";
 import SwitchCard from "@/components/page/dashboard/SwitchCard";
 import UserCard from "@/components/page/dashboard/UserCard";
-import UserChart from "@/components/page/dashboard/UserChart";
 
 export default function AdminDashboard() {
   return (
@@ -40,10 +37,10 @@ export default function AdminDashboard() {
                 <SwitchCard />
               </div>
             </div>
-            <UserChart />
+            {/* <UserChart /> */}
             <ApplicationChart />
-            <BlogChart />
-            <CommentChart />
+            {/* <BlogChart /> */}
+            {/* <CommentChart /> */}
           </div>
           <Footer />
         </div>

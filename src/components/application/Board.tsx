@@ -36,6 +36,7 @@ export function Board() {
     "Dinajpur",
     "Madrasah",
     "Technical",
+    "DIBS(Dhaka)",
   ];
 
   return (
