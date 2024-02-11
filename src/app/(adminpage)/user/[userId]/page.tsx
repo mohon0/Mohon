@@ -14,7 +14,7 @@ interface UserData {
   applications: [
     {
       id: string;
-    }
+    },
   ];
   comments: Array<{
     id: string;
@@ -75,10 +75,10 @@ export default function UserData() {
         <div>
           {userData && (
             <div className="mx-2">
-              <div className="flex items-center justify-center flex-col gap-10">
+              <div className="flex flex-col items-center justify-center gap-10">
                 <div
-                  className="border w-full md:w-2/3 lg:w-1/4 flex items-center justify-center flex-col
-                    gap-6"
+                  className="flex w-full flex-col items-center justify-center gap-6 border md:w-2/3
+                    lg:w-1/4"
                 >
                   {userData.image ? (
                     <Image
@@ -86,23 +86,23 @@ export default function UserData() {
                       alt=""
                       width={300}
                       height={300}
-                      className=" w-full h-80 object-cover"
+                      className=" h-48 w-full object-cover"
                     />
                   ) : (
-                    <div className="h-80 w-full text-xl text-gray-500 border-b flex items-center justify-center">
+                    <div className="flex h-80 w-full items-center justify-center border-b text-xl text-gray-500">
                       No Image Found
                     </div>
                   )}
                   <div className="m-4">
-                    <p className="font-bold text-2xl text-primary-200 text-center">
+                    <p className="text-center text-2xl font-bold text-primary-200">
                       {userData.name}
                     </p>
-                    <p className="text-gray-400 text-center">
+                    <p className="text-center text-gray-400">
                       {userData.email}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center flex-col lg:flex-row justify-center gap-10">
+                <div className="flex flex-col items-center justify-center gap-10 lg:flex-row">
                   <div className="border p-2 md:p-4">
                     <div>Comments</div>
                     <div>
@@ -118,7 +118,7 @@ export default function UserData() {
                     </div>
                   </div>
 
-                  <div className="border p-2 md:p-4 w-full flex flex-col gap-6 items-center justify-center">
+                  <div className="flex w-full flex-col items-center justify-center gap-6 border p-2 md:p-4">
                     <div>Application</div>
                     <div>
                       {userData.applications &&
@@ -127,7 +127,7 @@ export default function UserData() {
                           <Link
                             href={`/application-list/singleapplication/${userData.applications[0].id}`}
                           >
-                            <p className="bg-primary-200 text-black p-2 rounded-lg">
+                            <p className="rounded-lg bg-primary-200 p-2 text-black">
                               Application Details
                             </p>
                           </Link>
