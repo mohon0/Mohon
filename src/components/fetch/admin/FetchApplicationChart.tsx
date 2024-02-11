@@ -10,3 +10,12 @@ export function FetchApplicationChart() {
     },
   });
 }
+export function FetchUserChart() {
+  return useQuery({
+    queryKey: ["admin blog chart"],
+    queryFn: async () => {
+      const response = await axios.get(`/api/admin-dashboard/blogchart`);
+      return response.data;
+    },
+  });
+}

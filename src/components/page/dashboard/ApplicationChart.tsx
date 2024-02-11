@@ -16,37 +16,30 @@ export default function ApplicationChart() {
 
   return (
     <div className="mt-20" style={{ color: "white" }}>
-      {" "}
-      {/* Adjust text color for dark background */}
       {isLoading ? (
         <Loading />
       ) : isError ? (
         <div>Error fetching chart</div>
       ) : (
         <>
-          <div className="mx-auto mb-20 flex items-center justify-center text-3xl font-bold text-primary-200">
+          <div className="mx-auto mb-10 flex items-center justify-center text-3xl font-bold text-primary-200">
             Application Chart
           </div>
           <ResponsiveContainer width="100%" height={350}>
             <BarChart data={chartData || []}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                dataKey="course" // Assuming 'course' as the category for X-Axis
-                stroke="#888888"
-                fontSize={12}
-              />
+              <XAxis dataKey="course" stroke="#888888" fontSize={12} />
               <YAxis stroke="#888888" fontSize={12} />
               <Tooltip
-                cursor={{ fill: "rgba(255,255,255,0.1)" }} // Adjust cursor color for tooltip
+                cursor={{ fill: "rgba(255,255,255,0.1)" }}
                 contentStyle={{
                   backgroundColor: "rgba(0,0,0,0.8)",
                   border: "none",
-                }} // Adjust tooltip background and border
-                labelStyle={{ color: "white" }} // Adjust tooltip label color
-                itemStyle={{ color: "white" }} // Adjust tooltip item color
+                }}
+                labelStyle={{ color: "white" }}
+                itemStyle={{ color: "white" }}
               />
-              <Bar dataKey="_count" fill="#4caf50" radius={[4, 4, 0, 0]} />{" "}
-              {/* Adjust bar color */}
+              <Bar dataKey="_count" fill="#15ce2c" radius={[4, 4, 0, 0]} />{" "}
             </BarChart>
           </ResponsiveContainer>
         </>

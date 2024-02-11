@@ -5,10 +5,11 @@ const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
-    // Use Prisma's native groupBy method with transformed createdAt field
+    const url = new URL(req.url);
+    const queryParams = new URLSearchParams(url.search);
+    const searchName = queryParams.get("search") || "";
     const response = await prisma.application.groupBy({
       by: ["course"],
-
       _count: true,
     });
 
