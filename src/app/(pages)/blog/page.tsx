@@ -2,7 +2,9 @@
 import Loading from "@/components/common/loading/Loading";
 import Filter from "@/components/common/post/Filter";
 import PostModel from "@/components/common/post/PostModel";
-import { useEffect, useState } from "react";
+import PaginationUi from "@/components/core/PaginationUi";
+import { FetchAllPost } from "@/components/fetch/get/blog/FetchAllPost";
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 interface Post {
@@ -19,44 +21,26 @@ interface Post {
 }
 
 export default function Blog() {
-  const [posts, setPosts] = useState<Post[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
-  const [loading, setLoading] = useState(true);
   const [searchInput, setSearchInput] = useState("");
 
   const pageSize = 9;
 
-  useEffect(() => {
-    setPosts([]);
-    setLoading(true);
-    const apiUrl = `api/allpost?page=${currentPage}&pageSize=${pageSize}&category=${selectedCategory}&sortBy=${sortBy}&search=${searchInput}`;
-
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.posts.length > 0) setPosts(data.posts);
-
-        setTotalPages(Math.ceil(data.totalPostsCount / pageSize));
-        setLoading(false);
-      })
-      .catch(() => {
-        console.log("error");
-        setLoading(false);
-      });
-  }, [currentPage, selectedCategory, sortBy, searchInput]);
-
-  const jumpToPageOptions = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
-  );
+  const { isLoading, data, isError } = FetchAllPost({
+    currentPage,
+    pageSize,
+    selectedCategory,
+    sortBy,
+    searchInput,
+  });
 
   return (
-    <div className=" lg:my-10 mx-4 lg:mx-28 flex items-center justify-center flex-col gap-20">
-      <div className="text-3xl md:text-5xl font-bold">My Latest Updates</div>
-      <div className="flex flex-col md:flex-row items-center w-full gap-10">
+    <div className=" mx-4 flex flex-col items-center justify-center gap-20 lg:mx-28 lg:my-10">
+      <div className="text-3xl font-bold md:text-5xl">My Latest Updates</div>
+      <div className="flex w-full flex-col items-center gap-10 md:flex-row">
         {/* Filter by category dropdown */}
         <div>
           <Filter
@@ -65,13 +49,13 @@ export default function Blog() {
           />
         </div>
         {/* Sort by dropdown */}
-        <div className="rounded-full flex items-center justify-center  gap-2 border px-4 py-2">
+        <div className="flex items-center justify-center gap-2  rounded-full border px-4 py-2">
           <label htmlFor="sortPosts">SortBy:</label>
           <select
             id="sortPosts"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="bg-[#000119] px-2 py-2 w-24"
+            className="w-24 bg-[#000119] px-2 py-2"
           >
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
@@ -80,7 +64,7 @@ export default function Blog() {
         <div className="relative flex items-center md:w-1/2">
           <input
             type="text"
-            className="w-full bg-transparent border h-[3.2rem] focus-within:border-primary-200 rounded-full focus-within:outline-none outline-none px-4"
+            className="h-[3.2rem] w-full rounded-full border bg-transparent px-4 outline-none focus-within:border-primary-200 focus-within:outline-none"
             placeholder="Search..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
@@ -93,81 +77,39 @@ export default function Blog() {
       </div>
 
       {/* Loading state rendering */}
-      {loading ? (
-        <div className="w-11/12 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+      {isLoading ? (
+        <div className="grid w-11/12 grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
           <Loading />
           <Loading />
           <Loading />
         </div>
+      ) : isError ? (
+        "Error Fetching Post"
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 ">
-          {posts.length > 0 ? (
-            posts.map((post) => (
-              <div key={post.id}>
-                <PostModel
-                  title={post.title}
-                  img={post.coverImage}
-                  category={post.category}
-                />
+        <>
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 ">
+            {data.posts.length > 0 ? (
+              data.posts.map((post: Post) => (
+                <div key={post.id}>
+                  <PostModel
+                    title={post.title}
+                    img={post.coverImage}
+                    category={post.category}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="col-span-3 flex items-center justify-center text-2xl font-bold">
+                No posts to display
               </div>
-            ))
-          ) : (
-            <div className="text-2xl font-bold flex items-center justify-center col-span-3">
-              No posts to display
-            </div>
-          )}
-        </div>
-      )}
-      {/* Pagination controls */}
-      {totalPages > 1 && (
-        <div className="mt-4 flex gap-4 items-center">
-          <button
-            onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
-            disabled={currentPage === 1}
-            className={`px-4 py-2 rounded-md ${
-              currentPage === 1
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-gray-700 text-white cursor-pointer"
-            }`}
-          >
-            Prev
-          </button>
-          <div className="relative">
-            <select
-              value={currentPage}
-              onChange={(e) => setCurrentPage(Number(e.target.value))}
-              className="px-4 py-2 rounded-md bg-gray-600 focus:outline-none"
-            >
-              {jumpToPageOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            )}
           </div>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentPage(index + 1)}
-              className={`px-4 py-2 rounded-md ${
-                currentPage === index + 1 ? "bg-blue-950 border" : "bg-gray-600"
-              }`}
-            >
-              {index + 1}
-            </button>
-          ))}
-          <button
-            onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
-            disabled={currentPage === totalPages}
-            className={`px-4 py-2 rounded-md ${
-              currentPage === totalPages
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-gray-700 text-white cursor-pointer"
-            }`}
-          >
-            Next
-          </button>
-        </div>
+          <PaginationUi
+            currentPage={currentPage}
+            totalPages={Math.ceil(Number(data.totalPostsCount) / pageSize)}
+            setCurrentPage={(newPage) => setCurrentPage(newPage)}
+          />
+        </>
       )}
     </div>
   );

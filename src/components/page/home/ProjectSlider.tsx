@@ -1,6 +1,6 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
-import { FetchRecentProject } from "@/components/fetch/get/FetchRecentProject";
+import { FetchHomePageRecentProject } from "@/components/fetch/get/blog/FetchHomepageRecentProject";
 import Image from "next/image";
 import Link from "next/link";
 import "swiper/css";
@@ -22,7 +22,7 @@ interface Post {
 }
 
 export default function ProjectSlider() {
-  const { isLoading, isError, data } = FetchRecentProject();
+  const { isLoading, isError, data } = FetchHomePageRecentProject();
 
   const encodeForUrl = (str: string) => {
     return encodeURIComponent(str).replace(/%20/g, "_");

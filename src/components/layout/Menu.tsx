@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import Btn from "../common/button/Btn";
+import ActionButton from "./ActionButton";
 
 export default function Menu() {
   const [NavOpen, setNavOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function Menu() {
   };
 
   return (
-    <div className="lg:hidden relative">
+    <div className="relative lg:hidden">
       <div
         className={`z-40 flex flex-col gap-1 p-3 duration-300 ${
           NavOpen ? "rotate-[360deg]" : ""
@@ -38,19 +38,19 @@ export default function Menu() {
         ></span>
       </div>
       <div
-        className={`fixed top-0 right-0 z-50 flex h-screen w-full transform justify-end  bg-slate-200 bg-opacity-5 backdrop-blur-sm transition duration-300 ease-out  ${
+        className={`fixed right-0 top-0 z-50 flex h-screen w-full transform justify-end  bg-slate-200 bg-opacity-5 backdrop-blur-sm transition duration-300 ease-out  ${
           NavOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex w-9/12 flex-col gap-4 bg-[#000119] z-50">
+        <div className="z-50 flex w-9/12 flex-col gap-4 bg-[#000119]">
           <div className="flex items-center justify-between px-8 py-5 text-primary-200 ">
-            <Link href={"/"} className="font-bold text-xl">
+            <Link href={"/"} className="text-xl font-bold">
               MOHON
             </Link>
             <AiOutlineClose size={24} onClick={HandleClick} />
           </div>
           <hr />
-          <div className="my-4 flex flex-col gap-4 px-8 [&>*]:hover:underline [&>*]:hover:font-semibold">
+          <div className="my-4 flex flex-col gap-4 px-8 [&>*]:hover:font-semibold [&>*]:hover:underline">
             <Link href="/" onClick={HandleClick}>
               Home
             </Link>
@@ -85,7 +85,7 @@ export default function Menu() {
           </div>
 
           <hr />
-          <Btn />
+          <ActionButton />
         </div>
       </div>
     </div>

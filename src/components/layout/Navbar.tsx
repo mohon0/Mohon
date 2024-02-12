@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Btn from "../common/button/Btn";
+import ActionButton from "./ActionButton";
 import Menu from "./Menu";
 import { NavigationMenuDemo } from "./NavigationMenu";
 
@@ -24,24 +24,23 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [prevScrollPos]);
-  
 
   return (
     <header
       className={`z-50 flex h-14 w-full justify-between ${
-        visible ? " backdrop-blur-md translate-y-0" : " -translate-y-20"
-      } transition-transform duration-500 ease-in-out items-center   lg:px-7 px-2 fixed top-0 left-0`}
+        visible ? " translate-y-0 backdrop-blur-md" : " -translate-y-20"
+      } fixed left-0 top-0 items-center   px-2 transition-transform duration-500 ease-in-out lg:px-7`}
     >
-      <Link href="/" className="text-primary-200 font-bold text-2xl">
+      <Link href="/" className="text-2xl font-bold text-primary-200">
         MOHON
       </Link>
-      <div className="flex gap-10 items-center">
-        <div className="hidden lg:flex gap-6 items-center [&>*]:cursor-pointer ">
+      <div className="flex items-center gap-10">
+        <div className="hidden items-center gap-6 lg:flex [&>*]:cursor-pointer ">
           <NavigationMenuDemo />
         </div>
         <div className="flex items-center gap-10">
           <div className="hidden md:block">
-            <Btn />
+            <ActionButton />
           </div>
           <div>
             <Menu />

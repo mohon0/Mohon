@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export function FetchRecentProject() {
+export function FetchHomePageRecentProject() {
   return useQuery({
-    queryKey: ["recentProject"],
+    queryKey: ["Home Page Recent Projects"],
     queryFn: async () => {
       const response = await axios.get(
         `api/allpost?page=1&pageSize=5&category=projects`,
