@@ -1,4 +1,5 @@
 import Blog from "@/components/blog/Blog";
+import { FetchSinglePost } from "@/components/fetch/get/blog/FetchSinglePost";
 import { Metadata, ResolvingMetadata } from "next";
 
 interface PageProps {
@@ -13,22 +14,41 @@ function stripHtmlTags(html: string) {
 
 export async function generateMetadata(
   { params }: PageProps,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const { category, slug } = params;
 
   try {
-    const response = await fetch(`${siteurl}/api/${category}/${slug}`);
+    const { isLoading, data, isError } = FetchSinglePost({ category, slug });
 
-    if (!response.ok) {
-      throw new Error(
-        `Network response was not ok (${response.status} ${response.statusText})`
-      );
+    if (isLoading) {
+      return {
+        title: "Loading...",
+        // You can provide a placeholder description or leave it empty
+        description: "",
+        openGraph: {
+          // Provide a default URL or leave it empty
+          url: "",
+          // Provide a default image or leave it empty
+          images: [],
+        },
+      };
     }
 
-    const post = await response.json();
+    if (isError) {
+      return {
+        title: "Error",
+        description: "An error occurred while fetching the blog post.",
+        openGraph: {
+          // Provide a default URL or leave it empty
+          url: "",
+          // Provide a default image or leave it empty
+          images: [],
+        },
+      };
+    }
 
-    const cleanedContent = stripHtmlTags(post.content);
+    const cleanedContent = stripHtmlTags(data.content);
 
     const dynamicDescription = cleanedContent.substring(0, 150);
 
@@ -36,29 +56,29 @@ export async function generateMetadata(
     const previousImages = (await parent).openGraph?.images || [];
 
     return {
-      title: post.title || "Blog Post",
+      title: data.title || "Blog Post",
       description: dynamicDescription || "This is a blog post",
       openGraph: {
-        title: post.title || "Blog Post",
+        title: data.title || "Blog Post",
         description: dynamicDescription || "This is a blog post",
         type: "article",
         url: `${siteurl}/blog/${category}/${slug}`,
-        authors: post.author.name,
-        publishedTime: post.createdAt,
-        modifiedTime: post.updatedAt,
-        section: post.category,
+        authors: data.author.name,
+        publishedTime: data.createdAt,
+        modifiedTime: data.updatedAt,
+        section: data.category,
         images: [
           {
-            url: new URL(post.coverImage, siteurl).toString(),
+            url: new URL(data.coverImage, siteurl).toString(),
             width: 1200,
             height: 630,
-            alt: post.title,
+            alt: data.title,
           },
         ],
       },
       twitter: {
         card: "summary_large_image",
-        title: post.title,
+        title: data.title,
         description: dynamicDescription,
       },
     };
