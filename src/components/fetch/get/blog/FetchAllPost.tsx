@@ -4,7 +4,7 @@ import axios from "axios";
 interface props {
   currentPage: number;
   pageSize: number;
-  selectedCategory: string;
+  selectedCategory: string | string[];
   sortBy: string;
   searchInput: string;
 }
@@ -27,7 +27,7 @@ export function FetchAllPost({
     ],
     queryFn: async () => {
       const response = await axios.get(
-        `api/allpost?page=${currentPage}&pageSize=${pageSize}&category=${selectedCategory}&sortBy=${sortBy}&search=${searchInput}`,
+        `/api/allpost?page=${currentPage}&pageSize=${pageSize}&category=${selectedCategory}&sortBy=${sortBy}&search=${searchInput}`,
       );
       return response.data;
     },

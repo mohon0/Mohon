@@ -22,7 +22,6 @@ interface Post {
 
 export default function Blog() {
   const [currentPage, setCurrentPage] = useState(1);
-
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [searchInput, setSearchInput] = useState("");
@@ -76,7 +75,6 @@ export default function Blog() {
         </div>
       </div>
 
-      {/* Loading state rendering */}
       {isLoading ? (
         <div className="grid w-11/12 grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
           <Loading />

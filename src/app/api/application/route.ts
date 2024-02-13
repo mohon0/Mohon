@@ -184,12 +184,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     if (existingApplication) {
       return new NextResponse(JSON.stringify(existingApplication), {
-        status: 201,
+        status: 200,
         headers: { "Content-Type": "application/json" },
       });
+    } else {
+      return new NextResponse("No Application Found", { status: 200 });
     }
   } catch (error) {
-    return new NextResponse("An error occurred");
+    return new NextResponse("An error occurred", { status: 400 });
   }
 }
 
@@ -287,7 +289,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     } else {
       return new NextResponse(
         "You do not have permission to update this item.",
-        { status: 403 }
+        { status: 403 },
       );
     }
   } catch (error) {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import LoadingSpinner from "../common/loading/LoadingSpinner";
-import { FetchActionButtonData } from "../fetch/get/visibility/FetchActionButtonData";
+import { FetchActionButtonData } from "../fetch/get/application/FetchActionButtonData";
 
 interface RepoData {
   id: string;
