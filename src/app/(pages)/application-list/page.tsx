@@ -1,6 +1,6 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
-import { FetchAllApplication } from "@/components/fetch/FetchAllApplication";
+import { FetchAllApplication } from "@/components/fetch/get/application/FetchAllApplication";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -55,8 +55,6 @@ export default function List() {
 
   const totalPostsCount = data?.totalPostsCount || 1;
   const totalPages = Math.ceil(totalPostsCount / pageSize);
-
-  console.log(totalPages);
 
   const handelActionChange = (value: string) => {
     if (value.trim() !== "") {
@@ -115,7 +113,7 @@ export default function List() {
       } else {
         console.error(
           "Failed to update the Application. Status:",
-          response.status
+          response.status,
         );
         toast.dismiss();
         toast.error("Application Updating failed");
@@ -129,24 +127,24 @@ export default function List() {
 
   const jumpToPageOptions = Array.from(
     { length: totalPages },
-    (_, index) => index + 1
+    (_, index) => index + 1,
   );
 
   return (
     <div className="mx-2 lg:mx-20">
       <div className="mt-28">
-        <div className="text-3xl md:text-5xl font-bold text-center">
+        <div className="text-center text-3xl font-bold md:text-5xl">
           All Application
         </div>
-        <div className="flex justify-center flex-col md:flex-row items-center w-full gap-10 my-10">
+        <div className="my-10 flex w-full flex-col items-center justify-center gap-10 md:flex-row">
           {/* Filter by category dropdown */}
-          <div className="rounded-full flex items-center justify-center gap-2 border px-4 py-2">
+          <div className="flex items-center justify-center gap-2 rounded-full border px-4 py-2">
             <label htmlFor="filter">FilterBy:</label>
             <select
               id="filter"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="bg-[#000119] px-2 py-2 w-32"
+              className="w-32 bg-[#000119] px-2 py-2"
             >
               <option value="all">All</option>
               <option value="Approved">Approved</option>
@@ -155,13 +153,13 @@ export default function List() {
             </select>
           </div>
           {/* Sort by dropdown */}
-          <div className="rounded-full flex items-center justify-center  gap-2 border px-4 py-2">
+          <div className="flex items-center justify-center gap-2  rounded-full border px-4 py-2">
             <label htmlFor="sortPosts">SortBy:</label>
             <select
               id="sortPosts"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-[#000119] px-2 py-2 w-24"
+              className="w-24 bg-[#000119] px-2 py-2"
             >
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
@@ -170,7 +168,7 @@ export default function List() {
           <div className="relative flex items-center md:w-1/2">
             <input
               type="text"
-              className="w-full bg-transparent border h-[3.2rem] focus-within:border-primary-200 rounded-full focus-within:outline-none outline-none px-4"
+              className="h-[3.2rem] w-full rounded-full border bg-transparent px-4 outline-none focus-within:border-primary-200 focus-within:outline-none"
               placeholder="Search by applicant name"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
@@ -194,14 +192,14 @@ export default function List() {
             </div>
           ) : data.application && data.application.length > 0 ? (
             <div>
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:gap-20 gap-10">
+              <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:gap-20">
                 {data.application.map((app: Post) => (
                   <div
                     key={app.id}
-                    className="border border-gray-500  rounded-lg p-4 w-full"
+                    className="w-full rounded-lg  border border-gray-500 p-4"
                   >
                     <div>
-                      <div className="flex justify-center items-center mb-6">
+                      <div className="mb-6 flex items-center justify-center">
                         <Image
                           src={app.image}
                           alt=""
@@ -210,23 +208,23 @@ export default function List() {
                           className="h-20 w-20 rounded-full"
                         />
                       </div>
-                      <p className="font-bold text-xl mb-2 text-primary-100">
+                      <p className="mb-2 text-xl font-bold text-primary-100">
                         Name: {app.firstName} {app.lastName}
                       </p>
                       <p>
-                        <span className="text-primary-200 font-bold">
+                        <span className="font-bold text-primary-200">
                           Course:{" "}
                         </span>
                         <span>{app.course}</span>{" "}
                       </p>
                       <p>
-                        <span className="text-primary-200 font-bold">
+                        <span className="font-bold text-primary-200">
                           Type:{" "}
                         </span>
                         <span>{app.duration}</span>
                       </p>
                       <p>
-                        <span className="text-primary-200 font-bold">
+                        <span className="font-bold text-primary-200">
                           Date:{" "}
                         </span>
                         <span>{formatDate(app.createdAt)}</span>
@@ -237,19 +235,19 @@ export default function List() {
                         <span
                           className={
                             app.status === "Pending"
-                              ? "text-yellow-500 font-bold"
+                              ? "font-bold text-yellow-500"
                               : app.status === "Approved"
-                              ? "text-green-500 font-bold"
-                              : app.status === "Rejected"
-                              ? "text-red-500 font-bold"
-                              : "font-bold"
+                                ? "font-bold text-green-500"
+                                : app.status === "Rejected"
+                                  ? "font-bold text-red-500"
+                                  : "font-bold"
                           }
                         >
                           {app.status}
                         </span>
                       </p>
 
-                      <div className="flex gap-2 mt-4">
+                      <div className="mt-4 flex gap-2">
                         <div>
                           <ActionSelect
                             selectedValue={action}
@@ -260,7 +258,7 @@ export default function List() {
                           onClick={() =>
                             UpdateApplication({ status: action, id: app.id })
                           }
-                          className="bg-primary-200 text-black rounded py-1.5 px-4"
+                          className="rounded bg-primary-200 px-4 py-1.5 text-black"
                         >
                           Submit
                         </button>
@@ -268,7 +266,7 @@ export default function List() {
 
                       <Link
                         href={`/application-list/singleapplication/${app.id}`}
-                        className="border w-full py-2 hover:text-primary-200 px-4 mt-6 flex items-center justify-center border-primary-100 rounded-md"
+                        className="mt-6 flex w-full items-center justify-center rounded-md border border-primary-100 px-4 py-2 hover:text-primary-200"
                       >
                         View Details
                       </Link>
@@ -278,14 +276,14 @@ export default function List() {
               </div>
               {/* Pagination controls */}
               {totalPages > 1 && (
-                <div className="mt-10 flex gap-4 justify-center items-center">
+                <div className="mt-10 flex items-center justify-center gap-4">
                   <button
                     onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
                     disabled={currentPage === 1}
-                    className={`px-4 py-2 rounded-md ${
+                    className={`rounded-md px-4 py-2 ${
                       currentPage === 1
-                        ? "bg-gray-500 cursor-not-allowed"
-                        : "bg-gray-700 text-white cursor-pointer"
+                        ? "cursor-not-allowed bg-gray-500"
+                        : "cursor-pointer bg-gray-700 text-white"
                     }`}
                   >
                     Prev
@@ -294,7 +292,7 @@ export default function List() {
                     <select
                       value={currentPage}
                       onChange={(e) => setCurrentPage(Number(e.target.value))}
-                      className="px-4 py-2 rounded-md bg-gray-600 focus:outline-none"
+                      className="rounded-md bg-gray-600 px-4 py-2 focus:outline-none"
                     >
                       {jumpToPageOptions.map((option) => (
                         <option key={option} value={option}>
@@ -307,9 +305,9 @@ export default function List() {
                     <button
                       key={index}
                       onClick={() => setCurrentPage(index + 1)}
-                      className={`px-4 py-2 rounded-md ${
+                      className={`rounded-md px-4 py-2 ${
                         currentPage === index + 1
-                          ? "bg-blue-950 border"
+                          ? "border bg-blue-950"
                           : "bg-gray-600"
                       }`}
                     >
@@ -319,10 +317,10 @@ export default function List() {
                   <button
                     onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
                     disabled={currentPage === totalPages}
-                    className={`px-4 py-2 rounded-md ${
+                    className={`rounded-md px-4 py-2 ${
                       currentPage === totalPages
-                        ? "bg-gray-500 cursor-not-allowed"
-                        : "bg-gray-700 text-white cursor-pointer"
+                        ? "cursor-not-allowed bg-gray-500"
+                        : "cursor-pointer bg-gray-700 text-white"
                     }`}
                   >
                     Next

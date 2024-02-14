@@ -2,6 +2,7 @@
 import FileInput from "@/components/common/input/FileInput";
 import Input from "@/components/common/input/Input";
 import Loading from "@/components/common/loading/Loading";
+import { FetchProfileInfo } from "@/components/fetch/get/profile/FetchProfileInfo";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,14 +19,21 @@ export default function EditProfile() {
   const { data: session } = useSession();
   const id = session?.user?.id;
 
+  const { isLoading, data, isError } = FetchProfileInfo();
+
   useEffect(() => {
-    fetch(`/api/editprofile`).then((response) => {
-      response.json().then((userInfo) => {
-        setName(userInfo.name);
-        setLoading(false);
-      });
-    });
-  }, []);
+    if (!isLoading && !isError && data) {
+      setName(data.name);
+    }
+  }, [data, isError, isLoading]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return "There is an error";
+  }
 
   async function updateUser() {
     const id = session?.user?.id;
@@ -102,9 +110,9 @@ export default function EditProfile() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="flex flex-col gap-20 items-center justify-center">
-          <div className="border-primary-200 bg-blue-950 border w-11/12 md:w-9/12 lg:w-1/2 p-10 flex flex-col gap-10 rounded-xl">
-            <div className="text-3xl font-bold flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center gap-20">
+          <div className="flex w-11/12 flex-col gap-10 rounded-xl border border-primary-200 bg-blue-950 p-10 md:w-9/12 lg:w-1/2">
+            <div className="flex items-center justify-center text-3xl font-bold">
               Edit Profile
             </div>
             <div className="flex flex-col gap-10">
@@ -120,13 +128,13 @@ export default function EditProfile() {
             </div>
             <button
               onClick={updateUser}
-              className="border-primary-200 border bg-gray-950 px-4 py-2 rounded-lg hover:bg-gray-900"
+              className="rounded-lg border border-primary-200 bg-gray-950 px-4 py-2 hover:bg-gray-900"
             >
               Edit Profile
             </button>
           </div>
-          <div className="border-primary-200 bg-blue-950 flex flex-col gap-10 border w-11/12 md:w-9/12 lg:w-1/2 p-10 rounded-xl">
-            <div className="text-3xl font-bold flex items-center justify-center">
+          <div className="flex w-11/12 flex-col gap-10 rounded-xl border border-primary-200 bg-blue-950 p-10 md:w-9/12 lg:w-1/2">
+            <div className="flex items-center justify-center text-3xl font-bold">
               Change Password
             </div>
             <div className="flex flex-col gap-10">
@@ -149,7 +157,7 @@ export default function EditProfile() {
             </div>
             <button
               onClick={changePassword}
-              className="border-primary-200 border bg-gray-950 px-4 py-2 rounded-lg hover:bg-gray-900"
+              className="rounded-lg border border-primary-200 bg-gray-950 px-4 py-2 hover:bg-gray-900"
             >
               Change Password
             </button>

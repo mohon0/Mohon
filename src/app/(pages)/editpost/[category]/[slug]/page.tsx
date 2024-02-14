@@ -4,6 +4,7 @@ import Input from "@/components/common/input/PostInput";
 import Loading from "@/components/common/loading/Loading";
 import Categories from "@/components/common/post/Categories";
 import Content from "@/components/common/post/Content";
+import { FetchSinglePost } from "@/components/fetch/get/blog/FetchSinglePost";
 import EditPostValidation from "@/components/validation/EditPostValidation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,28 +25,32 @@ function EditPost({ params }: PageProps) {
   const [content, setContent] = useState<string>("");
   const [files, setFiles] = useState<FileList | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [isLoading, setIsLoading] = useState(true);
   const [validationFailed, setValidationFailed] = useState(false);
 
-  useEffect(() => {
-    fetch(`/api/${params.category}/${params.slug}`).then((response) => {
-      response.json().then((postInfo) => {
-        setTitle(postInfo.title);
-        setId(postInfo.id);
-        setUserId(postInfo.author.id);
-        setContent(postInfo.content);
-        setSelectedCategory(postInfo.category);
-        setIsLoading(false);
-      });
-    });
-  }, [params.slug, params.category]);
+  const { isLoading, data, isError } = FetchSinglePost({
+    category: params.category,
+    slug: params.slug,
+  });
 
+  useEffect(() => {
+    if (!isLoading && !isError && data) {
+      setTitle(data.title);
+      setId(data.id);
+      setUserId(data.author.id);
+      setContent(data.content);
+      setSelectedCategory(data.category);
+    }
+  }, [isLoading, isError, data]);
   if (isLoading) {
     return (
       <>
         <Loading />
       </>
     );
+  }
+
+  if (isError) {
+    ("Error fetching post: ");
   }
 
   // Function to properly encode a string for URLs
@@ -108,11 +113,11 @@ function EditPost({ params }: PageProps) {
   }
 
   return (
-    <div className="flex items-center justify-center flex-col-reverse lg:flex-row ">
-      <div className="flex  items-center justify-center mb-20  flex-col border mx-1 lg:mx-10 lg:p-10 rounded-xl bg-blue-950 md:w-10/12">
+    <div className="flex flex-col-reverse items-center justify-center lg:flex-row ">
+      <div className="mx-1  mb-20 flex flex-col  items-center justify-center rounded-xl border bg-blue-950 md:w-10/12 lg:mx-10 lg:p-10">
         <span className="text-2xl font-bold">Edit Post</span>
         <form
-          className="flex flex-col gap-10 w-full justify-center p-2 md:p-10 lg:py-20"
+          className="flex w-full flex-col justify-center gap-10 p-2 md:p-10 lg:py-20"
           onSubmit={UpdatePost}
         >
           <Input
@@ -140,7 +145,7 @@ function EditPost({ params }: PageProps) {
           />
 
           <button
-            className={` px-6 py-2 rounded-lg border text-primary-200 bg-black hover:bg-gray-950 border-primary-200 ${
+            className={` rounded-lg border border-primary-200 bg-black px-6 py-2 text-primary-200 hover:bg-gray-950 ${
               validationFailed ? "animate-shake" : ""
             }`}
           >
