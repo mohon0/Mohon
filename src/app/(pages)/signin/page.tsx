@@ -1,6 +1,8 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
 import Login from "@/components/page/auth/Login";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { ToastContainer } from "react-toastify";
@@ -21,12 +23,10 @@ export default function LoginPage() {
           </Link>
         </div>
       ) : (
-        <div className=" flex items-center justify-center ">
-          <div className="grid w-11/12 grid-cols-1 justify-around rounded-2xl shadow-2xl md:w-10/12 md:grid-cols-5">
-            <div className="col-span-3 bg-blue-950 p-6 md:rounded-l-2xl">
-              <Login />
-            </div>
-            <div className="col-span-2 hidden flex-col items-center  justify-center gap-4 bg-gray-800 p-16 text-center md:flex md:rounded-r-2xl">
+        <div className="flex items-center justify-center md:mt-12 lg:mt-28 ">
+          <Card className="grid w-11/12 grid-cols-1 justify-around rounded-2xl shadow-2xl md:max-w-4xl md:grid-cols-5">
+            <Login />
+            <div className="col-span-2 hidden flex-col items-center justify-center gap-4 bg-gray-900 p-4 md:flex">
               <span className="text-lightgray-100 text-3xl font-bold">
                 Hi, There!
               </span>
@@ -36,12 +36,10 @@ export default function LoginPage() {
                 with us.
               </span>
               <Link href="/signup">
-                <button className="rounded-lg border border-primary-200 bg-black px-4 py-2 text-primary-200 hover:bg-gray-950">
-                  Registration
-                </button>
+                <Button>Registration</Button>
               </Link>
             </div>
-          </div>
+          </Card>
           <ToastContainer position="top-center" autoClose={3000} />
         </div>
       )}

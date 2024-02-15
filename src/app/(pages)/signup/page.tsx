@@ -1,6 +1,8 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
 import Registration from "@/components/page/auth/Registration";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { ToastContainer } from "react-toastify";
@@ -22,9 +24,9 @@ export default function RegistrationPage() {
         </div>
       ) : (
         <div className="flex items-center justify-center md:mt-12 lg:mt-28 ">
-          <div className="grid w-11/12 grid-cols-1 justify-around rounded-2xl shadow-2xl md:w-10/12 md:grid-cols-5">
+          <Card className="grid w-11/12 grid-cols-1 justify-around rounded-2xl shadow-2xl md:max-w-4xl md:grid-cols-5">
             <Registration />
-            <div className="col-span-2 hidden flex-col items-center  justify-center gap-4 bg-gray-800 p-16 text-center md:flex md:rounded-r-2xl">
+            <div className="col-span-2 hidden flex-col items-center justify-center gap-4 bg-gray-900 md:flex">
               <span className="text-lightgray-100 text-3xl font-bold">
                 Hi, There!
               </span>
@@ -33,13 +35,10 @@ export default function RegistrationPage() {
                 Already have an account?
               </span>
               <Link href="/signin">
-                <button className="bg-btn-100 rounded-md border border-primary-200 bg-black px-8 py-2 text-sm font-bold text-primary-200 hover:bg-gray-900">
-                  Log In
-                </button>
+                <Button>Login</Button>
               </Link>
-              R
             </div>
-          </div>
+          </Card>
           <ToastContainer position="top-center" autoClose={3000} />
         </div>
       )}
