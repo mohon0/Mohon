@@ -1,4 +1,5 @@
 import InputField from "@/components/common/input/InputField";
+import axios from "axios";
 import { Form, Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -25,27 +26,29 @@ export default function Registration() {
             .required(),
         })}
         onSubmit={async (values) => {
-          const loadingToastId = toast.loading("Please wait a momment...", {
+          const loadingToastId = toast.loading("Please wait a moment...", {
             autoClose: false,
             theme: "dark",
           });
-          const response = await fetch("/api/registration", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ values }),
-          });
-          toast.dismiss(loadingToastId);
-          if (response.status !== 200) {
-            toast.error(
-              "Sign-up failed. Please check your email and password. email may already exits",
-            );
-          } else {
-            toast.success("Account created successfully");
-            setTimeout(() => {
-              router.push("/signin");
-            }, 1000);
+
+          try {
+            const response = await axios.post("/api/registration", values);
+            toast.dismiss(loadingToastId);
+
+            if (response.status !== 200) {
+              toast.error(
+                "Sign-up failed. Please check your email and password. Email may already exist",
+              );
+            } else {
+              toast.success("Account created successfully");
+              setTimeout(() => {
+                router.push("/signin");
+              }, 1000);
+            }
+          } catch (error) {
+            toast.error("An error occurred. Please try again later.");
+            console.error("Error submitting registration:", error);
+            toast.dismiss(loadingToastId);
           }
         }}
       >
