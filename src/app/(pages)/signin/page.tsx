@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function LoginPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   return (
     <>
