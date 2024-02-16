@@ -45,7 +45,6 @@ export default function Login() {
           } catch (error) {
             toast.dismiss();
             toast.error("Sign in failed");
-            console.error(error);
           }
           setSubmitting(false);
         }}

@@ -131,8 +131,8 @@ export default function List() {
   );
 
   return (
-    <div className="mx-2 lg:mx-20">
-      <div className="mt-28">
+    <div className="mx-2">
+      <div>
         <div className="text-center text-3xl font-bold md:text-5xl">
           All Application
         </div>

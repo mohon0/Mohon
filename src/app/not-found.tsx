@@ -1,23 +1,26 @@
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
 import Link from "next/link";
 
 export default function NotFound() {
   return (
     <>
+      <Navbar />
       {/* component */}
-      <div className="w-full  flex flex-col lg:flex-row items-center justify-center space-y-16 lg:space-y-0 space-x-8 2xl:space-x-0">
-        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center lg:px-2 xl:px-0 text-center">
-          <p className="text-7xl md:text-8xl lg:text-9xl font-bold tracking-wider text-gray-300">
+      <div className="mt-28 flex  w-full flex-col items-center justify-center space-x-8 space-y-16 lg:flex-row lg:space-y-0 2xl:space-x-0">
+        <div className="flex w-full flex-col items-center justify-center text-center lg:w-1/2 lg:px-2 xl:px-0">
+          <p className="text-7xl font-bold tracking-wider text-gray-300 md:text-8xl lg:text-9xl">
             404
           </p>
-          <p className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider text-gray-300 mt-2">
+          <p className="mt-2 text-4xl font-bold tracking-wider text-gray-300 md:text-5xl lg:text-6xl">
             Page Not Found
           </p>
-          <p className="text-lg md:text-xl lg:text-2xl text-gray-500 my-12">
+          <p className="my-12 text-lg text-gray-500 md:text-xl lg:text-2xl">
             Sorry, the page you are looking for could not be found.
           </p>
           <Link
             href="/"
-            className="bg-primary-200 dark:bg-btn-100 px-6 py-3 rounded-md text-sm text-lightgray-100 dark:text-primary-200 font-bold flex gap-2"
+            className="dark:bg-btn-100 text-lightgray-100 flex gap-2 rounded-md bg-primary-300 px-6 py-3 text-sm font-bold dark:bg-primary-300"
             title="Return Home"
           >
             <svg
@@ -35,7 +38,7 @@ export default function NotFound() {
             <span>Return Home</span>
           </Link>
         </div>
-        <div className="w-1/2 lg:h-full flex lg:items-end justify-center p-4">
+        <div className="flex w-1/2 justify-center p-4 lg:h-full lg:items-end">
           <svg
             className="w-full text-blue-600"
             xmlns="http://www.w3.org/2000/svg"
@@ -220,6 +223,7 @@ export default function NotFound() {
           </svg>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
