@@ -65,7 +65,7 @@
     word-spacing: 16px;
     -webkit-text-stroke-color: transparent;
     -webkit-text-stroke-width: calc(1em / 16);
-    @apply text-[#000119] bg-clip-text;
+    @apply bg-clip-text text-[#000119];
   }
 
   .wrong {
@@ -112,10 +112,12 @@
     max-width: 100%;
   }
   .footer {
-    @apply bg-cyan-600 p-2 text-white fixed bottom-0 w-full text-center;
+    @apply fixed bottom-0 w-full bg-cyan-600 p-2 text-center text-white;
   }
   .border-for-print {
-    box-shadow: 0 0 0 1px black, 0 0 0 2px black;
+    box-shadow:
+      0 0 0 1px black,
+      0 0 0 2px black;
   }
 }
 

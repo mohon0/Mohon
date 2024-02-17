@@ -23,7 +23,7 @@ export default function BlogChart() {
           <div>Error fetching chart</div>
         ) : (
           <>
-            <div className="mx-auto mb-10 flex items-center justify-center text-3xl font-bold text-primary-200">
+            <div className="mb-10 flex items-center justify-center text-center text-2xl font-bold text-primary-200 md:text-3xl">
               Blog Post Per Month
             </div>
             <ResponsiveContainer width="100%" height={350}>
