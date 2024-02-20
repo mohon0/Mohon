@@ -7,56 +7,64 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SiPolkadot } from "react-icons/si";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 
 export default function Registration() {
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
+
   return (
     <>
       <Formik
-        initialValues={{ name: "", email: "", password: "" }}
+        initialValues={{ name: "", identifier: "", password: "" }}
         validationSchema={Yup.object({
           name: Yup.string()
-            .min(5, "Name Must be at least 5 characters")
-            .max(20, "Name can not be more than 20 characters")
-            .required(),
-          email: Yup.string().email("Invalid email address").required(),
+            .min(5, "Name must be at least 5 characters")
+            .max(20, "Name cannot be more than 20 characters")
+            .required("Name is required"),
+          identifier: Yup.string()
+            .test(
+              "valid-identifier",
+              "Invalid email or phone number",
+              function (value) {
+                if (!value) return false;
+                const isEmail = Yup.string().email().isValidSync(value);
+                const isPhoneNumber = Yup.string()
+                  .matches(/^(\+)?(88)?01[0-9]{9}$/, "Invalid phone number")
+                  .isValidSync(value);
+                return isEmail || isPhoneNumber;
+              },
+            )
+            .required("Email or Phone number is required"),
+
           password: Yup.string()
             .min(6, "Password must be 6 characters long")
-            .max(15, "Password can not be more than 15 characters")
-            .required(),
+            .max(15, "Password cannot be more than 15 characters")
+            .required("Password is required"),
         })}
         onSubmit={async (values) => {
-          const loadingToastId = toast.loading("Please wait a moment...", {
-            autoClose: false,
-            theme: "dark",
-          });
-
           try {
+            toast.loading("Please wait a moment...");
             setSubmitting(true);
             const response = await axios.post("/api/registration", values);
-            toast.dismiss(loadingToastId);
 
-            if (response.status !== 200) {
-              setSubmitting(false);
-              toast.error(
-                "Sign-up failed. Please check your email and password. Email may already exist",
-              );
-            } else {
-              setSubmitting(false);
+            if (response.status === 200) {
+              toast.dismiss();
               toast.success("Account created successfully");
               setTimeout(() => {
                 router.push("/signin");
               }, 1000);
+            } else {
+              toast.dismiss();
+              toast.error(response.data);
             }
-          } catch (error) {
+          } catch (error: any) {
+            toast.dismiss();
+            toast.error(error.response.data);
+          } finally {
             setSubmitting(false);
-            toast.error("An error occurred. Please try again later.");
-            console.error("Error submitting registration:", error);
-            toast.dismiss(loadingToastId);
           }
         }}
       >
@@ -75,11 +83,11 @@ export default function Registration() {
                 placeholder="Input Your Name"
               />
               <InputField
-                name="email"
-                type="email"
-                id="email"
-                label="Email"
-                placeholder="Input Your Email"
+                name="identifier"
+                type="text"
+                id="identifier"
+                label="Email or Phone Number"
+                placeholder="Input Your Email or Phone Number"
               />
               <InputField
                 name="password"
@@ -105,7 +113,6 @@ export default function Registration() {
             <SiPolkadot />
             <Link href={"/terms"}>Terms & Condtions</Link>
           </div>
-          <ToastContainer position="top-center" theme="dark" />
         </Form>
       </Formik>
     </>

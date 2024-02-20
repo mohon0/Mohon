@@ -11,20 +11,32 @@ export const authOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        identifier: {
+          label: "Email or Phone Number",
+          type: "text",
+          placeholder: "email or phone number",
+        },
         password: { label: "Password", type: "password" },
-        email: { label: "email", type: "email" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
+        if (!credentials?.identifier || !credentials.password) {
           return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
+        let user;
+        if (credentials.identifier.includes("@")) {
+          user = await prisma.user.findUnique({
+            where: {
+              email: credentials.identifier,
+            },
+          });
+        } else {
+          user = await prisma.user.findUnique({
+            where: {
+              phoneNumber: credentials.identifier,
+            },
+          });
+        }
 
         if (!user) {
           return null;
