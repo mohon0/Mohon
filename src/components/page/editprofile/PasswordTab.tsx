@@ -12,7 +12,7 @@ import {
 import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { Form, Formik } from "formik";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,7 +20,7 @@ import * as Yup from "yup";
 
 export default function PasswordTab() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { data: session, status, update } = useSession();
+
   return (
     <Formik
       initialValues={{ oldPassword: "", newPassword: "", confirmPassword: "" }}
@@ -55,7 +55,7 @@ export default function PasswordTab() {
           toast.success(response.data);
 
           // Logout the user from the current session
-          await signOut({ callbackUrl: "/login" });
+          await signOut({ callbackUrl: "/signin" });
 
           // Show a toast notification for successful logout
           toast.info("Logged out from all devices");
