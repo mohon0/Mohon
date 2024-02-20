@@ -39,8 +39,6 @@ export default function Login() {
           try {
             setSubmitting(true);
             toast.loading("Please wait...");
-
-            // Login with either email or phone number based on validation
             const response = await signIn("credentials", {
               ...values,
               redirect: false,
