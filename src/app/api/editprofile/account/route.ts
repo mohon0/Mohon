@@ -65,6 +65,26 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       return new NextResponse("You are not logged in", { status: 401 });
     }
 
+    // Check if the new email is already used by another user
+    const existingEmail = await prisma.user.findFirst({
+      where: {
+        email: email as string,
+      },
+    });
+    if (existingEmail && existingEmail.id !== id) {
+      return new NextResponse("Email already in use", { status: 400 });
+    }
+
+    // Check if the new phone number is already used by another user
+    const existingPhone = await prisma.user.findFirst({
+      where: {
+        phoneNumber: phone as string,
+      },
+    });
+    if (existingPhone && existingPhone.id !== id) {
+      return new NextResponse("Phone number already in use", { status: 400 });
+    }
+
     // Check if the user exists
     const existingUser = await prisma.user.findUnique({
       where: { id },

@@ -8,7 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function EditProfile() {
   const { isLoading, data, isError } = FetchProfileInfo();
-  console.log(data)
 
   return (
     <>

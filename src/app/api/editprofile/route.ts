@@ -48,6 +48,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
       email: true,
       image: true,
       phoneNumber: true,
+      facebook: true,
+      bio: true,
+      twitter: true,
+      github: true,
+      instagram: true,
+      linkedin: true,
     },
   });
   if (!userInfo) {

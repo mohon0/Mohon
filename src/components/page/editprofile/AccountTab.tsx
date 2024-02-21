@@ -124,7 +124,7 @@ export default function AccountTab({ name, email, phone }: props) {
             if (error.response.status === 413) {
               toast.error("File size exceeds 500 KB limit");
             } else {
-              toast.error("An error occurred while updating the profile");
+              toast.error(error.response.data);
             }
           } else if (error.request) {
             // The request was made, but no response was received
