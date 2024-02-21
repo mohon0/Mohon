@@ -1,93 +1,153 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
-import ActionButton from "./ActionButton";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
+import { Button } from "../ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTrigger,
+} from "../ui/sheet";
 
 export default function Menu() {
-  const [NavOpen, setNavOpen] = useState(false);
   const { data: session } = useSession();
 
-  const HandleClick = () => {
-    setNavOpen((prev) => !prev);
-  };
+  const name = session?.user?.name || "PRIME";
+  const fallback = name.slice(0, 2);
+  const image = session?.user?.image;
+
+  const admin = process.env.NEXT_PUBLIC_ADMIN;
+
+  async function handleLogout() {
+    console.log("clicked");
+    signOut({ redirect: false, callbackUrl: "/" });
+  }
 
   return (
-    <div className="relative lg:hidden">
-      <div
-        className={`z-40 flex flex-col gap-1 p-3 duration-300 ${
-          NavOpen ? "rotate-[360deg]" : ""
-        }`}
-        onClick={HandleClick}
-      >
-        <span
-          className={`h-0.5 w-6 bg-primary-200  duration-300 ${
-            NavOpen ? " translate-y-1.5 rotate-45 " : ""
-          } `}
-        ></span>
-        <span
-          className={`h-0.5 w-6 bg-primary-200  duration-300  ${
-            NavOpen ? "hidden" : ""
-          } `}
-        ></span>
-        <span
-          className={`h-0.5 w-6 bg-primary-200  duration-300 ${
-            NavOpen ? "-rotate-45 duration-300 ease-in-out" : ""
-          } `}
-        ></span>
-      </div>
-      <div
-        className={`fixed right-0 top-0 z-50 flex h-screen w-full transform justify-end  bg-slate-200 bg-opacity-5 backdrop-blur-sm transition duration-300 ease-out  ${
-          NavOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="z-50 flex w-9/12 flex-col gap-4 bg-[#000119]">
-          <div className="flex items-center justify-between px-8 py-5 text-primary-200 ">
-            <Link href={"/"} className="text-xl font-bold">
-              MOHON
-            </Link>
-            <AiOutlineClose size={24} onClick={HandleClick} />
+    <div className="mr-3 lg:hidden">
+      <Sheet>
+        <SheetTrigger asChild>
+          <div className="flex flex-col items-end gap-1.5 p-1">
+            <span className="h-[2px] w-5 bg-foreground"></span>
+            <span className="h-[2px] w-4 bg-foreground"></span>
+            <span className="h-[2px] w-5 bg-foreground"></span>
           </div>
-          <hr />
-          <div className="my-4 flex flex-col gap-4 px-8 [&>*]:hover:font-semibold [&>*]:hover:underline">
-            <Link href="/" onClick={HandleClick}>
-              Home
-            </Link>
-            <Link href="/blog" onClick={HandleClick}>
-              Blog & Design
-            </Link>
-            <Link href="/projects" onClick={HandleClick}>
-              Projects
-            </Link>
-            <Link href="/course" onClick={HandleClick}>
-              Our Course
-            </Link>
-            <Link href="/about" onClick={HandleClick}>
-              About Me
-            </Link>
-            <Link href="/application" onClick={HandleClick}>
-              Application
-            </Link>
-            <Link href="/blog/notice" onClick={HandleClick}>
-              Notice
-            </Link>
+        </SheetTrigger>
+        <SheetContent className="">
+          <SheetHeader>
+            <SheetClose asChild>
+              <div className="mb-4 flex items-center justify-between px-8 text-primary">
+                <Link href={"/"} className="text-xl font-bold">
+                  MOHON
+                </Link>
+              </div>
+            </SheetClose>
+          </SheetHeader>
+          <div className=" flex w-8/12 flex-col gap-3">
+            <SheetClose asChild>
+              <Link href="/">
+                <Button variant="outline" className="flex w-full">
+                  Home
+                </Button>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href="/blog">
+                <Button variant="outline" className="flex w-full">
+                  Blog & Design
+                </Button>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href="/projects">
+                <Button variant="outline" className="flex w-full">
+                  Projects
+                </Button>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href="/course">
+                <Button variant="outline" className="flex w-full">
+                  Our Course
+                </Button>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href="/about">
+                <Button variant="outline" className="flex w-full">
+                  About Me
+                </Button>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href="/application">
+                <Button variant="outline" className="flex w-full">
+                  Application
+                </Button>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href="/notice">
+                <Button variant="outline" className="flex w-full">
+                  Notice
+                </Button>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              {session?.user ? (
+                <Link
+                  href={
+                    session.user.email === admin
+                      ? "/admin-dashboard"
+                      : "/dashboard"
+                  }
+                >
+                  <Button variant="outline" className="flex w-full">
+                    Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <Link href="/signin">
+                  <Button variant="outline" className="flex w-full">
+                    Login
+                  </Button>
+                </Link>
+              )}
+            </SheetClose>
 
-            {session?.user ? (
-              <Link href="/dashboard" onClick={HandleClick}>
-                Dashboard
-              </Link>
-            ) : (
-              <Link href="/signin" onClick={HandleClick}>
-                LogIn
-              </Link>
-            )}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive">Log Out</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleLogout}
+                    className="bg-red-600 hover:bg-red-700"
+                  >
+                    Log Out
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
-
-          <hr />
-          <ActionButton />
-        </div>
-      </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
