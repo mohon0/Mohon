@@ -16,12 +16,7 @@ export default function LoginPage() {
       {status === "loading" ? (
         <Loading />
       ) : status === "authenticated" ? (
-        <div>
-          You are already logged in. Go to{" "}
-          <Link href={"/dashboard"} className="font-bold">
-            Dashboard
-          </Link>
-        </div>
+        <div>You are already logged in</div>
       ) : (
         <div className="flex items-center justify-center md:mt-12 lg:mt-28 ">
           <Card className="grid w-11/12 grid-cols-1 justify-around rounded-2xl shadow-2xl md:max-w-4xl md:grid-cols-5">
