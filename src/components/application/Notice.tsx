@@ -28,9 +28,9 @@ const Notice: React.FC = () => {
   }, []);
 
   return (
-    <div className="mt-20 mx-2 md:mx-10 lg:mx-20 border py-2 border-primary-400">
+    <div className="mt-20 mx-2 md:mx-10 lg:mx-20 border py-2 border-primary">
       <div className="scroller overflow-hidden">
-        <div className="scroller__inner flex animate-scroll gap-4 text-primary-200">
+        <div className="scroller__inner flex animate-scroll gap-4 text-accent-forground">
           <p>সবাইকে দক্ষ করে গড়ে তোলায় আমাদের একমাত্র লক্ষ্য।</p>
           <p>ঝিনাইদহ শহরে একমাত্র আমরাই আপনাদের সার্বক্ষণিক পাশে আছি।</p>
           <p>আপনাদের যে কোন সমস্যা জানাতে সরাসরি চলে আসুন আমাদের অফিসে।</p>

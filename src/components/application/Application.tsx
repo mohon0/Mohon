@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 import Header from "../application/Header";
 import Preview from "../preview/Privew";
+import { Button } from "../ui/button";
 import BirthDay from "./BirthDay";
 import { BloodGroup } from "./BloodGroup";
 import { Board } from "./Board";
@@ -210,7 +211,7 @@ const Application: React.FC = () => {
         }}
       >
         <Form className="w-11/12 lg:w-3/4 mx-auto flex flex-col gap-6">
-          <div className=" lg:absolute top-52 border-primary-200 border right-20">
+          <div className=" lg:absolute top-52 border-primary border right-20">
             {imageError && <span>Image Must Be Provided</span>}
             <FileSelect onFileSelect={handleFileSelect} />
           </div>
@@ -396,13 +397,13 @@ const Application: React.FC = () => {
           <FooterNotice />
           <div className="flex items-center md:flex-row justify-center md:gap-20 mt-10 flex-col gap-6">
             <Preview />
-            <button
+            <Button
               type="submit"
               disabled={isSubmitting}
-              className="px-20 flex items-center justify-center py-3 rounded-full text-xl font-bold border border-primary-200 hover:text-primary-200 "
+              className="px-20 py-7"
             >
               {isSubmitting ? "Submitting..." : "Submit"}
-            </button>
+            </Button>
           </div>
         </Form>
       </Formik>

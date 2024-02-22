@@ -37,7 +37,7 @@ export default function FooterNotice() {
   const { values } = formik;
 
   return (
-    <div className="border p-2 rounded-sm border-primary-400">
+    <div className="border p-2 rounded-sm border-primary">
       {values.duration === "1 month" ? (
         <p>
           ১০০/= টাকা আবেদন ফি সহ- কোর্স ফি বিকাশ পেমেন্ট করে, Transaction ID

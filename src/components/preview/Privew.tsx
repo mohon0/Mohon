@@ -60,9 +60,9 @@ export default function Preview() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="px-20 cursor-pointer flex items-center justify-center  py-3 rounded-full text-xl font-bold border border-primary-200 hover:text-primary-200 ">
+        <Button className="px-20 py-7">
           Preview
-        </div>
+        </Button>
       </DialogTrigger>
       <DialogContent className="w-full">
         <DialogHeader>

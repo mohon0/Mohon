@@ -17,9 +17,9 @@ const BirthDay: React.FC = () => {
           showYearDropdown
           dropdownMode="select"
           placeholderText="Select your birthday"
-          className="px-3 py-1.5 bg-gray-800 rounded"
+          className="px-3 py-1.5 bg-transparent border flex rounded"
         />
-        <span className="absolute right-36 top-1/2 transform -translate-y-1/2">
+        <span className="absolute right-52 top-1/2 transform -translate-y-1/2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

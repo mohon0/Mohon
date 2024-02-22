@@ -48,11 +48,11 @@ export default function PayButton() {
           ? "https://shop.bkash.com/mia-store01779120023/pay/bdt600/2ODOyz"
           : "https://shop.bkash.com/mia-store01779120023/pay/bdt100/ZHHBE3"
       }
-      className="border relative flex items-center gap-2 px-2 mt-2 bg-primary-300 rounded-lg w-fit"
+      className="border relative flex items-center gap-2 px-2 mt-2 bg-sky-600 rounded-lg w-fit"
     >
       <Image src={bkash} alt="bkash" className=" w-20" />
       <span>Pay with bkash</span>
-      <div className="h-3 w-3 rounded-full bg-primary-400 animate-ping absolute top-0 -right-6"></div>
+      <div className="h-3 w-3 rounded-full bg-pink-600 animate-ping absolute top-0 -right-6"></div>
     </Link>
   );
 }

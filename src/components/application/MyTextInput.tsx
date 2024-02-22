@@ -18,12 +18,11 @@ export const MyTextInput: React.FC<MyTextInputProps> = ({
   const [field, meta] = useField(props);
   return (
     <div className="flex flex-col col-span-1">
-      <Label className="mb-1" htmlFor={id || props.name}>
+      <Label className="mb-1.5" htmlFor={id || props.name}>
         {label}
       </Label>
 
       <Input
-        className="bg-gray-800 placeholder:text-slate-300 px-2 py-1 rounded"
         {...field}
         {...props}
       />
