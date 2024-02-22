@@ -45,24 +45,21 @@ export default function SectionHeader({
       initial="offscreen"
       whileInView="onscreen"
       viewport={{ amount: 0.8, once: true }}
-      className="flex flex-col gap-6 items-center justify-center mx-3 text-center"
+      className="mx-3 flex flex-col items-center justify-center gap-6 text-center"
     >
-      <motion.div
-        variants={lineVariants}
-        className="text-primary-200 font-bold"
-      >
+      <motion.div variants={lineVariants} className="font-bold text-primary">
         {text}
       </motion.div>
-      <div className="flex items-center justify-center flex-col gap-3">
+      <div className="flex flex-col items-center justify-center gap-3">
         <motion.div
           variants={cardVariants}
-          className="text-3xl md:text-5xl font-bold"
+          className="text-2xl font-bold md:text-5xl"
         >
           {title}
         </motion.div>
         <motion.div
           variants={lineVariants}
-          className="h-1 w-40 bg-primary-200 "
+          className="h-1 w-40 bg-primary"
         ></motion.div>
       </div>
     </motion.div>

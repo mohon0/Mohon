@@ -1,12 +1,11 @@
 "use client";
-import Time from "@/components/common/time/Time";
+import Time from "@/components/page/home/Time";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { AiFillFacebook } from "react-icons/ai";
 import { FaLinkedin } from "react-icons/fa";
 import { SiFreelancer, SiUpwork } from "react-icons/si";
 import { TbBrandFiverr, TbBrandTwitter } from "react-icons/tb";
-import AnimatedTextWord from "../../common/animation/AnimatedText";
 import TypeEffect from "../../common/animation/TypeEffect";
 import HeroImage from "./HeroImage";
 import Intro from "./Intro";
@@ -16,55 +15,46 @@ export default function Hero() {
     <div className=" min-w-screen relative mx-3 mb-20 mt-12 flex flex-col items-center justify-center md:mx-4 lg:mx-28 lg:mt-12">
       <div className="flex flex-col-reverse justify-center gap-8 md:flex-row md:justify-between md:gap-0 ">
         <div className="flex flex-col justify-center gap-6 md:w-1/2">
-          <div className="md:hidden">Hello, i am</div>
-          <div className="hidden md:block">
-            <AnimatedTextWord
-              text={"Hello, it's me"}
-              size="2"
-              weight="normal"
-              colour={"#94a3b8"}
-            />
-          </div>
-
+          <p>Hello its me</p>
           <Intro />
           <TypeEffect />
-          <AnimatedTextWord
-            text={
-              "I'm  a certified graphic designer, working with multiple companies, and providing top-quality design services at competitive prices. My expertise covers various graphic design tasks, including brand identity, packaging, photo editing, and more. If you have design projects, don't hesitate to contact me, and we can discuss your needs."
-            }
-            size={"1"}
-            weight={"normal"}
-            colour={"#94a3b8"}
-          />
+          <p className="text-muted-foreground">
+            I&#39;m a certified graphic designer, working with multiple
+            companies, and providing top-quality design services at competitive
+            prices. My expertise covers various graphic design tasks, including
+            brand identity, packaging, photo editing, and more. If you have
+            design projects, don&#39;t hesitate to contact me, and we can
+            discuss your needs.
+          </p>
 
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
-            className="my-4 flex flex-wrap gap-10 text-slate-300"
+            className="my-4 flex flex-wrap gap-10 text-xl text-slate-300 md:text-4xl"
           >
             <Link
               href="https://facebook.com/md.freelancermohon"
               target="_blank"
             >
-              <AiFillFacebook size="40" />
+              <AiFillFacebook />
             </Link>
             <Link href="https://twitter.com/mohongraphics" target="_blank">
-              <TbBrandTwitter size="40" />
+              <TbBrandTwitter />
             </Link>{" "}
             <Link
               href="https://linkedin.com/in/md-mohon-794830291"
               target="_blank"
             >
-              <FaLinkedin size="40" />
+              <FaLinkedin />
             </Link>
             <Link href="https://freelancer.com/demo" target="_blank">
-              <SiFreelancer size="40" />
+              <SiFreelancer />
             </Link>
             <Link href="https://upwork.com/demo" target="_blank">
-              <SiUpwork size="40" />
+              <SiUpwork />
             </Link>
             <Link href="https://fiverr.com/demo" target="_blank">
-              <TbBrandFiverr size="40" />
+              <TbBrandFiverr />
             </Link>
           </motion.div>
           <Time />

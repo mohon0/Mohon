@@ -18,7 +18,7 @@ export default function DateTime(): JSX.Element {
       };
       const formattedDate: string = new Intl.DateTimeFormat(
         "en-US",
-        options
+        options,
       ).format(date);
       setCurrentDateTime(formattedDate);
     };
@@ -30,5 +30,9 @@ export default function DateTime(): JSX.Element {
     return () => clearInterval(intervalId);
   }, []);
 
-  return <div className="text-2xl text-gray-400">{currentDateTime}</div>;
+  return (
+    <div className="text-xl text-muted-foreground md:text-2xl">
+      {currentDateTime}
+    </div>
+  );
 }

@@ -1,13 +1,13 @@
+import SectionHeader from "@/components/common/animation/SectionHeader";
 import ProjectSlider from "./ProjectSlider";
-import ProjectsHeader from "./ProjectsHeader";
 
 export default function Projects() {
   return (
     <div
-      className="flex items-center justify-center flex-col lg:gap-10"
+      className="flex flex-col items-center justify-center lg:gap-10"
       id="project"
     >
-      <ProjectsHeader />
+      <SectionHeader text="What I Have Build" title="Recent Projects" />
       <ProjectSlider />
     </div>
   );

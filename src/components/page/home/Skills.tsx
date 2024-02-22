@@ -37,108 +37,108 @@ export default function Skills() {
 
   return (
     <div>
-      <div className="flex items-center w-full justify-center flex-col gap-8">
-        <div className="flex flex-col gap-2 w-full">
+      <div className="flex w-full flex-col items-center justify-center gap-8">
+        <div className="flex w-full flex-col gap-2">
           <div>Graphic Design</div>
           <motion.div
             initial="offscreen"
             whileInView="onscreen"
             viewport={{ amount: 0.8, once: false }}
-            className="h-2 w-full bg-slate-800 rounded-full overflow-hidden"
+            className="h-2 w-full overflow-hidden rounded-full bg-secondary"
           >
             <motion.div
               variants={lineVariants}
-              className="h-2 w-[90%]  bg-primary-200 rounded-full"
+              className="h-2 w-[90%]  rounded-full bg-primary"
               title="90%"
             ></motion.div>
           </motion.div>
         </div>
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex w-full flex-col gap-2">
           <div>Web Design</div>
           <motion.div
             initial="offscreen"
             whileInView="onscreen"
             viewport={{ amount: 0.8, once: false }}
-            className="h-2 w-full bg-slate-800 rounded-full overflow-hidden"
+            className="h-2 w-full overflow-hidden rounded-full bg-secondary"
           >
             <motion.div
               variants={lineVariants}
-              className="h-2 w-[85%] bg-primary-200 rounded-full"
+              className="h-2 w-[85%] rounded-full bg-primary"
               title="85%"
             ></motion.div>
           </motion.div>
         </div>
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex w-full flex-col gap-2">
           <div>Adobe Muse</div>
           <motion.div
             initial="offscreen"
             whileInView="onscreen"
             viewport={{ amount: 0.8, once: false }}
-            className="h-2 w-full bg-slate-800 rounded-full overflow-hidden"
+            className="h-2 w-full overflow-hidden rounded-full bg-secondary"
           >
             <motion.div
               variants={lineVariants}
-              className="h-2 w-[92%] bg-primary-200 rounded-full"
+              className="h-2 w-[92%] rounded-full bg-primary"
               title="92%"
             ></motion.div>
           </motion.div>
         </div>
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex w-full flex-col gap-2">
           <div>Illustrator</div>
           <motion.div
             initial="offscreen"
             whileInView="onscreen"
             viewport={{ amount: 0.8, once: false }}
-            className="h-2 w-full bg-slate-800 rounded-full overflow-hidden"
+            className="h-2 w-full overflow-hidden rounded-full bg-secondary"
           >
             <motion.div
               variants={lineVariants}
-              className="h-2 w-[98%] bg-primary-200 rounded-full"
+              className="h-2 w-[98%] rounded-full bg-primary"
               title="98%"
             ></motion.div>
           </motion.div>
         </div>
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex w-full flex-col gap-2">
           <div>Photoshop</div>
           <motion.div
             initial="offscreen"
             whileInView="onscreen"
             viewport={{ amount: 0.8, once: false }}
-            className="h-2 w-full bg-slate-800 rounded-full overflow-hidden"
+            className="h-2 w-full overflow-hidden rounded-full bg-secondary"
           >
             <motion.div
               variants={lineVariants}
-              className="h-2 w-[92%] bg-primary-200 rounded-full"
+              className="h-2 w-[92%] rounded-full bg-primary"
               title="92%"
             ></motion.div>
           </motion.div>
         </div>
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex w-full flex-col gap-2">
           <div>Video Editing</div>
           <motion.div
             initial="offscreen"
             whileInView="onscreen"
             viewport={{ amount: 0.8, once: false }}
-            className="h-2 w-full bg-slate-800 rounded-full overflow-hidden"
+            className="h-2 w-full overflow-hidden rounded-full bg-secondary"
           >
             <motion.div
               variants={lineVariants}
-              className="h-2 w-[85%] bg-primary-200 rounded-full"
+              className="h-2 w-[85%] rounded-full bg-primary"
               title="85%"
             ></motion.div>
           </motion.div>
         </div>
-        <div className="flex flex-col w-full gap-2">
+        <div className="flex w-full flex-col gap-2">
           <div>Communication</div>
           <motion.div
             initial="offscreen"
             whileInView="onscreen"
             viewport={{ amount: 0.8, once: false }}
-            className="h-2 w-full bg-slate-800 rounded-full overflow-hidden"
+            className="h-2 w-full overflow-hidden rounded-full bg-secondary"
           >
             <motion.div
               variants={lineVariants}
-              className="h-2 w-[95%] bg-primary-200 rounded-full"
+              className="h-2 w-[95%] rounded-full bg-primary"
               title="95%"
             ></motion.div>
           </motion.div>

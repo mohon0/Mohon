@@ -69,11 +69,11 @@ export default function TestimonialSlider() {
         {TestimonialData.map((slide, index) => (
           <SwiperSlide
             key={index}
-            className="border h-96 w-1/3 border-gray-800 p-4"
+            className="h-96 w-1/3 border border-gray-800 p-4"
           >
             <div className="flex justify-between">
               <div className="flex flex-col gap-2">
-                <span className="font-bold text-xl">{slide.name}</span>
+                <span className="text-xl font-bold">{slide.name}</span>
                 <span className="text-gray-400">{slide.title}</span>
               </div>
               <Image
@@ -84,7 +84,7 @@ export default function TestimonialSlider() {
             </div>
             {slide.star === 4.5 ? (
               <div
-                className="flex gap-2 my-4 items-center justify-center text-xl text-orange-600
+                className="my-4 flex items-center justify-center gap-2 text-xl text-orange-600
           "
               >
                 <FaStar />
@@ -95,7 +95,7 @@ export default function TestimonialSlider() {
               </div>
             ) : (
               <div
-                className="flex gap-2 my-4 items-center justify-center text-xl text-orange-600
+                className="my-4 flex items-center justify-center gap-2 text-xl text-orange-600
           "
               >
                 <FaStar />
@@ -110,17 +110,17 @@ export default function TestimonialSlider() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="text-3xl font-bold flex items-center justify-center gap-20 my-10">
+      <div className="my-10 flex items-center justify-center gap-20 text-3xl font-bold">
         <button
           onClick={slidePrev}
-          className="swiper-button-prev flex items-center justify-center h-16 w-16 border-2 rounded-full transition-transform transform hover:scale-110 focus:scale-110 border-primary-200 text-primary-100"
+          className="swiper-button-prev flex h-16 w-16 transform items-center justify-center rounded-full border-2 border-primary text-primary transition-transform hover:scale-110 focus:scale-110"
         >
           <FaAngleLeft className="text-xl" />
         </button>
 
         <button
           onClick={slideNext}
-          className="swiper-button-next flex items-center justify-center h-16 w-16 border-2 rounded-full transition-transform transform hover:scale-110 focus:scale-110 border-primary-200 text-primary-100"
+          className="swiper-button-next flex h-16 w-16 transform items-center justify-center rounded-full border-2 border-primary text-primary transition-transform hover:scale-110 focus:scale-110"
         >
           <FaAngleRight className="text-xl" />
         </button>

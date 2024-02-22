@@ -1,6 +1,6 @@
 .swiper-pagination-bullet {
-  @apply mt-10 h-5 w-5 bg-primary-100 md:mt-16 md:h-8 md:w-8;
+  @apply mt-10 h-5 w-5 bg-primary md:mt-16 md:h-8 md:w-8;
 }
 .swiper-pagination-bullet-active {
-  @apply mt-10 h-5 w-5 bg-primary-200 md:mt-16 md:h-8 md:w-8;
+  @apply mt-10 h-5 w-5 bg-primary md:mt-16 md:h-8 md:w-8;
 }

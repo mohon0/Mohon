@@ -52,7 +52,7 @@ export default function Team() {
           {TeamData.map((data) => (
             <SwiperSlide
               key={data.id}
-              className="mb-16 w-full rounded-2xl border border-gray-600 md:w-1/3 lg:w-1/4"
+              className="mb-16 w-full rounded-2xl border md:w-1/3 lg:w-1/4"
             >
               <div className=" flex w-full">
                 <Image
@@ -62,10 +62,10 @@ export default function Team() {
                 />
               </div>
               <div className="my-5 flex flex-col items-center justify-center gap-2">
-                <div className="text-2xl font-bold text-primary-200">
+                <div className="text-2xl font-bold text-primary">
                   {data.name}
                 </div>
-                <div className="text-slate-400">{data.post}</div>
+                <div className="text-secondary-foreground">{data.post}</div>
               </div>
               <div className="mb-4 flex justify-center gap-5 text-2xl text-slate-300">
                 <Link href={data.facebook} target="_blank">
