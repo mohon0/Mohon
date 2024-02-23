@@ -63,10 +63,10 @@ export default function Login() {
       >
         <Form className="col-span-3 p-6 md:rounded-l-2xl">
           <section className="my-8 flex flex-col items-center justify-center gap-4">
-            <h1 className="text-center text-2xl font-bold text-primary-200">
+            <h1 className="text-center text-2xl font-bold text-primary">
               Log in to Continue
             </h1>
-            <span className=" h-0.5 w-28 rounded-full bg-primary-200"></span>
+            <span className=" h-0.5 w-28 rounded-full bg-primary"></span>
 
             <div className="my-6 flex w-full flex-col gap-1 md:w-2/3">
               <InputField
@@ -86,10 +86,7 @@ export default function Login() {
                 />
 
                 <div className="flex items-center justify-end">
-                  <Link
-                    href="/resetpassword"
-                    className="text-sm text-primary-200"
-                  >
+                  <Link href="/resetpassword" className="text-sm text-primary">
                     Forget Password
                   </Link>
                 </div>

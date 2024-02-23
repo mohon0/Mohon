@@ -20,7 +20,7 @@ export default function ActionButton() {
         <div className="flex items-center justify-center">
           <Link
             href={data?.button === "Apply" ? "/application" : "/contact"}
-            className="relative overflow-hidden px-6 py-2 font-semibold text-primary-200 duration-300 hover:bg-primary-200 hover:text-black hover:shadow-cyanshadow"
+            className="relative overflow-hidden bg-background px-6 py-2 font-semibold duration-300 hover:bg-primary hover:shadow-cyanshadow"
           >
             <span className="absolute left-0 top-0 block h-0.5 w-full animate-animate1 bg-gradient-midnight"></span>
             <span className="absolute right-0 block h-full w-0.5 animate-animate2 bg-gradient-midnight"></span>

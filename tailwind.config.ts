@@ -56,11 +56,12 @@ module.exports = {
         },
       },
       backgroundImage: {
-        "gradient-midnight": "linear-gradient(360deg, transparent, #03e9f4)",
+        "gradient-midnight":
+          "linear-gradient(360deg, transparent, hsl(var(--primary)))",
       },
       boxShadow: {
         cyanshadow:
-          "0 0 5px #09f1b8, 0 0 25px #09f1b8, 0 0 50px #09f1b8, 0 0 200px #09f1b8",
+          "0 0 5px hsl(var(--primary)), 0 0 25px hsl(var(--primary)), 0 0 50px hsl(var(--primary)), 0 0 200px hsl(var(--primary))",
       },
       borderRadius: {
         lg: "var(--radius)",

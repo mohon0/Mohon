@@ -45,30 +45,10 @@
   }
 
   .hero {
-    background-image: linear-gradient(
-      to right,
-      #09f1b8,
-      #00a2ff,
-      #0f47fe,
-      #00a2ff,
-      #09f1b8
-    );
     word-spacing: 16px;
     -webkit-text-stroke-color: transparent;
     -webkit-text-stroke-width: calc(1em / 16);
-    @apply bg-clip-text text-[#000119];
-  }
-
-  .wrong {
-    @apply bg-red-500;
-  }
-
-  .correct {
-    @apply bg-green-500;
-  }
-
-  .active {
-    @apply border-b-2 border-primary-200;
+    @apply bg-gradient-to-r from-primary via-pink-600 to-primary bg-clip-text text-background;
   }
 }
 

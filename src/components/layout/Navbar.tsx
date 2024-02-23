@@ -32,7 +32,7 @@ export default function Navbar() {
         visible ? " translate-y-0 backdrop-blur-md" : " -translate-y-20"
       } fixed left-0 top-0 items-center   px-2 transition-transform duration-500 ease-in-out lg:px-7`}
     >
-      <Link href="/" className="text-2xl font-bold text-primary-200">
+      <Link href="/" className="text-2xl font-bold text-primary">
         MOHON
       </Link>
       <div className="flex items-center gap-10">

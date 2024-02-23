@@ -3,6 +3,8 @@ import FileInput from "@/components/common/input/FileInput";
 import PostInput from "@/components/common/input/PostInput";
 import Content from "@/components/common/post/Content";
 import NewPostCategories from "@/components/common/post/NewPostCategory";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import NewPostValidation from "@/components/validation/NewPostValidation";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -78,13 +80,13 @@ export default function NewPost() {
   }
 
   return (
-    <div className="flex gap-10 items-center justify-center  flex-col border mx-1 lg:mx-10 lg:p-10 bg-blue-950 rounded-lg">
-      <div className="flex flex-col gap-2 justify-center items-center">
-        <p className="font-bold text-3xl text-primary-200">Create New Post </p>
-        <span className="flex h-1 w-40 bg-primary-200 "></span>
+    <Card className="mx-auto max-w-3xl p-2 md:p-6">
+      <div className="mb-8 flex flex-col items-center justify-center gap-2">
+        <p className="text-3xl font-bold text-primary">Create New Post </p>
+        <span className="flex h-1 w-40 bg-primary"></span>
       </div>
       <form
-        className="flex flex-col gap-10 w-full justify-center p-2 md:p-10 lg:p-20"
+        className="flex w-full flex-col justify-center gap-6"
         onSubmit={createNewPost}
       >
         <PostInput
@@ -112,15 +114,9 @@ export default function NewPost() {
           value={content}
         />
 
-        <button
-          className={`flex items-center justify-center rounded bg-black border-primary-200 text-primary-200 hover:bg-gray-950 py-2 px-4 font-bold  border ${
-            validationFailed ? "animate-shake" : ""
-          }`}
-        >
-          Create Post
-        </button>
+        <Button>Create Post</Button>
       </form>
       <ToastContainer position="top-center" autoClose={3000} />
-    </div>
+    </Card>
   );
 }
