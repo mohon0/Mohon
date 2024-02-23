@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { Textarea } from "../ui/textarea";
 import CommentsList from "./CommentList";
 
 interface CommentFormProps {
@@ -75,34 +78,22 @@ function CommentForm({ postId }: CommentFormProps) {
             </span>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label
-                  className="mb-2 block font-bold text-gray-400"
-                  htmlFor="comment"
-                >
-                  Comment
-                </label>
-                <textarea
-                  className="focus:shadow-outline h-32 w-full appearance-none rounded border py-2 px-3 leading-tight  focus:outline-none bg-slate-800 md:h-40"
-                  id="comment"
+                <Label htmlFor="comment">Comment</Label>
+                <Textarea
                   placeholder="Enter your comment here"
                   value={comment}
+                  className="h-28"
                   onChange={(e) => setComment(e.target.value)}
                   required
-                ></textarea>
+                ></Textarea>
               </div>
-              <div>
-                <button
-                  className="px-6 py-2 border rounded-lg border-primary-200 hover:border-primary-100"
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </div>
+
+              <Button type="submit">Submit</Button>
             </form>
           </div>
         ) : (
           <div className="text-xl">
-            You Need To{" "}
+            You Need To
             <Link href={"/signin"}>
               <span className="font-bold text-primary">Log In</span>
             </Link>

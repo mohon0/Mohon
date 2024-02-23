@@ -1,122 +1,140 @@
 "use client";
-import FileInput from "@/components/common/input/FileInput";
-import PostInput from "@/components/common/input/PostInput";
-import Content from "@/components/common/post/Content";
-import NewPostCategories from "@/components/common/post/NewPostCategory";
+import Categories from "@/components/common/Post/Categories";
+import PostContent from "@/components/common/Post/PostContent";
+import FormikInput from "@/components/common/input/FormikInput";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import NewPostValidation from "@/components/validation/NewPostValidation";
-import { useSession } from "next-auth/react";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import axios from "axios";
+import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import * as Yup from "yup";
 
-export default function NewPost() {
-  const { data: session, status } = useSession();
+export default function NewPostPage() {
+  const [image, setImage] = useState<File | null>(null);
+  const [imageError, setImageError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [categories, setCategories] = useState<string>("");
-  const [files, setFiles] = useState<FileList | null>(null);
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [validationFailed, setValidationFailed] = useState(false);
 
-  useEffect(() => {
-    if (status === "loading") {
-      return;
-    }
-
-    if (!session) {
-      router.push("/signin");
-    }
-  }, [status, session, router]);
-
-  async function createNewPost(ev: React.FormEvent<HTMLFormElement>) {
-    ev.preventDefault();
-
-    const errors = NewPostValidation({
-      title,
-      categories,
-      content,
-      files,
-    });
-
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors as { [key: string]: string });
-      setValidationFailed(true);
-      return;
-    }
-
-    const data = new FormData();
-    data.append("title", title);
-    data.append("content", content);
-    if (files) {
-      data.append("file", files[0]);
-    }
-    data.append("categories", categories);
-
-    const loadingToastId = toast.loading("Creating your post...", {
-      autoClose: false,
-      theme: "dark",
-    });
-    try {
-      const response = await fetch("/api/post", {
-        method: "POST",
-        body: data,
-        credentials: "include",
-      });
-      toast.dismiss(loadingToastId);
-      if (response.ok) {
-        toast.success("Post is added successfully");
-        router.push("/dashboard");
+  const MAX_IMAGE_SIZE_KB = 1000;
+  const handleFile: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > MAX_IMAGE_SIZE_KB * 1024) {
+        setImageError("file size exceeds the maximum allowed size");
+        toast.error(
+          `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`,
+        );
       } else {
-        toast.error("Couldn't save your post. Please try again later");
+        setImage(file);
+        setImageError("");
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Couldn't save your post. Please try again later");
     }
-  }
+  };
+
+  // Function to properly encode a string for URLs
+  const encodeForUrl = (str: string) => {
+    return encodeURIComponent(str.replace(/\s+/g, "_")).toLowerCase();
+  };
 
   return (
-    <Card className="mx-auto max-w-3xl p-2 md:p-6">
-      <div className="mb-8 flex flex-col items-center justify-center gap-2">
-        <p className="text-3xl font-bold text-primary">Create New Post </p>
-        <span className="flex h-1 w-40 bg-primary"></span>
-      </div>
-      <form
-        className="flex w-full flex-col justify-center gap-6"
-        onSubmit={createNewPost}
-      >
-        <PostInput
-          label="Title"
-          id="title"
-          value={title}
-          type="text"
-          onChange={(ev) => setTitle(ev.target.value)}
-          error={errors.title}
-          maxLength={70}
-        />
+    <Formik
+      initialValues={{ title: "", categories: "", content: "" }}
+      validationSchema={Yup.object({
+        title: Yup.string()
+          .matches(
+            /^[a-zA-Z0-9\s,'_]+$/,
+            "Title can not contain special characters",
+          )
+          .min(4, "Title Must be at least 4 characters")
+          .max(80, "Title can not be more than 80 characters")
+          .required("Title is required"),
+        categories: Yup.string().required("Category is required"),
+        content: Yup.string(),
+      })}
+      onSubmit={async (values) => {
+        const formData = new FormData();
+        formData.append("title", values.title);
+        formData.append("category", values.categories);
+        formData.append("content", values.content);
+        formData.append("image", image as Blob);
 
-        <FileInput
-          onChange={(ev) => setFiles(ev.target.files)}
-          error={errors.files}
-        />
+        try {
+          setIsSubmitting(true);
+          toast.loading("Please wait...");
+          const response = await axios.post("/api/post", formData);
 
-        <NewPostCategories
-          onChange={(ev) => setCategories(ev.target.value)}
-          error={errors.categories}
-        />
-        <Content
-          onChange={(newValue) => setContent(newValue)}
-          error={errors.content}
-          value={content}
-        />
-
-        <Button>Create Post</Button>
-      </form>
-      <ToastContainer position="top-center" autoClose={3000} />
-    </Card>
+          if (response.status === 201) {
+            toast.dismiss();
+            toast.success("Post uploaded successfully 🎉");
+            const uri = response.data.title;
+            const category = response.data.category;
+            const encodedUri = uri ? encodeForUrl(uri) : "";
+            const encodedCategory = category ? encodeForUrl(category) : "";
+            setTimeout(() => {
+              router.push(`/blog/${encodedCategory}/${encodedUri}`);
+            }, 1000);
+            setIsSubmitting(false);
+          } else {
+            toast.dismiss();
+            setIsSubmitting(false);
+            toast.error("Error uploading post");
+          }
+        } catch (error) {
+          setIsSubmitting(false);
+          toast.dismiss();
+          toast.error("Error uploading post: ");
+        }
+      }}
+    >
+      <Form>
+        <Card className="mx-1 w-full md:mx-auto md:w-10/12 lg:w-9/12">
+          <CardHeader className="flex items-center justify-center">
+            <CardTitle className="text-3xl">Create New Post</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4">
+            <FormikInput
+              label="Title:"
+              name="title"
+              type="text"
+              placeholder="Input Post Title"
+            />
+            <div className="flex flex-col gap-1.5">
+              <Label>Featured Image:</Label>
+              <input
+                type="file"
+                className="rounded-md border p-2"
+                onChange={handleFile}
+                required
+              />
+              {imageError && (
+                <p className="text-sm text-red-600">{imageError}</p>
+              )}
+            </div>
+            <Label>Categories:</Label>
+            <Field as={Categories} name="categories" />
+            <div>
+              <Label>Post Content:</Label>
+              <PostContent />
+            </div>
+          </CardContent>
+          <CardFooter className="mt-10">
+            <Button size="lg" type="submit" disabled={isSubmitting}>
+              Upload Post
+            </Button>
+          </CardFooter>
+        </Card>
+        <ToastContainer theme="dark" position="top-center" />
+      </Form>
+    </Formik>
   );
 }

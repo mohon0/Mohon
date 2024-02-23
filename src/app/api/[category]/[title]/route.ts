@@ -41,8 +41,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const postData = await prisma.post.findFirst({
       where: {
-        category: category,
-        title: title,
+        category: {
+          equals: category,
+          mode: "insensitive",
+        },
+        title: {
+          equals: title,
+          mode: "insensitive",
+        },
       },
       select: {
         id: true,
@@ -112,7 +118,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     if (userId !== authorId) {
       return new NextResponse(
         "Unauthorized: You can only delete your own posts",
-        { status: 401 }
+        { status: 401 },
       );
     }
 

@@ -17,7 +17,13 @@ export default function ApplicationPage() {
     isError: isErrorButton,
   } = FetchActionButtonData();
 
-  if (status === "loading" || isLoadingButton) {
+  const {
+    isLoading: isLoadingApplication,
+    data: applicationData,
+    isError: isErrorApplication,
+  } = FetchApplicationData();
+
+  if (status === "loading" || isLoadingButton || isLoadingApplication) {
     return <Loading />;
   }
 
@@ -26,30 +32,15 @@ export default function ApplicationPage() {
     return <p>You are not authenticated. Redirecting...</p>;
   }
 
-  if (isErrorButton) {
-    return "Error loading button data";
+  if (isErrorButton || isErrorApplication) {
+    return "Error loading data";
   }
 
-  const {
-    isLoading: isLoadingApplication,
-    data: applicationData,
-    isError: isErrorApplication,
-  } = FetchApplicationData();
-
-  // Fetch application data only if the user is authenticated
   if (buttonData.button === "Apply") {
-    if (isLoadingApplication) {
-      return <Loading />;
-    }
-
-    if (isErrorApplication) {
-      return "Error Loading Application Data";
-    }
-
     if (applicationData === "No Application Found") {
       return (
         <div>
-          <div className=" mb-10 mt-24 text-xl font-bold">
+          <div className="mb-10 mt-24 text-xl font-bold">
             <Notice />
           </div>
           <Application />

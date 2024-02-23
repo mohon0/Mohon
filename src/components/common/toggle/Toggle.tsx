@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Label } from "../ui/label";
-import { Switch } from "../ui/switch";
+import { Label } from "../../ui/label";
+import { Switch } from "../../ui/switch";
 
 export default function Toggle() {
   const [visibility, setVisibility] = useState(false);

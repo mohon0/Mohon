@@ -1,8 +1,9 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
-import PostModel from "@/components/common/post/PostModel";
+import PostModel from "@/components/common/Post/PostModel";
 import PaginationUi from "@/components/core/PaginationUi";
 import { FetchAllPost } from "@/components/fetch/get/blog/FetchAllPost";
+import { Input } from "@/components/ui/input";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -59,9 +60,9 @@ export default function Category({ params }: PageProps) {
           </select>
         </div>
         <div className="relative flex items-center md:w-1/2">
-          <input
+          <Input
             type="text"
-            className="h-[3.2rem] w-full rounded-full border bg-transparent px-4 outline-none focus-within:border-primary-200 focus-within:outline-none"
+            className="h-[3.2rem] w-full rounded-full border bg-transparent px-4 outline-none focus-within:border-primary focus-within:outline-none"
             placeholder="Search..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}

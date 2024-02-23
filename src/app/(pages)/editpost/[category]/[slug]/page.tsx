@@ -1,160 +1,134 @@
 "use client";
-import FileInput from "@/components/common/input/FileInput";
-import Input from "@/components/common/input/PostInput";
+import Categories from "@/components/common/Post/Categories";
+import PostContent from "@/components/common/Post/PostContent";
+import FormikInput from "@/components/common/input/FormikInput";
 import Loading from "@/components/common/loading/Loading";
-import Categories from "@/components/common/post/Categories";
-import Content from "@/components/common/post/Content";
 import { FetchSinglePost } from "@/components/fetch/get/blog/FetchSinglePost";
-import EditPostValidation from "@/components/validation/EditPostValidation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import axios from "axios";
+import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import * as Yup from "yup";
 
 interface PageProps {
   params: { slug: string; category: string };
 }
 
 function EditPost({ params }: PageProps) {
+  const [image, setImage] = useState<File | null>(null);
   const router = useRouter();
-
-  const [id, setId] = useState<string>("");
-  const [userId, setUserId] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [content, setContent] = useState<string>("");
-  const [files, setFiles] = useState<FileList | null>(null);
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [validationFailed, setValidationFailed] = useState(false);
-
   const { isLoading, data, isError } = FetchSinglePost({
     category: params.category,
     slug: params.slug,
   });
 
-  useEffect(() => {
-    if (!isLoading && !isError && data) {
-      setTitle(data.title);
-      setId(data.id);
-      setUserId(data.author.id);
-      setContent(data.content);
-      setSelectedCategory(data.category);
-    }
-  }, [isLoading, isError, data]);
   if (isLoading) {
-    return (
-      <>
-        <Loading />
-      </>
-    );
+    return <Loading />;
+  }
+  if (isError) {
+    return <div>Error fetching post</div>;
   }
 
-  if (isError) {
-    ("Error fetching post: ");
-  }
+  const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setImage(files[0]);
+    }
+  };
 
   // Function to properly encode a string for URLs
   const encodeForUrl = (str: string) => {
-    return encodeURIComponent(str).replace(/%20/g, "_");
+    return encodeURIComponent(str.replace(/\s+/g, "_")).toLowerCase();
   };
 
-  async function UpdatePost(ev: React.FormEvent<HTMLFormElement>) {
-    ev.preventDefault();
-
-    const errors = EditPostValidation({
-      title,
-      categories: selectedCategory,
-      content,
-    });
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors as { [key: string]: string });
-      setValidationFailed(true);
-      return;
-    }
-    const data = new FormData();
-    data.set("title", title);
-    data.set("content", content);
-    data.set("categories", selectedCategory);
-    data.set("userId", userId);
-    if (id) {
-      data.set("id", id.toString());
-    }
-
-    if (files?.[0]) {
-      data.set("file", files?.[0]);
-    }
-
-    toast.loading("Please wait while we update your post.");
-
-    try {
-      const response = await fetch(`/api/post`, {
-        method: "PUT",
-        body: data,
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        const uri = responseData.title;
-        toast.dismiss();
-        const encodedUri = uri ? encodeForUrl(uri) : "";
-        toast.success("Post Updated successfully");
-        router.push(`/blog/${responseData.category}/${encodedUri}`);
-      } else {
-        console.error("Failed to update the post. Status:", response.status);
-        toast.dismiss();
-        toast.error("Post Updating failed");
-      }
-    } catch (error) {
-      console.error("An error occurred while updating the post:", error);
-      toast.dismiss();
-      toast.error("An error occurred");
-    }
-  }
-
   return (
-    <div className="flex flex-col-reverse items-center justify-center lg:flex-row ">
-      <div className="mx-1  mb-20 flex flex-col  items-center justify-center rounded-xl border bg-blue-950 md:w-10/12 lg:mx-10 lg:p-10">
-        <span className="text-2xl font-bold">Edit Post</span>
-        <form
-          className="flex w-full flex-col justify-center gap-10 p-2 md:p-10 lg:py-20"
-          onSubmit={UpdatePost}
-        >
-          <Input
-            label="Title"
-            id="title"
-            type="text"
-            value={title}
-            onChange={(ev) => setTitle(ev.target.value)}
-            error={errors.title}
-            maxLength={70}
-          />
+    <Formik
+      initialValues={{
+        title: data.title,
+        categories: data.category,
+        content: data.content,
+      }}
+      validationSchema={Yup.object({
+        title: Yup.string()
+          .matches(
+            /^[a-zA-Z0-9\s,'_]+$/,
+            "Title can not contain special characters",
+          )
+          .min(4, "Title Must be at least 4 characters")
+          .max(80, "Title can not be more than 80 characters")
+          .required("Title is required"),
+        categories: Yup.string().required("Category is required"),
+        content: Yup.string(),
+      })}
+      onSubmit={async (values) => {
+        try {
+          const formData = new FormData();
+          formData.append("title", values.title);
+          formData.append("categories", values.categories);
+          formData.append("content", values.content);
+          formData.append("id", data.id);
+          formData.append("userId", data.author.id);
+          if (image) {
+            formData.append("image", image as Blob);
+          }
 
-          <Categories
-            selectedCategory={selectedCategory}
-            onChange={(ev) => setSelectedCategory(ev.target.value)}
-            error={errors.categories}
-          />
+          toast.loading("Please wait...");
 
-          <FileInput onChange={(ev) => setFiles(ev.target.files)} />
+          const response = await axios.put("/api/post", formData);
 
-          <Content
-            onChange={(newValue) => setContent(newValue)}
-            error={errors.content}
-            value={content}
-          />
-
-          <button
-            className={` rounded-lg border border-primary-200 bg-black px-6 py-2 text-primary-200 hover:bg-gray-950 ${
-              validationFailed ? "animate-shake" : ""
-            }`}
-          >
-            Update Post
-          </button>
-        </form>
-      </div>
-      <ToastContainer position="top-center" autoClose={3000} />
-    </div>
+          console.log(response);
+          if (response.status === 200) {
+            toast.dismiss();
+            toast.success("Updated Successfully 🎉");
+            const uri = response.data.title;
+            const category = response.data.category;
+            const encodedUri = uri ? encodeForUrl(uri) : "";
+            const encodedCategory = category ? encodeForUrl(category) : "";
+            setTimeout(() => {
+              router.push(`/blog/${encodedCategory}/${encodedUri}`);
+            }, 1000);
+          }
+        } catch (error) {
+          toast.dismiss();
+          toast.error("Error while updating.");
+        }
+      }}
+    >
+      <Form>
+        <Card className="mx-1 w-full md:mx-auto md:w-10/12 lg:w-9/12">
+          <CardHeader className="flex items-center justify-center">
+            <CardTitle className="text-3xl">Update Post</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4">
+            <FormikInput label="Title:" name="title" type="text" id="title" />
+            <div className="flex flex-col gap-1.5">
+              <Label>Featured Image:</Label>
+              <input
+                type="file"
+                onChange={(event) => handleImage(event)}
+                className="rounded-md border p-2"
+              />
+            </div>
+            <Label>Categories:</Label>
+            <Categories value={data.category} name="categories" />
+            <div>
+              <Label>Post Content:</Label>
+              <PostContent />
+            </div>
+            -
+            <Button type="submit" className="mt-10">
+              Update Post
+            </Button>
+          </CardContent>
+          <ToastContainer position="top-center" theme="dark" />
+        </Card>
+      </Form>
+    </Formik>
   );
 }
 

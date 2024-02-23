@@ -2,13 +2,13 @@ const Toolbar = () => {
   const modules = {
     toolbar: {
       container: [
-        [{ size: ["small", false, "large", "huge"] }],
-        ["bold", "italic", "underline"],
-        ["blockquote"],
-        ["link"],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ["bold", "italic"],
+        ["blockquote", "code-block"],
         [{ list: "ordered" }, { list: "bullet" }],
-
         [{ color: [] }, { background: [] }],
+        [{ align: [] }],
+        ["link", "image"],
         ["clean"],
       ],
     },

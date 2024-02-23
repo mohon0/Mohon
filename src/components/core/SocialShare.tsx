@@ -38,7 +38,7 @@ export default function SocialShare({ yourPostUrl }: { yourPostUrl: string }) {
 
   return (
     <div className="flex flex-col gap-4 mt-10">
-      <div className="font-bold text-xl text-primary-200">
+      <div className="font-bold text-xl text-primary">
         Share On Social Media
       </div>
       <div className="flex items-center gap-4 md:gap-10 flex-wrap text-sm">

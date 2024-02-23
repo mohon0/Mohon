@@ -1,4 +1,4 @@
-const Options = [
+export const Options = [
   "Technology News",
   "Programming",
   "Web Development",
@@ -48,13 +48,3 @@ const Options = [
   "Our Course",
   "Notice",
 ];
-
-const optionsWithLinks = Options.map((option) => ({
-  value: option.toLowerCase().replace(/\s+/g, "_"),
-  label: option,
-}));
-
-// Sort the array alphabetically by the 'label' property
-optionsWithLinks.sort((a, b) => a.label.localeCompare(b.label));
-
-export default optionsWithLinks;

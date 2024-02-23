@@ -1,4 +1,4 @@
-import Blog from "@/components/blog/Blog";
+import Blog from "@/components/common/Post/Blog";
 import { FetchSinglePost } from "@/components/fetch/get/blog/FetchSinglePost";
 import { Metadata, ResolvingMetadata } from "next";
 

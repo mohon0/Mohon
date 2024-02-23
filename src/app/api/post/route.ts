@@ -42,10 +42,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     const data = await req.formData();
-
     const titleEntry = data.get("title");
-    const cover = data.get("file");
-    const categoriesEntry = data.get("categories");
+    const cover = data.get("image");
+    const categoriesEntry = data.get("category");
     const contentEntry = data.get("content");
 
     if (!titleEntry || !cover || !categoriesEntry) {
@@ -99,7 +98,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         },
       });
 
-      return new NextResponse("Post created successfully", { status: 201 });
+      return new NextResponse(JSON.stringify(newPost), { status: 201 });
     } catch (error) {
       console.error("Error occurred while uploading the file: ", error);
       return new NextResponse("File upload failed", { status: 500 });
@@ -138,7 +137,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       return new NextResponse("You are not the author of this post");
     }
 
-    const coverImageBlob = body.get("file") as Blob | null;
+    const coverImageBlob = body.get("image") as Blob | null;
 
     let coverImageURL = null;
     if (coverImageBlob) {
@@ -239,7 +238,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     if (userId !== authorId) {
       return new NextResponse(
         "Unauthorized: You can only delete your own posts",
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -251,7 +250,6 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     });
 
     if (await imageExists(post.coverImage)) {
-    
       const storageRefToDelete = ref(storage, post.coverImage);
       await deleteObject(storageRefToDelete);
     }

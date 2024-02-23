@@ -1,7 +1,0 @@
-.ql-toolbar {
-  background: black;
-}
-
-.ql-container {
-  @apply text-xs md:text-lg;
-}

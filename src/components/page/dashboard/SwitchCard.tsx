@@ -1,5 +1,5 @@
-import DurationToggle from "@/components/common/DurationToggle";
-import Toggle from "@/components/common/Toggle";
+import DurationToggle from "@/components/common/toggle/DurationToggle";
+import Toggle from "@/components/common/toggle/Toggle";
 import { Card } from "@/components/ui/card";
 
 export default function SwitchCard() {

@@ -3,6 +3,7 @@ import AuthorCard from "@/components/card/AuthorCard";
 import Loading from "@/components/common/loading/Loading";
 import CommentForm from "@/components/core/Comment";
 import SocialShare from "@/components/core/SocialShare";
+import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FetchSinglePost } from "../fetch/get/blog/FetchSinglePost";
+import { FetchSinglePost } from "../../fetch/get/blog/FetchSinglePost";
 import styles from "./PostContent.module.css";
 
 interface PageProps {
@@ -155,10 +156,10 @@ export default function Blog({ params }: PageProps) {
         <div className="m-2 flex flex-col gap-6 lg:m-10 lg:flex-row">
           <div className="flex-1">
             <div className="mb-8">
-              <h1 className="mb-4 text-3xl font-extrabold text-primary-200  md:text-4xl">
+              <h1 className="mb-4 text-3xl font-extrabold text-primary  md:text-4xl">
                 {data.title}
               </h1>
-              <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+              <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
                 <div>
                   <span className="flex text-sm">
                     <span className="text-sm ">
@@ -175,30 +176,22 @@ export default function Blog({ params }: PageProps) {
                     </span>
                   </span>
                 </div>
-                <div>
-                  <div>
-                    <button className="mr-10 rounded-br-2xl rounded-tl-2xl border-2 border-primary-200 px-4 py-1">
-                      {formattedCategory}
-                    </button>
-                  </div>
-                </div>
-                <div className="mt-6 flex flex-col items-center gap-6 md:flex-row">
+
+                <Button variant="outline" className="w-fit">
+                  {formattedCategory}
+                </Button>
+
+                <div className="flex flex-col items-center gap-6 md:flex-row">
                   {userInfo === data.author.email && (
                     <div className="mx-auto flex items-center justify-center gap-4 md:justify-end">
-                      <div>
-                        <Link
-                          href={`/editpost/${params.category}/${params.slug}`}
-                          className="flex h-10 items-center justify-center rounded-md bg-blue-700 px-8 hover:bg-blue-800"
-                        >
-                          Edit Post
-                        </Link>
-                      </div>
-                      <button
-                        onClick={handleDelete}
-                        className="flex h-10 items-center justify-center rounded-md bg-red-500 px-7 hover:bg-red-600"
+                      <Link
+                        href={`/editpost/${params.category}/${params.slug}`}
                       >
+                        <Button>Edit Post</Button>
+                      </Link>
+                      <Button onClick={handleDelete} variant="destructive">
                         Delete Post
-                      </button>
+                      </Button>
                     </div>
                   )}
 
@@ -236,12 +229,12 @@ export default function Blog({ params }: PageProps) {
               width={1000}
               height={1000}
             />
-            <button
+            <Button
               onClick={handleDownload}
-              className="mx-auto my-6 flex items-center justify-center rounded-md border border-primary-200 px-5 py-2 text-sm font-bold text-primary-200"
+              className="mx-auto my-6 flex items-center justify-center"
             >
               Download Image
-            </button>
+            </Button>
             <div
               className={`mb-12 mt-10 rounded-lg md:mx-0 md:mt-16 md:text-lg ${styles["post-content"]}`}
               dangerouslySetInnerHTML={{ __html: data.content }}
@@ -252,7 +245,7 @@ export default function Blog({ params }: PageProps) {
               />
             </div>
           </div>
-          <div className="right-4 top-20 mx-auto my-10 h-fit w-full rounded-lg  border border-gray-600 md:w-80 lg:sticky lg:my-0 lg:w-60">
+          <div className="right-4 top-20 mx-auto my-10 h-fit w-full rounded-lg  border md:w-80 lg:sticky lg:my-0 lg:w-60">
             <AuthorCard
               name={data.author.name}
               image={data.author.image}
@@ -260,10 +253,10 @@ export default function Blog({ params }: PageProps) {
             />
           </div>
         </div>
-        <div>
+        <div className="mx-1 md:mx-10">
           <CommentForm postId={data.id} />
         </div>
-        <ToastContainer position="top-center" autoClose={3000} />
+        <ToastContainer position="top-center" theme="dark" />
       </div>
     </>
   );

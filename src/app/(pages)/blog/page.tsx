@@ -1,9 +1,20 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
-import Filter from "@/components/common/post/Filter";
-import PostModel from "@/components/common/post/PostModel";
+import Filter from "@/components/common/Post/Filter";
+import PostModel from "@/components/common/Post/PostModel";
 import PaginationUi from "@/components/core/PaginationUi";
 import { FetchAllPost } from "@/components/fetch/get/blog/FetchAllPost";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
@@ -36,34 +47,46 @@ export default function Blog() {
     searchInput,
   });
 
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+  };
+
+  const handleSelectChange = (value: string) => {
+    setSortBy(value);
+  };
+
   return (
     <div className=" mx-4 flex flex-col items-center justify-center gap-20 lg:mx-28 lg:my-10">
       <div className="text-3xl font-bold md:text-5xl">My Latest Updates</div>
       <div className="flex w-full flex-col items-center gap-10 md:flex-row">
         {/* Filter by category dropdown */}
         <div>
-          <Filter
-            selectedCategory={selectedCategory}
-            onChange={(ev) => setSelectedCategory(ev.target.value)}
-          />
+          <Filter onCategoryChange={handleCategoryChange} />
         </div>
         {/* Sort by dropdown */}
-        <div className="flex items-center justify-center gap-2  rounded-full border px-4 py-2">
-          <label htmlFor="sortPosts">SortBy:</label>
-          <select
-            id="sortPosts"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="w-24 bg-[#000119] px-2 py-2"
-          >
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-          </select>
+        <div className="flex items-center justify-center gap-2">
+          <Label htmlFor="sortPosts">SortBy:</Label>
+          <Select onValueChange={handleSelectChange} defaultValue="newest">
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Updated Time" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Updated Time</SelectLabel>
+
+                <SelectItem value="newest" onSelect={() => setSortBy("newest")}>
+                  Newest
+                </SelectItem>
+                <SelectItem value="oldest" onSelect={() => setSortBy("oldest")}>
+                  Oldest
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
         <div className="relative flex items-center md:w-1/2">
-          <input
+          <Input
             type="text"
-            className="h-[3.2rem] w-full rounded-full border bg-transparent px-4 outline-none focus-within:border-primary-200 focus-within:outline-none"
             placeholder="Search..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}

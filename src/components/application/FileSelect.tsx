@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChangeEvent } from "react";
 import { FaRegUser } from "react-icons/fa6";
@@ -17,13 +16,15 @@ export function FileSelect({ onFileSelect }: FileSelectProps) {
   };
 
   return (
-    <div className="flex flex-col pt-2 items-center gap-1.5">
+    <div className="flex flex-col items-center gap-1.5 pt-2">
       <span className="text-sm">image limit 500kb</span>
-      <Label htmlFor="picture"><FaRegUser size='64' /></Label>
-      <Input
+      <Label htmlFor="picture">
+        <FaRegUser size="64" />
+      </Label>
+      <input
         id="picture"
         type="file"
-        className='border-none'
+        className="border-none"
         required={true}
         onChange={handleFileChange}
       />
