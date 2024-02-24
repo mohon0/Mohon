@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
+import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,7 +41,7 @@ const Users: React.FC = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `/api/user?page=${currentPage}&pageSize=${pageSize}&search=${searchInput}`
+          `/api/user?page=${currentPage}&pageSize=${pageSize}&search=${searchInput}`,
         );
 
         if (!response.ok) {
@@ -70,7 +71,7 @@ const Users: React.FC = () => {
 
   const jumpToPageOptions = Array.from(
     { length: totalPages },
-    (_, index) => index + 1
+    (_, index) => index + 1,
   );
 
   const admin = process.env.NEXT_PUBLIC_ADMIN;
@@ -109,14 +110,14 @@ const Users: React.FC = () => {
     <div className="mx-2 md:mx-10 lg:mx-16">
       {status === "authenticated" && email === admin ? (
         <div>
-          <h1 className="flex items-center justify-center font-bold text-4xl uppercase text-primary-200 mb-10">
+          <h1 className="mb-10 flex items-center justify-center text-4xl font-bold uppercase text-primary">
             All Users
           </h1>
-          <div className="flex mb-20  flex-col md:flex-row items-center justify-center w-full gap-10">
+          <div className="mb-20 flex  w-full flex-col items-center justify-center gap-10 md:flex-row">
             <div className="relative flex items-center md:w-1/2">
               <input
                 type="text"
-                className="w-full bg-transparent border h-[3.2rem] focus-within:border-primary-200 rounded-full focus-within:outline-none outline-none px-4"
+                className="h-[3.2rem] w-full rounded-full border bg-transparent px-4 outline-none focus-within:border-primary focus-within:outline-none"
                 placeholder="Search By Name..."
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
@@ -130,10 +131,10 @@ const Users: React.FC = () => {
             <Loading />
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {users.map((user) => (
                   <div
-                    className=" relative col-span-1 border p-4 rounded flex items-center justify-center gap-3 flex-col hover:border-primary-200"
+                    className=" relative col-span-1 flex flex-col items-center justify-center gap-3 rounded border p-4 hover:border-primary"
                     key={user.id}
                   >
                     <div>
@@ -143,31 +144,33 @@ const Users: React.FC = () => {
                           alt=""
                           height={100}
                           width={100}
-                          className="rounded-full h-20 w-20 object-cover"
+                          className="h-20 w-20 rounded-full object-cover"
                         />
                       ) : (
-                        <div className="h-20 w-20 rounded-full bg-gray-600  p-0.5 text-center text-sm flex items-center justify-center">
+                        <div className="flex h-20 w-20 items-center  justify-center rounded-full bg-secondary p-0.5 text-center text-sm">
                           No image
                         </div>
                       )}
                     </div>
-                    <p className="mt-2 font-bold text-xl text-primary-200">
+                    <p className="mt-2 text-xl font-bold text-primary">
                       {user.name}
                     </p>
                     <p className="text-gray-300">{user.email}</p>
                     {user.email !== admin && (
-                      <button
-                        className=" absolute top-2 right-2 flex gap-1 items-center bg-red-600 text-sm p-2 rounded-lg"
+                      <Button
+                        className=" absolute right-1 top-2"
+                        variant="destructive"
+                        size="sm"
                         onClick={() => handlePopUp(user.id)}
                       >
                         <MdDelete /> Delete User
-                      </button>
+                      </Button>
                     )}
 
                     {showConfirmation && (
-                      <div className="fixed w-screen inset-0  h-screen flex items-center justify-center backdrop-blur-sm bg-opacity-95 z-50">
-                        <div className="bg-blue-950 p-6 w-11/12 lg:w-2/6 rounded-lg shadow-md">
-                          <p className="text-xl text-red-500 font-b">
+                      <div className="fixed inset-0 z-50  flex h-screen w-screen items-center justify-center bg-opacity-95 backdrop-blur-sm">
+                        <div className="w-11/12 rounded-lg bg-blue-950 p-6 shadow-md lg:w-2/6">
+                          <p className="font-b text-xl text-red-500">
                             Are you sure you want to Delete this user.
                           </p>
                           <p className="text-sm ">
@@ -175,16 +178,16 @@ const Users: React.FC = () => {
                             associate with is account including application and
                             comments are going to be deleted.
                           </p>
-                          <div className="flex justify-end mt-8">
+                          <div className="mt-8 flex justify-end">
                             <button
                               onClick={() => setShowConfirmation(false)}
-                              className="px-4 py-2 mr-4 bg-gray-600 hover:bg-gray-700 rounded"
+                              className="mr-4 rounded bg-gray-600 px-4 py-2 hover:bg-gray-700"
                             >
                               Cancel
                             </button>
                             <button
                               onClick={() => handleDelete()}
-                              className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+                              className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
                             >
                               Delete User
                             </button>
@@ -192,11 +195,10 @@ const Users: React.FC = () => {
                         </div>
                       </div>
                     )}
-                    <Link
-                      href={`/user/${user.id}`}
-                      className="border w-full p-1.5 border-primary-200 text-sm text-primary-200 flex items-center justify-center rounded-md"
-                    >
-                      View Details
+                    <Link href={`/user/${user.id}`} className="flex w-full">
+                      <Button className="flex w-full" variant="outline">
+                        View Details
+                      </Button>
                     </Link>
                   </div>
                 ))}
@@ -205,14 +207,14 @@ const Users: React.FC = () => {
           )}
           {/* Pagination controls */}
           {totalPages > 1 && (
-            <div className=" flex gap-4 justify-center mt-16 items-center">
+            <div className=" mt-16 flex items-center justify-center gap-4">
               <button
                 onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
                 disabled={currentPage === 1}
-                className={`px-4 py-2 rounded-md ${
+                className={`rounded-md px-4 py-2 ${
                   currentPage === 1
-                    ? "bg-gray-500 cursor-not-allowed"
-                    : "bg-gray-700 text-white cursor-pointer"
+                    ? "cursor-not-allowed bg-gray-500"
+                    : "cursor-pointer bg-gray-700 text-white"
                 }`}
               >
                 Prev
@@ -221,7 +223,7 @@ const Users: React.FC = () => {
                 <select
                   value={currentPage}
                   onChange={(e) => setCurrentPage(Number(e.target.value))}
-                  className="px-4 py-2 rounded-md bg-gray-600 focus:outline-none"
+                  className="rounded-md bg-gray-600 px-4 py-2 focus:outline-none"
                 >
                   {jumpToPageOptions.map((option) => (
                     <option key={option} value={option}>
@@ -234,9 +236,9 @@ const Users: React.FC = () => {
                 <button
                   key={index}
                   onClick={() => setCurrentPage(index + 1)}
-                  className={`px-4 py-2 rounded-md ${
+                  className={`rounded-md px-4 py-2 ${
                     currentPage === index + 1
-                      ? "bg-blue-950 border"
+                      ? "border bg-blue-950"
                       : "bg-gray-600"
                   }`}
                 >
@@ -246,10 +248,10 @@ const Users: React.FC = () => {
               <button
                 onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
                 disabled={currentPage === totalPages}
-                className={`px-4 py-2 rounded-md ${
+                className={`rounded-md px-4 py-2 ${
                   currentPage === totalPages
-                    ? "bg-gray-500 cursor-not-allowed"
-                    : "bg-gray-700 text-white cursor-pointer"
+                    ? "cursor-not-allowed bg-gray-500"
+                    : "cursor-pointer bg-gray-700 text-white"
                 }`}
               >
                 Next
