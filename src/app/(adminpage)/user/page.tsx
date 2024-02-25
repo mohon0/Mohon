@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
+import PaginationList from "@/components/core/PaginationList";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -205,59 +206,13 @@ const Users: React.FC = () => {
               </div>
             </>
           )}
-          {/* Pagination controls */}
-          {totalPages > 1 && (
-            <div className=" mt-16 flex items-center justify-center gap-4">
-              <button
-                onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
-                disabled={currentPage === 1}
-                className={`rounded-md px-4 py-2 ${
-                  currentPage === 1
-                    ? "cursor-not-allowed bg-gray-500"
-                    : "cursor-pointer bg-gray-700 text-white"
-                }`}
-              >
-                Prev
-              </button>
-              <div className="relative">
-                <select
-                  value={currentPage}
-                  onChange={(e) => setCurrentPage(Number(e.target.value))}
-                  className="rounded-md bg-gray-600 px-4 py-2 focus:outline-none"
-                >
-                  {jumpToPageOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {Array.from({ length: totalPages }, (_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentPage(index + 1)}
-                  className={`rounded-md px-4 py-2 ${
-                    currentPage === index + 1
-                      ? "border bg-blue-950"
-                      : "bg-gray-600"
-                  }`}
-                >
-                  {index + 1}
-                </button>
-              ))}
-              <button
-                onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
-                disabled={currentPage === totalPages}
-                className={`rounded-md px-4 py-2 ${
-                  currentPage === totalPages
-                    ? "cursor-not-allowed bg-gray-500"
-                    : "cursor-pointer bg-gray-700 text-white"
-                }`}
-              >
-                Next
-              </button>
-            </div>
-          )}
+          <div className="mt-10">
+            <PaginationList
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={(newPage) => setCurrentPage(newPage)}
+            />
+          </div>
         </div>
       ) : (
         "You are not authenticated"
