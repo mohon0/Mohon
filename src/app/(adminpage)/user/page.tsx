@@ -2,6 +2,17 @@
 import Loading from "@/components/common/loading/Loading";
 import PaginationList from "@/components/core/PaginationList";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,6 +40,7 @@ const Users: React.FC = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [id, setId] = useState("");
   const [random, setRandom] = useState(Number);
+  const [sortBy, setSortBy] = useState("newest");
 
   const pageSize = 18;
   const router = useRouter();
@@ -42,7 +54,7 @@ const Users: React.FC = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `/api/user?page=${currentPage}&pageSize=${pageSize}&search=${searchInput}`,
+          `/api/user?page=${currentPage}&sortBy=${sortBy}&pageSize=${pageSize}&search=${searchInput}`,
         );
 
         if (!response.ok) {
@@ -68,12 +80,9 @@ const Users: React.FC = () => {
     };
 
     fetchData();
-  }, [currentPage, searchInput, status, random]);
+  }, [currentPage, searchInput, status, random, sortBy]);
 
-  const jumpToPageOptions = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1,
-  );
+
 
   const admin = process.env.NEXT_PUBLIC_ADMIN;
   const email = session?.user?.email;
@@ -107,6 +116,10 @@ const Users: React.FC = () => {
     setShowConfirmation(true);
   }
 
+  const handleSelectChange = (value: string) => {
+    setSortBy(value);
+  };
+
   return (
     <div className="mx-2 md:mx-10 lg:mx-16">
       {status === "authenticated" && email === admin ? (
@@ -115,10 +128,35 @@ const Users: React.FC = () => {
             All Users
           </h1>
           <div className="mb-20 flex  w-full flex-col items-center justify-center gap-10 md:flex-row">
+            <div className="flex items-center justify-center gap-2">
+              <Label htmlFor="sortPosts">SortBy:</Label>
+              <Select onValueChange={handleSelectChange} defaultValue="newest">
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="Updated Time" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Updated Time</SelectLabel>
+
+                    <SelectItem
+                      value="newest"
+                      onSelect={() => setSortBy("newest")}
+                    >
+                      Newest
+                    </SelectItem>
+                    <SelectItem
+                      value="oldest"
+                      onSelect={() => setSortBy("oldest")}
+                    >
+                      Oldest
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
             <div className="relative flex items-center md:w-1/2">
-              <input
+              <Input
                 type="text"
-                className="h-[3.2rem] w-full rounded-full border bg-transparent px-4 outline-none focus-within:border-primary focus-within:outline-none"
                 placeholder="Search By Name..."
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}

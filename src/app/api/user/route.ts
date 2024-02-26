@@ -17,6 +17,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
       ? parseInt(queryParams.get("pageSize")!, 10)
       : 6;
 
+    const sortBy = queryParams.get("sortBy");
+
     const skipCount = (page - 1) * pageSize;
 
     const searchName = queryParams.get("search") || ""; // Get the name parameter from the query
@@ -34,6 +36,10 @@ export async function GET(req: NextRequest, res: NextResponse) {
           mode: "insensitive",
         },
       },
+      orderBy: {
+        createdAt: sortBy === "oldest" ? "asc" : "desc",
+      },
+
       skip: skipCount,
       take: pageSize,
     });
@@ -45,7 +51,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         JSON.stringify({ users: allUsers, totalUsersCount }),
         {
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
     } else {
       return new NextResponse("No users found.", {
