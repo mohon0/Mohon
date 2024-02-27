@@ -1,6 +1,9 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
+import PaginationList from "@/components/core/PaginationList";
 import { FetchAllApplication } from "@/components/fetch/get/application/FetchAllApplication";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -43,7 +46,7 @@ export default function List() {
 
   const email = session?.user?.email;
   const admin = process.env.NEXT_PUBLIC_ADMIN;
-  const pageSize = 9;
+  const pageSize = 12;
 
   const { data, isLoading, isError } = FetchAllApplication({
     currentPage,
@@ -139,7 +142,7 @@ export default function List() {
         <div className="my-10 flex w-full flex-col items-center justify-center gap-10 md:flex-row">
           {/* Filter by category dropdown */}
           <div className="flex items-center justify-center gap-2 rounded-full border px-4 py-2">
-            <label htmlFor="filter">FilterBy:</label>
+            <Label htmlFor="filter">FilterBy:</Label>
             <select
               id="filter"
               value={selectedCategory}
@@ -196,35 +199,34 @@ export default function List() {
                 {data.application.map((app: Post) => (
                   <div
                     key={app.id}
-                    className="w-full rounded-lg  border border-gray-500 p-4"
+                    className="flex w-full flex-col justify-between rounded-lg border p-4"
                   >
-                    <div>
-                      <div className="mb-6 flex items-center justify-center">
-                        <Image
-                          src={app.image}
-                          alt=""
-                          height={200}
-                          width={200}
-                          className="h-20 w-20 rounded-full"
-                        />
-                      </div>
-                      <p className="mb-2 text-xl font-bold text-primary-100">
+                    <Image
+                      src={app.image}
+                      alt=""
+                      height={200}
+                      width={200}
+                      className="mx-auto mb-4 h-20 w-20 rounded-full"
+                    />
+
+                    <div className="flex flex-col">
+                      <p className="mb-2 text-xl font-bold text-primary">
                         Name: {app.firstName} {app.lastName}
                       </p>
                       <p>
-                        <span className="font-bold text-primary-200">
+                        <span className="font-bold text-secondary-foreground">
                           Course:{" "}
                         </span>
                         <span>{app.course}</span>{" "}
                       </p>
                       <p>
-                        <span className="font-bold text-primary-200">
+                        <span className="font-bold text-secondary-foreground">
                           Type:{" "}
                         </span>
                         <span>{app.duration}</span>
                       </p>
                       <p>
-                        <span className="font-bold text-primary-200">
+                        <span className="font-bold text-secondary-foreground">
                           Date:{" "}
                         </span>
                         <span>{formatDate(app.createdAt)}</span>
@@ -254,79 +256,36 @@ export default function List() {
                             onValueChange={handelActionChange}
                           />
                         </div>
-                        <button
+                        <Button
                           onClick={() =>
                             UpdateApplication({ status: action, id: app.id })
                           }
-                          className="rounded bg-primary-200 px-4 py-1.5 text-black"
                         >
                           Submit
-                        </button>
+                        </Button>
                       </div>
-
-                      <Link
-                        href={`/application-list/singleapplication/${app.id}`}
-                        className="mt-6 flex w-full items-center justify-center rounded-md border border-primary-100 px-4 py-2 hover:text-primary-200"
-                      >
-                        View Details
-                      </Link>
                     </div>
+                    <Link
+                      href={`/application-list/singleapplication/${app.id}`}
+                      className="mt-6 flex w-full"
+                    >
+                      <Button variant="outline" className="w-full">
+                        View Details
+                      </Button>
+                    </Link>
                   </div>
                 ))}
               </div>
-              {/* Pagination controls */}
-              {totalPages > 1 && (
-                <div className="mt-10 flex items-center justify-center gap-4">
-                  <button
-                    onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
-                    disabled={currentPage === 1}
-                    className={`rounded-md px-4 py-2 ${
-                      currentPage === 1
-                        ? "cursor-not-allowed bg-gray-500"
-                        : "cursor-pointer bg-gray-700 text-white"
-                    }`}
-                  >
-                    Prev
-                  </button>
-                  <div className="relative">
-                    <select
-                      value={currentPage}
-                      onChange={(e) => setCurrentPage(Number(e.target.value))}
-                      className="rounded-md bg-gray-600 px-4 py-2 focus:outline-none"
-                    >
-                      {jumpToPageOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentPage(index + 1)}
-                      className={`rounded-md px-4 py-2 ${
-                        currentPage === index + 1
-                          ? "border bg-blue-950"
-                          : "bg-gray-600"
-                      }`}
-                    >
-                      {index + 1}
-                    </button>
-                  ))}
-                  <button
-                    onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className={`rounded-md px-4 py-2 ${
-                      currentPage === totalPages
-                        ? "cursor-not-allowed bg-gray-500"
-                        : "cursor-pointer bg-gray-700 text-white"
-                    }`}
-                  >
-                    Next
-                  </button>
-                </div>
-              )}
+              <div className="mt-10">
+                <PaginationList
+                  currentPage={currentPage}
+                  totalPages={Math.ceil(
+                    Number(data.totalPostsCount) / pageSize,
+                  )}
+                  setCurrentPage={(newPage) => setCurrentPage(newPage)}
+                />
+              </div>
+
               <ToastContainer position="top-center" autoClose={3000} />
             </div>
           ) : isError ? (

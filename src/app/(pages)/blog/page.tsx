@@ -2,7 +2,7 @@
 import Loading from "@/components/common/loading/Loading";
 import Filter from "@/components/common/Post/Filter";
 import PostModel from "@/components/common/Post/PostModel";
-import PaginationUi from "@/components/core/PaginationUi";
+import PaginationList from "@/components/core/PaginationList";
 import { FetchAllPost } from "@/components/fetch/get/blog/FetchAllPost";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -37,7 +37,7 @@ export default function Blog() {
   const [sortBy, setSortBy] = useState("newest");
   const [searchInput, setSearchInput] = useState("");
 
-  const pageSize = 9;
+  const pageSize = 12;
 
   const { isLoading, data, isError } = FetchAllPost({
     currentPage,
@@ -125,7 +125,7 @@ export default function Blog() {
               </div>
             )}
           </div>
-          <PaginationUi
+          <PaginationList
             currentPage={currentPage}
             totalPages={Math.ceil(Number(data.totalPostsCount) / pageSize)}
             setCurrentPage={(newPage) => setCurrentPage(newPage)}
