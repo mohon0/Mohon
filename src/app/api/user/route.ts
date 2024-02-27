@@ -29,6 +29,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         name: true,
         email: true,
         image: true,
+        phoneNumber: true,
       },
       where: {
         name: {

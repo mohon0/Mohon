@@ -2,6 +2,13 @@
 import Loading from "@/components/common/loading/Loading";
 import PaginationList from "@/components/core/PaginationList";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -28,6 +35,7 @@ interface UserData {
   name: string;
   email: string;
   image: string;
+  phoneNumber: string;
 }
 
 const Users: React.FC = () => {
@@ -81,8 +89,6 @@ const Users: React.FC = () => {
 
     fetchData();
   }, [currentPage, searchInput, status, random, sortBy]);
-
-
 
   const admin = process.env.NEXT_PUBLIC_ADMIN;
   const email = session?.user?.email;
@@ -194,7 +200,12 @@ const Users: React.FC = () => {
                     <p className="mt-2 text-xl font-bold text-primary">
                       {user.name}
                     </p>
-                    <p className="text-gray-300">{user.email}</p>
+                    <p className="text-md text-secondary-foreground">
+                      {user.email}
+                    </p>
+                    <p className="text-md text-secondary-foreground">
+                      {user.phoneNumber}
+                    </p>
                     {user.email !== admin && (
                       <Button
                         className=" absolute right-1 top-2"
@@ -207,31 +218,33 @@ const Users: React.FC = () => {
                     )}
 
                     {showConfirmation && (
-                      <div className="fixed inset-0 z-50  flex h-screen w-screen items-center justify-center bg-opacity-95 backdrop-blur-sm">
-                        <div className="w-11/12 rounded-lg bg-blue-950 p-6 shadow-md lg:w-2/6">
-                          <p className="font-b text-xl text-red-500">
-                            Are you sure you want to Delete this user.
-                          </p>
-                          <p className="text-sm ">
+                      <div className="fixed inset-0 z-50  flex h-screen w-screen items-center justify-center opacity-20 backdrop-blur">
+                        <Card className="w-11/12 md:w-3/5 lg:w-2/5">
+                          <CardHeader>
+                            <CardTitle>
+                              Are you sure you want to Delete this user.
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent>
                             This action can not be undone And everything
                             associate with is account including application and
                             comments are going to be deleted.
-                          </p>
-                          <div className="mt-8 flex justify-end">
-                            <button
+                          </CardContent>
+                          <CardFooter className="flex justify-end gap-4">
+                            <Button
                               onClick={() => setShowConfirmation(false)}
-                              className="mr-4 rounded bg-gray-600 px-4 py-2 hover:bg-gray-700"
+                              variant="secondary"
                             >
                               Cancel
-                            </button>
-                            <button
+                            </Button>
+                            <Button
                               onClick={() => handleDelete()}
-                              className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                              variant="destructive"
                             >
                               Delete User
-                            </button>
-                          </div>
-                        </div>
+                            </Button>
+                          </CardFooter>
+                        </Card>
                       </div>
                     )}
                     <Link href={`/user/${user.id}`} className="flex w-full">

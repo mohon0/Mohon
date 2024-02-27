@@ -28,10 +28,10 @@ export default function SideBar() {
   };
 
   return (
-    <div className="fixed hidden h-screen w-52 flex-col justify-between overflow-clip bg-gradient-to-tr from-gray-800 via-black to-slate-800 md:flex">
+    <div className="fixed hidden h-screen w-52 flex-col justify-between overflow-clip bg-gradient-to-tl from-primary via-black to-slate-900 md:flex">
       <div>
         <Link href="/">
-          <p className="my-3 text-center text-2xl font-bold text-primary-200">
+          <p className="my-3 text-center text-2xl font-bold text-primary">
             MOHON
           </p>
         </Link>
