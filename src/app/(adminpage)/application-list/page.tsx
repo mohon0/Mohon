@@ -3,7 +3,17 @@ import Loading from "@/components/common/loading/Loading";
 import PaginationList from "@/components/core/PaginationList";
 import { FetchAllApplication } from "@/components/fetch/get/application/FetchAllApplication";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -57,7 +67,6 @@ export default function List() {
   });
 
   const totalPostsCount = data?.totalPostsCount || 1;
-  const totalPages = Math.ceil(totalPostsCount / pageSize);
 
   const handelActionChange = (value: string) => {
     if (value.trim() !== "") {
@@ -128,10 +137,12 @@ export default function List() {
     }
   }
 
-  const jumpToPageOptions = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1,
-  );
+  const handleSelectChange = (value: string) => {
+    setSortBy(value);
+  };
+  const handleFilterChange = (value: string) => {
+    setSelectedCategory(value);
+  };
 
   return (
     <div className="mx-2">
@@ -141,37 +152,62 @@ export default function List() {
         </div>
         <div className="my-10 flex w-full flex-col items-center justify-center gap-10 md:flex-row">
           {/* Filter by category dropdown */}
-          <div className="flex items-center justify-center gap-2 rounded-full border px-4 py-2">
-            <Label htmlFor="filter">FilterBy:</Label>
-            <select
-              id="filter"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-32 bg-[#000119] px-2 py-2"
-            >
-              <option value="all">All</option>
-              <option value="Approved">Approved</option>
-              <option value="Pending">Pending</option>
-              <option value="Rejected">Rejected</option>
-            </select>
-          </div>
-          {/* Sort by dropdown */}
-          <div className="flex items-center justify-center gap-2  rounded-full border px-4 py-2">
-            <label htmlFor="sortPosts">SortBy:</label>
-            <select
-              id="sortPosts"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="w-24 bg-[#000119] px-2 py-2"
-            >
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
-            </select>
-          </div>
+          <Select onValueChange={handleFilterChange} defaultValue="Approved">
+            <SelectTrigger className="w-60">
+              <Label>FilterBy:</Label>
+              <SelectValue placeholder="Filter By:" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>FilterBy</SelectLabel>
+                <SelectItem
+                  value="Approved"
+                  onSelect={() => handleSelectChange("Approved")}
+                >
+                  Approved
+                </SelectItem>
+                <SelectItem
+                  value="Pending"
+                  onSelect={() => handleSelectChange("Pending")}
+                >
+                  Pending
+                </SelectItem>
+                <SelectItem
+                  value="Rejected"
+                  onSelect={() => handleSelectChange("Reject")}
+                >
+                  Reject
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select onValueChange={handleSelectChange} defaultValue="newest">
+            <SelectTrigger className="w-60">
+              <Label>SortBy:</Label>
+              <SelectValue placeholder="Filter By:" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>SortBy</SelectLabel>
+                <SelectItem
+                  value="newest"
+                  onSelect={() => handleSelectChange("newest")}
+                >
+                  Newest
+                </SelectItem>
+                <SelectItem
+                  value="oldest"
+                  onSelect={() => handleSelectChange("oldest")}
+                >
+                  Oldest
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+
           <div className="relative flex items-center md:w-1/2">
-            <input
+            <Input
               type="text"
-              className="h-[3.2rem] w-full rounded-full border bg-transparent px-4 outline-none focus-within:border-primary-200 focus-within:outline-none"
               placeholder="Search by applicant name"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}

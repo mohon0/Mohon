@@ -22,7 +22,7 @@ export default function ApplicationChart() {
         <div>Error fetching chart</div>
       ) : (
         <>
-          <div className="mb-10 flex items-center justify-center text-center text-2xl font-bold text-primary-200 md:text-3xl">
+          <div className="mb-10 flex items-center justify-center text-center text-2xl font-bold text-primary md:text-3xl">
             Application Chart
           </div>
           <ResponsiveContainer height={350}>

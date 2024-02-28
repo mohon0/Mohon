@@ -18,29 +18,29 @@ export default function ProjectHead() {
   };
 
   return (
-    <div className=" mt-8 flex mx-2 md:mx-10 flex-col gap-10">
-      <div className="flex flex-col md:flex-row gap-10">
+    <div className=" mx-2 mt-8 flex flex-col gap-10 md:mx-10">
+      <div className="flex flex-col gap-10 md:flex-row">
         <div className="md:w-7/12">
           <Image
             src={
               selectedImageIndex === 0
                 ? pic1
                 : selectedImageIndex === 1
-                ? pic2
-                : selectedImageIndex === 2
-                ? pic3
-                : selectedImageIndex === 3
-                ? pic4
-                : pic5
+                  ? pic2
+                  : selectedImageIndex === 2
+                    ? pic3
+                    : selectedImageIndex === 3
+                      ? pic4
+                      : pic5
             }
             alt=""
             loading="lazy"
-            className="h-fit w-full object-cover rounded-2xl"
+            className="h-fit w-full rounded-2xl object-cover"
           />
         </div>
-        <div className="md:w-5/12 md:pl-6 flex flex-col gap-10">
-          <div className="text-4xl font-bold text-primary-200">About Me</div>
-          <div className="flex gap-6 flex-col">
+        <div className="flex flex-col gap-10 md:w-5/12 md:pl-6">
+          <div className="text-4xl font-bold text-primary">About Me</div>
+          <div className="flex flex-col gap-6">
             <div className="text-2xl font-medium">
               Hello, I&#39;m Md. Mohon,
             </div>
@@ -100,8 +100,8 @@ export default function ProjectHead() {
         </div>
       </div>
       <hr />
-      <div className="flex flex-col-reverse md:flex-row gap-10">
-        <div className="md:w-1/2 flex flex-col gap-6 lg:text-xl text-slate-300">
+      <div className="flex flex-col-reverse gap-10 md:flex-row">
+        <div className="flex flex-col gap-6 text-slate-300 md:w-1/2 lg:text-xl">
           <div>
             I specialize in bringing ideas to life through various design
             mediums, ensuring that each project I undertake is a unique
@@ -122,11 +122,11 @@ export default function ProjectHead() {
         </div>
       </div>
       <hr />
-      <div className="flex flex-col md:flex-row gap-10">
+      <div className="flex flex-col gap-10 md:flex-row">
         <div className="md:w-1/2">
           <Image src={pic7} alt="" className="h-fit w-full rounded-2xl" />
         </div>
-        <div className="md:w-1/2 lg:text-xl flex flex-col gap-6">
+        <div className="flex flex-col gap-6 md:w-1/2 lg:text-xl">
           <div>
             Whether you&#39;re a business looking to establish a strong visual
             identity or an individual seeking personalized design, I&#39;m here
@@ -139,7 +139,7 @@ export default function ProjectHead() {
           </div>
           <Link
             href="/contact"
-            className="bg-primary-200 flex items-center justify-center text-black px-10 py-3 lg:text-xl mt-10 hover:font-bold hover:tracking-wider transition-all duration-200 rounded-full"
+            className="mt-10 flex items-center justify-center rounded-full bg-primary px-10 py-3 text-black transition-all duration-200 hover:font-bold hover:tracking-wider lg:text-xl"
           >
             Contact Me
           </Link>

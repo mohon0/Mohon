@@ -23,7 +23,7 @@ export default function PostCard() {
               <div className="flex flex-wrap gap-1">
                 <span
                   className={
-                    data.percentage > 0 ? "text-primary-200" : "text-red-500"
+                    data.percentage > 0 ? "text-primary" : "text-red-500"
                   }
                 >
                   {data.percentage} % {data.percentage >= 0 ? "More" : "less"}
@@ -31,7 +31,7 @@ export default function PostCard() {
                 <span>Then Last Month</span>
               </div>
             </div>
-            <div className="mx-auto flex items-center justify-center text-primary-200">
+            <div className="mx-auto flex items-center justify-center text-primary">
               <GrArticle size={60} />
             </div>
           </div>

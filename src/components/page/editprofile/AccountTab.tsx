@@ -162,7 +162,7 @@ export default function AccountTab({ name, email, phone }: props) {
             </div>
             <div className="space-y-1">
               <Label htmlFor="image">Image</Label>
-              <Input
+              <input
                 id="image"
                 name="image"
                 type="file"

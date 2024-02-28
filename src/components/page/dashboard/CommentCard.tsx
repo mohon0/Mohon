@@ -22,9 +22,7 @@ export default function CommentCard() {
               <div className="flex flex-wrap gap-1">
                 <span
                   className={
-                    data.percentageChange > 0
-                      ? "text-primary-200"
-                      : "text-red-500"
+                    data.percentageChange > 0 ? "text-primary" : "text-red-500"
                   }
                 >
                   {data.percentageChange} %{" "}
@@ -33,7 +31,7 @@ export default function CommentCard() {
                 <span>Then Last Month</span>
               </div>
             </div>
-            <div className="mx-auto flex items-center justify-center text-primary-200">
+            <div className="mx-auto flex items-center justify-center text-primary">
               <LiaComments size={60} />
             </div>
           </div>
