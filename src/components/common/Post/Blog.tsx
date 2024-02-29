@@ -222,27 +222,33 @@ export default function Blog({ params }: PageProps) {
                 </div>
               </div>
             </div>
-            <Image
-              className="mx-auto h-fit w-full rounded-lg"
-              src={`${data.coverImage}`}
-              alt=""
-              width={1000}
-              height={1000}
-            />
-            <Button
-              onClick={handleDownload}
-              className="mx-auto my-6 flex items-center justify-center"
-            >
-              Download Image
-            </Button>
-            <div
-              className={`mb-12 mt-10 rounded-lg md:mx-0 md:mt-16 md:text-lg ${styles["post-content"]}`}
-              dangerouslySetInnerHTML={{ __html: data.content }}
-            />
-            <div className="my-8">
-              <SocialShare
-                yourPostUrl={`${process.env.NEXT_PUBLIC_SITE_URL}/blog/${params.category}/${params.slug}`}
+            <div className="mx-auto flex justify-center">
+              <div className="absolute mx-auto flex h-[26rem] w-11/12 items-center justify-center rounded-sm bg-secondary p-1 lg:w-9/12 lg:p-4">
+                <Image
+                  src={`${data.coverImage}`}
+                  alt=""
+                  fill={true}
+                  className="object-scale-down"
+                />
+              </div>
+            </div>
+
+            <div className="mt-[29rem]">
+              <Button
+                onClick={handleDownload}
+                className="mx-auto my-6 flex items-center justify-center"
+              >
+                Download Image
+              </Button>
+              <div
+                className={`mb-12 mt-10 rounded-lg md:mx-0 md:mt-16 md:text-lg ${styles["post-content"]}`}
+                dangerouslySetInnerHTML={{ __html: data.content }}
               />
+              <div className="my-8">
+                <SocialShare
+                  yourPostUrl={`${process.env.NEXT_PUBLIC_SITE_URL}/blog/${params.category}/${params.slug}`}
+                />
+              </div>
             </div>
           </div>
           <div className="right-4 top-20 mx-auto my-10 h-fit w-full rounded-lg  border md:w-80 lg:sticky lg:my-0 lg:w-60">

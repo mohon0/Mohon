@@ -61,8 +61,6 @@ export function NavigationMenuDemo() {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <BestComputer />
-
         <NavigationMenuItem>
           <Link href="/about" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -94,6 +92,7 @@ export function NavigationMenuDemo() {
             </Link>
           </NavigationMenuItem>
         )}
+        <BestComputer />
       </NavigationMenuList>
     </NavigationMenu>
   );

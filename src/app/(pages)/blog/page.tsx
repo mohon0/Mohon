@@ -126,7 +126,7 @@ export default function Blog() {
         ) : (
           <>
             <div>
-              <div className="gap- flex flex-wrap">
+              <div className="flex flex-wrap">
                 {/* Render first part */}
                 <div className="max-w-full flex-[100%] space-y-10 px-3 md:max-w-[50%] md:flex-[50%] lg:max-w-[25%] lg:flex-[25%]">
                   {firstPart.map((post: Post) => (
