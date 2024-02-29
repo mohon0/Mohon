@@ -37,7 +37,7 @@ export default function Footer() {
         </Link>
         <div className="block h-0.5 w-6 rotate-[120deg] bg-gray-600 md:w-10"></div>
         <Link
-          href="https://linkedin.com/in/md-mohon-794830291"
+          href="https://linkedin.com/in/freelancermohon"
           target="_blank"
           className="p-4 text-muted  hover:text-sky-600"
         >

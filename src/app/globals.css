@@ -48,7 +48,7 @@
     word-spacing: 16px;
     -webkit-text-stroke-color: transparent;
     -webkit-text-stroke-width: calc(1em / 16);
-    @apply bg-gradient-to-r from-primary via-pink-600 to-primary bg-clip-text text-background;
+    @apply bg-gradient-to-r from-primary via-sky-600 to-primary bg-clip-text text-background;
   }
 }
 

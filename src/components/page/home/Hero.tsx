@@ -42,7 +42,7 @@ export default function Hero() {
               <TbBrandTwitter />
             </Link>{" "}
             <Link
-              href="https://linkedin.com/in/md-mohon-794830291"
+              href="https://linkedin.com/in/freelancermohon"
               target="_blank"
             >
               <FaLinkedin />
