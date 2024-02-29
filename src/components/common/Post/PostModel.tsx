@@ -16,10 +16,10 @@ export default function PostModel({ title, img, category }: props) {
   const encodedTitle = title ? encodeForUrl(title) : "";
 
   return (
-    <div className="rounded-lg border border-gray-600">
+    <div className="rounded-lg border">
       <Link href={`/blog/${category}/${encodedTitle}`} className="">
         <Image
-          className="h-60 w-full rounded-lg object-cover"
+          className=" w-full rounded-lg object-cover"
           src={img}
           alt={title}
           height={300}

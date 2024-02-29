@@ -47,6 +47,10 @@ export default function Blog() {
     searchInput,
   });
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
   };
@@ -55,14 +59,33 @@ export default function Blog() {
     setSortBy(value);
   };
 
+  const columnCount = 4; // Number of columns
+  const postsPerPage = Math.ceil(data.posts.length / columnCount); // Number of posts per column
+
+  // Render each column dynamically
+  const columns = Array.from({ length: columnCount }, (_, columnIndex) => (
+    <div key={columnIndex} className="flex w-1/4 flex-col gap-10">
+      {data.posts
+        .slice(columnIndex * postsPerPage, (columnIndex + 1) * postsPerPage)
+        .map((post: Post) => (
+          <div key={post.id}>
+            <PostModel
+              title={post.title}
+              img={post.coverImage}
+              category={post.category}
+            />
+          </div>
+        ))}
+    </div>
+  ));
+
   return (
-    <div className=" mx-4 flex flex-col items-center justify-center gap-20 lg:mx-28 lg:my-10">
+    <div className=" mx-4 flex flex-col items-center justify-center gap-10 md:gap-16  lg:my-10">
       <div className="text-3xl font-bold md:text-5xl">My Latest Updates</div>
-      <div className="flex w-full flex-col items-center gap-10 md:flex-row">
+      <div className="flex flex-col items-center gap-3 md:flex-row md:gap-4 lg:w-8/12 lg:gap-10">
         {/* Filter by category dropdown */}
-        <div>
-          <Filter onCategoryChange={handleCategoryChange} />
-        </div>
+        <Filter onCategoryChange={handleCategoryChange} />
+
         {/* Sort by dropdown */}
         <div className="flex items-center justify-center gap-2">
           <Label htmlFor="sortPosts">SortBy:</Label>
@@ -73,7 +96,6 @@ export default function Blog() {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Updated Time</SelectLabel>
-
                 <SelectItem value="newest" onSelect={() => setSortBy("newest")}>
                   Newest
                 </SelectItem>
@@ -84,6 +106,7 @@ export default function Blog() {
             </SelectContent>
           </Select>
         </div>
+
         <div className="relative flex items-center md:w-1/2">
           <Input
             type="text"
@@ -91,7 +114,6 @@ export default function Blog() {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
-
           <div className=" absolute right-4 text-xl">
             <FaSearch />
           </div>
@@ -108,23 +130,7 @@ export default function Blog() {
         "Error Fetching Post"
       ) : (
         <>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 ">
-            {data.posts.length > 0 ? (
-              data.posts.map((post: Post) => (
-                <div key={post.id}>
-                  <PostModel
-                    title={post.title}
-                    img={post.coverImage}
-                    category={post.category}
-                  />
-                </div>
-              ))
-            ) : (
-              <div className="col-span-3 flex items-center justify-center text-2xl font-bold">
-                No posts to display
-              </div>
-            )}
-          </div>
+          <div className="flex gap-10">{columns}</div>
           <PaginationList
             currentPage={currentPage}
             totalPages={Math.ceil(Number(data.totalPostsCount) / pageSize)}
