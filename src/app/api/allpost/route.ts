@@ -36,16 +36,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
         : {}),
     };
 
-    // Calculate the total number of posts without pagination
-    const totalPostsCount = await prisma.post.count({ where });
-
-    if (totalPostsCount === 0) {
-      return new NextResponse("No posts to display in this category.", {
-        status: 404,
-        headers: { "Content-Type": "text/plain" },
-      });
-    }
-
     const allPosts = await prisma.post.findMany({
       select: {
         id: true,
@@ -69,17 +59,19 @@ export async function GET(req: NextRequest, res: NextResponse) {
       where, // Apply the where condition here
     });
 
+    const totalPostsCount = await prisma.post.count({ where });
+
     if (allPosts.length > 0) {
       // Include the total count along with the paginated posts in the response
       return new NextResponse(
         JSON.stringify({ posts: allPosts, totalPostsCount }),
         {
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
     } else {
       return new NextResponse("No posts found.", {
-        status: 404,
+        status: 200,
         headers: { "Content-Type": "text/plain" },
       });
     }

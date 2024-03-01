@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,23 +16,21 @@ export default function PostModel({ title, img, category }: props) {
   const encodedTitle = title ? encodeForUrl(title) : "";
 
   return (
-    <div className="rounded-lg border">
-      <Link href={`/blog/${category}/${encodedTitle}`} className="">
-        <Image
-          className=" w-full rounded-lg object-cover"
-          src={img}
-          alt={title}
-          height={300}
-          width={300}
-        />
+    <Card>
+      <Link href={`/blog/${category}/${encodedTitle}`}>
+        <div className="h-52">
+          <Image
+            className="h-52 w-full  rounded-lg object-scale-down"
+            src={img}
+            alt={title}
+            height={300}
+            width={300}
+          />
+        </div>
         <div className="flex flex-col justify-between gap-4 px-3 py-3">
-          <div className="text-xl font-bold">{title}</div>
-
-          <p className="flex justify-end">
-            <Button>Read More</Button>
-          </p>
+          <div className=" text-lg font-bold">{title}</div>
         </div>
       </Link>
-    </div>
+    </Card>
   );
 }

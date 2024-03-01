@@ -72,7 +72,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     if (postData) {
       return new NextResponse(JSON.stringify(postData));
     } else {
-      return new NextResponse("Post not found", { status: 404 });
+      return new NextResponse("No Post Found", { status: 204 });
     }
   } catch (error) {
     console.error("Error fetching post:", error);

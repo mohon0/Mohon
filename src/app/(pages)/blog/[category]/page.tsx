@@ -1,9 +1,19 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
 import PostModel from "@/components/common/Post/PostModel";
-import PaginationUi from "@/components/core/PaginationUi";
+import PaginationList from "@/components/core/PaginationList";
 import { FetchAllPost } from "@/components/fetch/get/blog/FetchAllPost";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -27,10 +37,11 @@ interface Post {
 
 export default function Category({ params }: PageProps) {
   const router = useParams();
+  const category = router.category as string;
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState("newest");
   const [searchInput, setSearchInput] = useState("");
-  const pageSize = 9;
+  const pageSize = 16;
 
   const { isLoading, data, isError } = FetchAllPost({
     currentPage,
@@ -40,29 +51,47 @@ export default function Category({ params }: PageProps) {
     searchInput,
   });
 
+  const handleSelectChange = (value: string) => {
+    setSortBy(value);
+  };
+
+  function formatCategory(category: string): string {
+    return category
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
   return (
-    <div className="mx-4 my-4 flex flex-col items-center justify-center gap-20 md:my-20 lg:mx-28">
-      <div className="text-3xl font-bold uppercase md:text-5xl">
-        {router.category}
+    <div className="mx-4 my-4 flex flex-col items-center justify-center gap-20 md:my-20">
+      <div className="text-3xl font-bold md:text-5xl">
+        {formatCategory(category)}
       </div>
       <div className="flex w-full flex-col items-center justify-center gap-10 md:flex-row lg:gap-20">
         {/* Sort by dropdown */}
-        <div className="flex items-center justify-center gap-2  rounded-full border px-4 py-2">
-          <label htmlFor="sortPosts">SortBy:</label>
-          <select
-            id="sortPosts"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="w-24 bg-[#000119] px-2 py-2"
-          >
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-          </select>
+        <div className="flex items-center justify-center gap-2">
+          <Label htmlFor="sortPosts">SortBy:</Label>
+          <Select onValueChange={handleSelectChange} defaultValue="newest">
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Updated Time" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Updated Time</SelectLabel>
+
+                <SelectItem value="newest" onSelect={() => setSortBy("newest")}>
+                  Newest
+                </SelectItem>
+                <SelectItem value="oldest" onSelect={() => setSortBy("oldest")}>
+                  Oldest
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
         <div className="relative flex items-center md:w-1/2">
           <Input
             type="text"
-            className="h-[3.2rem] w-full rounded-full border bg-transparent px-4 outline-none focus-within:border-primary focus-within:outline-none"
             placeholder="Search..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
@@ -76,7 +105,8 @@ export default function Category({ params }: PageProps) {
 
       {/* Loading state rendering */}
       {isLoading ? (
-        <div className="grid w-11/12 grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid  grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+          <Loading />
           <Loading />
           <Loading />
           <Loading />
@@ -85,28 +115,33 @@ export default function Category({ params }: PageProps) {
         "Error Loading Post"
       ) : (
         <>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-            {data.posts.length > 0 ? (
-              data.posts.map((post: Post) => (
-                <div key={post.id}>
-                  <PostModel
-                    title={post.title}
-                    img={post.coverImage}
-                    category={post.category}
-                  />
-                </div>
-              ))
-            ) : (
-              <div className="col-span-3 flex items-center justify-center text-2xl font-bold">
-                No posts to display
+          <div>
+            {/* Render first part */}
+            {data && data !== "No posts found." && data.posts.length > 0 ? (
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+                {data.posts.map((post: Post) => (
+                  <div key={post.id}>
+                    <PostModel
+                      title={post.title}
+                      img={post.coverImage}
+                      category={post.category}
+                    />
+                  </div>
+                ))}
               </div>
+            ) : (
+              <div>No posts found matching your criteria.</div>
             )}
           </div>
-          <PaginationUi
-            currentPage={currentPage}
-            totalPages={Math.ceil(Number(data.totalPostsCount) / pageSize)}
-            setCurrentPage={(newPage) => setCurrentPage(newPage)}
-          />
+          {data &&
+            data !== "No posts found" &&
+            data.totalPostsCount > pageSize && (
+              <PaginationList
+                currentPage={currentPage}
+                totalPages={Math.ceil(Number(data.totalPostsCount) / pageSize)}
+                setCurrentPage={(newPage) => setCurrentPage(newPage)}
+              />
+            )}
         </>
       )}
     </div>

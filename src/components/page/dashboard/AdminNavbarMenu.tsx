@@ -42,17 +42,17 @@ export default function AdminNavbarMenu() {
         onClick={HandleClick}
       >
         <span
-          className={`h-0.5 w-6 bg-primary-200  duration-300 ${
+          className={`h-0.5 w-6 bg-primary  duration-300 ${
             NavOpen ? " translate-y-1.5 rotate-45 " : ""
           } `}
         ></span>
         <span
-          className={`h-0.5 w-6 bg-primary-200  duration-300  ${
+          className={`h-0.5 w-6 bg-primary  duration-300  ${
             NavOpen ? "hidden" : ""
           } `}
         ></span>
         <span
-          className={`h-0.5 w-6 bg-primary-200  duration-300 ${
+          className={`h-0.5 w-6 bg-primary  duration-300 ${
             NavOpen ? "-rotate-45 duration-300 ease-in-out" : ""
           } `}
         ></span>
@@ -63,7 +63,7 @@ export default function AdminNavbarMenu() {
         }`}
       >
         <div className="z-50 flex w-9/12 flex-col gap-4 bg-[#000119]">
-          <div className="flex items-center justify-between px-8 py-5 text-primary-200 ">
+          <div className="text-primary-200 flex items-center justify-between px-8 py-5 ">
             <Link href={"/"} className="text-xl font-bold">
               MOHON
             </Link>

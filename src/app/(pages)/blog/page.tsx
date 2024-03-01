@@ -37,7 +37,7 @@ export default function Blog() {
   const [sortBy, setSortBy] = useState("newest");
   const [searchInput, setSearchInput] = useState("");
 
-  const pageSize = 12;
+  const pageSize = 16;
 
   const { isLoading, data, isError } = FetchAllPost({
     currentPage,
@@ -46,7 +46,8 @@ export default function Blog() {
     sortBy,
     searchInput,
   });
-  if (isLoading) return <Loading />;
+
+  if (isError) return "No results found";
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
@@ -55,15 +56,6 @@ export default function Blog() {
   const handleSelectChange = (value: string) => {
     setSortBy(value);
   };
-
-  const postsCount = data.posts.length;
-  const postsPerPart = Math.ceil(postsCount / 4);
-
-  // Define constants to hold each part of the sliced data
-  const firstPart = data.posts.slice(0, postsPerPart);
-  const secondPart = data.posts.slice(postsPerPart, postsPerPart * 2);
-  const thirdPart = data.posts.slice(postsPerPart * 2, postsPerPart * 3);
-  const fourthPart = data.posts.slice(postsPerPart * 3);
 
   return (
     <>
@@ -116,7 +108,8 @@ export default function Blog() {
         </div>
 
         {isLoading ? (
-          <div className="grid w-11/12 grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+            <Loading />
             <Loading />
             <Loading />
             <Loading />
@@ -126,55 +119,34 @@ export default function Blog() {
         ) : (
           <>
             <div>
-              <div className="flex flex-wrap">
-                {/* Render first part */}
-                <div className="max-w-full flex-[100%] space-y-10 px-3 md:max-w-[50%] md:flex-[50%] lg:max-w-[25%] lg:flex-[25%]">
-                  {firstPart.map((post: Post) => (
-                    <PostModel
-                      key={post.id}
-                      title={post.title}
-                      img={post.coverImage}
-                      category={post.category}
-                    />
+              {/* Render first part */}
+              {data && data !== "No posts found." && data.posts.length > 0 ? (
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+                  {data.posts.map((post: Post) => (
+                    <div key={post.id}>
+                      <PostModel
+                        title={post.title}
+                        img={post.coverImage}
+                        category={post.category}
+                      />
+                    </div>
                   ))}
                 </div>
-                <div className="max-w-full flex-[100%] space-y-10 px-3 md:max-w-[50%] md:flex-[50%] lg:max-w-[25%] lg:flex-[25%]">
-                  {secondPart.map((post: Post) => (
-                    <PostModel
-                      key={post.id}
-                      title={post.title}
-                      img={post.coverImage}
-                      category={post.category}
-                    />
-                  ))}
-                </div>
-                <div className="max-w-full flex-[100%] space-y-10 px-3 md:max-w-[50%] md:flex-[50%] lg:max-w-[25%] lg:flex-[25%]">
-                  {thirdPart.map((post: Post) => (
-                    <PostModel
-                      key={post.id}
-                      title={post.title}
-                      img={post.coverImage}
-                      category={post.category}
-                    />
-                  ))}
-                </div>
-                <div className="max-w-full flex-[100%] space-y-10 px-3 md:max-w-[50%] md:flex-[50%] lg:max-w-[25%] lg:flex-[25%]">
-                  {fourthPart.map((post: Post) => (
-                    <PostModel
-                      key={post.id}
-                      title={post.title}
-                      img={post.coverImage}
-                      category={post.category}
-                    />
-                  ))}
-                </div>
-              </div>
+              ) : (
+                <div>No posts found matching your criteria.</div>
+              )}
             </div>
-            <PaginationList
-              currentPage={currentPage}
-              totalPages={Math.ceil(Number(data.totalPostsCount) / pageSize)}
-              setCurrentPage={(newPage) => setCurrentPage(newPage)}
-            />
+            {data &&
+              data !== "No posts found" &&
+              data.totalPostsCount > pageSize && (
+                <PaginationList
+                  currentPage={currentPage}
+                  totalPages={Math.ceil(
+                    Number(data.totalPostsCount) / pageSize,
+                  )}
+                  setCurrentPage={(newPage) => setCurrentPage(newPage)}
+                />
+              )}
           </>
         )}
       </div>

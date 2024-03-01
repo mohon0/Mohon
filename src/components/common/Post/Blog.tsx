@@ -177,9 +177,11 @@ export default function Blog({ params }: PageProps) {
                   </span>
                 </div>
 
-                <Button variant="outline" className="w-fit">
-                  {formattedCategory}
-                </Button>
+                <Link href={`/blog/${data.category}`}>
+                  <Button variant="outline" className="w-fit">
+                    {formattedCategory}
+                  </Button>
+                </Link>
 
                 <div className="flex flex-col items-center gap-6 md:flex-row">
                   {userInfo === data.author.email && (
