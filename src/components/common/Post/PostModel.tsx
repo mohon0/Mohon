@@ -16,18 +16,17 @@ export default function PostModel({ title, img, category }: props) {
   const encodedTitle = title ? encodeForUrl(title) : "";
 
   return (
-    <Card>
+    <Card className="group relative my-4 h-fit">
       <Link href={`/blog/${category}/${encodedTitle}`}>
-        <div className="h-52">
-          <Image
-            className="h-52 w-full  rounded-lg object-scale-down"
-            src={img}
-            alt={title}
-            height={300}
-            width={300}
-          />
-        </div>
-        <div className="flex flex-col justify-between gap-4 px-3 py-3">
+        <Image
+          className=" h-auto w-full rounded-md transition-all duration-300 sm:group-hover:brightness-50"
+          src={img}
+          alt={title}
+          height={400}
+          width={400}
+        />
+
+        <div className="flex-col justify-between gap-4 px-3 py-3 group-hover:flex sm:absolute sm:bottom-0 sm:hidden">
           <div className=" text-lg font-bold">{title}</div>
         </div>
       </Link>

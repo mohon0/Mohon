@@ -17,6 +17,9 @@ export default function Filter({ onCategoryChange }: FilterProps) {
     onCategoryChange(value);
   };
 
+  // Sort the Options array alphabetically
+  const sortedOptions = Options.sort((a, b) => a.localeCompare(b));
+
   return (
     <div className="flex items-center gap-2">
       <label htmlFor="categories">Filter:</label>
@@ -28,7 +31,7 @@ export default function Filter({ onCategoryChange }: FilterProps) {
           <SelectGroup>
             <SelectLabel>Categories</SelectLabel>
             <SelectItem value="all">All</SelectItem>
-            {Options.map((category) => (
+            {sortedOptions.map((category) => (
               <SelectItem
                 key={category}
                 value={category.toLowerCase().replace(/\s+/g, "_")}

@@ -51,6 +51,7 @@ export default function Blog() {
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
+    setCurrentPage(1);
   };
 
   const handleSelectChange = (value: string) => {
@@ -121,7 +122,7 @@ export default function Blog() {
             <div>
               {/* Render first part */}
               {data && data !== "No posts found." && data.posts.length > 0 ? (
-                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+                <div className="gallery gap-5">
                   {data.posts.map((post: Post) => (
                     <div key={post.id}>
                       <PostModel
