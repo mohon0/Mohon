@@ -225,7 +225,7 @@ export default function Blog({ params }: PageProps) {
               </div>
             </div>
             <div className="mx-auto flex justify-center">
-              <div className="absolute mx-auto flex h-[26rem] w-11/12 items-center justify-center rounded-sm bg-secondary p-1 lg:w-9/12 lg:p-4">
+              <div className="absolute mx-auto flex h-[30rem] w-11/12 items-center justify-center rounded-sm bg-secondary p-1 lg:w-9/12 lg:p-4">
                 <Image
                   src={`${data.coverImage}`}
                   alt=""
@@ -235,7 +235,7 @@ export default function Blog({ params }: PageProps) {
               </div>
             </div>
 
-            <div className="mt-[29rem]">
+            <div className="mt-[32rem]">
               <Button
                 onClick={handleDownload}
                 className="mx-auto my-6 flex items-center justify-center"

@@ -16,6 +16,10 @@ export default function ApplicationPage() {
     data: buttonData,
     isError: isErrorButton,
   } = FetchActionButtonData();
+  if (status === "unauthenticated") {
+    router.push("/signin");
+    return <p>You are not authenticated. Redirecting...</p>;
+  }
 
   const {
     isLoading: isLoadingApplication,
@@ -25,11 +29,6 @@ export default function ApplicationPage() {
 
   if (status === "loading" || isLoadingButton || isLoadingApplication) {
     return <Loading />;
-  }
-
-  if (status === "unauthenticated") {
-    router.push("/signin");
-    return <p>You are not authenticated. Redirecting...</p>;
   }
 
   if (isErrorButton || isErrorApplication) {
