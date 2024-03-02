@@ -1,16 +1,19 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
+import { FetchSingleUserData } from "@/components/fetch/get/profile/FetchSingleUserData";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 interface UserData {
   id: string;
   name: string;
   image: string;
   email: string;
+  phoneNumber: string;
   applications: [
     {
       id: string;
@@ -30,114 +33,85 @@ export default function UserData() {
   const { status, data: session } = useSession();
   const params = useParams();
   const userId = params.userId as string;
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<ErrorResponse | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (status !== "authenticated") {
-        setIsLoading(false);
-        return;
-      }
-
-      const apiUrl = `/api/user/singleuser?userId=${userId}`;
-
-      try {
-        const response = await fetch(apiUrl);
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const userInfo = await response.json();
-        setUserData(userInfo.userData);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setError({ message: "Error " });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [status, userId]);
-
-  console.log(userData);
+  const { isLoading, data, isError } = FetchSingleUserData(userId);
 
   return (
     <div>
       {isLoading ? (
         <Loading />
-      ) : error ? (
-        <div>Error: {error.message}</div>
+      ) : isError ? (
+        <div>Error Fetching User Info</div>
       ) : (
         <div>
-          {userData && (
-            <div className="mx-2">
-              <div className="flex flex-col items-center justify-center gap-10">
-                <div
-                  className="flex w-full flex-col items-center justify-center gap-6 border md:w-2/3
-                    lg:w-1/4"
-                >
-                  {userData.image ? (
+          {data.userData && (
+            <div className="mx-auto flex flex-col items-center justify-center gap-4 lg:gap-10">
+              <Card className="p-4 lg:w-8/12">
+                <div className="flex flex-col gap-4 md:flex-row lg:gap-10">
+                  {data.userData.image ? (
                     <Image
-                      src={userData.image}
+                      src={data.userData.image}
                       alt=""
                       width={300}
                       height={300}
-                      className=" h-48 w-full object-cover"
+                      className="h-60 w-60 object-cover"
+                    />
+                  ) : data.userData.applications[0].image ? (
+                    <Image
+                      src={data.userData.applications[0].image}
+                      alt=""
+                      width={300}
+                      height={300}
+                      className="h-60 w-60 object-cover"
                     />
                   ) : (
-                    <div className="flex h-80 w-full items-center justify-center border-b text-xl text-gray-500">
+                    <div className="flex h-60 w-60 items-center justify-center border text-muted-foreground">
                       No Image Found
                     </div>
                   )}
-                  <div className="m-4">
-                    <p className="text-center text-2xl font-bold text-primary-200">
-                      {userData.name}
-                    </p>
-                    <p className="text-center text-gray-400">
-                      {userData.email}
-                    </p>
+                  <div className="flex flex-col gap-3 md:mt-10">
+                    <div className="text-2xl font-bold text-primary lg:text-3xl">
+                      {data.userData.name}
+                    </div>
+                    <div>{data.userData.email}</div>
+                    <div>{data.userData.phoneNumber}</div>
                   </div>
                 </div>
-                <div className="flex flex-col items-center justify-center gap-10 lg:flex-row">
-                  <div className="border p-2 md:p-4">
-                    <div>Comments</div>
-                    <div>
-                      {userData.comments && userData.comments.length > 0 ? (
-                        userData.comments.map((comment) => (
-                          <div key={comment.id}>
-                            <p>{comment.content}</p>
-                          </div>
-                        ))
-                      ) : (
-                        <p>No comments yet.</p>
-                      )}
-                    </div>
-                  </div>
+              </Card>
 
-                  <div className="flex w-full flex-col items-center justify-center gap-6 border p-2 md:p-4">
-                    <div>Application</div>
-                    <div>
-                      {userData.applications &&
-                      userData.applications.length > 0 ? (
-                        <>
-                          <Link
-                            href={`/application-list/singleapplication/${userData.applications[0].id}`}
-                          >
-                            <p className="rounded-lg bg-primary-200 p-2 text-black">
-                              Application Details
-                            </p>
-                          </Link>
-                        </>
-                      ) : (
-                        <p>User has not applied yet.</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
+              <div className="flex flex-col-reverse gap-4 md:flex-row lg:gap-12">
+                <Card className="p-4">
+                  <CardHeader>
+                    <CardTitle>Comments</CardTitle>
+                  </CardHeader>
+                  {data.userData.comments &&
+                  data.userData.comments.length > 0 ? (
+                    data.userData.comments.map((comment: any) => (
+                      <div key={comment.id}>
+                        <p>{comment.content}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No comments yet.</p>
+                  )}
+                </Card>
+                <Card className="p-4">
+                  <CardHeader>
+                    <CardTitle>Application</CardTitle>
+                  </CardHeader>
+                  {data.userData.applications &&
+                  data.userData.applications.length > 0 ? (
+                    <>
+                      <Link
+                        href={`/application-list/singleapplication/${data.userData.applications[0].id}`}
+                      >
+                        <Button>Application Details</Button>
+                      </Link>
+                    </>
+                  ) : (
+                    <p>User has not applied yet.</p>
+                  )}
+                </Card>
               </div>
             </div>
           )}

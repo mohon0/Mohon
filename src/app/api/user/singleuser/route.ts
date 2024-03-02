@@ -59,9 +59,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
         name: true,
         email: true,
         image: true,
+        phoneNumber: true,
         applications: {
           select: {
             id: true,
+            image: true,
           },
         },
         comments: {
@@ -173,7 +175,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
 
     return new NextResponse(
       JSON.stringify({ message: "User deleted successfully" }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error deleting user:", error);
