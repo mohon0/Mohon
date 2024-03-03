@@ -33,24 +33,24 @@ export default function NavigationMenuUi() {
   const components: Component[] = [
     {
       title: "Notice",
-      href: "/blog/notice",
+      href: "/blog/category/notice",
       description: "All the information you need to know.",
     },
     {
       title: "Projects",
-      href: "/blog/projects",
+      href: "/blog/category/projects",
       description:
         "Our Projects section, that showcase all of your recent work.",
     },
     {
       title: "Course",
-      href: "/blog/our_course",
+      href: "/blog/category/our_course",
       description:
         "We provide some of the best course modules that have known.",
     },
     {
       title: "Blog",
-      href: "/blog",
+      href: "/blog/page/1",
       description: "Follow our blog section for some of the amazing work I do.",
     },
     {
@@ -200,9 +200,9 @@ export default function NavigationMenuUi() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/blog" legacyBehavior passHref>
+          <Link href="/blog/page/1" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Blog & Design
+              Design
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

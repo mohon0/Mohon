@@ -30,6 +30,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
         email: true,
         image: true,
         phoneNumber: true,
+        applications: {
+          select: {
+            image: true,
+          },
+        },
       },
       where: {
         name: {

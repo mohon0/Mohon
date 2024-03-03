@@ -1,6 +1,7 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
-import PaginationList from "@/components/core/PaginationList";
+import PaginationUi from "@/components/core/PaginationUi";
+import { FetchAllUser } from "@/components/fetch/get/user/FetchAllUser";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -23,8 +24,8 @@ import {
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
@@ -36,66 +37,31 @@ interface UserData {
   email: string;
   image: string;
   phoneNumber: string;
+  applications: [
+    {
+      image: string;
+    },
+  ];
 }
 
 const Users: React.FC = () => {
   const { status, data: session } = useSession();
-  const [users, setUsers] = useState<UserData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [totalPages, setTotalPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  const params = useParams();
+  const [page, setPage] = useState<number>(Number(params.page[1]) || 1);
   const [searchInput, setSearchInput] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [id, setId] = useState("");
-  const [random, setRandom] = useState(Number);
   const [sortBy, setSortBy] = useState("newest");
-
   const pageSize = 18;
-  const router = useRouter();
-
-  useEffect(() => {
-    if (status !== "authenticated") {
-      setLoading(false);
-      return;
-    }
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `/api/user?page=${currentPage}&sortBy=${sortBy}&pageSize=${pageSize}&search=${searchInput}`,
-        );
-
-        if (!response.ok) {
-          setLoading(false);
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        if (data.users.length > 0) {
-          setUsers(data.users);
-          setTotalPages(Math.ceil(data.totalUsersCount / pageSize));
-          setLoading(false);
-        } else {
-          setUsers([]);
-          setTotalPages(1);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [currentPage, searchInput, status, random, sortBy]);
-
   const admin = process.env.NEXT_PUBLIC_ADMIN;
   const email = session?.user?.email;
 
-  function generateRandomNumber() {
-    return Math.floor(Math.random() * 100) + 1;
-  }
+  const { isLoading, data, isError, refetch } = FetchAllUser({
+    currentPage: page,
+    sortBy,
+    searchInput,
+    pageSize,
+  });
 
   async function handleDelete() {
     try {
@@ -108,7 +74,7 @@ const Users: React.FC = () => {
       setShowConfirmation(false);
       if (response.ok) {
         toast.success("User was successfully deleted");
-        setRandom(generateRandomNumber());
+        refetch();
       } else {
         toast.error("Failed to delete user");
       }
@@ -172,12 +138,12 @@ const Users: React.FC = () => {
               </div>
             </div>
           </div>
-          {loading ? (
+          {isLoading ? (
             <Loading />
           ) : (
             <>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {users.map((user) => (
+                {data.users.map((user: UserData) => (
                   <div
                     className=" relative col-span-1 flex flex-col items-center justify-center gap-3 rounded border p-4 hover:border-primary"
                     key={user.id}
@@ -187,8 +153,19 @@ const Users: React.FC = () => {
                         <Image
                           src={user.image}
                           alt=""
-                          height={100}
-                          width={100}
+                          width={300}
+                          height={300}
+                          className="h-20 w-20 rounded-full object-cover"
+                        />
+                      ) : user.applications &&
+                        user.applications[0] &&
+                        user.applications[0].image &&
+                        user.applications[0].image !== null ? (
+                        <Image
+                          src={user.applications[0].image}
+                          alt=""
+                          width={300}
+                          height={300}
                           className="h-20 w-20 rounded-full object-cover"
                         />
                       ) : (
@@ -247,7 +224,10 @@ const Users: React.FC = () => {
                         </Card>
                       </div>
                     )}
-                    <Link href={`/user/${user.id}`} className="flex w-full">
+                    <Link
+                      href={`/user/userid/${user.id}`}
+                      className="flex w-full"
+                    >
                       <Button className="flex w-full" variant="outline">
                         View Details
                       </Button>
@@ -255,15 +235,22 @@ const Users: React.FC = () => {
                   </div>
                 ))}
               </div>
+              <div className="mt-10">
+                {data &&
+                  data !== "No posts found" &&
+                  data.totalUsersCount > pageSize && (
+                    <PaginationUi
+                      link="user"
+                      currentPage={page}
+                      totalPages={Math.ceil(
+                        Number(data.totalUsersCount) / pageSize,
+                      )}
+                      setCurrentPage={(newPage) => setPage(newPage)}
+                    />
+                  )}
+              </div>
             </>
           )}
-          <div className="mt-10">
-            <PaginationList
-              currentPage={currentPage}
-              totalPages={totalPages}
-              setCurrentPage={(newPage) => setCurrentPage(newPage)}
-            />
-          </div>
         </div>
       ) : (
         "You are not authenticated"

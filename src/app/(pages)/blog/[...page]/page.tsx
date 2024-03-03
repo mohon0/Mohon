@@ -132,6 +132,7 @@ export default function Blog() {
               data !== "No posts found" &&
               data.totalPostsCount > pageSize && (
                 <PaginationUi
+                  link="blog"
                   currentPage={page}
                   totalPages={Math.ceil(
                     Number(data.totalPostsCount) / pageSize,

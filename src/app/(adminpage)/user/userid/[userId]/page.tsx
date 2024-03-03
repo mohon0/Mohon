@@ -3,7 +3,6 @@ import Loading from "@/components/common/loading/Loading";
 import { FetchSingleUserData } from "@/components/fetch/get/profile/FetchSingleUserData";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -30,7 +29,6 @@ interface ErrorResponse {
 }
 
 export default function UserData() {
-  const { status, data: session } = useSession();
   const params = useParams();
   const userId = params.userId as string;
 
@@ -56,7 +54,10 @@ export default function UserData() {
                       height={300}
                       className="h-60 w-60 object-cover"
                     />
-                  ) : data.userData.applications[0].image ? (
+                  ) : data.userData.applications &&
+                    data.userData.applications[0] &&
+                    data.userData.applications[0].image &&
+                    data.userData.applications[0].image !== null ? (
                     <Image
                       src={data.userData.applications[0].image}
                       alt=""

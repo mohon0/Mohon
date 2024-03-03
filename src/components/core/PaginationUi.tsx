@@ -12,12 +12,14 @@ interface PaginationUiProps {
   currentPage: number;
   totalPages: number;
   setCurrentPage: (page: number) => void;
+  link: string;
 }
 
 export default function PaginationUi({
   currentPage,
   totalPages,
   setCurrentPage,
+  link,
 }: PaginationUiProps) {
   const router = useRouter();
   const isFirstPage = currentPage == 1;
@@ -25,13 +27,13 @@ export default function PaginationUi({
 
   const handlePreviousClick = () => {
     setCurrentPage(currentPage - 1);
-    router.push(`/blog/page/${currentPage - 1}`);
+    router.push(`/${link}/page/${currentPage - 1}`);
   };
 
   const handleNextClick = () => {
     if (!isLastPage) {
       setCurrentPage(currentPage + 1);
-      router.push(`/blog/page/${currentPage + 1}`);
+      router.push(`/${link}/page/${currentPage + 1}`);
     }
   };
 
@@ -60,7 +62,7 @@ export default function PaginationUi({
               <PaginationLink
                 onClick={() => {
                   setCurrentPage(page + 1);
-                  router.push(`/blog/page/${page + 1}`);
+                  router.push(`/${link}/page/${page + 1}`);
                 }}
                 className="cursor-pointer"
               >
