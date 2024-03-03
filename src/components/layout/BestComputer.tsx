@@ -31,7 +31,7 @@ export function BestComputer() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Link href="/blog/notice">Notice</Link>
+            <Link href="/blog/category/notice">Notice</Link>
             <DropdownMenuShortcut>
               <TfiAnnouncement />
             </DropdownMenuShortcut>

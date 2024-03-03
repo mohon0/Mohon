@@ -34,13 +34,13 @@ export function NavigationMenuDemo() {
           <NavigationMenuTrigger>Services</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[200px] gap-3 p-4 md:w-[250px] lg:w-[300px]">
-              <ListItem title="Blog" href="/blog">
+              <ListItem title="Blog" href="/blog/page/1">
                 Follow my blog section for some of the amazing work I do.
               </ListItem>
-              <ListItem title="Projects" href="/blog/projects">
+              <ListItem title="Projects" href="/blog/category/projects">
                 Our Projects section, that showcase all of your recent work.
               </ListItem>
-              <ListItem title="Course" href="/blog/our_course">
+              <ListItem title="Course" href="/blog/category/our_course">
                 We provide some of the best course modules that have known.
               </ListItem>
             </ul>
@@ -48,7 +48,7 @@ export function NavigationMenuDemo() {
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <Link href="/blog" legacyBehavior passHref>
+          <Link href="/blog/page/1" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Design
             </NavigationMenuLink>

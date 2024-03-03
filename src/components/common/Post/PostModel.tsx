@@ -17,7 +17,7 @@ export default function PostModel({ title, img, category }: props) {
 
   return (
     <Card className="group relative my-4 h-fit">
-      <Link href={`/blog/${category}/${encodedTitle}`}>
+      <Link href={`/blog/category/${category}/${encodedTitle}`}>
         <Image
           className=" h-auto w-full rounded-md transition-all duration-300 sm:group-hover:brightness-50"
           src={img}

@@ -63,21 +63,21 @@ export default function Menu() {
               </Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link href="/blog">
+              <Link href="/blog/page/1">
                 <Button variant="outline" className="flex w-full">
-                  Blog & Design
+                  Design
                 </Button>
               </Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link href="/projects">
+              <Link href="/blog/category/projects">
                 <Button variant="outline" className="flex w-full">
                   Projects
                 </Button>
               </Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link href="/course">
+              <Link href="/blog/category/our_course">
                 <Button variant="outline" className="flex w-full">
                   Our Course
                 </Button>
@@ -98,7 +98,7 @@ export default function Menu() {
               </Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link href="/notice">
+              <Link href="/blog/category/notice">
                 <Button variant="outline" className="flex w-full">
                   Notice
                 </Button>

@@ -177,7 +177,7 @@ export default function Blog({ params }: PageProps) {
                   </span>
                 </div>
 
-                <Link href={`/blog/${data.category}`}>
+                <Link href={`/blog/category/${data.category}`}>
                   <Button variant="outline" className="w-fit">
                     {formattedCategory}
                   </Button>

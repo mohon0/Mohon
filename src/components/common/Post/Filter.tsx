@@ -24,7 +24,7 @@ export default function Filter({ onCategoryChange }: FilterProps) {
     <div className="flex items-center gap-2">
       <label htmlFor="categories">Filter:</label>
       <Select onValueChange={handleSelectChange} defaultValue="all">
-        <SelectTrigger className="w-60">
+        <SelectTrigger className="w-48">
           <SelectValue placeholder="Select Your Post Category" />
         </SelectTrigger>
         <SelectContent>

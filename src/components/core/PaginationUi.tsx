@@ -20,18 +20,12 @@ export default function PaginationUi({
   setCurrentPage,
 }: PaginationUiProps) {
   const router = useRouter();
-  const isFirstPage = currentPage === 1;
+  const isFirstPage = currentPage == 1;
   const isLastPage = currentPage === totalPages;
 
   const handlePreviousClick = () => {
-    if (!isFirstPage) {
-      if (currentPage === 2) {
-        router.push(`/`);
-      } else {
-        setCurrentPage(currentPage - 1);
-        router.push(`/blog/page/${currentPage - 1}`);
-      }
-    }
+    setCurrentPage(currentPage - 1);
+    router.push(`/blog/page/${currentPage - 1}`);
   };
 
   const handleNextClick = () => {
@@ -50,7 +44,10 @@ export default function PaginationUi({
               <PaginationPrevious />
             </span>
           ) : (
-            <PaginationPrevious onClick={handlePreviousClick} />
+            <PaginationPrevious
+              className="cursor-pointer"
+              onClick={handlePreviousClick}
+            />
           )}
         </PaginationItem>
         {[...Array(totalPages).keys()].map((page) => (
@@ -63,8 +60,9 @@ export default function PaginationUi({
               <PaginationLink
                 onClick={() => {
                   setCurrentPage(page + 1);
-                  router.push(page === 0 ? `/` : `/blog/page/${page + 1}`);
+                  router.push(`/blog/page/${page + 1}`);
                 }}
+                className="cursor-pointer"
               >
                 {page + 1}
               </PaginationLink>

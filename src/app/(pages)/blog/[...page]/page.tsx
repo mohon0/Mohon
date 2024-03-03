@@ -2,7 +2,7 @@
 import Filter from "@/components/common/Post/Filter";
 import PostModel from "@/components/common/Post/PostModel";
 import Loading from "@/components/common/loading/Loading";
-import PaginationList from "@/components/core/PaginationList";
+import PaginationUi from "@/components/core/PaginationUi";
 import { FetchAllPost } from "@/components/fetch/get/blog/FetchAllPost";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
@@ -32,7 +33,8 @@ interface Post {
 }
 
 export default function Blog() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const params = useParams();
+  const [page, setPage] = useState<number>(Number(params.page[1]) || 1);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [searchInput, setSearchInput] = useState("");
@@ -40,7 +42,7 @@ export default function Blog() {
   const pageSize = 16;
 
   const { isLoading, data, isError } = FetchAllPost({
-    currentPage,
+    currentPage: page,
     pageSize,
     selectedCategory,
     sortBy,
@@ -51,7 +53,7 @@ export default function Blog() {
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
-    setCurrentPage(1);
+    setPage(1);
   };
 
   const handleSelectChange = (value: string) => {
@@ -140,12 +142,12 @@ export default function Blog() {
             {data &&
               data !== "No posts found" &&
               data.totalPostsCount > pageSize && (
-                <PaginationList
-                  currentPage={currentPage}
+                <PaginationUi
+                  currentPage={page}
                   totalPages={Math.ceil(
                     Number(data.totalPostsCount) / pageSize,
                   )}
-                  setCurrentPage={(newPage) => setCurrentPage(newPage)}
+                  setCurrentPage={(newPage) => setPage(newPage)}
                 />
               )}
           </>
