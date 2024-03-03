@@ -74,7 +74,7 @@ export default function SideBar() {
                 <span>Edit Profile</span>
               </Button>
             </Link>
-            <Link href="application-list">
+            <Link href="/application-list">
               <Button
                 className="flex w-full items-center justify-start gap-4"
                 variant={
@@ -85,10 +85,12 @@ export default function SideBar() {
                 <span>Application</span>
               </Button>
             </Link>
-            <Link href="/user">
+            <Link href="/user/page/1">
               <Button
                 className="flex w-full items-center justify-start gap-4"
-                variant={pathname === "/user" ? "default" : "outline"}
+                variant={
+                  /^\/user\/page\/\d+$/.test(pathname) ? "default" : "outline"
+                }
               >
                 <FaUsers />
                 <span>User</span>
