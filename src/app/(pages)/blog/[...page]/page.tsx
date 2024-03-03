@@ -1,5 +1,5 @@
 "use client";
-import Filter from "@/components/common/Post/Filter";
+
 import PostModel from "@/components/common/Post/PostModel";
 import Loading from "@/components/common/loading/Loading";
 import PaginationUi from "@/components/core/PaginationUi";
@@ -35,26 +35,19 @@ interface Post {
 export default function Blog() {
   const params = useParams();
   const [page, setPage] = useState<number>(Number(params.page[1]) || 1);
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [searchInput, setSearchInput] = useState("");
-
   const pageSize = 16;
 
   const { isLoading, data, isError } = FetchAllPost({
     currentPage: page,
     pageSize,
-    selectedCategory,
+    selectedCategory: "all",
     sortBy,
     searchInput,
   });
 
   if (isError) return "No results found";
-
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-    setPage(1);
-  };
 
   const handleSelectChange = (value: string) => {
     setSortBy(value);
@@ -64,11 +57,7 @@ export default function Blog() {
     <>
       <div className=" mx-4 flex flex-col items-center justify-center gap-10 md:gap-16  lg:my-10">
         <div className="text-3xl font-bold md:text-5xl">My Latest Updates</div>
-        <div className="flex flex-col items-center gap-3 md:flex-row md:gap-4 lg:w-8/12 lg:gap-10">
-          {/* Filter by category dropdown */}
-
-          <Filter onCategoryChange={handleCategoryChange} />
-
+        <div className="flex flex-col items-center justify-center gap-3 md:flex-row md:gap-4 lg:w-8/12 lg:gap-10">
           {/* Sort by dropdown */}
           <div className="flex items-center justify-center gap-2">
             <Label htmlFor="sortPosts">SortBy:</Label>
