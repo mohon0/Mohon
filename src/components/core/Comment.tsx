@@ -19,6 +19,7 @@ function CommentForm({ postId }: CommentFormProps) {
   const { data: session } = useSession();
   const name = session?.user?.name;
   const [isCommentAdded, setIsCommentAdded] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const resetCommentAdded = () => {
     setIsCommentAdded(false);
   };
@@ -46,18 +47,22 @@ function CommentForm({ postId }: CommentFormProps) {
               })}
               onSubmit={async (values) => {
                 try {
+                  setIsSubmitting(true);
                   toast.loading("Please wait...");
                   const response = await axios.post(`/api/comment`, values);
 
                   if (response.status === 201) {
+                    setIsSubmitting(false);
                     toast.dismiss();
                     setIsCommentAdded(true);
                     toast.success("comment has been added.");
                   } else {
+                    setIsSubmitting(false);
                     toast.dismiss();
                     toast.error("There was an error.");
                   }
                 } catch (error) {
+                  setIsSubmitting(false);
                   console.error("Error sending comment:", error);
                   toast.error("Error sending comment:");
                 }
@@ -73,7 +78,9 @@ function CommentForm({ postId }: CommentFormProps) {
                   />
                 </div>
 
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  Submit
+                </Button>
               </Form>
             </Formik>
           </div>
