@@ -17,7 +17,7 @@ export default function CommentCard() {
         <Card className="p-3">
           <div className="flex items-center gap-6">
             <div className="flex flex-col gap-2">
-              <div className="text-4xl font-bold">20</div>
+              <div className="text-4xl font-bold">{data.totalComments}</div>
               <div>Total Comments</div>
               <div className="flex flex-wrap gap-1">
                 <span

@@ -65,7 +65,7 @@ function CommentsList({ postId, onCommentAdded }: CommentsListProps) {
       if (response.status === 204) {
         toast.dismiss();
         const updatedComments = comments.filter(
-          (comment) => comment.id !== commentId
+          (comment) => comment.id !== commentId,
         );
         setComments(updatedComments);
       } else {
@@ -143,24 +143,24 @@ function CommentsList({ postId, onCommentAdded }: CommentsListProps) {
         comments.map((comment) => (
           <div
             key={comment.id}
-            className="flex flex-col p-2 gap-3 bg-gray-900 rounded-md"
+            className="flex flex-col gap-3 rounded-md bg-gray-900 p-2"
           >
             <div className="flex  md:flex-row md:justify-between">
-              <div className="flex flex-wrap md:flex-row gap-4 items-center">
+              <div className="flex flex-wrap items-center gap-4 md:flex-row">
                 {comment.author.image ? (
                   <Image
                     src={comment.author.image}
                     alt=""
                     height={100}
                     width={100}
-                    className="rounded-full h-12 w-12 object-cover"
+                    className="h-12 w-12 rounded-full object-cover"
                   />
                 ) : (
                   <div className="h-12 w-12 rounded-full bg-gray-600  p-0.5 text-center text-sm">
                     No image
                   </div>
                 )}
-                <div className="font-bold text-xl">{comment.author.name}</div>
+                <div className="text-xl font-bold">{comment.author.name}</div>
                 <div>
                   {new Date(comment.createdAt).toLocaleString("en-US", {
                     dateStyle: "medium",
@@ -170,7 +170,7 @@ function CommentsList({ postId, onCommentAdded }: CommentsListProps) {
               </div>
             </div>
             <div className="md:ml-16">{comment.content}</div>
-            <div className="md:pl-16 flex items-center justify-between mt-3">
+            <div className="mt-3 flex items-center justify-between md:pl-16">
               <div className="flex gap-2">
                 {comment.likedBy.length > 0 && comment.likedBy.length}
                 <div onClick={() => handleIncrement(comment.id, comment)}>
@@ -185,7 +185,7 @@ function CommentsList({ postId, onCommentAdded }: CommentsListProps) {
                 session?.user?.name === comment.author.name) && (
                 <button
                   title="delete comment"
-                  className="bg-red-600 px-3 h-8 rounded-md text-white"
+                  className="h-8 rounded-md bg-red-600 px-3 text-white"
                   onClick={() => handleDelete(comment.id)}
                 >
                   Delete

@@ -5,7 +5,6 @@ import { GrArticle } from "react-icons/gr";
 
 export default function PostCard() {
   const { isLoading, data, isError } = FetchPostCount();
-  console.log(data);
   return (
     <>
       {isLoading ? (
