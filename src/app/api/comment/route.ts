@@ -38,8 +38,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
-    const { search } = req.nextUrl;
-    const postId = search.slice(1);
+    const search = req.nextUrl;
+    const postId = search.searchParams.get("id");
+
+    if (!postId) {
+      return new NextResponse("PostId is required", {
+        status: 400,
+      });
+    }
     const comments = await prisma.comment.findMany({
       where: {
         postId,
