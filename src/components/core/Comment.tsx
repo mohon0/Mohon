@@ -88,7 +88,7 @@ function CommentForm({ postId }: CommentFormProps) {
           <div className="text-xl">
             You Need To
             <Link href={"/signin"}>
-              <span className="font-bold text-primary">Log In</span>
+              <span className="font-bold text-primary"> Log In</span>
             </Link>
           </div>
         )}

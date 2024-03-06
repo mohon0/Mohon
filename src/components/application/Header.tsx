@@ -14,11 +14,8 @@ export default function Header() {
           <div>Mobile: 01989491248</div>
           <div>Email: bestcomputer.jhenaidah@gmail.com</div>
         </div>
-        <div className="relative">
-          <div className="mb-10 rounded-2xl border border-primary px-6 py-3 text-2xl font-bold md:mb-0 md:text-4xl">
-            Application Form
-          </div>
-          <div className="absolute -right-6 top-0 h-2 w-2 animate-ping rounded-full bg-primary"></div>
+        <div className="mb-10 rounded-2xl border border-primary px-6 py-3 text-2xl font-bold md:mb-0 md:text-4xl">
+          Application Form
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ import "./TeamStyle.css";
 
 export default function Team() {
   return (
-    <div className="flex  flex-col items-center justify-center md:my-28 md:gap-20">
+    <div className="flex  flex-col items-center justify-center md:my-10 md:gap-1">
       <SectionHeader text="Team Members" title="My Team" />
       <div className="w-full px-3 md:px-0">
         <Swiper

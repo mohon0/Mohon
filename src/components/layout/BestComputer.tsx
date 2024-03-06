@@ -43,7 +43,10 @@ export function BestComputer() {
             </DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href="/application">Apply Now</Link>
+            <Link href="/application" className="flex items-center gap-3">
+              <span>Apply Now</span>
+              <div className="h-2 w-2 animate-ping rounded-full bg-primary"></div>
+            </Link>
             <DropdownMenuShortcut>
               <MdEditDocument />
             </DropdownMenuShortcut>
