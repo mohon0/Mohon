@@ -140,6 +140,8 @@ const Users: React.FC = () => {
           </div>
           {isLoading ? (
             <Loading />
+          ) : data === "No users found." ? (
+            "No User Found"
           ) : (
             <>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -237,7 +239,7 @@ const Users: React.FC = () => {
               </div>
               <div className="mt-10">
                 {data &&
-                  data !== "No posts found" &&
+                  data !== "No users found." &&
                   data.totalUsersCount > pageSize && (
                     <PaginationUi
                       link="user"

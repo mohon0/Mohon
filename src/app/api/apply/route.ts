@@ -64,9 +64,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const totalPostsCount = await prisma.application.count({ where });
 
     if (totalPostsCount === 0) {
-      return new NextResponse("No posts to display in this category.", {
-        status: 404,
-        headers: { "Content-Type": "text/plain" },
+      return new NextResponse("No Application Found.", {
+        status: 200,
       });
     }
 

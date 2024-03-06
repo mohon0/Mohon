@@ -1,15 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
 const prisma = new PrismaClient();
-
-// ...
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const url = new URL(req.url);
     const queryParams = new URLSearchParams(url.search);
-
     const page = queryParams.get("page")
       ? parseInt(queryParams.get("page")!, 10)
       : 1;
@@ -21,7 +17,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     const skipCount = (page - 1) * pageSize;
 
-    const searchName = queryParams.get("search") || ""; // Get the name parameter from the query
+    const searchName = queryParams.get("search") || "";
 
     const allUsers = await prisma.user.findMany({
       select: {
@@ -30,6 +26,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         email: true,
         image: true,
         phoneNumber: true,
+        createdAt: true,
         applications: {
           select: {
             image: true,
@@ -60,10 +57,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         },
       );
     } else {
-      return new NextResponse("No users found.", {
-        status: 404,
-        headers: { "Content-Type": "text/plain" },
-      });
+      return new NextResponse("No users found.", { status: 200 });
     }
   } catch (error) {
     console.error("Error fetching users:", error);

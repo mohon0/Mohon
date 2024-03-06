@@ -74,11 +74,13 @@ export default function SideBar() {
                 <span>Edit Profile</span>
               </Button>
             </Link>
-            <Link href="/application-list">
+            <Link href="/application-list/page/1">
               <Button
                 className="flex w-full items-center justify-start gap-4"
                 variant={
-                  pathname === "/application-list" ? "default" : "outline"
+                  /^\/application-list\/page\/\d+$/.test(pathname)
+                    ? "default"
+                    : "outline"
                 }
               >
                 <FaClipboardList />
