@@ -23,7 +23,15 @@ export default function AboutMe() {
             alt=""
             className="rounded-xl object-cover lg:h-80"
           />
-          <Button size="lg">Download CV</Button>
+          <a
+            href="/cv.pdf"
+            download="cv"
+            className="flex w-full items-center justify-center"
+          >
+            <Button size="lg" className="flex w-full">
+              Download Cv
+            </Button>
+          </a>
         </div>
       </div>
       <WorkCategory />

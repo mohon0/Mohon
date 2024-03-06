@@ -52,6 +52,7 @@ function CommentForm({ postId }: CommentFormProps) {
                   const response = await axios.post(`/api/comment`, values);
 
                   if (response.status === 201) {
+                    values.comment = "";
                     setIsSubmitting(false);
                     toast.dismiss();
                     setIsCommentAdded(true);

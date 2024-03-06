@@ -12,7 +12,7 @@ export default function AboutMeCard() {
     <Card>
       <div>
         <CardHeader>
-          <div className="flex flex-col-reverse items-center gap-6 md:justify-between">
+          <div className="flex flex-col-reverse items-center gap-6 md:flex-row md:justify-between">
             <div className="flex flex-col gap-2">
               <CardTitle className="text-2xl font-bold">
                 Name: Md. Mohon
