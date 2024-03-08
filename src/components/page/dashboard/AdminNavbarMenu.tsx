@@ -108,21 +108,25 @@ export default function AdminNavbarMenu() {
                 <span>Edit Profile</span>
               </Button>
             </Link>
-            <Link href="application-list" onClick={HandleClick}>
+            <Link href="/application-list/page/1" onClick={HandleClick}>
               <Button
                 className="flex w-full items-center justify-start gap-4"
                 variant={
-                  pathname === "/application-list" ? "default" : "outline"
+                  /^\/application-list\/page\/\d+$/.test(pathname)
+                    ? "default"
+                    : "outline"
                 }
               >
                 <FaClipboardList />
                 <span>Application</span>
               </Button>
             </Link>
-            <Link href="/user" onClick={HandleClick}>
+            <Link href="/user/page/1" onClick={HandleClick}>
               <Button
                 className="flex w-full items-center justify-start gap-4"
-                variant={pathname === "/user" ? "default" : "outline"}
+                variant={
+                  /^\/user\/page\/\d+$/.test(pathname) ? "default" : "outline"
+                }
               >
                 <FaUsers />
                 <span>User</span>

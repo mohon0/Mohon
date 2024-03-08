@@ -16,7 +16,7 @@ export default function EditProfile() {
       ) : isError ? (
         "Error Loading page"
       ) : (
-        <div className="mt-24 flex items-center justify-center">
+        <div className="mx-2 mt-24 flex items-center justify-center">
           <Tabs defaultValue="account" className="w-[400px]">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="account">Account</TabsTrigger>

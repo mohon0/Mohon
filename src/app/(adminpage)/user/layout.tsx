@@ -1,5 +1,5 @@
 import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
+import AdminNavbar from "@/components/page/dashboard/AdminNavbar";
 import Navbarui from "@/components/page/dashboard/Navbar";
 import SideBar from "@/components/page/dashboard/SideBar";
 import { ReactNode } from "react";
@@ -10,7 +10,7 @@ export default function layout({ children }: { children: ReactNode }) {
       <SideBar />
       <div className="min-h-screen md:ml-52">
         <div className="md:hidden">
-          <Navbar />
+          <AdminNavbar />
         </div>
         <div className="hidden md:block">
           <Navbarui />

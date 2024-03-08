@@ -25,7 +25,7 @@ export default function ApplicationChart() {
           <div className="mb-10 flex items-center justify-center text-center text-2xl font-bold text-primary md:text-3xl">
             Application Chart
           </div>
-          <ResponsiveContainer height={350}>
+          <ResponsiveContainer width="90%" height={350}>
             <BarChart data={chartData || []}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="course" stroke="#888888" fontSize={12} />

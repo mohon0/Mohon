@@ -25,13 +25,11 @@ export default function AdminDashboard() {
             <p className="text-2xl font-extrabold md:text-4xl">Dashboard</p>
           </div>
           <div className="mt-6">
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-              <div className="col-span-2 grid grid-cols-1 gap-8 md:grid-cols-2">
-                <UserCard />
-                <ApplicationCard />
-                <PostCard />
-                <CommentCard />
-              </div>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <UserCard />
+              <ApplicationCard />
+              <PostCard />
+              <CommentCard />
               <SwitchCard />
             </div>
           </div>
