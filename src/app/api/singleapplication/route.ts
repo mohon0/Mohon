@@ -16,6 +16,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
       where: {
         id: postId,
       },
+      include: {
+        user: {
+          select: {
+            email: true,
+            phoneNumber: true,
+          },
+        },
+      },
     });
 
     if (!application) {

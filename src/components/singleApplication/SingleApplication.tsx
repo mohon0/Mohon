@@ -31,6 +31,10 @@ interface SingleApplicationProps {
     transactionId: string;
     fatherOccupation: string;
     maritalStatus: string;
+    user: {
+      email: string;
+      phoneNumber: string;
+    };
   };
 }
 
@@ -38,7 +42,7 @@ export default function SingleApplication({
   application,
 }: SingleApplicationProps) {
   return (
-    <div className="mx-2 lg:mx-20 my-32 print:text-black print:p-4 print:my-10">
+    <div className="mx-2 my-32 print:my-10 print:p-4 print:text-black lg:mx-20">
       <Print application={application} />
     </div>
   );

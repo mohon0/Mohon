@@ -40,7 +40,7 @@ const Application: React.FC = () => {
       // Display an error message or handle it as needed
       setImageError(true);
       toast.error(
-        `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`
+        `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`,
       );
     } else {
       setImage(file);
@@ -122,7 +122,7 @@ const Application: React.FC = () => {
                 }
 
                 return userAge >= 5;
-              }
+              },
             )
             .transform((originalValue, originalObject) => {
               return originalValue instanceof Date ? originalValue : null;
@@ -170,7 +170,7 @@ const Application: React.FC = () => {
               day: "numeric",
               month: "long",
               year: "numeric",
-            }
+            },
           );
 
           const formData = new FormData();
@@ -203,19 +203,19 @@ const Application: React.FC = () => {
             const responseData = await response.json();
 
             router.push(
-              `/application-list/singleapplication/${responseData.id}`
+              `/application-list/singleapplication/${responseData.id}`,
             );
           } else {
             toast.error("Couldn't save your post. Please try again later");
           }
         }}
       >
-        <Form className="w-11/12 lg:w-3/4 mx-auto flex flex-col gap-6">
-          <div className=" lg:absolute top-52 border-primary border right-20">
+        <Form className="mx-auto flex w-11/12 flex-col gap-6 lg:w-3/4">
+          <div className=" right-20 top-52 border border-primary lg:absolute">
             {imageError && <span>Image Must Be Provided</span>}
             <FileSelect onFileSelect={handleFileSelect} />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
               label="Student First Name"
               name="firstName"
@@ -230,7 +230,7 @@ const Application: React.FC = () => {
               placeholder="Mohon"
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
               label="Father's Name"
               name="fatherName"
@@ -245,7 +245,7 @@ const Application: React.FC = () => {
               placeholder="Mother name"
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
               label="Father's Occupation"
               name="fatherOccupation"
@@ -257,7 +257,7 @@ const Application: React.FC = () => {
               <Field as={MaritelSelect} name="maritalStatus" />
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <div>
               <div>Date of Birth</div>
               <Field as={BirthDay} name="birthDay" />
@@ -267,7 +267,7 @@ const Application: React.FC = () => {
               <Field as={BloodGroup} name="bloodGroup" />
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
               label="Mobile Number"
               name="mobileNumber"
@@ -281,7 +281,7 @@ const Application: React.FC = () => {
               placeholder="Guardian Number"
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <div>
               <div>Gender</div>
 
@@ -292,7 +292,7 @@ const Application: React.FC = () => {
               <Field as={Religion} name="religion" />
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
               label="Full Address"
               name="fullAddress"
@@ -305,7 +305,7 @@ const Application: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
               label="Email"
               name="email"
@@ -318,7 +318,7 @@ const Application: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <div>
               <div>Education</div>
               <Field as={EducationSelect} name="education" />
@@ -333,7 +333,7 @@ const Application: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
               label="Roll Number"
               name="rollNumber"
@@ -347,7 +347,7 @@ const Application: React.FC = () => {
               placeholder="Registration Number"
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
               label="Passing Year"
               name="passingYear"
@@ -361,7 +361,7 @@ const Application: React.FC = () => {
               placeholder="GPA/CGPA"
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
               label="NID/Birth Reg."
               name="nid"
@@ -375,7 +375,7 @@ const Application: React.FC = () => {
               placeholder="Nationality"
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <div>
               <div>Course</div>
               <Field as={CourseSelect} name="course" />
@@ -385,7 +385,7 @@ const Application: React.FC = () => {
               <Field as={DurationSelect} name="duration" />
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <PayButton />
             <MyTextInput
               label="TransactionID"
@@ -395,7 +395,7 @@ const Application: React.FC = () => {
             />
           </div>
           <FooterNotice />
-          <div className="flex items-center md:flex-row justify-center md:gap-20 mt-10 flex-col gap-6">
+          <div className="mt-10 flex flex-col items-center justify-center gap-6 md:flex-row md:gap-20">
             <Preview />
             <Button
               type="submit"
