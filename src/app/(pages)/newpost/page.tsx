@@ -2,6 +2,7 @@
 import Categories from "@/components/common/Post/Categories";
 import PostContent from "@/components/common/Post/PostContent";
 import FormikInput from "@/components/common/input/FormikInput";
+import Loading from "@/components/common/loading/Loading";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,6 +14,7 @@ import {
 import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChangeEventHandler, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,8 +25,23 @@ export default function NewPostPage() {
   const [image, setImage] = useState<File | null>(null);
   const [imageError, setImageError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { status, data: session } = useSession();
   const router = useRouter();
+  const admin = process.env.NEXT_PUBLIC_ADMIN;
+  if (session) {
+    console.log(session);
+  }
 
+  if (status === "loading") {
+    return <Loading />;
+  }
+  if (status === "unauthenticated") {
+    return <p>Your are not authenticated</p>;
+  }
+
+  if (session?.user?.email !== admin) {
+    return <p>You don&#39;t have permission to access this page.</p>;
+  }
   const MAX_IMAGE_SIZE_KB = 1000;
   const handleFile: ChangeEventHandler<HTMLInputElement> = (event) => {
     const file = event.target.files?.[0];

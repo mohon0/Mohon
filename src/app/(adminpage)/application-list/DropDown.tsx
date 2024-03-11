@@ -20,39 +20,41 @@ export function ActionSelect({ onValueChange }: DurationSelectProps) {
   };
 
   return (
-    <Select onValueChange={handleSelectChange}>
-      <SelectTrigger className="w-32">
-        <SelectValue placeholder="Action" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Action</SelectLabel>
-          <SelectItem
-            value="Approved"
-            onSelect={() => handleSelectChange("free")}
-          >
-            Approve
-          </SelectItem>
-          <SelectItem
-            value="Pending"
-            onSelect={() => handleSelectChange("Pending")}
-          >
-            Pending
-          </SelectItem>
-          <SelectItem
-            value="Rejected"
-            onSelect={() => handleSelectChange("Reject")}
-          >
-            Reject
-          </SelectItem>
-          <SelectItem
-            value="Delete"
-            onSelect={() => handleSelectChange("Delete")}
-          >
-            Delete
-          </SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <>
+      <Select onValueChange={handleSelectChange}>
+        <SelectTrigger className="w-32">
+          <SelectValue placeholder="Action" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Action</SelectLabel>
+            <SelectItem
+              value="Approved"
+              onSelect={() => handleSelectChange("free")}
+            >
+              Approve
+            </SelectItem>
+            <SelectItem
+              value="Pending"
+              onSelect={() => handleSelectChange("Pending")}
+            >
+              Pending
+            </SelectItem>
+            <SelectItem
+              value="Rejected"
+              onSelect={() => handleSelectChange("Reject")}
+            >
+              Reject
+            </SelectItem>
+            <SelectItem
+              value="Delete"
+              onSelect={() => handleSelectChange("Delete")}
+            >
+              Delete
+            </SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </>
   );
 }

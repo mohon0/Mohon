@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,6 +24,19 @@ import { FaSearch } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ActionSelect } from "../DropDown";
+
+// Interface definition omitted for brevity
+
+function formatDate(isoDateString: string): string {
+  const date = new Date(isoDateString);
+  return date
+    .toLocaleDateString("en-US", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    })
+    .replace(/\//g, "-");
+}
 
 interface Post {
   id: string;
@@ -34,23 +48,11 @@ interface Post {
   status: string;
   createdAt: string;
 }
-
-function formatDate(isoDateString: string): string {
-  const options: Intl.DateTimeFormatOptions = {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  };
-  const date: Date = new Date(isoDateString);
-  return date.toLocaleDateString("en-US", options).replace(/\//g, "-");
-}
-
 export default function List() {
   const { status, data: session } = useSession();
   const params = useParams();
   const [page, setPage] = useState<number>(Number(params.page[1]) || 1);
   const [action, setAction] = useState("");
-  const [key, setKey] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [searchInput, setSearchInput] = useState("");
@@ -58,7 +60,7 @@ export default function List() {
   const admin = process.env.NEXT_PUBLIC_ADMIN;
   const pageSize = 12;
 
-  const { data, isLoading, isError } = FetchAllApplication({
+  const { data, isError, refetch, isFetching } = FetchAllApplication({
     currentPage: page,
     pageSize,
     selectedCategory,
@@ -66,12 +68,12 @@ export default function List() {
     searchInput,
   });
 
-  const handelActionChange = (value: string) => {
-    if (value.trim() !== "") {
-      setAction(value);
-    } else {
+  const handleActionChange = (value: string) => {
+    if (!value.trim()) {
       toast.error("Action cannot be empty");
       console.error("Action cannot be empty");
+    } else {
+      setAction(value);
     }
   };
 
@@ -84,42 +86,31 @@ export default function List() {
   }) {
     const data = new FormData();
     data.set("status", status);
-    if (id) {
-      data.set("id", id);
-    }
+    if (id) data.set("id", id);
 
-    // Use window.confirm to show a confirmation dialog
     const shouldDelete =
       action === "Delete"
         ? window.confirm("Are you sure you want to delete this application?")
         : true;
-
-    if (!shouldDelete) {
-      return; // If the user cancels, do nothing
-    }
+    if (!shouldDelete) return;
 
     toast.loading("Please wait while we update.");
 
     try {
-      let response;
+      let response = await axios({
+        method: action === "Delete" ? "DELETE" : "PUT",
+        url:
+          action === "Delete"
+            ? `/api/application?id=${id}`
+            : `/api/application`,
+        data: action === "Delete" ? null : data,
+        withCredentials: true,
+      });
 
-      if (action === "Delete") {
-        response = await fetch(`/api/application?id=${id}`, {
-          method: "DELETE",
-          credentials: "include",
-        });
-      } else {
-        response = await fetch(`/api/application`, {
-          method: "PUT",
-          body: data,
-          credentials: "include",
-        });
-      }
-
-      if (response.ok) {
+      if (response.status === 200) {
         toast.dismiss();
         toast.success("Application Updated successfully");
-        setKey((prevKey) => prevKey + 1);
+        refetch();
       } else {
         console.error(
           "Failed to update the Application. Status:",
@@ -135,104 +126,76 @@ export default function List() {
     }
   }
 
-  const handleSelectChange = (value: string) => {
-    setSortBy(value);
-  };
-  const handleFilterChange = (value: string) => {
-    setSelectedCategory(value);
-  };
+  const handleSelectChange = (value: string) => setSortBy(value);
+  const handleFilterChange = (value: string) => setSelectedCategory(value);
 
   return (
     <div className="mx-2">
-      <div>
-        <div className="text-center text-3xl font-bold md:text-5xl">
-          All Application
-        </div>
-        <div className="my-10 flex w-full flex-col items-center justify-center gap-10 md:flex-row">
-          {/* Filter by category dropdown */}
-          <Select onValueChange={handleFilterChange} defaultValue="all">
+      <div className="text-center text-3xl font-bold md:text-5xl">
+        All Application
+      </div>
+      <div className="my-10 flex w-full flex-col items-center justify-center gap-10 md:flex-row">
+        {/* Filter and Sort dropdowns */}
+        {["FilterBy", "SortBy"].map((label, index) => (
+          <Select
+            key={index}
+            onValueChange={
+              index === 0 ? handleFilterChange : handleSelectChange
+            }
+            defaultValue={index === 0 ? "all" : "newest"}
+          >
             <SelectTrigger className="w-60">
-              <Label>FilterBy:</Label>
-              <SelectValue placeholder="Filter By:" />
+              <Label>{label}:</Label>
+              <SelectValue placeholder={`Select ${label}:`} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>FilterBy</SelectLabel>
-                <SelectItem
-                  value="all"
-                  onSelect={() => handleSelectChange("all")}
-                >
-                  All
-                </SelectItem>
-                <SelectItem
-                  value="Approved"
-                  onSelect={() => handleSelectChange("Approved")}
-                >
-                  Approved
-                </SelectItem>
-                <SelectItem
-                  value="Pending"
-                  onSelect={() => handleSelectChange("Pending")}
-                >
-                  Pending
-                </SelectItem>
-                <SelectItem
-                  value="Rejected"
-                  onSelect={() => handleSelectChange("Reject")}
-                >
-                  Rejected
-                </SelectItem>
+                <SelectLabel>{label}</SelectLabel>
+                {index === 0
+                  ? ["all", "Approved", "Pending", "Rejected"].map(
+                      (value, idx) => (
+                        <SelectItem
+                          key={idx}
+                          value={value}
+                          onSelect={() => handleSelectChange(value)}
+                        >
+                          {value}
+                        </SelectItem>
+                      ),
+                    )
+                  : ["newest", "oldest"].map((value, idx) => (
+                      <SelectItem
+                        key={idx}
+                        value={value}
+                        onSelect={() => handleSelectChange(value)}
+                      >
+                        {value === "newest" ? "Newest" : "Oldest"}
+                      </SelectItem>
+                    ))}
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Select onValueChange={handleSelectChange} defaultValue="newest">
-            <SelectTrigger className="w-60">
-              <Label>SortBy:</Label>
-              <SelectValue placeholder="Filter By:" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>SortBy</SelectLabel>
-                <SelectItem
-                  value="newest"
-                  onSelect={() => handleSelectChange("newest")}
-                >
-                  Newest
-                </SelectItem>
-                <SelectItem
-                  value="oldest"
-                  onSelect={() => handleSelectChange("oldest")}
-                >
-                  Oldest
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-
-          <div className="relative flex items-center md:w-1/2">
-            <Input
-              type="text"
-              placeholder="Search by applicant name"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-
-            <div className=" absolute right-4 text-xl">
-              <FaSearch />
-            </div>
+        ))}
+        {/* Search input */}
+        <div className="relative flex items-center md:w-1/2">
+          <Input
+            type="text"
+            placeholder="Search by applicant name"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+          <div className=" absolute right-4 text-xl">
+            <FaSearch />
           </div>
         </div>
       </div>
+      {/* Application list */}
       {email === admin ? (
         <>
-          {isLoading ? (
-            <div>
-              <Loading />
-            </div>
+          {isFetching ? (
+            <Loading />
           ) : isError ? (
-            <div>
-              <p>Error loading applications. No Application Found.</p>
-            </div>
+            <p>Error loading applications. No Application Found.</p>
           ) : data === "No Application Found." ? (
             "No Application Found"
           ) : data.application && data.application.length > 0 ? (
@@ -250,7 +213,6 @@ export default function List() {
                       width={200}
                       className="mx-auto mb-4 h-20 w-20 rounded-full"
                     />
-
                     <div className="flex flex-col">
                       <p className="mb-2 text-xl font-bold text-primary">
                         Name: {app.firstName} {app.lastName}
@@ -259,21 +221,20 @@ export default function List() {
                         <span className="font-bold text-secondary-foreground">
                           Course:{" "}
                         </span>
-                        <span>{app.course}</span>{" "}
+                        {app.course}
                       </p>
                       <p>
                         <span className="font-bold text-secondary-foreground">
                           Type:{" "}
                         </span>
-                        <span>{app.duration}</span>
+                        {app.duration}
                       </p>
                       <p>
                         <span className="font-bold text-secondary-foreground">
                           Date:{" "}
                         </span>
-                        <span>{formatDate(app.createdAt)}</span>
+                        {formatDate(app.createdAt)}
                       </p>
-
                       <p>
                         <span>Status: </span>
                         <span
@@ -290,12 +251,11 @@ export default function List() {
                           {app.status}
                         </span>
                       </p>
-
                       <div className="mt-4 flex gap-2">
                         <div>
                           <ActionSelect
                             selectedValue={action}
-                            onValueChange={handelActionChange}
+                            onValueChange={handleActionChange}
                           />
                         </div>
                         <Button
@@ -332,11 +292,8 @@ export default function List() {
                     />
                   )}
               </div>
-
-              <ToastContainer position="top-center" autoClose={3000} />
+              <ToastContainer position="top-center" theme="dark" />
             </div>
-          ) : isError ? (
-            <p>{"Error Loading Application"}</p>
           ) : (
             <p>No application data available.</p>
           )}
