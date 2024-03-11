@@ -38,6 +38,7 @@ interface SingleApplicationProps {
     transactionId: string;
     fatherOccupation: string;
     maritalStatus: string;
+    roll: number;
     user: {
       phoneNumber: string;
       email: string;
@@ -120,7 +121,7 @@ export default function Print({ application }: SingleApplicationProps) {
             </div>
             <div className="flex gap-2 border-t px-2">
               <div>Roll No:</div>
-              <div></div>
+              <div>{application.roll}</div>
             </div>
           </div>
         </div>

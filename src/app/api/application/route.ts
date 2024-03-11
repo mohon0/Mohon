@@ -108,6 +108,20 @@ export async function POST(req: NextRequest, res: NextResponse) {
       // Get download URL from Firebase storage
       const downloadURL = await getDownloadURL(storageRef);
 
+      const lastApplication = await prisma.application.findFirst({
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          roll: true,
+        },
+      });
+      if (!lastApplication || !lastApplication.roll) {
+        return new NextResponse("There was an error. Please try again later.");
+      }
+
+      const roll = lastApplication?.roll + 1;
+
       // Create a new post using Prisma
       const newPost = await prisma.application.create({
         data: {
@@ -136,6 +150,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
           email,
           pc,
           userId,
+          roll,
           transactionId,
           fatherOccupation,
           maritalStatus,

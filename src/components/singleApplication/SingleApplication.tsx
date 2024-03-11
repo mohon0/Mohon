@@ -31,6 +31,7 @@ interface SingleApplicationProps {
     transactionId: string;
     fatherOccupation: string;
     maritalStatus: string;
+    roll: number;
     user: {
       email: string;
       phoneNumber: string;
