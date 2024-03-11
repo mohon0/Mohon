@@ -150,7 +150,7 @@ export default function List() {
         </div>
         <div className="my-10 flex w-full flex-col items-center justify-center gap-10 md:flex-row">
           {/* Filter by category dropdown */}
-          <Select onValueChange={handleFilterChange} defaultValue="Approved">
+          <Select onValueChange={handleFilterChange} defaultValue="all">
             <SelectTrigger className="w-60">
               <Label>FilterBy:</Label>
               <SelectValue placeholder="Filter By:" />
@@ -158,6 +158,12 @@ export default function List() {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>FilterBy</SelectLabel>
+                <SelectItem
+                  value="all"
+                  onSelect={() => handleSelectChange("all")}
+                >
+                  All
+                </SelectItem>
                 <SelectItem
                   value="Approved"
                   onSelect={() => handleSelectChange("Approved")}
@@ -174,7 +180,7 @@ export default function List() {
                   value="Rejected"
                   onSelect={() => handleSelectChange("Reject")}
                 >
-                  Reject
+                  Rejected
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
