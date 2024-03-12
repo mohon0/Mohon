@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { Form, Formik } from "formik";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -22,6 +23,8 @@ interface PageProps {
 function EditPost({ params }: PageProps) {
   const [image, setImage] = useState<File | null>(null);
   const router = useRouter();
+  const { status, data: session } = useSession();
+  const admin = process.env.NEXT_PUBLIC_ADMIN;
   const { isLoading, data, isError } = FetchSinglePost({
     category: params.category,
     slug: params.slug,
@@ -32,6 +35,18 @@ function EditPost({ params }: PageProps) {
   }
   if (isError) {
     return <div>Error fetching post</div>;
+  }
+
+  if (status === "loading") {
+    return <Loading />;
+  }
+
+  if (status === "unauthenticated") {
+    return <div>Unauthenticated</div>;
+  }
+
+  if (session?.user?.email !== admin) {
+    return <div>You are not authorized to access this page.</div>;
   }
 
   const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +71,7 @@ function EditPost({ params }: PageProps) {
       validationSchema={Yup.object({
         title: Yup.string()
           .matches(
-            /^[a-zA-Z0-9\s,'_]+$/,
+            /^[a-zA-Z0-9\s,\u0980-\u09FF]+$/,
             "Title can not contain special characters",
           )
           .min(4, "Title Must be at least 4 characters")
@@ -90,7 +105,7 @@ function EditPost({ params }: PageProps) {
             const encodedUri = uri ? encodeForUrl(uri) : "";
             const encodedCategory = category ? encodeForUrl(category) : "";
             setTimeout(() => {
-              router.push(`/blog/${encodedCategory}/${encodedUri}`);
+              router.push(`/blog/category/${encodedCategory}/${encodedUri}`);
             }, 1000);
           }
         } catch (error) {

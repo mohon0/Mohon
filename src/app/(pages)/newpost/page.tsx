@@ -69,7 +69,7 @@ export default function NewPostPage() {
       validationSchema={Yup.object({
         title: Yup.string()
           .matches(
-            /^[a-zA-Z0-9\s,'_]+$/,
+            /^[a-zA-Z0-9\s,\u0980-\u09FF]+$/,
             "Title can not contain special characters",
           )
           .min(4, "Title Must be at least 4 characters")
@@ -98,7 +98,7 @@ export default function NewPostPage() {
             const encodedUri = uri ? encodeForUrl(uri) : "";
             const encodedCategory = category ? encodeForUrl(category) : "";
             setTimeout(() => {
-              router.push(`/blog/${encodedCategory}/${encodedUri}`);
+              router.push(`/blog/category/${encodedCategory}/${encodedUri}`);
             }, 1000);
             setIsSubmitting(false);
           } else {
