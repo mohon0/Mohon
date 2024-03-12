@@ -1,5 +1,4 @@
 "use client";
-
 import PostModel from "@/components/common/Post/PostModel";
 import Loading from "@/components/common/loading/Loading";
 import PaginationUi from "@/components/core/PaginationUi";
