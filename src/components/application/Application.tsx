@@ -27,17 +27,12 @@ import { Religion } from "./Religion";
 const Application: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imageError, setImageError] = useState(false);
-  const [hasError, setHasError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const router = useRouter();
-
-  const MAX_IMAGE_SIZE_KB = 500;
+  const MAX_IMAGE_SIZE_KB = 100;
 
   const handleFileSelect = (file: File) => {
-    // Check if the file size exceeds the maximum allowed size
     if (file.size > MAX_IMAGE_SIZE_KB * 1024) {
-      // Display an error message or handle it as needed
       setImageError(true);
       toast.error(
         `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`,
@@ -47,7 +42,6 @@ const Application: React.FC = () => {
       setImageError(false);
     }
   };
-
   return (
     <>
       <div className="mb-20">
@@ -124,7 +118,7 @@ const Application: React.FC = () => {
                 return userAge >= 5;
               },
             )
-            .transform((originalValue, originalObject) => {
+            .transform((originalValue) => {
               return originalValue instanceof Date ? originalValue : null;
             }),
           mobileNumber: Yup.string()
@@ -137,9 +131,7 @@ const Application: React.FC = () => {
           religion: Yup.string().required("Required"),
           fullAddress: Yup.string().required("Required"),
           district: Yup.string().required("Required"),
-          email: Yup.string()
-            .email("Invalid email address")
-            .required("Required"),
+          email: Yup.string().email("Invalid email address"),
           pc: Yup.string().required("Required"),
           education: Yup.string().required("Required"),
           board: Yup.string().required("Required"),
@@ -156,13 +148,11 @@ const Application: React.FC = () => {
           maritalStatus: Yup.string().required("Required"),
         })}
         onSubmit={async (values, { setSubmitting }) => {
-          setHasError(false);
           setIsSubmitting(true);
-          setHasError(true);
 
           setSubmitting(false);
 
-          const { birthDay, ...otherValues } = values;
+          const { birthDay } = values;
 
           const formattedBirthDay = new Date(birthDay).toLocaleDateString(
             "en-GB",
@@ -325,11 +315,7 @@ const Application: React.FC = () => {
             </div>
             <div>
               <div>Education Board</div>
-              <Field
-                as={Board}
-                name="board"
-                onValueChange={(value: any) => {}}
-              />
+              <Field as={Board} name="board" />
             </div>
           </div>
 

@@ -248,7 +248,7 @@ export default function Blog({ params }: PageProps) {
               />
               <div className="my-8">
                 <SocialShare
-                  yourPostUrl={`${process.env.NEXT_PUBLIC_SITE_URL}/blog/${params.category}/${params.slug}`}
+                  yourPostUrl={`${process.env.NEXT_PUBLIC_SITE_URL}/blog/category/${params.category}/${params.slug}`}
                 />
               </div>
             </div>
