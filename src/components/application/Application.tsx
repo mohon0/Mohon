@@ -297,7 +297,7 @@ const Application: React.FC = () => {
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
-              label="Email"
+              label="Email (Optional)"
               name="email"
               type="email"
               placeholder="Inter your email address"

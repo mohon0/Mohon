@@ -17,7 +17,7 @@ export function FileSelect({ onFileSelect }: FileSelectProps) {
 
   return (
     <div className="flex flex-col items-center gap-1.5 pt-2">
-      <span className="text-sm">image limit 500kb</span>
+      <span className="text-sm">image limit 100kb</span>
       <Label htmlFor="picture">
         <FaRegUser size="64" />
       </Label>
