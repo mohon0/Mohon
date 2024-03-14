@@ -35,25 +35,49 @@ export default function Hero() {
             <Link
               href="https://facebook.com/md.freelancermohon"
               target="_blank"
+              aria-label="Facebook"
             >
+              <span className="sr-only">Facebook</span>
               <AiFillFacebook />
             </Link>
-            <Link href="https://twitter.com/mohongraphics" target="_blank">
+            <Link
+              href="https://twitter.com/mohongraphics"
+              target="_blank"
+              aria-label="Twitter"
+            >
+              <span className="sr-only">Twitter</span>
               <TbBrandTwitter />
-            </Link>{" "}
+            </Link>
             <Link
               href="https://linkedin.com/in/freelancermohon"
               target="_blank"
+              aria-label="LinkedIn"
             >
+              <span className="sr-only">LinkedIn</span>
               <FaLinkedin />
             </Link>
-            <Link href="https://freelancer.com/demo" target="_blank">
+            <Link
+              href="https://freelancer.com/demo"
+              target="_blank"
+              aria-label="Freelancer"
+            >
+              <span className="sr-only">Freelancer</span>
               <SiFreelancer />
             </Link>
-            <Link href="https://upwork.com/demo" target="_blank">
+            <Link
+              href="https://upwork.com/demo"
+              target="_blank"
+              aria-label="Upwork"
+            >
+              <span className="sr-only">Upwork</span>
               <SiUpwork />
             </Link>
-            <Link href="https://fiverr.com/demo" target="_blank">
+            <Link
+              href="https://fiverr.com/demo"
+              target="_blank"
+              aria-label="Fiverr"
+            >
+              <span className="sr-only">Fiverr</span>
               <TbBrandFiverr />
             </Link>
           </motion.div>

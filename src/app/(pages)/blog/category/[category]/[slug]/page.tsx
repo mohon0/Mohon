@@ -26,6 +26,9 @@ export async function generateMetadata(
   return {
     title: response.data.title || "Blog Post",
     description: dynamicDescription || "This is a blog post",
+    alternates: {
+      canonical: `/blog/category/${category}/${slug}`,
+    },
     openGraph: {
       title: response.data.title || "Blog Post",
       description: dynamicDescription || "This is a blog post",
@@ -35,14 +38,14 @@ export async function generateMetadata(
       publishedTime: response.data.createdAt,
       modifiedTime: response.data.updatedAt,
       section: response.data.category,
+
       images: [
         {
-          url: new URL(response.data.coverImage, siteurl).toString(),
-          width: 1200,
-          height: 630,
+          url: response.data.coverImage,
           alt: response.data.title,
         },
       ],
+      locale: "en_US",
     },
     twitter: {
       card: "summary_large_image",

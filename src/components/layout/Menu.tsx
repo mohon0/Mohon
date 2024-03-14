@@ -22,15 +22,9 @@ import {
 
 export default function Menu() {
   const { data: session } = useSession();
-
-  const name = session?.user?.name || "PRIME";
-  const fallback = name.slice(0, 2);
-  const image = session?.user?.image;
-
   const admin = process.env.NEXT_PUBLIC_ADMIN;
 
   async function handleLogout() {
-    console.log("clicked");
     signOut({ redirect: false, callbackUrl: "/" });
   }
 

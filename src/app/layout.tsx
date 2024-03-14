@@ -1,15 +1,15 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 import { ReactNode } from "react";
 import Provider from "../../context/Provider";
 import { ReactQueryClientProvider } from "../../context/ReactQueryClientProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-
+const siteurl = process.env.NEXT_PUBLIC_SITE_URL;
 export const metadata: Metadata = {
+  metadataBase: new URL(`${siteurl}`),
   title: "Freelancer Mohon",
   description:
     "Professional Graphics Desinger & IT Teacher. Jhenaidah, Khulna, Bangladesh.",
@@ -25,12 +25,6 @@ export const metadata: Metadata = {
     description: "Graphics Designer and video editor",
     url: "https://freelancermohon.online",
     siteName: "FreeLancer MOHON",
-    images: [
-      {
-        url: "https://freelancermohon.online/home.jpeg",
-        alt: "home page banner image",
-      },
-    ],
     type: "website",
   },
   verification: {
@@ -55,7 +49,6 @@ export const metadata: Metadata = {
     title: "Freelancer Mohon",
     description: "Graphics Designer and video editor",
     creator: "@mohongraphics",
-    images: ["https://freelancermohon.online/home.jpeg"],
   },
 };
 
@@ -68,22 +61,6 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
   return (
     <ReactQueryClientProvider>
       <html lang="en">
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-N6SRGXKBYL"
-        ></Script>
-        <Script
-          id="google-analytics"
-          dangerouslySetInnerHTML={{
-            __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-N6SRGXKBYL');
-          `,
-          }}
-        />
-
         <body className={inter.className}>
           <Provider session={session}>
             <div className="min-h-screen">{children}</div>
