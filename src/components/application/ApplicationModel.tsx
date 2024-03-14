@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FetchApplicationData } from "../fetch/get/application/FetchApplicationData";
 
 interface Post {
@@ -33,12 +34,19 @@ export default function ApplicationModel() {
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const router = useRouter();
-  const { status, data: session } = useSession();
+  const { status } = useSession();
 
-  const { isLoading, data, isError } = FetchApplicationData();
+  const { isLoading, data, isError, refetch } = FetchApplicationData();
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    <p>Error Loading page.</p>;
+  }
 
   const handleDelete = async () => {
-    if (data.application) {
+    if (data.id) {
       // Open the confirmation modal
       setShowConfirmation(true);
     } else {
@@ -47,28 +55,22 @@ export default function ApplicationModel() {
   };
 
   const confirmDelete = async () => {
-    if (data.application) {
+    if (data.id) {
       // Perform the delete operation
       toast.loading("Please wait while deleting this application");
 
       try {
-        const response = await fetch(
-          `/api/application?id=${data.application.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
+        const response = await fetch(`/api/application?id=${data.id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+        });
 
         if (response.ok) {
           toast.dismiss();
           toast.success("Application deleted successfully");
-          console.log(response);
-          setTimeout(() => {
-            router.push("/");
-          }, 1000);
+          refetch();
         } else {
           toast.error("Error deleting post");
           console.error("Error deleting the Application");
@@ -87,17 +89,17 @@ export default function ApplicationModel() {
   return (
     <div>
       {!isLoading && status === "authenticated" ? (
-        data.application ? (
+        data && data !== "No Application Found" ? (
           <>
             <div className="flex flex-col items-center justify-center">
               <p className="text-xl font-bold">
                 Your application has already been submitted
               </p>
 
-              <div className="mx-2 mt-16 flex w-full flex-col gap-2 rounded-lg border border-primary-200 bg-gray-950 p-3 md:w-1/3 lg:w-1/4">
+              <div className="border-primary-200 mx-2 mt-16 flex w-full flex-col gap-2 rounded-lg border bg-gray-950 p-3 md:w-1/3 lg:w-1/4">
                 <div className="mb-3 flex justify-between">
                   <Image
-                    src={data.application.image}
+                    src={data.image}
                     alt=""
                     width={200}
                     height={200}
@@ -111,40 +113,40 @@ export default function ApplicationModel() {
                   </button>
                 </div>
 
-                <p className="mb-2 text-xl font-bold text-primary-100">
-                  Name: {data.application.firstName} {data.application.lastName}
+                <p className="text-primary-100 mb-2 text-xl font-bold">
+                  Name: {data.firstName} {data.lastName}
                 </p>
                 <p>
-                  <span className="font-bold text-primary-200">Course: </span>
-                  <span>{data.application.course}</span>{" "}
+                  <span className="text-primary-200 font-bold">Course: </span>
+                  <span>{data.course}</span>{" "}
                 </p>
                 <p>
-                  <span className="font-bold text-primary-200">Type: </span>
-                  <span>{data.application.duration}</span>
+                  <span className="text-primary-200 font-bold">Type: </span>
+                  <span>{data.duration}</span>
                 </p>
                 <p>
-                  <span className="font-bold text-primary-200">Date: </span>
-                  <span>{formatDate(data.application.createdAt)}</span>
+                  <span className="text-primary-200 font-bold">Date: </span>
+                  <span>{formatDate(data.createdAt)}</span>
                 </p>
                 <p>
                   <span>Status: </span>
                   <span
                     className={
-                      data.application.status === "Pending"
+                      data.status === "Pending"
                         ? "font-bold text-yellow-500"
-                        : data.application.status === "Approved"
+                        : data.status === "Approved"
                           ? "font-bold text-green-500"
-                          : data.application.status === "Rejected"
+                          : data.status === "Rejected"
                             ? "font-bold text-red-500"
                             : "font-bold"
                     }
                   >
-                    {data.application.status}
+                    {data.status}
                   </span>
                 </p>
                 <Link
-                  href={`/application-list/singleapplication/${data.application.id}`}
-                  className="flex items-center justify-center rounded border border-primary-100 bg-black px-4 py-1.5 hover:text-primary-100"
+                  href={`/application-list/singleapplication/${data.id}`}
+                  className="border-primary-100 hover:text-primary-100 flex items-center justify-center rounded border bg-black px-4 py-1.5"
                 >
                   View Details
                 </Link>

@@ -22,7 +22,7 @@ export default function Registration() {
         validationSchema={Yup.object({
           name: Yup.string()
             .min(5, "Name must be at least 5 characters")
-            .max(20, "Name cannot be more than 20 characters")
+            .max(40, "Name cannot be more than 40 characters")
             .required("Name is required"),
           identifier: Yup.string()
             .test(

@@ -79,16 +79,16 @@ const Application: React.FC = () => {
         }}
         validationSchema={Yup.object({
           firstName: Yup.string()
-            .max(15, "Must be 15 characters or less")
+            .max(40, "Must be 40 characters or less")
             .required("Required"),
           lastName: Yup.string()
-            .max(20, "Must be 20 characters or less")
+            .max(40, "Must be 40 characters or less")
             .required("Required"),
           fatherName: Yup.string()
-            .max(30, "Must be 30 characters or less")
+            .max(50, "Must be 50 characters or less")
             .required("Required"),
           motherName: Yup.string()
-            .max(30, "Must be 30 characters or less")
+            .max(50, "Must be 50 characters or less")
             .required("Required"),
           bloodGroup: Yup.string()
             .max(10, "Must be 10 characters or less")

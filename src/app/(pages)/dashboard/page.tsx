@@ -28,10 +28,6 @@ export default function Dashboard() {
     signOut({ redirect: true, callbackUrl: "/" });
   };
 
-  const name = data.user.name;
-  const email = data?.user?.email;
-  const id = data.user.id;
-  const image = data?.user?.image;
   const admin = process.env.NEXT_PUBLIC_ADMIN;
 
   return (
@@ -41,9 +37,9 @@ export default function Dashboard() {
           <div className="flex flex-col gap-10">
             <div className="grid w-full grid-cols-1 gap-10 bg-gray-900 p-6  md:grid-cols-2  lg:grid-cols-3">
               <div className="col-span-3 flex h-full w-full items-center justify-center border md:col-span-1">
-                {image ? (
+                {data.user.image ? (
                   <Image
-                    src={image}
+                    src={data.user.image}
                     alt=""
                     height={500}
                     width={500}
@@ -55,12 +51,12 @@ export default function Dashboard() {
               </div>
               <div className="col-span-3 mx-auto flex w-full flex-col items-center justify-center gap-6 px-4 text-center md:col-span-1 md:px-0">
                 <div className="mx-auto text-4xl font-bold uppercase">
-                  {name}
+                  {data.user.name}
                 </div>
-                <div className="text-xl">{email}</div>
+                <div className="text-xl">{data.user.email}</div>
               </div>
               <div className="col-span-3 flex flex-col items-center justify-center gap-2 md:flex-row md:gap-6  lg:col-span-1 lg:flex-col">
-                {admin === email ? (
+                {admin === data.user.email ? (
                   <div className="flex items-center justify-center">
                     <Link href={"/newpost"}>
                       <button className="flex items-center justify-center gap-4 rounded-lg border bg-cyan-500 px-8 py-2 font-bold  shadow-lg hover:bg-cyan-600">
@@ -72,7 +68,7 @@ export default function Dashboard() {
                 ) : (
                   ""
                 )}
-                {id && (
+                {data.user.id && (
                   <div>
                     <Link href={`/editprofile`}>
                       <button className="flex items-center justify-center gap-4 rounded-lg border bg-blue-950 px-6 py-2 font-bold text-white hover:bg-gray-800">
