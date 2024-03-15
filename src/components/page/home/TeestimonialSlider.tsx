@@ -114,14 +114,18 @@ export default function TestimonialSlider() {
         <button
           onClick={slidePrev}
           className="swiper-button-prev flex h-16 w-16 transform items-center justify-center rounded-full border-2 border-primary text-primary transition-transform hover:scale-110 focus:scale-110"
+          aria-label="Previous Slide"
         >
+          <span className="sr-only">Previous Slide</span>
           <FaAngleLeft className="text-xl" />
         </button>
 
         <button
           onClick={slideNext}
           className="swiper-button-next flex h-16 w-16 transform items-center justify-center rounded-full border-2 border-primary text-primary transition-transform hover:scale-110 focus:scale-110"
+          aria-label="Next Slide"
         >
+          <span className="sr-only">Next Slide</span>
           <FaAngleRight className="text-xl" />
         </button>
       </div>

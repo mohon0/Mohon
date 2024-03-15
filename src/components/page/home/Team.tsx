@@ -68,13 +68,24 @@ export default function Team() {
                 <div className="text-secondary-foreground">{data.post}</div>
               </div>
               <div className="mb-4 flex justify-center gap-5 text-2xl text-slate-300">
-                <Link href={data.facebook} target="_blank">
+                <Link
+                  href={data.facebook}
+                  target="_blank"
+                  aria-label="Facebook"
+                >
+                  <span className="sr-only">Facebook</span>
                   <FaFacebook />
                 </Link>
-                <Link href={data.twitter} target="_blank">
+                <Link href={data.twitter} target="_blank" aria-label="Twitter">
+                  <span className="sr-only">Twitter</span>
                   <FaTwitter />
                 </Link>
-                <Link href={data.linkedin} target="_blank">
+                <Link
+                  href={data.linkedin}
+                  target="_blank"
+                  aria-label="LinkedIn"
+                >
+                  <span className="sr-only">LinkedIn</span>
                   <FaLinkedin />
                 </Link>
               </div>
