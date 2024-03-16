@@ -3,8 +3,8 @@ import Application from "@/components/application/Application";
 import Notice from "@/components/application/Notice";
 import ApplicationDataModel from "@/components/application/applied/ApplicationDataModel";
 import Loading from "@/components/common/loading/Loading";
-import { FetchActionButtonData } from "@/components/fetch/get/application/FetchActionButtonData";
 import { FetchApplicationData } from "@/components/fetch/get/application/FetchApplicationData";
+import { FetchActionButtonData } from "@/components/fetch/get/visibility/FetchActionButtonData";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 

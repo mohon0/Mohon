@@ -8,5 +8,6 @@ export function FetchActionButtonData() {
       const response = await axios.get(`/api/visibility`);
       return response.data;
     },
+    staleTime: 1000 * 60 * 7,
   });
 }

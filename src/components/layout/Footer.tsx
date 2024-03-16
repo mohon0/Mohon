@@ -16,7 +16,9 @@ export default function Footer() {
           href="https://facebook.com/md.freelancermohon"
           target="_blank"
           className="p-4 text-muted  hover:text-blue-600"
+          aria-label="Facebook"
         >
+          <span className="sr-only">Facebook</span>
           <FaFacebookF />
         </Link>
         <div className="block h-0.5 w-6 rotate-[120deg] bg-gray-600 md:w-10"></div>
@@ -24,7 +26,9 @@ export default function Footer() {
           href="https://twitter.com/mohongraphics"
           target="_blank"
           className="p-4 text-muted  hover:text-sky-600"
+          aria-label="Twitter"
         >
+          <span className="sr-only">Twitter</span>
           <TbBrandTwitter />
         </Link>
         <div className="block h-0.5 w-6 rotate-[120deg] bg-gray-600 md:w-10"></div>
@@ -32,7 +36,9 @@ export default function Footer() {
           href="https://instagram.com/mohongraphics"
           target="_blank"
           className="p-4 text-muted  hover:text-pink-600"
+          aria-label="Instagram"
         >
+          <span className="sr-only">Instagram</span>
           <BsInstagram />
         </Link>
         <div className="block h-0.5 w-6 rotate-[120deg] bg-gray-600 md:w-10"></div>
@@ -40,7 +46,9 @@ export default function Footer() {
           href="https://linkedin.com/in/freelancermohon"
           target="_blank"
           className="p-4 text-muted  hover:text-sky-600"
+          aria-label="Linkedin"
         >
+          <span className="sr-only">LinkedIn</span>
           <BsLinkedin />
         </Link>
         <div className="block h-0.5 w-6 rotate-[120deg] bg-gray-600 md:w-10"></div>
@@ -48,7 +56,9 @@ export default function Footer() {
           href="https://freelancer.com/demo"
           target="_blank"
           className="p-4 text-muted  hover:text-sky-600"
+          aria-label="freelancer"
         >
+          <span className="sr-only">freelancer</span>
           <SiFreelancer />
         </Link>
         <div className="block h-0.5 w-6 rotate-[120deg] bg-gray-600 md:w-10"></div>
@@ -56,7 +66,9 @@ export default function Footer() {
           href="https://upwork.com/demo"
           target="_blank"
           className="p-4 text-muted  hover:text-green-600"
+          aria-label="upwork"
         >
+          <span className="sr-only">upwork</span>
           <SiUpwork />
         </Link>
         <div className="block h-0.5 w-6 rotate-[120deg] bg-gray-600 md:w-10"></div>
@@ -64,7 +76,9 @@ export default function Footer() {
           href="https://fiverr.com/demo"
           target="_blank"
           className="p-4 text-muted  hover:text-green-600"
+          aria-label="fiverr"
         >
+          <span className="sr-only">fiverr</span>
           <TbBrandFiverr />
         </Link>
       </div>
