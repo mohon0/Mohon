@@ -134,7 +134,7 @@ export default function List() {
       <div className="text-center text-3xl font-bold md:text-5xl">
         All Application
       </div>
-      <div className="my-10 flex w-full flex-col items-center justify-center gap-10 md:flex-row">
+      <div className="my-10 flex w-full flex-col  items-center justify-center gap-3 md:flex-row md:gap-2 lg:gap-10">
         {/* Filter and Sort dropdowns */}
         {["FilterBy", "SortBy"].map((label, index) => (
           <Select
@@ -177,7 +177,7 @@ export default function List() {
           </Select>
         ))}
         {/* Search input */}
-        <div className="relative flex items-center md:w-1/2">
+        <div className="relative flex w-full items-center md:w-1/2">
           <Input
             type="text"
             placeholder="Search by applicant name"
@@ -200,7 +200,7 @@ export default function List() {
             "No Application Found"
           ) : data.application && data.application.length > 0 ? (
             <div>
-              <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:gap-20">
+              <div className="grid grid-cols-1 gap-3 gap-y-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-x-4">
                 {data.application.map((app: Post) => (
                   <div
                     key={app.id}
@@ -215,7 +215,7 @@ export default function List() {
                     />
                     <div className="flex flex-col">
                       <p className="mb-2 text-xl font-bold text-primary">
-                        Name: {app.firstName} {app.lastName}
+                        {app.firstName} {app.lastName}
                       </p>
                       <p>
                         <span className="font-bold text-secondary-foreground">

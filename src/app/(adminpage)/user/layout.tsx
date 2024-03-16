@@ -15,7 +15,7 @@ export default function layout({ children }: { children: ReactNode }) {
         <div className="hidden md:block">
           <Navbarui />
         </div>
-        <div className="mx-10 mt-20 md:mt-6">{children}</div>
+        <div className="mx-2 mt-20 md:mx-4 md:mt-6 lg:mx-10">{children}</div>
         <Footer />
       </div>
     </div>
