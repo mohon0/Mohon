@@ -111,6 +111,24 @@ module.exports = {
             bottom: "100%",
           },
         },
+
+        move: {
+          "0%, 100%": {
+            left: "0%",
+          },
+          "50%": {
+            left: "calc(100% - 150px)",
+          },
+        },
+
+        ani: {
+          "0%, 40%, 100%": {
+            transform: "scale(0.2)",
+          },
+          "20%": {
+            transform: "scale(0.6)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -122,6 +140,8 @@ module.exports = {
         animate4: "animate4 1s linear infinite 0.75s",
         mouse: "mouse 2s infinite",
         scroll: "scroll forwards 70s linear infinite",
+        move: "move 4s linear infinite",
+        ani: "ani 1.6s linear infinite",
       },
     },
   },

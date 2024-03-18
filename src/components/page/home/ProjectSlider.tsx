@@ -92,7 +92,7 @@ export default function ProjectSlider() {
                         height={500}
                         width={500}
                       />
-                      <div className=" gradientbackground absolute bottom-0 left-0 flex w-full px-2 py-3  text-xl font-medium group-hover:text-primary">
+                      <div className=" absolute bottom-0 left-0 flex w-full bg-slate-950 bg-opacity-25  px-2 py-3 text-xl backdrop-blur-md">
                         {post.title}
                       </div>
                     </Link>

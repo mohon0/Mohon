@@ -1,5 +1,4 @@
 import StarsCanvas from "@/components/common/animation/Star";
-import Loading from "@/components/common/loading/Loading";
 import { Contract } from "@/components/layout/Contract";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";

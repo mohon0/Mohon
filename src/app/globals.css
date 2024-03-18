@@ -35,15 +35,6 @@
     @apply bg-background text-foreground;
   }
 
-  .gradientbackground {
-    background: linear-gradient(
-      180deg,
-      hsla(0, 0%, 0%, 0) 0%,
-      hsla(0, 0%, 0%, 0.3) 10%,
-      hsl(0, 0%, 0%) 100%
-    );
-  }
-
   .hero {
     word-spacing: 16px;
     -webkit-text-stroke-color: transparent;
