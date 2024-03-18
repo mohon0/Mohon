@@ -84,7 +84,9 @@ export default function ProjectSlider() {
                     key={post.id}
                     className="group relative mb-16 h-60 w-full overflow-hidden rounded-2xl md:h-96 md:w-1/3 lg:w-1/4"
                   >
-                    <Link href={`/blog/${post.category}/${encodedTitle}`}>
+                    <Link
+                      href={`/blog/category/${post.category}/${encodedTitle}`}
+                    >
                       <Image
                         src={post.coverImage}
                         alt=""

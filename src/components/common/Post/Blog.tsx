@@ -1,5 +1,5 @@
 "use client";
-import AuthorCard from "@/components/card/AuthorCard";
+import AuthorCard from "@/components/common/Post/AuthorCard";
 import Loading from "@/components/common/loading/Loading";
 import CommentForm from "@/components/core/Comment";
 import SocialShare from "@/components/core/SocialShare";

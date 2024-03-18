@@ -1,4 +1,5 @@
 "use client";
+import Contact from "@/components/layout/Contract";
 import AboutMeCard from "@/components/page/about/AboutMeCard";
 import WorkCategory from "@/components/page/about/WorkCategory";
 import Cta from "@/components/page/home/Cta";
@@ -7,7 +8,6 @@ import Team from "@/components/page/home/Team";
 import { Button } from "@/components/ui/button";
 import img1 from "@/images/hero/img1.jpeg";
 import Image from "next/image";
-import Contact from "../contact/page";
 
 export default function AboutMe() {
   return (

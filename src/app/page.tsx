@@ -1,5 +1,5 @@
 import StarsCanvas from "@/components/common/animation/Star";
-import { Contract } from "@/components/layout/Contract";
+import Contact from "@/components/layout/Contract";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import Cta from "@/components/page/home/Cta";
@@ -26,7 +26,7 @@ export default function Home() {
       <Team />
       <Cta />
       <Testimonial />
-      <Contract />
+      <Contact />
       <Footer />
     </main>
   );
