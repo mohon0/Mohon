@@ -3,6 +3,7 @@ import Loading from "@/components/common/loading/Loading";
 import PostModel from "@/components/common/Post/PostModel";
 import PaginationList from "@/components/core/PaginationList";
 import { FetchAllPost } from "@/components/fetch/get/blog/FetchAllPost";
+import { BlogPostType } from "@/components/type/BlogPostType";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -20,19 +21,6 @@ import { FaSearch } from "react-icons/fa";
 
 interface PageProps {
   params: { category: string };
-}
-
-interface Post {
-  id: number;
-  coverImage: string;
-  title: string;
-  content: string;
-  author: {
-    name: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-  category: string;
 }
 
 export default function Category({ params }: PageProps) {
@@ -119,7 +107,7 @@ export default function Category({ params }: PageProps) {
             {/* Render first part */}
             {data && data !== "No posts found." && data.posts.length > 0 ? (
               <div className="gallery gap-5">
-                {data.posts.map((post: Post) => (
+                {data.posts.map((post: BlogPostType) => (
                   <div key={post.id}>
                     <PostModel
                       title={post.title}

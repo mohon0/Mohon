@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "../common/loading/Loading";
 import { FetchComments } from "../fetch/get/comments/FetchComments";
+import { CommentType } from "../type/CommentType";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,20 +18,6 @@ import {
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
-
-interface Comment {
-  hasLiked: any;
-  likeCount: number;
-  id: string;
-  author: {
-    name: string;
-    id: string;
-    image: string | null;
-  };
-  createdAt: string;
-  likedBy: string[];
-  content: string;
-}
 
 interface CommentListProps {
   postId: string;
@@ -86,7 +73,7 @@ export default function CommentsList({
       ) : isError ? (
         "Error Fetching Comments."
       ) : (
-        data.map((comment: Comment) => (
+        data.map((comment: CommentType) => (
           <Card key={comment.id} className="relative p-3">
             <div className="flex  md:flex-row md:justify-between">
               <div className="flex flex-wrap items-center gap-4 md:flex-row">

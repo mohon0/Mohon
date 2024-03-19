@@ -18,22 +18,6 @@ interface PageProps {
   params: { slug: string; category: string };
 }
 
-interface Post {
-  id: string;
-  content: string;
-  title: string;
-  author: {
-    id: string;
-    name: string;
-    email: string;
-    image: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-  category: string;
-  coverImage: string;
-}
-
 export default function Blog({ params }: PageProps) {
   const router = useRouter();
 

@@ -1,25 +1,13 @@
 "use client";
 import useFormattedDate from "@/components/helper/hooks/useFormatedDate";
+import { ApplicationType } from "@/components/type/ApplicationType";
 import Image from "next/image";
 import Link from "next/link"; // Assuming you're using Link from next.js
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
-interface Props {
-  application: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    duration: string;
-    image: string;
-    course: string;
-    status: string;
-    createdAt: string;
-  };
-}
-
-const ApplicationDataModel: React.FC<Props> = ({ application }) => {
+const ApplicationDataModel: React.FC<ApplicationType> = ({ application }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const formattedDate = useFormattedDate(application.createdAt);
   const router = useRouter();
@@ -73,7 +61,7 @@ const ApplicationDataModel: React.FC<Props> = ({ application }) => {
           Your application has already been submitted
         </p>
 
-        <div className="mx-2 mt-16 flex w-full flex-col gap-2 rounded-lg border border-primary-200 bg-gray-950 p-3 md:w-1/3 lg:w-1/4">
+        <div className="border-primary-200 mx-2 mt-16 flex w-full flex-col gap-2 rounded-lg border bg-gray-950 p-3 md:w-1/3 lg:w-1/4">
           <div className="mb-3 flex justify-between">
             <Image
               src={application.image}
@@ -89,20 +77,20 @@ const ApplicationDataModel: React.FC<Props> = ({ application }) => {
               Delete
             </button>
           </div>
-          <p className="mb-2 text-xl font-bold text-primary-100">
+          <p className="text-primary-100 mb-2 text-xl font-bold">
             Name: {application.firstName} {application.lastName}
           </p>
           <p>
             {" "}
-            <span className="font-bold text-primary-200">Course: </span>
+            <span className="text-primary-200 font-bold">Course: </span>
             <span>{application.course}</span>{" "}
           </p>
           <p>
-            <span className="font-bold text-primary-200">Type: </span>
+            <span className="text-primary-200 font-bold">Type: </span>
             <span>{application.duration}</span>
           </p>
           <p>
-            <span className="font-bold text-primary-200">Date: </span>
+            <span className="text-primary-200 font-bold">Date: </span>
             <span>{formattedDate}</span>
           </p>
           <p>
@@ -123,7 +111,7 @@ const ApplicationDataModel: React.FC<Props> = ({ application }) => {
           </p>
           <Link
             href={`/application-list/singleapplication/${application.id}`}
-            className="flex items-center justify-center rounded border border-primary-100 bg-black px-4 py-1.5 hover:text-primary-100"
+            className="border-primary-100 hover:text-primary-100 flex items-center justify-center rounded border bg-black px-4 py-1.5"
           >
             View Details
           </Link>

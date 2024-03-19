@@ -2,6 +2,7 @@
 import Loading from "@/components/common/loading/Loading";
 import PaginationUi from "@/components/core/PaginationUi";
 import { FetchAllUser } from "@/components/fetch/get/user/FetchAllUser";
+import { UserListType } from "@/components/type/UserListType";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -30,19 +31,6 @@ import { FaSearch } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-interface UserData {
-  id: string;
-  name: string;
-  email: string;
-  image: string;
-  phoneNumber: string;
-  applications: [
-    {
-      image: string;
-    },
-  ];
-}
 
 const Users: React.FC = () => {
   const { status, data: session } = useSession();
@@ -145,7 +133,7 @@ const Users: React.FC = () => {
           ) : (
             <>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {data.users.map((user: UserData) => (
+                {data.users.map((user: UserListType) => (
                   <div
                     className=" relative col-span-1 flex flex-col items-center justify-center gap-3 rounded border p-4 hover:border-primary"
                     key={user.id}

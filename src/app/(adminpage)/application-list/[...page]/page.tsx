@@ -2,6 +2,7 @@
 import Loading from "@/components/common/loading/Loading";
 import PaginationUi from "@/components/core/PaginationUi";
 import { FetchAllApplication } from "@/components/fetch/get/application/FetchAllApplication";
+import { ApplicationListType } from "@/components/type/ApplicationListType";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,29 +26,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ActionSelect } from "../DropDown";
 
-// Interface definition omitted for brevity
-
-function formatDate(isoDateString: string): string {
-  const date = new Date(isoDateString);
-  return date
-    .toLocaleDateString("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    })
-    .replace(/\//g, "-");
-}
-
-interface Post {
-  id: string;
-  duration: string;
-  firstName: string;
-  lastName: string;
-  course: string;
-  image: string;
-  status: string;
-  createdAt: string;
-}
 export default function List() {
   const { status, data: session } = useSession();
   const params = useParams();
@@ -129,6 +107,14 @@ export default function List() {
   const handleSelectChange = (value: string) => setSortBy(value);
   const handleFilterChange = (value: string) => setSelectedCategory(value);
 
+  function formatDate(isoDateString: string): string {
+    const date = new Date(isoDateString);
+    const day = date.getDate().toString().padStart(2, "0"); // Get day and pad with leading zero if necessary
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get month (note: months are zero-indexed) and pad with leading zero if necessary
+    const year = date.getFullYear(); // Get full year
+    return `${day}-${month}-${year}`;
+  }
+
   return (
     <div className="mx-2">
       <div className="text-center text-3xl font-bold md:text-5xl">
@@ -201,7 +187,7 @@ export default function List() {
           ) : data.application && data.application.length > 0 ? (
             <div>
               <div className="grid grid-cols-1 gap-3 gap-y-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-x-4">
-                {data.application.map((app: Post) => (
+                {data.application.map((app: ApplicationListType) => (
                   <div
                     key={app.id}
                     className="flex w-full flex-col justify-between rounded-lg border p-4"

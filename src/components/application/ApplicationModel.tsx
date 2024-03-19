@@ -9,16 +9,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FetchApplicationData } from "../fetch/get/application/FetchApplicationData";
 
-interface Post {
-  id: string;
-  firstName: string;
-  lastName: string;
-  duration: string;
-  image: string;
-  course: string;
-  status: string;
-  createdAt: string;
-}
 
 function formatDate(isoDateString: string): string {
   const options: Intl.DateTimeFormatOptions = {

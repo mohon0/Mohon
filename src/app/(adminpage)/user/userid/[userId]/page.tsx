@@ -7,27 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-interface UserData {
-  id: string;
-  name: string;
-  image: string;
-  email: string;
-  phoneNumber: string;
-  applications: [
-    {
-      id: string;
-    },
-  ];
-  comments: Array<{
-    id: string;
-    content: string;
-  }>;
-}
-
-interface ErrorResponse {
-  message: string;
-}
-
 export default function UserData() {
   const params = useParams();
   const userId = params.userId as string;

@@ -5,48 +5,11 @@ import Image from "next/image";
 import { useRef } from "react";
 import { IoMdPrint } from "react-icons/io";
 import { useReactToPrint } from "react-to-print";
+import { SingleApplicationUserType } from "../type/ApplicationType";
 import { Button } from "../ui/button";
 import Model from "./Model";
-interface SingleApplicationProps {
-  application: {
-    firstName: string;
-    lastName: string;
-    fatherName: string;
-    motherName: string;
-    birthDay: string;
-    bloodGroup: string;
-    mobileNumber: string;
-    guardianNumber: string;
-    gender: string;
-    gpa: string;
-    nationality: string;
-    nid: string;
-    passingYear: string;
-    regNumber: string;
-    religion: string;
-    rollNumber: string;
-    image: string;
-    fullAddress: string;
-    district: string;
-    courseName: string;
-    duration: string;
-    education: string;
-    board: string;
-    course: string;
-    pc: string;
-    email: string;
-    transactionId: string;
-    fatherOccupation: string;
-    maritalStatus: string;
-    roll: number;
-    user: {
-      phoneNumber: string;
-      email: string;
-    };
-  };
-}
 
-export default function Print({ application }: SingleApplicationProps) {
+export default function Print({ application }: SingleApplicationUserType) {
   const duration =
     application && application.duration === "free"
       ? "Free (conditions applied)"

@@ -1,25 +1,13 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
 import { FetchHomePageRecentProject } from "@/components/fetch/get/blog/FetchHomepageRecentProject";
+import { BlogPostType } from "@/components/type/BlogPostType";
 import Image from "next/image";
 import Link from "next/link";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, FreeMode, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-interface Post {
-  id: number;
-  coverImage: string;
-  title: string;
-  content: string;
-  author: {
-    name: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-  category: string;
-}
 
 export default function ProjectSlider() {
   const { isLoading, isError, data } = FetchHomePageRecentProject();
@@ -76,7 +64,7 @@ export default function ProjectSlider() {
                 dynamicBullets: true,
               }}
             >
-              {data.posts.map((post: Post) => {
+              {data.posts.map((post: BlogPostType) => {
                 const encodedTitle = post.title ? encodeForUrl(post.title) : "";
 
                 return (
