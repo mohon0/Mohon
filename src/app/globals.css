@@ -36,24 +36,6 @@
   }
 }
 
-@media print {
-  .page-break {
-    page-break-before: always;
-  }
-
-  .print-content {
-    max-width: 100%;
-  }
-  .footer {
-    @apply fixed bottom-0 w-full bg-cyan-600 p-2 text-center text-white;
-  }
-  .border-for-print {
-    box-shadow:
-      0 0 0 1px black,
-      0 0 0 2px black;
-  }
-}
-
 .scroller[data-animated="true"] .scroller__inner {
   width: max-content;
 }

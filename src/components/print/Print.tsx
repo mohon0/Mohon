@@ -199,7 +199,7 @@ export default function Print({ application }: SingleApplicationUserType) {
             </div>
           </div>
         </div>
-        <div className="footer hidden print:block">
+        <div className="fixed bottom-0 hidden w-full bg-cyan-600 p-2 text-center text-white print:block">
           <p>www.freelancermohon.online</p>
         </div>
 
