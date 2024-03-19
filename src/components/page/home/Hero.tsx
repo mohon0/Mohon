@@ -8,7 +8,6 @@ import { SiFreelancer, SiUpwork } from "react-icons/si";
 import { TbBrandFiverr, TbBrandTwitter } from "react-icons/tb";
 import TypeEffect from "../../common/animation/TypeEffect";
 import HeroImage from "./HeroImage";
-import Intro from "./Intro";
 
 export default function Hero() {
   return (
@@ -16,7 +15,15 @@ export default function Hero() {
       <div className="flex flex-col-reverse justify-center gap-8 md:flex-row md:justify-between md:gap-0 ">
         <div className="flex flex-col justify-center gap-6 md:w-1/2">
           <p>Hello its me</p>
-          <Intro />
+          <h1
+            className="hero flex bg-gradient-to-r from-primary via-sky-600 to-primary bg-clip-text text-5xl font-extrabold text-background md:text-5xl lg:text-7xl"
+            style={{
+              WebkitTextStrokeColor: "transparent",
+              WebkitTextStrokeWidth: "calc(1em/16)",
+            }}
+          >
+            MD. MOHON
+          </h1>
           <TypeEffect />
           <p className="text-muted-foreground">
             I&#39;m a certified graphic designer, working with multiple

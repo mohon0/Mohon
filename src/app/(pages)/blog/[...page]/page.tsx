@@ -100,7 +100,7 @@ export default function Blog() {
             <div>
               {/* Render first part */}
               {data && data !== "No posts found." && data.posts.length > 0 ? (
-                <div className="gallery gap-5">
+                <div className=" columns-1 gap-5 sm:columns-2 md:columns-3 lg:columns-4">
                   {data.posts.map((post: BlogPostType) => (
                     <div key={post.id}>
                       <PostModel
