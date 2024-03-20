@@ -104,6 +104,7 @@ model Application {
   id                     String   @id @default(auto()) @map("_id") @db.ObjectId
   firstName              String
   lastName               String
+  session                String?
   fatherName             String
   motherName             String
   birthDay               String

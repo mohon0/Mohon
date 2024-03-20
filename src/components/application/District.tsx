@@ -95,7 +95,7 @@ export function District() {
         <SelectTrigger className="w-60">
           <SelectValue placeholder="Select Your District" />
         </SelectTrigger>
-        <SelectContent className="bg-gray-900 text-slate-200">
+        <SelectContent>
           <SelectGroup>
             <SelectLabel>District</SelectLabel>
 

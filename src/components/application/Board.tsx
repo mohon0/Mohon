@@ -11,17 +11,11 @@ import {
 
 import { useField } from "formik";
 
-// interface SelectDemoProps {
-//   onValueChange: (value: string) => void;
-//   selectedValue: string | undefined;
-// }
-
 export function Board() {
   const [field, meta, helpers] = useField("board");
 
   const handleSelectChange = (value: string) => {
     helpers.setValue(value);
-    // onValueChange(value);
   };
 
   const educationBoards = [
@@ -50,7 +44,7 @@ export function Board() {
         <SelectTrigger className="w-60">
           <SelectValue placeholder="Select Your Education Board" />
         </SelectTrigger>
-        <SelectContent className="bg-gray-900 text-slate-200">
+        <SelectContent>
           <SelectGroup>
             <SelectLabel>Education Board</SelectLabel>
 

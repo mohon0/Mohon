@@ -23,6 +23,7 @@ import MyTextInput from "./MyTextInput";
 import PayButton from "./PayButton";
 import { PcSelect } from "./PcSelect";
 import { Religion } from "./Religion";
+import SessionSelect from "./SessionSelect";
 
 const Application: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -51,6 +52,7 @@ const Application: React.FC = () => {
         initialValues={{
           firstName: "",
           lastName: "",
+          session: "",
           fatherName: "",
           motherName: "",
           birthDay: "",
@@ -70,7 +72,7 @@ const Application: React.FC = () => {
           passingYear: "",
           gpa: "",
           nid: "",
-          nationality: "",
+          nationality: "Bangladeshi",
           course: "",
           duration: "",
           transactionId: "",
@@ -81,9 +83,7 @@ const Application: React.FC = () => {
           firstName: Yup.string()
             .max(40, "Must be 40 characters or less")
             .required("Required"),
-          lastName: Yup.string()
-            .max(40, "Must be 40 characters or less")
-            .required("Required"),
+          session: Yup.string().required(),
           fatherName: Yup.string()
             .max(50, "Must be 50 characters or less")
             .required("Required"),
@@ -207,18 +207,15 @@ const Application: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
-              label="Student First Name"
+              label="Student full Name"
               name="firstName"
               type="text"
               placeholder="Md"
             />
-
-            <MyTextInput
-              label="Student Last Name"
-              name="lastName"
-              type="text"
-              placeholder="Mohon"
-            />
+            <div>
+              <div>Session</div>
+              <Field as={SessionSelect} name="session" />
+            </div>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput

@@ -33,7 +33,7 @@ export function DurationSelect() {
             <SelectTrigger className="w-60">
               <SelectValue placeholder="Course Duration" />
             </SelectTrigger>
-            <SelectContent className="bg-gray-900 text-slate-200">
+            <SelectContent>
               <SelectGroup>
                 <SelectLabel>Course Duration</SelectLabel>
                 {data.button === "On" && (

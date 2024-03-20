@@ -29,7 +29,7 @@ export function EducationSelect() {
         <SelectTrigger className="w-60">
           <SelectValue placeholder="Select Your Education" />
         </SelectTrigger>
-        <SelectContent className="bg-gray-900 text-slate-200">
+        <SelectContent>
           <SelectGroup>
             <SelectLabel>Education</SelectLabel>
             <SelectItem value="jsc" onSelect={() => handleSelectChange("jsc")}>

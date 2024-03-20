@@ -29,7 +29,7 @@ export function Religion() {
         <SelectTrigger className="w-60">
           <SelectValue placeholder="Select Your Religion" />
         </SelectTrigger>
-        <SelectContent className="bg-gray-900 text-slate-200">
+        <SelectContent>
           <SelectGroup>
             <SelectLabel>Religion</SelectLabel>
 

@@ -41,6 +41,7 @@ export interface SingleApplicationType {
   transactionId: string;
   fatherOccupation: string;
   maritalStatus: string;
+  session: string;
 }
 
 export interface SingleApplicationUserType {
@@ -79,5 +80,6 @@ export interface SingleApplicationUserType {
       phoneNumber: string;
       email: string;
     };
+    session: string;
   };
 }

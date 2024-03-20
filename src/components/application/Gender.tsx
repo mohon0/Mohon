@@ -24,7 +24,7 @@ export function Gender() {
         <SelectTrigger className="w-60">
           <SelectValue placeholder="Select your gender" />
         </SelectTrigger>
-        <SelectContent className="bg-gray-900 text-slate-200">
+        <SelectContent>
           <SelectGroup>
             <SelectLabel>Gender</SelectLabel>
             <SelectItem value="male">Male</SelectItem>

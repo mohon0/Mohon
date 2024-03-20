@@ -29,7 +29,7 @@ export function CourseSelect() {
         <SelectTrigger className="w-60">
           <SelectValue placeholder="Select Your Course" />
         </SelectTrigger>
-        <SelectContent className="bg-gray-900 text-slate-200">
+        <SelectContent>
           <SelectGroup>
             <SelectLabel>Course</SelectLabel>
             <SelectItem

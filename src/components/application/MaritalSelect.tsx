@@ -24,7 +24,7 @@ export function MaritelSelect() {
         <SelectTrigger className="w-60">
           <SelectValue placeholder="Select" />
         </SelectTrigger>
-        <SelectContent className="bg-gray-900 text-slate-200">
+        <SelectContent>
           <SelectGroup>
             <SelectLabel>Marital Status</SelectLabel>
 

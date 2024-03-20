@@ -90,13 +90,13 @@ export default function Print({ application }: SingleApplicationUserType) {
         </div>
 
         <div className="flex flex-col print:mx-10 print:text-black ">
-          <div className=" flex w-full items-center gap-3 border-x border-t px-2 py-1">
-            <div className="font-bold">Student Full Name:</div>
-            <div className=" uppercase">
-              {application.firstName} {application.lastName}
-            </div>
-          </div>
           <table className=" w-full">
+            <Model
+              item1="Student Full Name"
+              item2="Session"
+              value1={application.fatherName + application.lastName}
+              value2={application.session}
+            />
             <Model
               item1="Father Name"
               item2="Mother Name"

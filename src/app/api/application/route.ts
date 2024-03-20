@@ -91,6 +91,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const course = getStringValue(formData, "course");
     const duration = getStringValue(formData, "duration");
     const pc = getStringValue(formData, "pc");
+    const session = getStringValue(formData, "session");
     const transactionId = getStringValue(formData, "transactionId");
     const fatherOccupation = getStringValue(formData, "fatherOccupation");
     const maritalStatus = getStringValue(formData, "maritalStatus");
@@ -154,6 +155,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
           transactionId,
           fatherOccupation,
           maritalStatus,
+          session,
           image: downloadURL,
           status: "Pending",
         },

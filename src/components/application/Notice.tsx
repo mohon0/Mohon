@@ -14,7 +14,7 @@ const Notice: React.FC = () => {
         scroller.setAttribute("data-animated", "true");
 
         const scrollerInner = scroller.querySelector(
-          ".scroller__inner"
+          ".scroller__inner",
         ) as HTMLElement;
         const scrollerContent = Array.from(scrollerInner.children);
 
@@ -28,14 +28,14 @@ const Notice: React.FC = () => {
   }, []);
 
   return (
-    <div className="mt-20 mx-2 md:mx-10 lg:mx-20 border py-2 border-primary">
+    <div className="mx-2 mt-20 border border-primary py-2 md:mx-10 lg:mx-20">
       <div className="scroller overflow-hidden">
-        <div className="scroller__inner flex animate-scroll gap-4 text-accent-forground">
+        <div className="scroller__inner text-accent-forground flex animate-scroll gap-4">
           <p>সবাইকে দক্ষ করে গড়ে তোলায় আমাদের একমাত্র লক্ষ্য।</p>
           <p>ঝিনাইদহ শহরে একমাত্র আমরাই আপনাদের সার্বক্ষণিক পাশে আছি।</p>
           <p>আপনাদের যে কোন সমস্যা জানাতে সরাসরি চলে আসুন আমাদের অফিসে।</p>
           <p>ঠিকানাঃ রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা)</p>
-          <p>অথবা কল করুনঃ 01989-491248।, </p>
+          <p>অথবা কল করুনঃ 01989-491248, </p>
           <p>Gmail: bestcomputer.jhenaidah@gmail.com</p>
         </div>
       </div>

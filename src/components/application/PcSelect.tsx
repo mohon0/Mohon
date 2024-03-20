@@ -24,7 +24,7 @@ export function PcSelect() {
         <SelectTrigger className="w-60">
           <SelectValue placeholder="Select" />
         </SelectTrigger>
-        <SelectContent className="bg-gray-900 text-slate-200">
+        <SelectContent>
           <SelectGroup>
             <SelectLabel>Select</SelectLabel>
             <SelectItem
