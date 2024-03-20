@@ -21,6 +21,14 @@ export default function Print({ application }: SingleApplicationUserType) {
     content: () => componentRef.current,
   });
 
+  const capitalizeFirstLetter = (str: string) => {
+    return str ? str.charAt(0).toUpperCase() + str.slice(1) : "";
+  };
+
+  const fullName =
+    capitalizeFirstLetter(application.firstName) +
+    capitalizeFirstLetter(application.lastName);
+
   return (
     <div>
       <div ref={componentRef} className="">
@@ -90,101 +98,103 @@ export default function Print({ application }: SingleApplicationUserType) {
         </div>
 
         <div className="flex flex-col print:mx-10 print:text-black ">
-          <table className=" w-full">
-            <Model
-              item1="Student Full Name"
-              item2="Session"
-              value1={application.fatherName + application.lastName}
-              value2={application.session}
-            />
-            <Model
-              item1="Father Name"
-              item2="Mother Name"
-              value1={application.fatherName}
-              value2={application.motherName}
-            />
-            <Model
-              item1="Father's Occupation"
-              item2="Marital Status"
-              value1={application.fatherOccupation}
-              value2={application.maritalStatus}
-            />
-            <Model
-              item1="Date Of Birth"
-              item2="Blood Group"
-              value1={application.birthDay}
-              value2={application.bloodGroup}
-            />
-            <Model
-              item1="Mobile Number"
-              item2="Guardian Number"
-              value1={application.mobileNumber}
-              value2={application.guardianNumber}
-            />
-            <Model
-              item1="Gender"
-              item2="Religion"
-              value1={application.gender}
-              value2={application.religion}
-            />
-            <Model
-              item1="Full Address"
-              item2="District"
-              value1={application.fullAddress}
-              value2={application.district}
-            />
-            <tr className="flex flex-col print:flex-row md:flex-row">
-              <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
-                <span className="font-bold">Email Address: </span>
-                <span className="pl-3">{application.email}</span>
-              </td>
-              <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
-                <span className="font-bold">Computer: </span>
-                <span className="pl-3">{application.pc}</span>
-              </td>
-            </tr>
-            <Model
-              item1="Education"
-              item2="Board"
-              value1={application.education}
-              value2={application.board}
-            />
-            <Model
-              item1="Roll Number"
-              item2="Reg Number"
-              value1={application.rollNumber}
-              value2={application.regNumber}
-            />
-            <Model
-              item1="Passing Year"
-              item2="GPA/CGPA"
-              value1={application.passingYear}
-              value2={application.gpa}
-            />
-            <Model
-              item1="Birth Reg/NID"
-              item2="Nationality"
-              value1={application.nid}
-              value2={application.nationality}
-            />
-            <tr className="flex flex-col print:flex-row md:flex-row">
-              <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
-                <span className="font-bold">Course Name: </span>
-                <span className="pl-3 uppercase">{application.course}</span>
-              </td>
-              <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
-                <span className="font-bold">Duration: </span>
-                <span className="pl-3">{duration}</span>
-              </td>
-            </tr>
-            <tr className="flex flex-col print:flex-row md:flex-row">
-              <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
-                <span className="font-bold">Transaction ID: </span>
-                <span className="pl-3 uppercase">
-                  {application.transactionId}
-                </span>
-              </td>
-            </tr>
+          <table className="w-full">
+            <tbody>
+              <Model
+                item1="Student Full Name"
+                item2="Session"
+                value1={fullName}
+                value2={application.session}
+              />
+              <Model
+                item1="Father Name"
+                item2="Mother Name"
+                value1={application.fatherName}
+                value2={application.motherName}
+              />
+              <Model
+                item1="Father's Occupation"
+                item2="Marital Status"
+                value1={application.fatherOccupation}
+                value2={application.maritalStatus}
+              />
+              <Model
+                item1="Date Of Birth"
+                item2="Blood Group"
+                value1={application.birthDay}
+                value2={application.bloodGroup}
+              />
+              <Model
+                item1="Mobile Number"
+                item2="Guardian Number"
+                value1={application.mobileNumber}
+                value2={application.guardianNumber}
+              />
+              <Model
+                item1="Gender"
+                item2="Religion"
+                value1={application.gender}
+                value2={application.religion}
+              />
+              <Model
+                item1="Full Address"
+                item2="District"
+                value1={application.fullAddress}
+                value2={application.district}
+              />
+              <tr className="flex flex-col print:flex-row md:flex-row">
+                <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
+                  <span className="font-bold">Email Address: </span>
+                  <span className="pl-3">{application.email}</span>
+                </td>
+                <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
+                  <span className="font-bold">Computer: </span>
+                  <span className="pl-3">{application.pc}</span>
+                </td>
+              </tr>
+              <Model
+                item1="Education"
+                item2="Board"
+                value1={application.education}
+                value2={application.board}
+              />
+              <Model
+                item1="Roll Number"
+                item2="Reg Number"
+                value1={application.rollNumber}
+                value2={application.regNumber}
+              />
+              <Model
+                item1="Passing Year"
+                item2="GPA/CGPA"
+                value1={application.passingYear}
+                value2={application.gpa}
+              />
+              <Model
+                item1="Birth Reg/NID"
+                item2="Nationality"
+                value1={application.nid}
+                value2={application.nationality}
+              />
+              <tr className="flex flex-col print:flex-row md:flex-row">
+                <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
+                  <span className="font-bold">Course Name: </span>
+                  <span className="pl-3 uppercase">{application.course}</span>
+                </td>
+                <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
+                  <span className="font-bold">Duration: </span>
+                  <span className="pl-3">{duration}</span>
+                </td>
+              </tr>
+              <tr className="flex flex-col print:flex-row md:flex-row">
+                <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
+                  <span className="font-bold">Transaction ID: </span>
+                  <span className="pl-3 uppercase">
+                    {application.transactionId}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
           </table>
           <div className="mt-24 hidden justify-between  font-bold print:mt-10 print:flex print:text-black md:mx-12 md:flex lg:mx-10">
             <div>

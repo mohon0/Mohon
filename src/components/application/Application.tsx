@@ -210,7 +210,7 @@ const Application: React.FC = () => {
               label="Student full Name"
               name="firstName"
               type="text"
-              placeholder="Md"
+              placeholder="Md Mohon"
             />
             <div>
               <div>Session</div>

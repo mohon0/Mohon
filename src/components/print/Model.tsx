@@ -12,12 +12,12 @@ export default function Model({ item1, value1, value2, item2 }: props) {
 
   return (
     <>
-      <tr className="flex flex-col md:flex-row print:flex-row">
-        <td className="border px-2 print:w-1/2 w-full md:w-1/2 p-1">
+      <tr className="flex flex-col print:flex-row md:flex-row">
+        <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
           <span className="font-bold">{item1}: </span>
           <span className="pl-3">{capitalizeFirstLetter(value1)}</span>
         </td>
-        <td className="border px-2 print:w-1/2 w-full md:w-1/2 p-1">
+        <td className="w-full border p-1 px-2 print:w-1/2 md:w-1/2">
           <span className="font-bold">{item2}: </span>
           <span className="pl-3">{capitalizeFirstLetter(value2)}</span>
         </td>

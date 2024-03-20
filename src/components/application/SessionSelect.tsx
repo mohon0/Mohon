@@ -21,10 +21,9 @@ export default function SessionSelect() {
     const currentYear = new Date().getFullYear();
     const options = [];
 
-    for (let year = 1998; year <= currentYear; year++) {
-      options.push(`${year} Jan-June`, `${year} July-Dec`);
+    for (let year = currentYear; year >= 1998; year--) {
+      options.push(`${year} July-Dec`, `${year} Jan-June`);
     }
-
     return options;
   };
 
