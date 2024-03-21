@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -45,12 +46,7 @@ export default function CommentsList({
   const handleDelete = async (commentId: string) => {
     try {
       toast.loading("Please wait while...");
-      const response = await fetch(`/api/comment?id=${commentId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.delete(`/api/comment?id=${commentId}`);
 
       if (response.status === 204) {
         refetch();
@@ -64,6 +60,7 @@ export default function CommentsList({
       toast.error("There was an error.");
     }
   };
+
   return (
     <div className="flex w-full flex-col gap-4">
       {isLoading ? (

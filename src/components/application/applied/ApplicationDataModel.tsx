@@ -1,6 +1,7 @@
 "use client";
 import useFormattedDate from "@/components/helper/hooks/useFormatedDate";
 import { ApplicationType } from "@/components/type/ApplicationType";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link"; // Assuming you're using Link from next.js
 import { useRouter } from "next/navigation";
@@ -20,21 +21,17 @@ const ApplicationDataModel: React.FC<ApplicationType> = ({ application }) => {
       console.error("Application is null. Cannot delete.");
     }
   };
-
   const confirmDelete = async () => {
     if (application) {
       // Perform the delete operation
       toast.loading("Please wait while deleting this application");
 
       try {
-        const response = await fetch(`/api/application?id=${application.id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.delete(
+          `/api/application?id=${application.id}`,
+        );
 
-        if (response.ok) {
+        if (response.status === 200) {
           toast.dismiss();
           toast.success("Application deleted successfully");
           setTimeout(() => {

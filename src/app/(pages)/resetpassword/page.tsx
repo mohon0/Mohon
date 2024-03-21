@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
@@ -28,7 +29,7 @@ export default function PasswordResetPage(props: PasswordResetProps) {
   }, [session, router]);
 
   if (session) {
-    return null; // Return null to avoid rendering the rest of the component
+    return null;
   }
 
   const handleEmailSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -36,18 +37,13 @@ export default function PasswordResetPage(props: PasswordResetProps) {
 
     try {
       toast.loading("Please wait...");
-      const response = await fetch("/api/reset/email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: userEmail }),
+      const response = await axios.post("/api/reset/email", {
+        email: userEmail,
       });
       toast.dismiss();
 
-      if (response.ok) {
+      if (response.status === 200) {
         toast.success("Email sent successfully");
-
         setShowVerification(true);
       } else {
         toast.error("Email sent failed");
@@ -62,18 +58,12 @@ export default function PasswordResetPage(props: PasswordResetProps) {
     e.preventDefault();
     try {
       toast.loading("Please wait...");
-      const response = await fetch(
+      const response = await axios.get(
         `/api/reset/code?code=${code}&email=${userEmail}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
       );
       toast.dismiss();
 
-      if (response.ok) {
+      if (response.status === 200) {
         toast.success("Verification successful");
         setShowPasswordReset(true);
       } else {
@@ -95,21 +85,15 @@ export default function PasswordResetPage(props: PasswordResetProps) {
     try {
       toast.loading("Please wait...");
 
-      const response = await fetch("/api/reset/password", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: userEmail,
-          password: newPassword,
-          code: code,
-        }),
+      const response = await axios.put("/api/reset/password", {
+        email: userEmail,
+        password: newPassword,
+        code: code,
       });
 
       toast.dismiss();
 
-      if (response.ok) {
+      if (response.status === 200) {
         toast.success("Password reset successful!");
         router.push("/signin");
       } else {
@@ -127,13 +111,13 @@ export default function PasswordResetPage(props: PasswordResetProps) {
   };
 
   return (
-    <div className=" mt-32 flex items-center justify-center mx-2">
-      <div className="p-8 shadow-md rounded-md w-96 border">
-        <h2 className="text-2xl font-bold mb-6 ">Password Reset</h2>
+    <div className=" mx-2 mt-32 flex items-center justify-center">
+      <div className="w-96 rounded-md border p-8 shadow-md">
+        <h2 className="mb-6 text-2xl font-bold ">Password Reset</h2>
 
         {showPasswordReset ? (
           <>
-            <p className="text-sm mb-4">Enter your new password.</p>
+            <p className="mb-4 text-sm">Enter your new password.</p>
             <form
               className="flex flex-col gap-4"
               onSubmit={handlePasswordResetSubmit}
@@ -149,11 +133,10 @@ export default function PasswordResetPage(props: PasswordResetProps) {
                   placeholder="Enter new password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 />
                 <button
                   type="button"
-                  className="absolute top-1/2 right-3 transform -translate-y-1/2"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 transform"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -174,21 +157,15 @@ export default function PasswordResetPage(props: PasswordResetProps) {
                   placeholder="Confirm new password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 />
               </div>
 
-              <Button
-                type="submit"
-                className="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
-              >
-                Reset Password
-              </Button>
+              <Button type="submit">Reset Password</Button>
             </form>
           </>
         ) : showVerification ? (
           <>
-            <p className="text-sm mb-4">
+            <p className="mb-4 text-sm">
               Enter the verification code sent to your email.
             </p>
             <form
@@ -208,20 +185,14 @@ export default function PasswordResetPage(props: PasswordResetProps) {
                 name="verificationCode"
                 onChange={(e) => setCode(e.target.value)}
                 placeholder="Enter verification code"
-                className="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
               />
 
-              <Button
-                type="submit"
-                className="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
-              >
-                Verify Code
-              </Button>
+              <Button type="submit">Verify Code</Button>
             </form>
           </>
         ) : (
           <>
-            <p className="text-sm mb-4">
+            <p className="mb-4 text-sm">
               Please enter the email associated with your account. We will send
               you a verification code to reset your password.
             </p>
@@ -236,20 +207,14 @@ export default function PasswordResetPage(props: PasswordResetProps) {
                 value={userEmail}
                 onChange={(e) => setUserEmail(e.target.value)}
                 placeholder="Your email address"
-                className="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
               />
 
-              <Button
-                type="submit"
-                className="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
-              >
-                Send Verification Code
-              </Button>
+              <Button type="submit">Send Verification Code</Button>
             </form>
           </>
         )}
       </div>
-      <ToastContainer position="top-center" autoClose={3000} />
+      <ToastContainer position="top-center" theme="dark" autoClose={3000} />
     </div>
   );
 }

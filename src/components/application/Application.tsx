@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -181,22 +182,25 @@ const Application: React.FC = () => {
 
           toast.loading("Please wait...");
 
-          const response = await fetch("/api/application", {
-            method: "POST",
-            body: formData,
-            credentials: "include",
-          });
+          try {
+            const response = await axios.post("/api/application", formData, {
+              withCredentials: true,
+            });
 
-          toast.dismiss();
-          if (response.ok) {
-            toast.success("Your application was successfully submitted");
-            const responseData = await response.json();
+            toast.dismiss();
+            if (response.status === 200) {
+              toast.success("Your application was successfully submitted");
+              const responseData = response.data;
 
-            router.push(
-              `/application-list/singleapplication/${responseData.id}`,
-            );
-          } else {
+              router.push(
+                `/application-list/singleapplication/${responseData.id}`,
+              );
+            } else {
+              toast.error("Couldn't save your post. Please try again later");
+            }
+          } catch (error) {
             toast.error("Couldn't save your post. Please try again later");
+            console.error("Error submitting application:", error);
           }
         }}
       >

@@ -1,6 +1,4 @@
-"use client";
 import Time from "@/components/page/home/Time";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { AiFillFacebook } from "react-icons/ai";
 import { FaLinkedin } from "react-icons/fa";
@@ -34,11 +32,7 @@ export default function Hero() {
             discuss your needs.
           </p>
 
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="my-4 flex flex-wrap gap-10 text-xl text-slate-300 md:text-4xl"
-          >
+          <div className="my-4 flex flex-wrap gap-10 text-xl text-slate-300 md:text-4xl">
             <Link
               href="https://facebook.com/md.freelancermohon"
               target="_blank"
@@ -87,7 +81,7 @@ export default function Hero() {
               <span className="sr-only">Fiverr</span>
               <TbBrandFiverr />
             </Link>
-          </motion.div>
+          </div>
           <Time />
         </div>
         <div className="flex scale-90 items-center justify-center md:w-1/2 md:scale-100 md:justify-end">

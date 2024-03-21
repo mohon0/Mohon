@@ -16,7 +16,6 @@ export default function SessionSelect() {
     helpers.setValue(value);
   };
 
-  // Function to generate an array of session options from 1998 to the current year
   const generateSessionOptions = () => {
     const currentYear = new Date().getFullYear();
     const options = [];

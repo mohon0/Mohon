@@ -1,14 +1,13 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FetchApplicationData } from "../fetch/get/application/FetchApplicationData";
-
 
 function formatDate(isoDateString: string): string {
   const options: Intl.DateTimeFormatOptions = {
@@ -23,7 +22,6 @@ function formatDate(isoDateString: string): string {
 export default function ApplicationModel() {
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const router = useRouter();
   const { status } = useSession();
 
   const { isLoading, data, isError, refetch } = FetchApplicationData();
@@ -37,7 +35,6 @@ export default function ApplicationModel() {
 
   const handleDelete = async () => {
     if (data.id) {
-      // Open the confirmation modal
       setShowConfirmation(true);
     } else {
       console.error("Application is null. Cannot delete.");
@@ -46,18 +43,12 @@ export default function ApplicationModel() {
 
   const confirmDelete = async () => {
     if (data.id) {
-      // Perform the delete operation
       toast.loading("Please wait while deleting this application");
 
       try {
-        const response = await fetch(`/api/application?id=${data.id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.delete(`/api/application?id=${data.id}`);
 
-        if (response.ok) {
+        if (response.status === 200) {
           toast.dismiss();
           toast.success("Application deleted successfully");
           refetch();
@@ -69,7 +60,6 @@ export default function ApplicationModel() {
         toast.error("Error deleting application");
         console.error("Error deleting the application", error);
       }
-      // Close the confirmation modal
       setShowConfirmation(false);
     } else {
       console.error("Application is null. Cannot confirm delete.");
