@@ -4,11 +4,20 @@ import Loading from "@/components/common/loading/Loading";
 import CommentForm from "@/components/core/Comment";
 import SocialShare from "@/components/core/SocialShare";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FetchSinglePost } from "../../fetch/get/blog/FetchSinglePost";
@@ -20,9 +29,6 @@ interface PageProps {
 
 export default function Blog({ params }: PageProps) {
   const router = useRouter();
-
-  const [showConfirmation, setShowConfirmation] = useState(false);
-
   const { data: session } = useSession();
 
   const { isLoading, data, isError } = FetchSinglePost({
@@ -76,14 +82,8 @@ export default function Blog({ params }: PageProps) {
     }
   };
 
-  const handleDelete = async () => {
-    // Open the confirmation modal
-    setShowConfirmation(true);
-  };
-
   const confirmDelete = async () => {
-    // Perform the delete operation
-    toast.loading("Please wait while deleting this post");
+    toast.loading("Please wait...");
     try {
       const response = await fetch(`/api/post?postId=${data.id}`, {
         method: "DELETE",
@@ -95,19 +95,13 @@ export default function Blog({ params }: PageProps) {
       if (response.ok) {
         toast.dismiss();
         toast.success("Post deleted successfully");
-        // Handle successful deletion, e.g., redirect to another page
-        router.push("/blog"); // Redirect to the home page or another suitable page
+        router.push("/blog/page/1");
       } else {
         toast.error("Error deleting post");
-        // Handle errors, e.g., show an error message
-        console.error("Error deleting the post");
       }
     } catch (error) {
       toast.error("Error deleting post");
-      console.error("Error deleting the post:", error);
     }
-    // Close the confirmation modal
-    setShowConfirmation(false);
   };
 
   function formatString(inputString: string) {
@@ -175,34 +169,36 @@ export default function Blog({ params }: PageProps) {
                       >
                         <Button>Edit Post</Button>
                       </Link>
-                      <Button onClick={handleDelete} variant="destructive">
-                        Delete Post
-                      </Button>
-                    </div>
-                  )}
-
-                  {showConfirmation && (
-                    <div className="fixed inset-0 z-50  flex h-screen w-screen items-center justify-center bg-black bg-opacity-50  backdrop-blur-sm">
-                      <div className="w-11/12 rounded-lg bg-blue-950 p-6 shadow-md md:w-3/4 lg:w-2/6">
-                        <p className="text-xl">
-                          Are you sure you want to delete this post? This Action
-                          can not be undone.
-                        </p>
-                        <div className="mt-8 flex justify-end">
-                          <button
-                            onClick={() => setShowConfirmation(false)}
-                            className="mr-4 rounded bg-gray-600 px-4 py-2 hover:bg-gray-700"
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            onClick={confirmDelete}
-                            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-                          >
-                            Confirm Delete
-                          </button>
-                        </div>
-                      </div>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button variant="destructive">Delete Post</Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                          <DialogHeader>
+                            <DialogTitle>Delete Post</DialogTitle>
+                            <DialogDescription>
+                              Are you sure you want to delete this post? This
+                              Action can not be undone.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <DialogFooter className="sm:justify-start">
+                            <DialogClose asChild>
+                              <Button type="button" variant="secondary">
+                                Cancel
+                              </Button>
+                            </DialogClose>
+                            <DialogClose asChild>
+                              <Button
+                                type="button"
+                                variant="destructive"
+                                onClick={confirmDelete}
+                              >
+                                Delete
+                              </Button>
+                            </DialogClose>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   )}
                 </div>
