@@ -227,7 +227,7 @@ export default function Blog({ params }: PageProps) {
                 Download Image
               </Button>
               <div
-                className={`mb-12 mt-10 rounded-lg md:mx-0 md:mt-16 md:text-lg ${styles["post-content"]}`}
+                className={`mb-12 mt-10 list-decimal rounded-lg md:mx-0 md:mt-16 md:text-lg ${styles["post-content"]}`}
                 dangerouslySetInnerHTML={{ __html: data.content }}
               />
               <div className="my-8">

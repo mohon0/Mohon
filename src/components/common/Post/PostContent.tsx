@@ -14,7 +14,7 @@ export default function PostContent() {
           {({ field, meta }: FieldProps) => (
             <div>
               <ReactQuill
-                className="h-56 w-full md:h-80 lg:min-h-96"
+                className="lg:min-h-96 h-56 w-full md:h-80"
                 value={field.value}
                 onChange={field.onChange(field.name)}
                 modules={Toolbar()}

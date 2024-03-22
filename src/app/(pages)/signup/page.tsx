@@ -1,11 +1,11 @@
 "use client";
-import { useRouter } from "next/navigation";
 import Loading from "@/components/common/loading/Loading";
 import Registration from "@/components/page/auth/Registration";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -18,11 +18,10 @@ export default function RegistrationPage() {
   }
 
   if (status === "authenticated") {
-    // Redirect authenticated users to the dashboard page
     router.push("/dashboard");
     return (
       <p>Your are already loged in. please wait while we redirect you..</p>
-    ); // Optionally, return a loading indicator while redirecting
+    );
   }
 
   return (
@@ -43,7 +42,7 @@ export default function RegistrationPage() {
             </Link>
           </div>
         </Card>
-        <ToastContainer position="top-center" autoClose={3000} />
+        <ToastContainer position="top-center" theme="dark" autoClose={3000} />
       </div>
     </>
   );

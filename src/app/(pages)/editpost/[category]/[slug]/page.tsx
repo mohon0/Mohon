@@ -91,11 +91,8 @@ function EditPost({ params }: PageProps) {
           if (image) {
             formData.append("image", image as Blob);
           }
-
           toast.loading("Please wait...");
-
           const response = await axios.put("/api/post", formData);
-
           console.log(response);
           if (response.status === 200) {
             toast.dismiss();
@@ -135,7 +132,6 @@ function EditPost({ params }: PageProps) {
               <Label>Post Content:</Label>
               <PostContent />
             </div>
-            -
             <Button type="submit" className="mt-10">
               Update Post
             </Button>
