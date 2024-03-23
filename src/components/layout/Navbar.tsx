@@ -1,14 +1,17 @@
 "use client";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 import ActionButton from "./ActionButton";
-
 import Menu from "./Menu";
 import { NavigationMenuDemo } from "./NavigationMenu";
 
 export default function Navbar() {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const { data: session } = useSession();
+  const admin = process.env.NEXT_PUBLIC_ADMIN;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,6 +46,23 @@ export default function Navbar() {
           <div className="hidden md:block">
             <ActionButton />
           </div>
+
+          {session?.user ? (
+            <Link
+              href={
+                session.user.email === admin ? "/admin-dashboard" : "/dashboard"
+              }
+              legacyBehavior
+              passHref
+            >
+              <Button variant="ghost">Dashboard</Button>
+            </Link>
+          ) : (
+            <Link href="/signin" legacyBehavior passHref>
+              <Button variant="ghost">LogIn</Button>
+            </Link>
+          )}
+
           <div>
             <Menu />
           </div>

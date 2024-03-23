@@ -39,3 +39,7 @@
 .scroller[data-animated="true"] .scroller__inner {
   width: max-content;
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+}

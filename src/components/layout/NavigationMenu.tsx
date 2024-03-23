@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import * as React from "react";
 
@@ -17,9 +16,6 @@ import { cn } from "@/lib/utils";
 import { BestComputer } from "./BestComputer";
 
 export function NavigationMenuDemo() {
-  const { data: session } = useSession();
-  const admin = process.env.NEXT_PUBLIC_ADMIN;
-
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -61,30 +57,6 @@ export function NavigationMenuDemo() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
-
-        {session?.user ? (
-          <NavigationMenuItem>
-            <Link
-              href={
-                session.user.email === admin ? "/admin-dashboard" : "/dashboard"
-              }
-              legacyBehavior
-              passHref
-            >
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Dashboard
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-        ) : (
-          <NavigationMenuItem>
-            <Link href="/signin" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                LogIn
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-        )}
         <BestComputer />
       </NavigationMenuList>
     </NavigationMenu>

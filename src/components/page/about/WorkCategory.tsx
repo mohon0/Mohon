@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { v4 as uuidv4 } from "uuid";
 import { WorkData } from "./WorkData";
 
 export default function WorkCategory() {
@@ -46,9 +47,9 @@ export default function WorkCategory() {
         </Card>
         <Card className="p-5">
           <div className="grid grid-cols-2 gap-x-4 gap-y-1 md:grid-cols-3 lg:gap-x-10">
-            {WorkData.map((data, index) => (
+            {WorkData.map((data) => (
               <>
-                <div key={index}>{data}</div>
+                <div key={uuidv4()}>{data}</div>
               </>
             ))}
           </div>

@@ -30,27 +30,27 @@ export function BestComputer() {
         <DropdownMenuLabel>Main Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Link href="/blog/category/notice">Notice</Link>
-            <DropdownMenuShortcut>
+          <Link href="/blog/category/notice">
+            <DropdownMenuItem className="flex justify-between">
+              Notice
               <TfiAnnouncement />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem>
             <span>Result</span>
             <DropdownMenuShortcut>
               <GrDocumentPerformance />
             </DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href="/application" className="flex items-center gap-3">
-              <span>Apply Now</span>
-              <div className="h-2 w-2 animate-ping rounded-full bg-primary"></div>
-            </Link>
-            <DropdownMenuShortcut>
+          <Link href="/application">
+            <DropdownMenuItem className="flex justify-between">
+              <div className="flex items-center gap-3">
+                <span>Apply Now</span>
+                <div className="h-2 w-2 animate-ping rounded-full bg-primary"></div>
+              </div>
               <MdEditDocument />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

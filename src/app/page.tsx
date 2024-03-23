@@ -12,7 +12,7 @@ import Tools from "@/components/page/home/Tools";
 
 export default function Home() {
   return (
-    <main className=" overflow-x-hidden">
+    <main className="overflow-x-hidden">
       <Navbar />
       <div className="fixed left-0 top-0 -z-50 h-screen">
         <StarsCanvas />
