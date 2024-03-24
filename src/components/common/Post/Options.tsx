@@ -1,7 +1,6 @@
 export const Options = [
   "Technology News",
   "Programming",
-  "Web Development",
   "Internet of Things",
   "Tech Reviews",
   "Software Development",
@@ -32,7 +31,7 @@ export const Options = [
   "Video Editing",
   "Ethical Hacking",
   "Photos",
-  "Web Design",
+  "Web Design and Development",
   "Digital Marketing",
   "Auto Cad",
   "Office Applications",
@@ -47,4 +46,7 @@ export const Options = [
   "My Data",
   "Our Course",
   "Notice",
+  "Graphics Design",
+  "Motions Graphics",
+  "Python Programming",
 ];

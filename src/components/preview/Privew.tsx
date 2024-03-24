@@ -81,7 +81,7 @@ export default function Preview() {
                 <Model
                   item1="Student Full Name"
                   item2="Session"
-                  value1={values.fatherName + values.lastName}
+                  value1={values.firstName + values.lastName}
                   value2={values.session}
                 />
                 <Model

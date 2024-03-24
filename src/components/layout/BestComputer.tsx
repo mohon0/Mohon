@@ -60,33 +60,33 @@ export function BestComputer() {
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem>
-                  <span>Office Application</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>DataBase Programming</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Digital Marketing</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Graphics Design</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Motions Graphics</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Web Design & Development</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Video Editing</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Ethical Hacking</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Python Programming</span>
-                </DropdownMenuItem>
+                <Link href="/blog/category/office_application">
+                  <DropdownMenuItem>Office Application</DropdownMenuItem>
+                </Link>
+                <Link href="/blog/category/database_programming">
+                  <DropdownMenuItem>DataBase Programming</DropdownMenuItem>
+                </Link>
+                <Link href="/blog/category/digital_marketing">
+                  <DropdownMenuItem>Digital Marketing</DropdownMenuItem>
+                </Link>
+                <Link href="/blog/category/graphics_design">
+                  <DropdownMenuItem>Graphics Design</DropdownMenuItem>
+                </Link>
+                <Link href="/blog/category/motions_graphics">
+                  <DropdownMenuItem>Motions Graphics</DropdownMenuItem>
+                </Link>
+                <Link href="/blog/category/web_design_and_development">
+                  <DropdownMenuItem>Web Design & Development</DropdownMenuItem>
+                </Link>
+                <Link href="/blog/category/video_editing">
+                  <DropdownMenuItem>Video Editing</DropdownMenuItem>
+                </Link>
+                <Link href="/blog/category/ethical_hacking">
+                  <DropdownMenuItem>Ethical Hacking</DropdownMenuItem>
+                </Link>
+                <Link href="/blog/category/python_programming">
+                  <DropdownMenuItem>Python Programming</DropdownMenuItem>
+                </Link>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
@@ -97,10 +97,10 @@ export function BestComputer() {
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuItem>
-                  <span>Bangla</span>
+                  <Link href="/typingtest/bangla">Bangla</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <span>English</span>
+                  <Link href="/typingtest/english">English</Link>
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>

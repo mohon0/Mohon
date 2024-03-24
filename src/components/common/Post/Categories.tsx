@@ -24,7 +24,7 @@ export default function Categories({ value, ...props }: MyTextInputProps) {
   const handleSelectChange = (value: string) => {
     helpers.setValue(value);
   };
-
+  const sortedOptions = Options.sort((a, b) => a.localeCompare(b));
   return (
     <div className={meta.touched && meta.error ? "error" : ""}>
       <Select
@@ -40,7 +40,7 @@ export default function Categories({ value, ...props }: MyTextInputProps) {
           <SelectGroup>
             <SelectLabel>Categories</SelectLabel>
 
-            {Options.map((categories) => (
+            {sortedOptions.map((categories) => (
               <SelectItem
                 key={categories}
                 value={categories.toLowerCase().replace(/\s+/g, "_")}
