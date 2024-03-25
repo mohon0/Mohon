@@ -25,6 +25,9 @@ import { FaSearch } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ActionSelect } from "../DropDown";
+import { FiDelete } from "react-icons/fi";
+import { MdDeleteOutline } from "react-icons/md";
+import { BiEdit } from "react-icons/bi";
 
 export default function List() {
   const { status, data: session } = useSession();
@@ -190,7 +193,7 @@ export default function List() {
                 {data.application.map((app: ApplicationListType) => (
                   <div
                     key={app.id}
-                    className="flex w-full flex-col justify-between rounded-lg border p-4"
+                    className="relative flex w-full flex-col justify-between rounded-lg border p-4"
                   >
                     <Image
                       src={app.image}
@@ -259,6 +262,14 @@ export default function List() {
                     >
                       <Button variant="outline" className="w-full">
                         View Details
+                      </Button>
+                    </Link>
+                    <Link
+                      href={`/application-list/editapplication/${app.id}`}
+                      className="absolute right-2"
+                    >
+                      <Button variant="secondary" size="icon">
+                        <BiEdit />
                       </Button>
                     </Link>
                   </div>

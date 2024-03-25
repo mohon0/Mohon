@@ -28,6 +28,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import axios from "axios";
 import { MdDelete } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -44,7 +45,7 @@ const Users: React.FC = () => {
   const admin = process.env.NEXT_PUBLIC_ADMIN;
   const email = session?.user?.email;
 
-  const { isLoading, data, isError, refetch } = FetchAllUser({
+  const { isLoading, data, refetch } = FetchAllUser({
     currentPage: page,
     sortBy,
     searchInput,
@@ -54,13 +55,12 @@ const Users: React.FC = () => {
   async function handleDelete() {
     try {
       toast.loading("Deleting user...");
-      const response = await fetch(`/api/user/singleuser?userId=${id}`, {
-        method: "DELETE",
-        credentials: "include",
+      const response = await axios.delete(`/api/user/singleuser?userId=${id}`, {
+        withCredentials: true,
       });
       toast.dismiss();
       setShowConfirmation(false);
-      if (response.ok) {
+      if (response.status === 200) {
         toast.success("User was successfully deleted");
         refetch();
       } else {
@@ -175,12 +175,15 @@ const Users: React.FC = () => {
                     </p>
                     {user.email !== admin && (
                       <Button
-                        className=" absolute right-1 top-2"
+                        className="group absolute right-1 top-2"
                         variant="destructive"
                         size="sm"
                         onClick={() => handlePopUp(user.id)}
                       >
-                        <MdDelete /> Delete User
+                        <MdDelete />
+                        <span className="ml-1 hidden group-hover:block">
+                          Delete User
+                        </span>
                       </Button>
                     )}
 
