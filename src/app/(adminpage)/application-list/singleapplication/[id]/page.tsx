@@ -1,5 +1,4 @@
 "use client";
-
 import Loading from "@/components/common/loading/Loading";
 import { FetchSingleApplication } from "@/components/fetch/get/application/FetchSingleApplication";
 import SingleApplication from "@/components/singleApplication/SingleApplication";
