@@ -60,7 +60,7 @@ export function BestComputer() {
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <Link href="/blog/category/office_application">
+                <Link href="/blog/category/office_applications">
                   <DropdownMenuItem>Office Application</DropdownMenuItem>
                 </Link>
                 <Link href="/blog/category/database_programming">

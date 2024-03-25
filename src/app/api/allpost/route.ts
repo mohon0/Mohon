@@ -25,7 +25,22 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const where: Prisma.PostWhereInput = {
       ...(category && category !== "all"
         ? { category }
-        : { category: { not: "notice" } }),
+        : {
+            category: {
+              notIn: [
+                "notice",
+                "office_applications",
+                "database_programming",
+                "digital_marketing",
+                "graphics_design",
+                "motions_graphics",
+                "web_design_and_development",
+                "video_editing",
+                "ethical_hacking",
+                "python_progamming",
+              ],
+            },
+          }),
       ...(search
         ? {
             title: {

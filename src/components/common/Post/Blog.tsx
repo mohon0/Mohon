@@ -181,7 +181,7 @@ export default function Blog({ params }: PageProps) {
                               Action can not be undone.
                             </DialogDescription>
                           </DialogHeader>
-                          <DialogFooter className="sm:justify-start">
+                          <DialogFooter>
                             <DialogClose asChild>
                               <Button type="button" variant="secondary">
                                 Cancel
