@@ -7,11 +7,15 @@ import { useParams } from "next/navigation";
 export default function Application() {
   const params = useParams();
   const id = params.id;
-  const { isLoading, data, isError } = FetchSingleApplication({ id });
+  const { isLoading, data, isError, isRefetching } = FetchSingleApplication({
+    id,
+  });
 
   return (
     <div>
       {isLoading ? (
+        <Loading />
+      ) : isRefetching ? (
         <Loading />
       ) : isError ? (
         "Error loading application"

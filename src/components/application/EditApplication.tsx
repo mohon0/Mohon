@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -27,7 +28,7 @@ import { Religion } from "./Religion";
 import SessionSelect from "./SessionSelect";
 
 export default function EditApplication({ id }: { id: string | string[] }) {
-  const { isLoading, data, isError } = FetchSingleApplication({ id });
+  const { isLoading, data, isError, refetch } = FetchSingleApplication({ id });
   const [image, setImage] = useState<File | null>(null);
   const [imageError, setImageError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,6 +60,7 @@ export default function EditApplication({ id }: { id: string | string[] }) {
           </div>
           <Formik
             initialValues={{
+              id: id,
               firstName:
                 data.application.firstName + " " + data.application.lastName,
               lastName: "",
@@ -139,68 +141,46 @@ export default function EditApplication({ id }: { id: string | string[] }) {
               maritalStatus: Yup.string().required("Required"),
             })}
             onSubmit={async (values, { setSubmitting }) => {
-              // setIsSubmitting(true);
+              setIsSubmitting(true);
 
-              // setSubmitting(false);
-
-              const { birthDay } = values;
-              console.log(birthDay);
-
-              const formattedBirthDay = new Date(birthDay).toLocaleDateString(
-                "en-GB",
-                {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                },
-              );
+              setSubmitting(false);
 
               const formData = new FormData();
 
-              Object.keys(values).forEach((key) => {
-                if (key === "birthDay") {
-                  formData.append(key, formattedBirthDay);
-                } else {
-                  formData.append(key, (values as Record<string, any>)[key]);
-                }
+              // Iterate through the form values and append each key-value pair to formData
+              Object.entries(values).forEach(([key, value]) => {
+                formData.append(key, value);
               });
-
               if (image) {
-                formData.append("picture", image);
-              } else {
-                setImageError(true);
+                formData.append("image", image as Blob);
               }
 
-              // toast.loading("Please wait...");
+              toast.loading("Please wait...");
 
-              console.log(formData);
+              try {
+                const response = await axios.put("/api/application", formData, {
+                  withCredentials: true,
+                });
 
-              // try {
-              //   const response = await axios.post(
-              //     "/api/application",
-              //     formData,
-              //     {
-              //       withCredentials: true,
-              //     },
-              //   );
-
-              //   toast.dismiss();
-              //   if (response.status === 200) {
-              //     toast.success("Your application was successfully submitted");
-              //     const responseData = response.data;
-
-              //     router.push(
-              //       `/application-list/singleapplication/${responseData.id}`,
-              //     );
-              //   } else {
-              //     toast.error(
-              //       "Couldn't save your post. Please try again later",
-              //     );
-              //   }
-              // } catch (error) {
-              //   toast.error("Couldn't save your post. Please try again later");
-              //   console.error("Error submitting application:", error);
-              // }
+                toast.dismiss();
+                if (response.status === 200) {
+                  toast.success("Application was successfully updated");
+                  const responseData = response.data;
+                  refetch();
+                  router.push(
+                    `/application-list/singleapplication/${responseData.id}`,
+                  );
+                } else {
+                  toast.error(
+                    "Couldn't update your post. Please try again later",
+                  );
+                }
+              } catch (error) {
+                toast.error(
+                  "Couldn't update your post. Please try again later",
+                );
+                console.error("Error submitting application:", error);
+              }
             }}
           >
             <Form className="mx-auto flex w-11/12 flex-col gap-6 lg:w-3/4">
@@ -398,7 +378,7 @@ export default function EditApplication({ id }: { id: string | string[] }) {
               </div>
             </Form>
           </Formik>
-          <ToastContainer position="top-center" autoClose={3000} />
+          <ToastContainer position="top-center" theme="dark" autoClose={3000} />
         </>
       )}
     </>

@@ -1,3 +1,4 @@
+import checkIfImageExists from "@/components/helper/ImageCheck";
 import storage from "@/utils/firebaseConfig";
 import { PrismaClient } from "@prisma/client";
 import {
@@ -283,18 +284,62 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     }
 
     const formData = await req.formData();
-
-    const status = getStringValue(formData, "status");
     const id = getStringValue(formData, "id");
+    const imageData = formData.get("image");
+    // Check if the user exists
+    const existingUser = await prisma.application.findUnique({
+      where: { id },
+    });
+
+    if (!existingUser) {
+      return new NextResponse("User not found", { status: 404 });
+    }
+
+    // Check if the user has an image in Firebase Storage
+    if (existingUser.image) {
+      const imageExists = await checkIfImageExists(existingUser.image);
+      if (imageExists) {
+        // Delete the previous cover image
+        const storageRefToDelete = ref(storage, existingUser.image);
+        await deleteObject(storageRefToDelete);
+      }
+    }
+    // Upload the new cover image
+    let image: string;
+
+    if (imageData) {
+      const filename =
+        Date.now() + (imageData as File).name.replaceAll(" ", "_");
+      const buffer = Buffer.from(await (imageData as Blob).arrayBuffer());
+
+      // Upload file to Firebase storage
+      const storageRef = ref(storage, "profile/" + filename);
+      await uploadBytes(storageRef, buffer);
+
+      // Get download URL from Firebase storage
+      image = await getDownloadURL(storageRef);
+    }
+
+    const updatedData: Record<string, string> = {};
+
+    // Iterate through form data and add it to updatedData
+    formData.forEach((value, key) => {
+      // Exclude the id field from updatedData
+      if (key !== "id" && key !== "image") {
+        updatedData[key] = value.toString();
+      } else if (key === "image" && image) {
+        // Add the image download URL to updatedData
+        updatedData[key] = image; // Replace "downloadURL" with your actual variable
+      }
+    });
 
     if (userEmail === admin) {
+      // Update the application with the provided data (including imageURL)
       const response = await prisma.application.update({
         where: {
           id: id,
         },
-        data: {
-          status: status,
-        },
+        data: updatedData,
       });
 
       if (response) {
@@ -310,6 +355,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       );
     }
   } catch (error) {
+    console.error("Error updating application:", error);
     return new NextResponse("Error updating application");
   }
 }
