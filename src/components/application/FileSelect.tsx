@@ -3,10 +3,11 @@ import { ChangeEvent } from "react";
 import { FaRegUser } from "react-icons/fa6";
 
 interface FileSelectProps {
+  isRequired?: boolean;
   onFileSelect: (file: File) => void;
 }
 
-export function FileSelect({ onFileSelect }: FileSelectProps) {
+export function FileSelect({ onFileSelect, isRequired }: FileSelectProps) {
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
@@ -25,7 +26,7 @@ export function FileSelect({ onFileSelect }: FileSelectProps) {
         id="picture"
         type="file"
         className="border-none"
-        required={true}
+        required={isRequired}
         onChange={handleFileChange}
       />
     </div>

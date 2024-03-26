@@ -9,7 +9,6 @@ import * as Yup from "yup";
 import Header from "../application/Header";
 import Preview from "../preview/Privew";
 import { Button } from "../ui/button";
-import BirthDay from "./BirthDay";
 import { BloodGroup } from "./BloodGroup";
 import { Board } from "./Board";
 import { CourseSelect } from "./CourseSelect";
@@ -46,9 +45,7 @@ const Application: React.FC = () => {
   };
   return (
     <>
-      <div className="mb-20">
-        <Header />
-      </div>
+      <Header />
       <Formik
         initialValues={{
           firstName: "",
@@ -94,34 +91,12 @@ const Application: React.FC = () => {
           bloodGroup: Yup.string()
             .max(10, "Must be 10 characters or less")
             .required("Required"),
-          birthDay: Yup.date()
-            .nullable()
+          birthDay: Yup.string()
             .required("Required")
-            .test(
-              "is-over-5",
-              "Must be at least 5 years old",
-              function (value) {
-                // Check if the user is at least 16 years old
-                const currentDate = new Date();
-                const userBirthDate = new Date(value);
-                const userAge =
-                  currentDate.getFullYear() - userBirthDate.getFullYear();
-
-                // Adjust age calculation for leap years
-                if (
-                  currentDate.getMonth() < userBirthDate.getMonth() ||
-                  (currentDate.getMonth() === userBirthDate.getMonth() &&
-                    currentDate.getDate() < userBirthDate.getDate())
-                ) {
-                  return userAge - 1 >= 5;
-                }
-
-                return userAge >= 5;
-              },
-            )
-            .transform((originalValue) => {
-              return originalValue instanceof Date ? originalValue : null;
-            }),
+            .matches(
+              /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+              "Date must be in the format DD/MM/YYYY",
+            ),
           mobileNumber: Yup.string()
             .required("Required")
             .matches(/^[0-9]+$/, "Must be a valid phone number"),
@@ -153,25 +128,10 @@ const Application: React.FC = () => {
 
           setSubmitting(false);
 
-          const { birthDay } = values;
-
-          const formattedBirthDay = new Date(birthDay).toLocaleDateString(
-            "en-GB",
-            {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            },
-          );
-
           const formData = new FormData();
 
           Object.keys(values).forEach((key) => {
-            if (key === "birthDay") {
-              formData.append(key, formattedBirthDay);
-            } else {
-              formData.append(key, (values as Record<string, any>)[key]);
-            }
+            formData.append(key, (values as Record<string, any>)[key]);
           });
 
           if (image) {
@@ -207,7 +167,7 @@ const Application: React.FC = () => {
         <Form className="mx-auto flex w-11/12 flex-col gap-6 lg:w-3/4">
           <div className=" right-20 top-52 border border-primary lg:absolute">
             {imageError && <span>Image Must Be Provided</span>}
-            <FileSelect onFileSelect={handleFileSelect} />
+            <FileSelect onFileSelect={handleFileSelect} isRequired={true} />
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
             <MyTextInput
@@ -249,10 +209,12 @@ const Application: React.FC = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-32">
-            <div>
-              <div>Date of Birth</div>
-              <Field as={BirthDay} name="birthDay" />
-            </div>
+            <MyTextInput
+              label="Birth Date"
+              name="birthDay"
+              type="text"
+              placeholder="13/01/2000"
+            />
             <div>
               <div>Blood Group</div>
               <Field as={BloodGroup} name="bloodGroup" />
