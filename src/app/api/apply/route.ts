@@ -83,7 +83,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         certificate: true,
       },
       orderBy: {
-        updatedAt: sortBy === "oldest" ? "asc" : "desc",
+        createdAt: sortBy === "oldest" ? "asc" : "desc",
       },
       skip: skipCount,
       take: pageSize,

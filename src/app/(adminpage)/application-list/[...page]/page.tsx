@@ -6,6 +6,16 @@ import ActionSelect from "@/components/page/applicationlist/ActionSelect";
 import CertificateSelect from "@/components/page/applicationlist/CertificateSelect";
 import { ApplicationListType } from "@/components/type/ApplicationListType";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -67,40 +77,18 @@ export default function List() {
     data.set("status", status);
     if (id) data.set("id", id);
 
-    const shouldDelete =
-      action === "Delete"
-        ? window.confirm("Are you sure you want to delete this application?")
-        : true;
-    if (!shouldDelete) return;
-
-    toast.loading("Please wait...");
-
     try {
-      let response = await axios({
-        method: action === "Delete" ? "DELETE" : "PUT",
-        url:
-          action === "Delete"
-            ? `/api/application?id=${id}`
-            : `/api/application`,
-        data: action === "Delete" ? null : data,
-        withCredentials: true,
-      });
+      toast.loading("Please wait...");
+      const response = await axios.put(`/api/application?id=${id}`, data);
 
+      toast.dismiss();
       if (response.status === 200) {
-        toast.dismiss();
         toast.success("Application Updated successfully");
         refetch();
       } else {
-        console.error(
-          "Failed to update the Application. Status:",
-          response.status,
-        );
-        toast.dismiss();
         toast.error("Application Updating failed");
       }
     } catch (error) {
-      console.error("An error occurred while updating the post:", error);
-      toast.dismiss();
       toast.error("An error occurred");
     }
   }
@@ -140,8 +128,25 @@ export default function List() {
     toast.dismiss();
     if (response.status === 200) {
       toast.success("Updated certificate successfully");
+      refetch();
     } else {
       toast.error("Error updating certificate");
+    }
+  }
+
+  async function handleDelete(id: string) {
+    try {
+      const response = await axios.delete(
+        `/api/application/application-list?id=${id}`,
+      );
+      if (response.status === 200) {
+        toast.success("Successfully deleted");
+        refetch();
+      } else {
+        toast.error("Error deleting application");
+      }
+    } catch (error) {
+      toast.error("Error deleting application");
     }
   }
 
@@ -238,9 +243,41 @@ export default function List() {
                         width={200}
                         className="mx-auto mb-4 h-20 w-20 rounded-full"
                       />
-                      <Button size="icon" variant="destructive">
-                        <FaRegTrashAlt />
-                      </Button>
+
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button size="icon" variant="destructive">
+                            <FaRegTrashAlt />
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                          <DialogHeader>
+                            <DialogTitle>Delete Application</DialogTitle>
+                            <DialogDescription>
+                              Are you sure you want to delete this Application?
+                              This Action can not be undone.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <DialogFooter>
+                            <DialogClose asChild>
+                              <Button type="button" variant="secondary">
+                                Cancel
+                              </Button>
+                            </DialogClose>
+                            <DialogClose asChild>
+                              <Button
+                                type="button"
+                                onClick={() => {
+                                  handleDelete(app.id);
+                                }}
+                                variant="destructive"
+                              >
+                                Delete
+                              </Button>
+                            </DialogClose>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                     <div className="flex flex-col">
                       <p className="mb-2 text-xl font-bold text-primary">
@@ -295,7 +332,7 @@ export default function List() {
                                 : app.certificate === "Fail"
                                   ? "font-bold text-destructive"
                                   : app.certificate === "Received"
-                                    ? "text-primary font-bold"
+                                    ? "font-bold text-primary"
                                     : ""
                           }
                         >
@@ -344,18 +381,10 @@ export default function List() {
                       href={`/application-list/singleapplication/${app.id}`}
                       className="mt-6 flex w-full"
                     >
-                      <Button variant="outline" className="w-full">
+                      <Button variant="secondary" className="w-full">
                         View Details
                       </Button>
                     </Link>
-                    {/* <Link
-                      href={`/application-list/editapplication/${app.id}`}
-                      className="absolute right-2"
-                    >
-                      <Button variant="secondary" size="icon">
-                        <BiEdit />
-                      </Button>
-                    </Link> */}
                   </div>
                 ))}
               </div>

@@ -51,12 +51,6 @@ export default function ActionSelect({
             >
               Reject
             </SelectItem>
-            <SelectItem
-              value="Delete"
-              onSelect={() => handleSelectChange("Delete")}
-            >
-              Delete
-            </SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
