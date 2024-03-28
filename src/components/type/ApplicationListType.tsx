@@ -7,4 +7,5 @@ export interface ApplicationListType {
   image: string;
   status: string;
   createdAt: string;
+  certificate: string;
 }

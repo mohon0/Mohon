@@ -2,6 +2,8 @@
 import Loading from "@/components/common/loading/Loading";
 import PaginationUi from "@/components/core/PaginationUi";
 import { FetchAllApplication } from "@/components/fetch/get/application/FetchAllApplication";
+import ActionSelect from "@/components/page/applicationlist/ActionSelect";
+import CertificateSelect from "@/components/page/applicationlist/CertificateSelect";
 import { ApplicationListType } from "@/components/type/ApplicationListType";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,22 +23,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { BiEdit } from "react-icons/bi";
 import { FaSearch } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ActionSelect } from "../DropDown";
-import { FiDelete } from "react-icons/fi";
-import { MdDeleteOutline } from "react-icons/md";
-import { BiEdit } from "react-icons/bi";
 
 export default function List() {
-  const { status, data: session } = useSession();
+  const { data: session } = useSession();
   const params = useParams();
   const [page, setPage] = useState<number>(Number(params.page[1]) || 1);
   const [action, setAction] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [searchInput, setSearchInput] = useState("");
+  const [certificate, setCertificate] = useState("");
   const email = session?.user?.email;
   const admin = process.env.NEXT_PUBLIC_ADMIN;
   const pageSize = 12;
@@ -52,7 +52,6 @@ export default function List() {
   const handleActionChange = (value: string) => {
     if (!value.trim()) {
       toast.error("Action cannot be empty");
-      console.error("Action cannot be empty");
     } else {
       setAction(value);
     }
@@ -75,7 +74,7 @@ export default function List() {
         : true;
     if (!shouldDelete) return;
 
-    toast.loading("Please wait while we update.");
+    toast.loading("Please wait...");
 
     try {
       let response = await axios({
@@ -112,10 +111,39 @@ export default function List() {
 
   function formatDate(isoDateString: string): string {
     const date = new Date(isoDateString);
-    const day = date.getDate().toString().padStart(2, "0"); // Get day and pad with leading zero if necessary
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get month (note: months are zero-indexed) and pad with leading zero if necessary
-    const year = date.getFullYear(); // Get full year
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
     return `${day}-${month}-${year}`;
+  }
+
+  function handleCertificateChange(value: string) {
+    if (!value.trim()) {
+      toast.error("Action cannot be empty");
+    } else {
+      setCertificate(value);
+    }
+  }
+
+  async function UpdateCertificate({
+    id,
+    status,
+  }: {
+    id: string;
+    status: string;
+  }) {
+    toast.loading("Please wait...");
+    const response = await axios.put("/api/application/application-list", {
+      certificate: status,
+      id: id,
+    });
+
+    toast.dismiss();
+    if (response.status === 200) {
+      toast.success("Updated certificate successfully");
+    } else {
+      toast.error("Error updating certificate");
+    }
   }
 
   return (
@@ -224,35 +252,41 @@ export default function List() {
                         </span>
                         {formatDate(app.createdAt)}
                       </p>
-                      <p>
-                        <span>Status: </span>
-                        <span
-                          className={
-                            app.status === "Pending"
-                              ? "font-bold text-yellow-500"
-                              : app.status === "Approved"
-                                ? "font-bold text-green-500"
-                                : app.status === "Rejected"
-                                  ? "font-bold text-red-500"
-                                  : "font-bold"
-                          }
-                        >
-                          {app.status}
-                        </span>
-                      </p>
-                      <div className="mt-4 flex gap-2">
-                        <div>
-                          <ActionSelect
-                            selectedValue={action}
-                            onValueChange={handleActionChange}
-                          />
-                        </div>
+                      <div className="flex items-center gap-0.5">
+                        <p className="text-sm">Status:</p>
+                        <ActionSelect
+                          Value={app.status}
+                          onValueChange={handleActionChange}
+                        />
+
                         <Button
+                          size="sm"
+                          variant="secondary"
                           onClick={() =>
                             UpdateApplication({ status: action, id: app.id })
                           }
                         >
-                          Submit
+                          OK
+                        </Button>
+                      </div>
+                      <div className="mt-2 flex items-center gap-0.5">
+                        <p className="text-sm">Certificate:</p>
+                        <CertificateSelect
+                          Value={app.certificate}
+                          onValueChange={handleCertificateChange}
+                        />
+
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() =>
+                            UpdateCertificate({
+                              status: certificate,
+                              id: app.id,
+                            })
+                          }
+                        >
+                          OK
                         </Button>
                       </div>
                     </div>

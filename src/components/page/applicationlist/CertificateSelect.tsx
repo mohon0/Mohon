@@ -11,28 +11,33 @@ import {
 
 interface DurationSelectProps {
   onValueChange: (value: string) => void;
-  selectedValue: string | undefined;
+
+  Value: string;
 }
 
-export function ActionSelect({ onValueChange }: DurationSelectProps) {
+export default function CertificateSelect({
+  onValueChange,
+
+  Value,
+}: DurationSelectProps) {
   const handleSelectChange = (value: string) => {
     onValueChange(value);
   };
 
   return (
     <>
-      <Select onValueChange={handleSelectChange}>
-        <SelectTrigger className="w-32">
+      <Select onValueChange={handleSelectChange} defaultValue={Value}>
+        <SelectTrigger>
           <SelectValue placeholder="Action" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Action</SelectLabel>
             <SelectItem
-              value="Approved"
-              onSelect={() => handleSelectChange("free")}
+              value="At Office"
+              onSelect={() => handleSelectChange("At Office")}
             >
-              Approve
+              At Office
             </SelectItem>
             <SelectItem
               value="Pending"
@@ -41,16 +46,16 @@ export function ActionSelect({ onValueChange }: DurationSelectProps) {
               Pending
             </SelectItem>
             <SelectItem
-              value="Rejected"
-              onSelect={() => handleSelectChange("Reject")}
+              value="Fail"
+              onSelect={() => handleSelectChange("Fail")}
             >
-              Reject
+              Fail
             </SelectItem>
             <SelectItem
-              value="Delete"
-              onSelect={() => handleSelectChange("Delete")}
+              value="Received"
+              onSelect={() => handleSelectChange("Received")}
             >
-              Delete
+              Received
             </SelectItem>
           </SelectGroup>
         </SelectContent>

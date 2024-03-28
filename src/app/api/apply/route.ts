@@ -80,6 +80,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         course: true,
         duration: true,
         createdAt: true,
+        certificate: true,
       },
       orderBy: {
         updatedAt: sortBy === "oldest" ? "asc" : "desc",
