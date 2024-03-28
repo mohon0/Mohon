@@ -23,8 +23,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { BiEdit } from "react-icons/bi";
-import { FaSearch } from "react-icons/fa";
+import { FaRegEdit, FaRegTrashAlt, FaSearch } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -221,15 +220,28 @@ export default function List() {
                 {data.application.map((app: ApplicationListType) => (
                   <div
                     key={app.id}
-                    className="relative flex w-full flex-col justify-between rounded-lg border p-4"
+                    className="flex w-full flex-col justify-between rounded-lg border p-4"
                   >
-                    <Image
-                      src={app.image}
-                      alt=""
-                      height={200}
-                      width={200}
-                      className="mx-auto mb-4 h-20 w-20 rounded-full"
-                    />
+                    <div className="flex justify-between">
+                      <Link
+                        href={`/application-list/editapplication/${app.id}`}
+                        className="h-fit w-fit"
+                      >
+                        <Button size="icon" variant="secondary">
+                          <FaRegEdit size="16" />
+                        </Button>
+                      </Link>
+                      <Image
+                        src={app.image}
+                        alt=""
+                        height={200}
+                        width={200}
+                        className="mx-auto mb-4 h-20 w-20 rounded-full"
+                      />
+                      <Button size="icon" variant="destructive">
+                        <FaRegTrashAlt />
+                      </Button>
+                    </div>
                     <div className="flex flex-col">
                       <p className="mb-2 text-xl font-bold text-primary">
                         {app.firstName} {app.lastName}
@@ -252,8 +264,46 @@ export default function List() {
                         </span>
                         {formatDate(app.createdAt)}
                       </p>
-                      <div className="flex items-center gap-0.5">
-                        <p className="text-sm">Status:</p>
+                      <p>
+                        <span className="font-bold text-secondary-foreground">
+                          Status:{" "}
+                        </span>
+                        <span
+                          className={
+                            app.status === "Approved"
+                              ? "font-bold text-primary"
+                              : app.status === "Pending"
+                                ? "font-bold text-yellow-500"
+                                : app.status === "Rejected"
+                                  ? "font-bold text-destructive"
+                                  : ""
+                          }
+                        >
+                          {app.status}
+                        </span>
+                      </p>
+                      <p>
+                        <span className="font-bold text-secondary-foreground">
+                          Certificate:{" "}
+                        </span>
+                        <span
+                          className={
+                            app.certificate === "At Office"
+                              ? "font-bold text-cyan-500"
+                              : app.certificate === "Pending"
+                                ? "font-bold text-yellow-500"
+                                : app.certificate === "Fail"
+                                  ? "font-bold text-destructive"
+                                  : app.certificate === "Received"
+                                    ? "text-primary font-bold"
+                                    : ""
+                          }
+                        >
+                          {app.certificate}
+                        </span>
+                      </p>
+                      <div className="mt-3 flex items-center gap-0.5">
+                        <p className="text-sm font-bold">Status:</p>
                         <ActionSelect
                           Value={app.status}
                           onValueChange={handleActionChange}
@@ -270,7 +320,7 @@ export default function List() {
                         </Button>
                       </div>
                       <div className="mt-2 flex items-center gap-0.5">
-                        <p className="text-sm">Certificate:</p>
+                        <p className="text-sm font-bold">Certificate:</p>
                         <CertificateSelect
                           Value={app.certificate}
                           onValueChange={handleCertificateChange}
@@ -298,14 +348,14 @@ export default function List() {
                         View Details
                       </Button>
                     </Link>
-                    <Link
+                    {/* <Link
                       href={`/application-list/editapplication/${app.id}`}
                       className="absolute right-2"
                     >
                       <Button variant="secondary" size="icon">
                         <BiEdit />
                       </Button>
-                    </Link>
+                    </Link> */}
                   </div>
                 ))}
               </div>
