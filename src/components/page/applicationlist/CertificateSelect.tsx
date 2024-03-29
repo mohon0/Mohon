@@ -57,6 +57,12 @@ export default function CertificateSelect({
             >
               Received
             </SelectItem>
+            <SelectItem
+              value="Course Incomplete"
+              onSelect={() => handleSelectChange("Course Incomplete")}
+            >
+              Course Incomplete
+            </SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

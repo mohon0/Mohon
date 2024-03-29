@@ -18,12 +18,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const sortBy = queryParams.get("sortBy");
     const status = queryParams.get("category");
     const search = queryParams.get("search");
+    const certificate = queryParams.get("certificate");
 
     const skipCount = (page - 1) * pageSize;
 
     // Build the where condition for filtering by category and searching by title
     const where: Prisma.ApplicationWhereInput = {
-      ...(status && status !== "all" ? { status } : {}),
+      ...(status && status !== "All" ? { status } : {}),
       ...(search
         ? {
             OR: [
@@ -58,6 +59,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
             ],
           }
         : {}),
+      ...(certificate && certificate !== "All" ? { certificate } : {}),
     };
 
     // Calculate the total number of posts without pagination

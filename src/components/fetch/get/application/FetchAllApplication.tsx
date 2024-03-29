@@ -7,6 +7,7 @@ interface props {
   selectedCategory: string;
   sortBy: string;
   searchInput: string;
+  certificate: string;
 }
 
 export function FetchAllApplication({
@@ -15,6 +16,7 @@ export function FetchAllApplication({
   selectedCategory,
   sortBy,
   searchInput,
+  certificate,
 }: props) {
   return useQuery({
     queryKey: [
@@ -24,10 +26,11 @@ export function FetchAllApplication({
       selectedCategory,
       sortBy,
       searchInput,
+      certificate,
     ],
     queryFn: async () => {
       const response = await axios.get(
-        `/api/apply?page=${currentPage}&pageSize=${pageSize}&category=${selectedCategory}&sortBy=${sortBy}&search=${searchInput}`
+        `/api/apply?page=${currentPage}&pageSize=${pageSize}&category=${selectedCategory}&sortBy=${sortBy}&search=${searchInput}&certificate=${certificate}`,
       );
       return response.data;
     },

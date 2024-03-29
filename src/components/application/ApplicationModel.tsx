@@ -8,6 +8,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FetchApplicationData } from "../fetch/get/application/FetchApplicationData";
+import { Button } from "../ui/button";
 
 function formatDate(isoDateString: string): string {
   const options: Intl.DateTimeFormatOptions = {
@@ -124,11 +125,33 @@ export default function ApplicationModel() {
                     {data.status}
                   </span>
                 </p>
+                <p>
+                  <span className="font-bold text-secondary-foreground">
+                    Certificate:{" "}
+                  </span>
+                  <span
+                    className={
+                      data.certificate === "At Office"
+                        ? "font-bold text-cyan-500"
+                        : data.certificate === "Pending"
+                          ? "font-bold text-yellow-500"
+                          : data.certificate === "Fail"
+                            ? "font-bold text-destructive"
+                            : data.certificate === "Received"
+                              ? "font-bold text-primary"
+                              : ""
+                    }
+                  >
+                    {data.certificate}
+                  </span>
+                </p>
                 <Link
                   href={`/application-list/singleapplication/${data.id}`}
-                  className="border-primary-100 hover:text-primary-100 flex items-center justify-center rounded border bg-black px-4 py-1.5"
+                  className="mt-6 flex w-full"
                 >
-                  View Details
+                  <Button variant="secondary" className="w-full">
+                    View Details
+                  </Button>
                 </Link>
               </div>
             </div>
