@@ -1,6 +1,8 @@
 "use client";
 import InputField from "@/components/common/input/InputField";
+import PasswordInput from "@/components/common/input/PasswordInput";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { Form, Formik } from "formik";
 import Link from "next/link";
@@ -89,11 +91,10 @@ export default function Registration() {
                 label="Email or Phone Number"
                 placeholder="Input Your Email or Phone Number"
               />
-              <InputField
+              <Label>Password</Label>
+              <PasswordInput
                 name="password"
-                type="password"
                 id="password"
-                label="Password"
                 placeholder="Input Your Password"
               />
 

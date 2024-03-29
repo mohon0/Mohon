@@ -1,6 +1,8 @@
 "use client";
 import InputField from "@/components/common/input/InputField";
+import PasswordInput from "@/components/common/input/PasswordInput";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Form, Formik } from "formik";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -77,12 +79,11 @@ export default function Login() {
                 label="Email or Phone Number"
               />
               <div>
-                <InputField
+                <Label>Password:</Label>
+                <PasswordInput
                   name="password"
                   placeholder="Input Your Password"
                   id="password"
-                  type="password"
-                  label="Password"
                 />
 
                 <div className="flex items-center justify-end">

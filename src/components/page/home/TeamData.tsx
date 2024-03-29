@@ -4,6 +4,7 @@ import Pic11 from "@/images/team/img11.jpg";
 import Pic12 from "@/images/team/img12.jpg";
 import Pic13 from "@/images/team/img13.jpg";
 import Pic14 from "@/images/team/img14.jpg";
+import Pic15 from "@/images/team/img15.jpg";
 import Pic2 from "@/images/team/img2.jpg";
 import Pic3 from "@/images/team/img3.jpg";
 import Pic4 from "@/images/team/img4.jpg";
@@ -139,5 +140,14 @@ export const TeamData = [
     twitter: "https:twitter.com/demo",
     linkedin: "https:linkedin/in/demo",
     img: Pic14,
+  },
+  {
+    id: 15,
+    name: "MD Toufik Ali",
+    post: "T-shirt Designer",
+    facebook: "https/facebook.com/demo",
+    twitter: "https:twitter.com/demo",
+    linkedin: "https:linkedin/in/demo",
+    img: Pic15,
   },
 ];
