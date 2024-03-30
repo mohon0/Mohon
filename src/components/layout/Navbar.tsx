@@ -46,23 +46,25 @@ export default function Navbar() {
           <div className="hidden md:block">
             <ActionButton />
           </div>
-
-          {session?.user ? (
-            <Link
-              href={
-                session.user.email === admin ? "/admin-dashboard" : "/dashboard"
-              }
-              legacyBehavior
-              passHref
-            >
-              <Button variant="ghost">Dashboard</Button>
-            </Link>
-          ) : (
-            <Link href="/signin" legacyBehavior passHref>
-              <Button variant="ghost">LogIn</Button>
-            </Link>
-          )}
-
+          <div className="hidden md:block">
+            {session?.user ? (
+              <Link
+                href={
+                  session.user.email === admin
+                    ? "/admin-dashboard"
+                    : "/dashboard"
+                }
+                legacyBehavior
+                passHref
+              >
+                <Button variant="ghost">Dashboard</Button>
+              </Link>
+            ) : (
+              <Link href="/signin" legacyBehavior passHref>
+                <Button variant="ghost">LogIn</Button>
+              </Link>
+            )}
+          </div>
           <div>
             <Menu />
           </div>

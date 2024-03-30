@@ -19,6 +19,12 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "../ui/sheet";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
 
 export default function Menu() {
   const { data: session } = useSession();
@@ -56,6 +62,35 @@ export default function Menu() {
                 </Button>
               </Link>
             </SheetClose>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="1">
+                <AccordionTrigger>
+                  <Button variant="outline">Best Computer T.C</Button>
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-2">
+                  <Link href="/notice">
+                    <Button variant="outline" className="w-full">
+                      Notice
+                    </Button>
+                  </Link>
+                  <Link href="/result">
+                    <Button variant="outline" className="w-full">
+                      Result
+                    </Button>
+                  </Link>
+                  <Link href="/application">
+                    <Button variant="outline" className="w-full">
+                      Apply Now
+                    </Button>
+                  </Link>
+                  <Link href="/blog/category/our_course">
+                    <Button variant="outline" className="w-full">
+                      Course Module
+                    </Button>
+                  </Link>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
             <SheetClose asChild>
               <Link href="/blog/page/1">
                 <Button variant="outline" className="flex w-full">
