@@ -43,11 +43,11 @@ export default function MoreTab({
     <Formik
       initialValues={{
         bio: bio,
-        facebook: facebook,
-        twitter: twitter,
-        linkedin: linkedin,
-        instagram: instagram,
-        github: github,
+        facebook: facebook || "",
+        twitter: twitter || "",
+        linkedin: linkedin || "",
+        instagram: instagram || "",
+        github: github || "",
       }}
       validationSchema={Yup.object({
         bio: Yup.string().max(1200, "Bio must be at most 1200 characters"),

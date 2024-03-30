@@ -2,16 +2,43 @@
 import ApplicationModel from "@/components/application/ApplicationModel";
 import Loading from "@/components/common/loading/Loading";
 import { FetchActionDashboardData } from "@/components/fetch/get/dashboard/FetchDashboardData";
+import formatDate from "@/components/helper/hooks/FormatedDate";
+import ToolTipHookDown from "@/components/helper/hooks/TooltipHookDown";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { BiSolidEdit } from "react-icons/bi";
-import { FaPowerOff, FaUserEdit } from "react-icons/fa";
+import { FaUserEdit } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaGithub,
+  FaInstagram,
+  FaLinkedin,
+  FaPowerOff,
+  FaTwitter,
+} from "react-icons/fa6";
 
 export default function Dashboard() {
   const { status, data: session } = useSession();
-  const [showConfirmation, setShowConfirmation] = useState(false);
   const { isLoading, data, isError } = FetchActionDashboardData();
 
   if (isLoading) {
@@ -20,9 +47,6 @@ export default function Dashboard() {
   if (isError) {
     return "Error loading Dashboard";
   }
-  const handleDelete = async () => {
-    setShowConfirmation(true);
-  };
 
   const handleLogout = () => {
     signOut({ redirect: true, callbackUrl: "/" });
@@ -34,97 +58,179 @@ export default function Dashboard() {
     <div className="flex flex-col md:gap-10">
       {!isLoading && status === "authenticated" ? (
         <>
-          <div className="flex flex-col gap-10">
-            <div className="grid w-full grid-cols-1 gap-10 bg-gray-900 p-6  md:grid-cols-2  lg:grid-cols-3">
-              <div className="col-span-3 flex h-full w-full items-center justify-center border md:col-span-1">
+          <div className="flex flex-col items-center justify-center gap-20">
+            <Card className="flex w-11/12 flex-col md:flex-row lg:w-10/12">
+              <div className="flex flex-col items-center gap-4 md:w-4/12">
                 {data.user.image ? (
                   <Image
                     src={data.user.image}
                     alt=""
-                    height={500}
-                    width={500}
-                    className=" h-60 object-cover"
+                    className="h-52 w-full rounded-lg object-cover md:h-40 lg:h-80"
+                    height={200}
+                    width={200}
                   />
                 ) : (
-                  "No image found"
-                )}
-              </div>
-              <div className="col-span-3 mx-auto flex w-full flex-col items-center justify-center gap-6 px-4 text-center md:col-span-1 md:px-0">
-                <div className="mx-auto text-4xl font-bold uppercase">
-                  {data.user.name}
-                </div>
-                <div className="text-xl">{data.user.email}</div>
-              </div>
-              <div className="col-span-3 flex flex-col items-center justify-center gap-2 md:flex-row md:gap-6  lg:col-span-1 lg:flex-col">
-                {admin === data.user.email ? (
-                  <div className="flex items-center justify-center">
-                    <Link href={"/newpost"}>
-                      <button className="flex items-center justify-center gap-4 rounded-lg border bg-cyan-500 px-8 py-2 font-bold  shadow-lg hover:bg-cyan-600">
-                        New Post
-                        <BiSolidEdit size={20} />
-                      </button>
-                    </Link>
-                  </div>
-                ) : (
-                  ""
-                )}
-                {data.user.id && (
-                  <div>
-                    <Link href={`/editprofile`}>
-                      <button className="flex items-center justify-center gap-4 rounded-lg border bg-blue-950 px-6 py-2 font-bold text-white hover:bg-gray-800">
-                        Edit Profile
-                        <FaUserEdit size={20} />
-                      </button>
-                    </Link>
+                  <div className="flex h-52 w-full items-center justify-center border text-2xl text-muted-foreground">
+                    No Image Found
                   </div>
                 )}
 
-                <div className="flex items-center justify-center">
-                  <button
-                    onClick={handleDelete}
-                    className="flex items-center justify-center gap-4 rounded-lg bg-red-600 px-10 py-2 font-bold text-white hover:bg-red-500"
-                  >
-                    Log Out
-                    <FaPowerOff size={14} />
-                  </button>
-                </div>
-
-                {showConfirmation && (
-                  <div className="fixed inset-0 z-50  flex h-screen w-screen items-center justify-center bg-black bg-opacity-50  backdrop-blur-sm">
-                    <div className="w-11/12 rounded-lg bg-blue-950 p-6 shadow-md lg:w-2/6">
-                      <p className="text-xl">
-                        Are you sure you want to Log Out
-                      </p>
-                      <div className="mt-8 flex justify-end">
-                        <button
-                          onClick={() => setShowConfirmation(false)}
-                          className="mr-4 rounded bg-gray-600 px-4 py-2 hover:bg-gray-700"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          onClick={handleLogout}
-                          className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-                        >
+                <div className="flex flex-col gap-3 md:gap-6 lg:flex-row">
+                  <Button size="lg">
+                    <span className="flex items-center gap-4">
+                      Edit Profile
+                      <FaUserEdit size={20} />
+                    </span>
+                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="destructive" size="lg">
+                        <span className="flex items-center gap-4">
+                          Log Out <FaPowerOff size={14} />
+                        </span>
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action will log you out of this browser.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleLogout}>
                           Log Out
-                        </button>
-                      </div>
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
+              </div>
+              <div className="md:w-8/12">
+                <CardHeader>
+                  <div className="flex items-center gap-8">
+                    <CardTitle className="text-2xl font-extrabold">
+                      {data.user.name}
+                    </CardTitle>
+                    <Badge>
+                      {admin === data.user.email ? "Admin" : "Member"}
+                    </Badge>
+                  </div>
+                </CardHeader>
+
+                <CardContent>
+                  <div>
+                    <div className="flex items-center gap-4">
+                      <span>Email:</span>
+                      <span>{data.user.email}</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span>Mobile:</span>
+                      <span>{data.user.phoneNumber}</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span>Member Since:</span>
+                      <span>{formatDate(data.user.createdAt)}</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span>Total Post:</span>
+                      <span>{data.user._count.posts}</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span>Total Comment:</span>
+                      <span>{data.user._count.comments}</span>
                     </div>
                   </div>
-                )}
+                  <div
+                    className="mt-3 text-muted-foreground"
+                    dangerouslySetInnerHTML={{ __html: data.user.bio }}
+                  />
+                </CardContent>
+                <CardFooter className="flex flex-wrap">
+                  {(data.user.facebook ||
+                    data.user.twitter ||
+                    data.user.linkedin ||
+                    data.user.instagram ||
+                    data.user.github) && <div>Connect with me:</div>}
+                  <div className="flex flex-wrap gap-4 pl-4 text-muted-foreground hover:[&>*]:text-foreground">
+                    {data.user.facebook && (
+                      <Link
+                        href={`https://${data.user.facebook}`}
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        <ToolTipHookDown
+                          text="Facebook"
+                          icon={<FaFacebook size={20} />}
+                        />
+                      </Link>
+                    )}
+                    {data.user.twitter && (
+                      <Link
+                        href={`https://${data.user.twitter}`}
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        <ToolTipHookDown
+                          text="Twitter"
+                          icon={<FaTwitter size={20} />}
+                        />
+                      </Link>
+                    )}
+                    {data.user.linkedin && (
+                      <Link
+                        href={`https://${data.user.linkedin}`}
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        <ToolTipHookDown
+                          text="LinkedIn"
+                          icon={<FaLinkedin size={20} />}
+                        />
+                      </Link>
+                    )}
+                    {data.user.instagram && (
+                      <Link
+                        href={`https://${data.user.instagram}`}
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        <ToolTipHookDown
+                          text="Instagram"
+                          icon={<FaInstagram size={20} />}
+                        />
+                      </Link>
+                    )}
+                    {data.user.github && (
+                      <Link
+                        href={`https://${data.user.github}`}
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        <ToolTipHookDown
+                          text="GitHub"
+                          icon={<FaGithub size={20} />}
+                        />
+                      </Link>
+                    )}
+                  </div>
+                </CardFooter>
               </div>
-            </div>
-          </div>
+            </Card>
 
-          <ApplicationModel />
+            <ApplicationModel />
+          </div>
         </>
       ) : status !== "authenticated" ? (
-        <div className="flex flex-col gap-10 text-center text-2xl font-bold">
+        <Card>
           <p>You are not logged in. Log in to access this page.</p>
-          <Link href="/signin" className="rounded border bg-blue-950 px-8 py-2">
-            Log in
+          <Link href="/signin">
+            <Button>Log in</Button>
           </Link>
-        </div>
+        </Card>
       ) : (
         <Loading />
       )}

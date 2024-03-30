@@ -22,17 +22,23 @@ export async function GET(req: NextRequest, res: NextResponse) {
       where: { id },
 
       select: {
-        id: true,
-        name: true,
-        email: true,
-        image: true,
-        applications: {
+        _count: {
           select: {
-            id: true,
-            status: true,
-            course: true,
+            posts: true,
+            comments: true,
           },
         },
+        name: true,
+        email: true,
+        phoneNumber: true,
+        image: true,
+        facebook: true,
+        twitter: true,
+        linkedin: true,
+        github: true,
+        instagram: true,
+        bio: true,
+        createdAt: true,
       },
     });
 
