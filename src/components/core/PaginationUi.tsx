@@ -22,7 +22,7 @@ export default function PaginationUi({
   link,
 }: PaginationUiProps) {
   const router = useRouter();
-  const isFirstPage = currentPage == 1;
+  const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
 
   const handlePreviousClick = () => {
@@ -35,6 +35,64 @@ export default function PaginationUi({
       setCurrentPage(currentPage + 1);
       router.push(`/${link}/page/${currentPage + 1}`);
     }
+  };
+
+  const renderPageNumbers = () => {
+    const pages = [];
+    const totalPagesToShow = 5;
+
+    if (totalPages <= totalPagesToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= totalPagesToShow - 2) {
+        for (let i = 1; i <= totalPagesToShow - 1; i++) {
+          pages.push(i);
+        }
+        pages.push("...");
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - (totalPagesToShow - 3)) {
+        pages.push(1);
+        pages.push("...");
+        for (
+          let i = totalPages - (totalPagesToShow - 3);
+          i <= totalPages;
+          i++
+        ) {
+          pages.push(i);
+        }
+      } else {
+        pages.push(1);
+        pages.push("...");
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i);
+        }
+        pages.push("...");
+        pages.push(totalPages);
+      }
+    }
+
+    return pages.map((page, index) => (
+      <PaginationItem key={index}>
+        {page === "..." ? (
+          <span className="cursor-not-allowed">...</span>
+        ) : (
+          <PaginationLink
+            isActive={currentPage === page}
+            onClick={() => {
+              setCurrentPage(typeof page === "number" ? page : currentPage);
+              router.push(
+                `/${link}/page/${typeof page === "number" ? page : currentPage}`,
+              );
+            }}
+            className={`cursor-pointer`}
+          >
+            {page}
+          </PaginationLink>
+        )}
+      </PaginationItem>
+    ));
   };
 
   return (
@@ -52,25 +110,7 @@ export default function PaginationUi({
             />
           )}
         </PaginationItem>
-        {[...Array(totalPages).keys()].map((page) => (
-          <PaginationItem key={page}>
-            {currentPage === page + 1 ? (
-              <span className="cursor-not-allowed">
-                <PaginationLink isActive>{page + 1}</PaginationLink>
-              </span>
-            ) : (
-              <PaginationLink
-                onClick={() => {
-                  setCurrentPage(page + 1);
-                  router.push(`/${link}/page/${page + 1}`);
-                }}
-                className="cursor-pointer"
-              >
-                {page + 1}
-              </PaginationLink>
-            )}
-          </PaginationItem>
-        ))}
+        {renderPageNumbers()}
         <PaginationItem>
           {isLastPage ? (
             <span className="cursor-not-allowed">
