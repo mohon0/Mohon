@@ -10,7 +10,11 @@ export default function HeroImage() {
           <Image
             src={HeroImg}
             alt=""
-            className=" mx-auto mt-12 scale-[0.91] object-cover"
+            className=" mx-auto mt-12 object-cover"
+            height="350"
+            width="350"
+            quality="70"
+            priority={true}
           />
         </div>
       </div>
