@@ -1,5 +1,5 @@
 import { useFormikContext } from "formik";
-import { SingleApplicationType } from "../type/ApplicationType";
+import { SingleApplicationType } from "../../type/ApplicationType";
 
 export default function FooterNotice() {
   const formik = useFormikContext<SingleApplicationType>();

@@ -5,8 +5,8 @@ import Image from "next/image";
 import { useRef } from "react";
 import { IoMdPrint } from "react-icons/io";
 import { useReactToPrint } from "react-to-print";
-import { SingleApplicationUserType } from "../type/ApplicationType";
-import { Button } from "../ui/button";
+import { SingleApplicationUserType } from "../../../type/ApplicationType";
+import { Button } from "../../../ui/button";
 import Model from "./Model";
 
 export default function Print({ application }: SingleApplicationUserType) {

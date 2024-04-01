@@ -1,7 +1,7 @@
 "use client";
-import EditApplication from "@/components/application/EditApplication";
 import Loading from "@/components/common/loading/Loading";
 import { FetchSingleApplication } from "@/components/fetch/get/application/FetchSingleApplication";
+import EditApplication from "@/components/page/application/EditApplication";
 import { useParams } from "next/navigation";
 export default function EditSingleApplication() {
   const params = useParams();
@@ -15,7 +15,7 @@ export default function EditSingleApplication() {
       ) : isError ? (
         "Error fetching application"
       ) : (
-        <EditApplication id={params.id}/>
+        <EditApplication id={params.id} />
       )}
     </>
   );

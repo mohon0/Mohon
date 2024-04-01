@@ -7,8 +7,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FetchApplicationData } from "../fetch/get/application/FetchApplicationData";
-import { Button } from "../ui/button";
+import { FetchApplicationData } from "../../fetch/get/application/FetchApplicationData";
+import { Button } from "../../ui/button";
 
 function formatDate(isoDateString: string): string {
   const options: Intl.DateTimeFormatOptions = {

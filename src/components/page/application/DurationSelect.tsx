@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 
 import { useField } from "formik";
-import { FetchDuration } from "../fetch/get/application/FetchDuration";
+import { FetchDuration } from "../../fetch/get/application/FetchDuration";
 
 export function DurationSelect() {
   const [field, meta, helpers] = useField("duration");

@@ -1,9 +1,9 @@
-import LoadingAnimation from "@/components/common/loading/LoadingAnimation";
+import Loading from "@/components/common/loading/Loading";
 
 export default function LoadingHome() {
   return (
     <>
-      <LoadingAnimation />
+      <Loading />
     </>
   );
 }

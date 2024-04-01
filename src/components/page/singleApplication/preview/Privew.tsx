@@ -1,3 +1,4 @@
+import { SingleApplicationType } from "@/components/type/ApplicationType";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,7 +13,6 @@ import logo from "@/images/hero/logo3.png";
 import { useFormikContext } from "formik";
 import Image from "next/image";
 import Model from "../print/Model";
-import { SingleApplicationType } from "../type/ApplicationType";
 
 export default function Preview() {
   const formik = useFormikContext<SingleApplicationType>();

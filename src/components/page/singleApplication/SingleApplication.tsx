@@ -1,5 +1,5 @@
-import Print from "../print/Print";
-import { SingleApplicationUserType } from "../type/ApplicationType";
+import { SingleApplicationUserType } from "@/components/type/ApplicationType";
+import Print from "./print/Print";
 
 export default function SingleApplication({
   application,

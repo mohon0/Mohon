@@ -2,7 +2,7 @@ import bkash from "@/images/tools/bkash.svg";
 import { useFormikContext } from "formik";
 import Image from "next/image";
 import Link from "next/link";
-import { SingleApplicationType } from "../type/ApplicationType";
+import { SingleApplicationType } from "../../type/ApplicationType";
 
 export default function PayButton() {
   const formik = useFormikContext<SingleApplicationType>();

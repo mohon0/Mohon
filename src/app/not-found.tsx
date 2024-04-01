@@ -1,5 +1,6 @@
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function NotFound() {
@@ -18,24 +19,23 @@ export default function NotFound() {
           <p className="my-12 text-lg text-gray-500 md:text-xl lg:text-2xl">
             Sorry, the page you are looking for could not be found.
           </p>
-          <Link
-            href="/"
-            className="dark:bg-btn-100 text-lightgray-100 flex gap-2 rounded-md bg-primary-300 px-6 py-3 text-sm font-bold dark:bg-primary-300"
-            title="Return Home"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <span>Return Home</span>
+
+          <Link href="/" title="Return Home">
+            <Button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <>Return Home</>
+            </Button>
           </Link>
         </div>
         <div className="flex w-1/2 justify-center p-4 lg:h-full lg:items-end">

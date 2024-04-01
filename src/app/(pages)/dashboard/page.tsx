@@ -1,9 +1,9 @@
 "use client";
-import ApplicationModel from "@/components/application/ApplicationModel";
 import Loading from "@/components/common/loading/Loading";
 import { FetchActionDashboardData } from "@/components/fetch/get/dashboard/FetchDashboardData";
 import formatDate from "@/components/helper/hooks/FormatedDate";
 import ToolTipHookDown from "@/components/helper/hooks/TooltipHookDown";
+import ApplicationModel from "@/components/page/application/ApplicationModel";
 import {
   AlertDialog,
   AlertDialogAction,

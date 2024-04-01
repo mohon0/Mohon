@@ -1,10 +1,10 @@
 "use client";
-import Application from "@/components/application/Application";
-import Notice from "@/components/application/Notice";
-import ApplicationDataModel from "@/components/application/applied/ApplicationDataModel";
-import LoadingAnimation from "@/components/common/loading/LoadingAnimation";
+import Loading from "@/components/common/loading/Loading";
 import { FetchApplicationData } from "@/components/fetch/get/application/FetchApplicationData";
 import { FetchActionButtonData } from "@/components/fetch/get/visibility/FetchActionButtonData";
+import Application from "@/components/page/application/Application";
+import Notice from "@/components/page/application/Notice";
+import ApplicationDataModel from "@/components/page/application/applied/ApplicationDataModel";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -28,7 +28,7 @@ export default function ApplicationPage() {
   } = FetchApplicationData();
 
   if (status === "loading" || isLoadingButton || isLoadingApplication) {
-    return <LoadingAnimation />;
+    return <Loading />;
   }
 
   if (isErrorButton || isErrorApplication) {
