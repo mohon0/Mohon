@@ -12,12 +12,12 @@ function Cta() {
           <div className="text-2xl lg:text-3xl">Lets Get Started...</div>
         </div>
 
-        <Link href="/contact">
+        <Link href="#contact">
           <Button
             variant="outline"
             className="rounded-full border-primary px-12 py-6 text-xl font-bold"
           >
-            Contact Me{" "}
+            Contact Me
           </Button>
         </Link>
       </div>
