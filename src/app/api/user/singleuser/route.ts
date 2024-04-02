@@ -60,16 +60,23 @@ export async function GET(req: NextRequest, res: NextResponse) {
         email: true,
         image: true,
         phoneNumber: true,
+        createdAt: true,
+        facebook: true,
+        twitter: true,
+        linkedin: true,
+        github: true,
+        instagram: true,
+        bio: true,
+        _count: {
+          select: {
+            posts: true,
+            comments: true,
+          },
+        },
         applications: {
           select: {
             id: true,
             image: true,
-          },
-        },
-        comments: {
-          select: {
-            id: true,
-            content: true,
           },
         },
       },
