@@ -2,6 +2,12 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -19,12 +25,6 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "../ui/sheet";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "../ui/accordion";
 
 export default function Menu() {
   const { data: session } = useSession();

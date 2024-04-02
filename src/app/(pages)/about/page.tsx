@@ -1,7 +1,7 @@
 "use client";
-import Contact from "@/components/layout/Contract";
 import AboutMeCard from "@/components/page/about/AboutMeCard";
 import WorkCategory from "@/components/page/about/WorkCategory";
+import Contact from "@/components/page/contact/Contract";
 import Cta from "@/components/page/home/Cta";
 import Projects from "@/components/page/home/Projects";
 import Team from "@/components/page/home/Team";
