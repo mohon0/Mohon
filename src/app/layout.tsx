@@ -10,7 +10,10 @@ const inter = Inter({ subsets: ["latin"] });
 const siteurl = process.env.NEXT_PUBLIC_SITE_URL;
 export const metadata: Metadata = {
   metadataBase: new URL(`${siteurl}`),
-  title: "Freelancer Mohon",
+  title: {
+    default: "Freelancer Mohon",
+    template: "%s - Freelancer Mohon",
+  },
   description:
     "Professional Graphics Desinger & IT Teacher. Jhenaidah, Khulna, Bangladesh.",
   generator: "Next js",

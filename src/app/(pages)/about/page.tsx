@@ -1,4 +1,3 @@
-"use client";
 import AboutMeCard from "@/components/page/about/AboutMeCard";
 import WorkCategory from "@/components/page/about/WorkCategory";
 import Contact from "@/components/page/contact/Contract";
@@ -7,7 +6,12 @@ import Projects from "@/components/page/home/Projects";
 import Team from "@/components/page/home/Team";
 import { Button } from "@/components/ui/button";
 import img1 from "@/images/hero/img1.jpeg";
+import { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "About Me",
+};
 
 export default function AboutMe() {
   return (
@@ -22,6 +26,7 @@ export default function AboutMe() {
             src={img1}
             alt=""
             className="rounded-xl object-cover lg:h-80"
+            priority
           />
           <a
             href="/cv.pdf"
