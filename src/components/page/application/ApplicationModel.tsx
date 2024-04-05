@@ -1,15 +1,25 @@
 "use client";
 import Loading from "@/components/common/loading/Loading";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Card, CardContent } from "@/components/ui/card";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FetchApplicationData } from "../../fetch/get/application/FetchApplicationData";
 import { Button } from "../../ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 
 function formatDate(isoDateString: string): string {
   const options: Intl.DateTimeFormatOptions = {
@@ -22,8 +32,6 @@ function formatDate(isoDateString: string): string {
 }
 
 export default function ApplicationModel() {
-  const [showConfirmation, setShowConfirmation] = useState(false);
-
   const { status } = useSession();
 
   const { isLoading, data, isError, refetch } = FetchApplicationData();
@@ -35,36 +43,21 @@ export default function ApplicationModel() {
     <p>Error Loading page.</p>;
   }
 
-  const handleDelete = async () => {
-    if (data.id) {
-      setShowConfirmation(true);
-    } else {
-      console.error("Application is null. Cannot delete.");
-    }
-  };
-  console.log(data);
   const confirmDelete = async () => {
-    if (data.id) {
-      toast.loading("Please wait while deleting this application");
+    toast.loading("Please wait while deleting this application");
 
-      try {
-        const response = await axios.delete(`/api/application?id=${data.id}`);
+    try {
+      const response = await axios.delete(`/api/application?id=${data.id}`);
 
-        if (response.status === 200) {
-          toast.dismiss();
-          toast.success("Application deleted successfully");
-          refetch();
-        } else {
-          toast.error("Error deleting post");
-          console.error("Error deleting the Application");
-        }
-      } catch (error) {
-        toast.error("Error deleting application");
-        console.error("Error deleting the application", error);
+      toast.dismiss();
+      if (response.status === 200) {
+        toast.success("Application deleted successfully");
+        refetch();
+      } else {
+        toast.error("Error deleting post");
       }
-      setShowConfirmation(false);
-    } else {
-      console.error("Application is null. Cannot confirm delete.");
+    } catch (error) {
+      toast.error("Error deleting application");
     }
   };
 
@@ -73,7 +66,7 @@ export default function ApplicationModel() {
       {!isLoading && status === "authenticated" ? (
         data && data !== "No Application Found" ? (
           <>
-            <div className="space-y-4">
+            <div className="mx-2 space-y-4">
               <p className="text-xl font-bold">
                 Your application has already been submitted
               </p>
@@ -88,12 +81,33 @@ export default function ApplicationModel() {
                       height={200}
                       className="h-20 w-20 rounded-full object-cover"
                     />
-                    <button
-                      onClick={handleDelete}
-                      className="h-10 rounded-md bg-red-600 px-4"
-                    >
-                      Delete
-                    </button>
+
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="destructive" size="lg">
+                          <span className="flex items-center gap-4">
+                            Delete
+                          </span>
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Application data will be deleted from the database.
+                            And you will not be refunded.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={confirmDelete}>
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
 
                   <p className="text-primary-100 mb-2 text-xl font-bold">
@@ -160,32 +174,6 @@ export default function ApplicationModel() {
                 </CardContent>
               </Card>
             </div>
-            {showConfirmation && (
-              <div className="fixed inset-0 z-50  flex h-screen w-screen items-center justify-center bg-black bg-opacity-50  backdrop-blur-sm">
-                <div className="w-11/12 rounded-lg bg-blue-950 p-6 shadow-md md:w-3/4 lg:w-2/6">
-                  <p className="text-xl">
-                    Are you sure you want to delete this Application? This
-                    Action can not be undone.
-                  </p>
-                  <p className="text-red-600">You will not be refunded.</p>
-                  <div className="mt-8 flex justify-end">
-                    <button
-                      onClick={() => setShowConfirmation(false)}
-                      className="mr-4 rounded bg-gray-600 px-4 py-2 hover:bg-gray-700"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      onClick={confirmDelete}
-                      className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-                    >
-                      Confirm Delete
-                    </button>
-                  </div>
-                </div>
-                <ToastContainer position="top-center" autoClose={3000} />
-              </div>
-            )}
           </>
         ) : (
           ""

@@ -3,8 +3,8 @@ import Loading from "@/components/common/loading/Loading";
 import { FetchApplicationData } from "@/components/fetch/get/application/FetchApplicationData";
 import { FetchActionButtonData } from "@/components/fetch/get/visibility/FetchActionButtonData";
 import Application from "@/components/page/application/Application";
+import ApplicationModel from "@/components/page/application/ApplicationModel";
 import Notice from "@/components/page/application/Notice";
-import ApplicationDataModel from "@/components/page/application/applied/ApplicationDataModel";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -47,7 +47,11 @@ export default function ApplicationPage() {
       );
     }
 
-    return <ApplicationDataModel application={applicationData} />;
+    return (
+      <div className="mt-28 flex items-center justify-center">
+        <ApplicationModel />
+      </div>
+    );
   }
 
   return "Application Date is Over";
