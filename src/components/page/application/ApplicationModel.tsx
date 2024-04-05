@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FetchApplicationData } from "../../fetch/get/application/FetchApplicationData";
 import { Button } from "../../ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 function formatDate(isoDateString: string): string {
   const options: Intl.DateTimeFormatOptions = {
@@ -41,7 +42,7 @@ export default function ApplicationModel() {
       console.error("Application is null. Cannot delete.");
     }
   };
-
+  console.log(data);
   const confirmDelete = async () => {
     if (data.id) {
       toast.loading("Please wait while deleting this application");
@@ -72,88 +73,92 @@ export default function ApplicationModel() {
       {!isLoading && status === "authenticated" ? (
         data && data !== "No Application Found" ? (
           <>
-            <div className="flex flex-col items-center justify-center">
+            <div className="space-y-4">
               <p className="text-xl font-bold">
                 Your application has already been submitted
               </p>
 
-              <div className="border-primary-200 mx-2 mt-16 flex w-full flex-col gap-2 rounded-lg border bg-gray-950 p-3 md:w-1/3 lg:w-1/4">
-                <div className="mb-3 flex justify-between">
-                  <Image
-                    src={data.image}
-                    alt=""
-                    width={200}
-                    height={200}
-                    className="h-20 w-20 rounded-full object-cover"
-                  />
-                  <button
-                    onClick={handleDelete}
-                    className="h-10 rounded-md bg-red-600 px-4"
-                  >
-                    Delete
-                  </button>
-                </div>
+              <Card>
+                <CardContent className="mt-4">
+                  <div className="mb-3 flex justify-between">
+                    <Image
+                      src={data.image}
+                      alt=""
+                      width={200}
+                      height={200}
+                      className="h-20 w-20 rounded-full object-cover"
+                    />
+                    <button
+                      onClick={handleDelete}
+                      className="h-10 rounded-md bg-red-600 px-4"
+                    >
+                      Delete
+                    </button>
+                  </div>
 
-                <p className="text-primary-100 mb-2 text-xl font-bold">
-                  Name: {data.firstName} {data.lastName}
-                </p>
-                <p>
-                  <span className="text-primary-200 font-bold">Course: </span>
-                  <span>{data.course}</span>{" "}
-                </p>
-                <p>
-                  <span className="text-primary-200 font-bold">Type: </span>
-                  <span>{data.duration}</span>
-                </p>
-                <p>
-                  <span className="text-primary-200 font-bold">Date: </span>
-                  <span>{formatDate(data.createdAt)}</span>
-                </p>
-                <p>
-                  <span>Status: </span>
-                  <span
-                    className={
-                      data.status === "Pending"
-                        ? "font-bold text-yellow-500"
-                        : data.status === "Approved"
-                          ? "font-bold text-green-500"
-                          : data.status === "Rejected"
-                            ? "font-bold text-red-500"
-                            : "font-bold"
-                    }
-                  >
-                    {data.status}
-                  </span>
-                </p>
-                <p>
-                  <span className="font-bold text-secondary-foreground">
-                    Certificate:{" "}
-                  </span>
-                  <span
-                    className={
-                      data.certificate === "At Office"
-                        ? "font-bold text-cyan-500"
-                        : data.certificate === "Pending"
+                  <p className="text-primary-100 mb-2 text-xl font-bold">
+                    Name: {data.firstName} {data.lastName}
+                  </p>
+                  <p>
+                    <span className="text-primary-200 font-bold">Course: </span>
+                    <span>{data.course}</span>{" "}
+                  </p>
+                  <p>
+                    <span className="text-primary-200 font-bold">Type: </span>
+                    <span>{data.duration}</span>
+                  </p>
+                  <p>
+                    <span className="text-primary-200 font-bold">Date: </span>
+                    <span>{formatDate(data.createdAt)}</span>
+                  </p>
+                  <p>
+                    <span className="font-bold text-secondary-foreground">
+                      Status:{" "}
+                    </span>
+                    <span
+                      className={
+                        data.status === "Pending"
                           ? "font-bold text-yellow-500"
-                          : data.certificate === "Fail"
-                            ? "font-bold text-destructive"
-                            : data.certificate === "Received"
-                              ? "font-bold text-primary"
-                              : ""
-                    }
+                          : data.status === "Approved"
+                            ? "font-bold text-green-500"
+                            : data.status === "Rejected"
+                              ? "font-bold text-red-500"
+                              : "font-bold"
+                      }
+                    >
+                      {data.status}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-bold text-secondary-foreground">
+                      Certificate:{" "}
+                    </span>
+                    <span
+                      className={
+                        data.certificate === "At Office"
+                          ? "font-bold text-cyan-500"
+                          : data.certificate === "Pending"
+                            ? "font-bold text-yellow-500"
+                            : data.certificate === "Fail"
+                              ? "font-bold text-destructive"
+                              : data.certificate === "Received"
+                                ? "font-bold text-primary"
+                                : ""
+                      }
+                    >
+                      {data.certificate}
+                    </span>
+                  </p>
+                  <Link
+                    href={`/application-list/singleapplication/${data.id}`}
+                    className="mt-6 flex w-full"
                   >
-                    {data.certificate}
-                  </span>
-                </p>
-                <Link
-                  href={`/application-list/singleapplication/${data.id}`}
-                  className="mt-6 flex w-full"
-                >
-                  <Button variant="secondary" className="w-full">
-                    View Details
-                  </Button>
-                </Link>
-              </div>
+                    <Button variant="secondary" className="w-full">
+                      View Details
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
             </div>
             {showConfirmation && (
               <div className="fixed inset-0 z-50  flex h-screen w-screen items-center justify-center bg-black bg-opacity-50  backdrop-blur-sm">

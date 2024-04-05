@@ -159,6 +159,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
           session,
           image: downloadURL,
           status: "Pending",
+          certificate: "Pending",
         },
       });
 
@@ -197,6 +198,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         status: true,
         course: true,
         createdAt: true,
+        certificate: true,
       },
     });
 
