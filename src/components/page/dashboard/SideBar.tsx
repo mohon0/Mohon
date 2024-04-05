@@ -1,4 +1,15 @@
 "use client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
@@ -111,36 +122,30 @@ export default function SideBar() {
               </Avatar>
               <div>{name}</div>
             </div>
-            <Button
-              variant="destructive"
-              className="mx-4 flex items-center gap-4"
-              onClick={handleDelete}
-            >
-              <FaPowerOff />
-              <span>Logout</span>
-            </Button>
-          </div>
-          {showConfirmation && (
-            <div className="fixed inset-0 z-50  flex h-screen w-screen items-center justify-center bg-black bg-opacity-50  backdrop-blur-sm">
-              <div className="w-11/12 rounded-lg bg-blue-950 p-6 shadow-md lg:w-2/6">
-                <p className="text-xl">Are you sure you want to Log Out</p>
-                <div className="mt-8 flex justify-end">
-                  <button
-                    onClick={() => setShowConfirmation(false)}
-                    className="mr-4 rounded bg-gray-600 px-4 py-2 hover:bg-gray-700"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleLogout}
-                    className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-                  >
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive">
+                  <span className="flex items-center gap-4">
+                    Log Out <FaPowerOff />
+                  </span>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    You will be log out from this browser immediately.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleLogout}>
                     Log Out
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         </>
       )}
     </div>

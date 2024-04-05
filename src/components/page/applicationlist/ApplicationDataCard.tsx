@@ -1,21 +1,24 @@
 "use client";
 import { ApplicationListType } from "@/components/type/ApplicationListType";
-import { Button } from "@/components/ui/button";
-import { DialogFooter, DialogHeader } from "@/components/ui/dialog";
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from "@radix-ui/react-dialog";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
-import { toast } from "react-toastify";
+import { FaRegEdit } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa6";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ActionSelect from "./ActionSelect";
 import CertificateSelect from "./CertificateSelect";
@@ -138,40 +141,31 @@ export default function ApplicationDataCard(app: ExtendedApplicationListType) {
           className="mx-auto mb-4 h-20 w-20 rounded-full"
         />
 
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button size="icon" variant="destructive">
-              <FaRegTrashAlt />
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="destructive" size="icon">
+              <FaTrash />
             </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Delete Application</DialogTitle>
-              <DialogDescription>
-                Are you sure you want to delete this Application? This Action
-                can not be undone.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button type="button" variant="secondary">
-                  Cancel
-                </Button>
-              </DialogClose>
-              <DialogClose asChild>
-                <Button
-                  type="button"
-                  onClick={() => {
-                    handleDelete(app.id);
-                  }}
-                  variant="destructive"
-                >
-                  Delete
-                </Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Application data will be deleted from the database.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  handleDelete(app.id);
+                }}
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
       <div className="flex flex-col">
         <p className="mb-2 text-xl font-bold text-primary">
@@ -266,6 +260,7 @@ export default function ApplicationDataCard(app: ExtendedApplicationListType) {
           View Details
         </Button>
       </Link>
+      <ToastContainer theme="dark" />
     </div>
   );
 }
