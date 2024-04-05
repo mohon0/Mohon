@@ -106,13 +106,6 @@ export default function Menu() {
               </Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link href="/blog/category/our_course">
-                <Button variant="outline" className="flex w-full">
-                  Our Course
-                </Button>
-              </Link>
-            </SheetClose>
-            <SheetClose asChild>
               <Link href="/about">
                 <Button variant="outline" className="flex w-full">
                   About Me
@@ -123,13 +116,6 @@ export default function Menu() {
               <Link href="/application">
                 <Button variant="outline" className="flex w-full">
                   Application
-                </Button>
-              </Link>
-            </SheetClose>
-            <SheetClose asChild>
-              <Link href="/blog/category/notice">
-                <Button variant="outline" className="flex w-full">
-                  Notice
                 </Button>
               </Link>
             </SheetClose>
