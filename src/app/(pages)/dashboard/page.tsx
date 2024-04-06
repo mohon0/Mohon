@@ -76,12 +76,14 @@ export default function Dashboard() {
                 )}
 
                 <div className="flex flex-col gap-3 md:gap-6 lg:flex-row">
-                  <Button size="lg">
-                    <span className="flex items-center gap-4">
-                      Edit Profile
-                      <FaUserEdit size={20} />
-                    </span>
-                  </Button>
+                  <Link href="/editprofile">
+                    <Button size="lg">
+                      <span className="flex items-center gap-4">
+                        Edit Profile
+                        <FaUserEdit size={20} />
+                      </span>
+                    </Button>
+                  </Link>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button variant="destructive" size="lg">

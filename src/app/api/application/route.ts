@@ -1,4 +1,4 @@
-import checkIfImageExists from "@/components/helper/ImageCheck";
+import checkIfImageExists from "@/components/helper/backEnd/ImageCheck";
 import storage from "@/utils/firebaseConfig";
 import { PrismaClient } from "@prisma/client";
 import {

@@ -1,9 +1,9 @@
+import checkIfImageExists from "@/components/helper/backEnd/ImageCheck";
+import { Prisma } from "@/components/helper/backEnd/Prisma";
 import storage from "@/utils/firebaseConfig";
-import { PrismaClient } from "@prisma/client";
 import {
   deleteObject,
   getDownloadURL,
-  getMetadata,
   ref,
   uploadBytes,
 } from "firebase/storage";
@@ -11,27 +11,6 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 const secret = process.env.NEXTAUTH_SECRET;
-const prisma = new PrismaClient();
-
-// Function to check if an image exists in Firebase Storage
-async function imageExists(imagePath: string | undefined) {
-  const storageRef = ref(storage, imagePath);
-
-  try {
-    // Get metadata for the file
-    const metadata = await getMetadata(storageRef);
-    return metadata.size > 0; // If size is greater than 0, the file exists.
-  } catch (error) {
-    if ((error as any).code === "storage/object-not-found") {
-      // If the error code is "object-not-found," the file doesn't exist.
-      return false;
-    } else {
-      // Handle other errors here
-      console.error("Error checking image existence:", error);
-      throw error;
-    }
-  }
-}
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
@@ -88,7 +67,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       const downloadURL = await getDownloadURL(storageRef);
 
       // Create a new post using Prisma
-      const newPost = await prisma.post.create({
+      const newPost = await Prisma.post.create({
         data: {
           title,
           coverImage: downloadURL,
@@ -153,7 +132,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
 
       // Delete previous image from Firebase storage
       if (coverImageURL && postId) {
-        const previousPost = await prisma.post.findUnique({
+        const previousPost = await Prisma.post.findUnique({
           where: { id: postId },
           select: { coverImage: true },
         });
@@ -181,7 +160,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       updatedPostData.coverImage = coverImageURL;
     }
 
-    const updatedPost = await prisma.post.update({
+    const updatedPost = await Prisma.post.update({
       where: { id: postId },
       data: updatedPostData,
     });
@@ -214,7 +193,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
       return new NextResponse("Post not found", { status: 404 });
     }
     // Step 2: Fetch the post details
-    const post = await prisma.post.findUnique({
+    const post = await Prisma.post.findUnique({
       where: {
         id: postId,
       },
@@ -243,19 +222,19 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     }
 
     // Step 4: Delete associated comments first
-    await prisma.comment.deleteMany({
+    await Prisma.comment.deleteMany({
       where: {
         postId: postId,
       },
     });
 
-    if (await imageExists(post.coverImage)) {
+    if (await checkIfImageExists(post.coverImage)) {
       const storageRefToDelete = ref(storage, post.coverImage);
       await deleteObject(storageRefToDelete);
     }
 
     // Step 5: Delete the post
-    const deletedPost = await prisma.post.delete({
+    const deletedPost = await Prisma.post.delete({
       where: {
         id: postId,
       },
