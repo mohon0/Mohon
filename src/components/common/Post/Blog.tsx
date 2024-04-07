@@ -3,6 +3,7 @@ import AuthorCard from "@/components/common/Post/AuthorCard";
 import Loading from "@/components/common/loading/Loading";
 import CommentForm from "@/components/core/Comment";
 import SocialShare from "@/components/core/SocialShare";
+import { FetchAllPost } from "@/components/fetch/get/blog/FetchAllPost";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -30,6 +31,13 @@ interface PageProps {
 export default function Blog({ params }: PageProps) {
   const router = useRouter();
   const { data: session } = useSession();
+  const { refetch } = FetchAllPost({
+    currentPage: 1,
+    pageSize: 16,
+    selectedCategory: "all",
+    sortBy: "newest",
+    searchInput: "",
+  });
 
   const { isLoading, data, isError } = FetchSinglePost({
     category: params.category,
@@ -92,10 +100,13 @@ export default function Blog({ params }: PageProps) {
         },
       });
 
+      toast.dismiss();
       if (response.ok) {
-        toast.dismiss();
         toast.success("Post deleted successfully");
-        router.push("/blog/page/1");
+        refetch();
+        setTimeout(() => {
+          router.push("/blog/page/1");
+        }, 1000);
       } else {
         toast.error("Error deleting post");
       }
