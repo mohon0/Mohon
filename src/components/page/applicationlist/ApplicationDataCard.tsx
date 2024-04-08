@@ -260,7 +260,7 @@ export default function ApplicationDataCard(app: ExtendedApplicationListType) {
           View Details
         </Button>
       </Link>
-      <ToastContainer theme="dark" />
+      <ToastContainer theme="dark" position="top-center" />
     </div>
   );
 }

@@ -142,9 +142,7 @@ export default function EditApplication({ id }: { id: string | string[] }) {
             })}
             onSubmit={async (values, { setSubmitting }) => {
               setIsSubmitting(true);
-
               setSubmitting(false);
-
               const formData = new FormData();
 
               // Iterate through the form values and append each key-value pair to formData
@@ -179,7 +177,6 @@ export default function EditApplication({ id }: { id: string | string[] }) {
                 toast.error(
                   "Couldn't update your post. Please try again later",
                 );
-                console.error("Error submitting application:", error);
               }
             }}
           >
@@ -378,9 +375,9 @@ export default function EditApplication({ id }: { id: string | string[] }) {
               </div>
             </Form>
           </Formik>
-          <ToastContainer position="top-center" theme="dark" autoClose={3000} />
         </>
       )}
+      <ToastContainer theme="dark" position="top-center" />
     </>
   );
 }

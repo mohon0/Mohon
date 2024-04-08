@@ -228,12 +228,14 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
       },
     });
 
+    // Step 5: Delete associated Image
+
     if (await checkIfImageExists(post.coverImage)) {
       const storageRefToDelete = ref(storage, post.coverImage);
       await deleteObject(storageRefToDelete);
     }
 
-    // Step 5: Delete the post
+    // Step 6: Delete the post
     const deletedPost = await Prisma.post.delete({
       where: {
         id: postId,
@@ -246,7 +248,6 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
       return new NextResponse("Post not found", { status: 404 });
     }
   } catch (error) {
-    console.error("Error deleting post:", error);
     return new NextResponse("Internal server error", { status: 500 });
   }
 }

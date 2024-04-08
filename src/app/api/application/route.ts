@@ -298,7 +298,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     }
 
     // Check if the user has an image in Firebase Storage
-    if (existingUser.image) {
+    if (existingUser.image && imageData) {
       const imageExists = await checkIfImageExists(existingUser.image);
       if (imageExists) {
         // Delete the previous cover image
@@ -315,7 +315,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       const buffer = Buffer.from(await (imageData as Blob).arrayBuffer());
 
       // Upload file to Firebase storage
-      const storageRef = ref(storage, "profile/" + filename);
+      const storageRef = ref(storage, "application/" + filename);
       await uploadBytes(storageRef, buffer);
 
       // Get download URL from Firebase storage

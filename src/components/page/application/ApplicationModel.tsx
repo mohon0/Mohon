@@ -44,16 +44,16 @@ export default function ApplicationModel() {
   }
 
   const confirmDelete = async () => {
-    toast.loading("Please wait while deleting this application");
-
     try {
+      toast.loading("Please wait while deleting this application");
       const response = await axios.delete(`/api/application?id=${data.id}`);
 
-      toast.dismiss();
       if (response.status === 200) {
+        toast.dismiss();
         toast.success("Application deleted successfully");
         refetch();
       } else {
+        toast.dismiss();
         toast.error("Error deleting post");
       }
     } catch (error) {
