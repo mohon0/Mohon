@@ -94,7 +94,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       return new NextResponse("User not found", { status: 404 });
     }
     // Check if the user has an image in Firebase Storage
-    if (existingUser.image) {
+    if (existingUser.image && coverImageBlob) {
       const imageExists = await checkIfImageExists(existingUser.image);
       if (imageExists) {
         // Delete the previous cover image

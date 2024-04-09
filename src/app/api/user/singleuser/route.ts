@@ -1,35 +1,13 @@
+import checkIfImageExists from "@/components/helper/backEnd/ImageCheck";
 import storage from "@/utils/firebaseConfig";
 import { PrismaClient } from "@prisma/client";
-import { deleteObject, getMetadata, ref } from "firebase/storage";
+import { deleteObject, ref } from "firebase/storage";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 const secret = process.env.NEXTAUTH_SECRET;
 const Admin = process.env.NEXT_PUBLIC_ADMIN;
-
-async function imageExists(imagePath: string | undefined) {
-  const storageRef = ref(storage, imagePath);
-
-  try {
-    const metadata = await getMetadata(storageRef);
-    return metadata.size > 0;
-  } catch (error) {
-    if ((error as any).code === "storage/object-not-found") {
-      return false;
-    } else {
-      console.error("Error checking image existence:", error);
-      throw error;
-    }
-  }
-}
-
-async function deleteImageIfExists(imagePath: string | undefined) {
-  if (imagePath && (await imageExists(imagePath))) {
-    const storageRefToDelete = ref(storage, imagePath);
-    await deleteObject(storageRefToDelete);
-  }
-}
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
@@ -150,13 +128,13 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     });
 
     if (application?.image) {
-      if (await imageExists(application.image)) {
+      if (await checkIfImageExists(application.image)) {
         const storageRefToDelete = ref(storage, application.image);
         await deleteObject(storageRefToDelete);
       }
     }
     if (user?.image) {
-      if (await imageExists(user.image)) {
+      if (await checkIfImageExists(user.image)) {
         const storageRefToDelete = ref(storage, user.image);
         await deleteObject(storageRefToDelete);
       }
