@@ -129,6 +129,17 @@ module.exports = {
             transform: "scale(0.6)",
           },
         },
+
+        text: {
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "left center",
+          },
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -142,6 +153,7 @@ module.exports = {
         scroll: "scroll forwards 70s linear infinite",
         move: "move 4s linear infinite",
         ani: "ani 1.6s linear infinite",
+        text: "text 5s ease infinite",
       },
     },
   },

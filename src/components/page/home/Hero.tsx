@@ -9,7 +9,7 @@ import HeroImage from "./HeroImage";
 
 export default function Hero() {
   return (
-    <div className=" min-w-screen relative mx-3 mb-20 mt-12 flex flex-col items-center justify-center md:mx-4 lg:mx-28 lg:mt-12">
+    <div className=" min-w-screen relative mx-3 mb-10 mt-12 flex flex-col items-center justify-center md:mx-4 lg:mx-28 lg:mt-12">
       <div className="flex flex-col-reverse justify-center gap-8 md:flex-row md:justify-between md:gap-0 ">
         <div className="flex flex-col justify-center gap-6 md:w-1/2">
           <p>Hello its me</p>

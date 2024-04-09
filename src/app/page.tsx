@@ -5,6 +5,7 @@ import Contact from "@/components/page/contact/Contract";
 import Cta from "@/components/page/home/Cta";
 import Hero from "@/components/page/home/Hero";
 import Projects from "@/components/page/home/Projects";
+import ScrollingText from "@/components/page/home/ScrollingText";
 import Services from "@/components/page/home/Services";
 import Team from "@/components/page/home/Team";
 import Testimonial from "@/components/page/home/Testimonial";
@@ -20,6 +21,7 @@ export default function Home() {
       <div className="mt-20">
         <Hero />
       </div>
+      <ScrollingText />
       <Services />
       <Tools />
       <Projects />

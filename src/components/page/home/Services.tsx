@@ -5,7 +5,7 @@ import { ServicesData } from "./ServiceData";
 export default function Services() {
   return (
     <div
-      className="flex flex-col items-center justify-center gap-10 overflow-clip md:mx-3 md:gap-20 lg:mx-28 lg:my-10"
+      className="my-10 flex flex-col items-center justify-center gap-10 overflow-clip md:mx-3 md:gap-20 lg:mx-28"
       id="service"
     >
       <SectionHeader text="What I Do" title="Services & Our Course" />
