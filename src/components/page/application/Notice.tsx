@@ -31,12 +31,14 @@ const Notice: React.FC = () => {
     <div className="mx-2 mt-20 border border-primary py-2 md:mx-10 lg:mx-20">
       <div className="scroller overflow-hidden">
         <div className="scroller__inner text-accent-forground flex animate-scroll gap-4">
-          <p>সবাইকে দক্ষ করে গড়ে তোলায় আমাদের একমাত্র লক্ষ্য।</p>
-          <p>ঝিনাইদহ শহরে একমাত্র আমরাই আপনাদের সার্বক্ষণিক পাশে আছি।</p>
-          <p>আপনাদের যে কোন সমস্যা জানাতে সরাসরি চলে আসুন আমাদের অফিসে।</p>
-          <p>ঠিকানাঃ রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা)</p>
-          <p>অথবা কল করুনঃ 01989-491248, </p>
-          <p>Gmail: bestcomputer.jhenaidah@gmail.com</p>
+          <span>সবাইকে দক্ষ করে গড়ে তোলায় আমাদের একমাত্র লক্ষ্য।</span>
+          <span>ঝিনাইদহ শহরে একমাত্র আমরাই আপনাদের সার্বক্ষণিক পাশে আছি।</span>
+          <span>
+            আপনাদের যে কোন সমস্যা জানাতে সরাসরি চলে আসুন আমাদের অফিসে।
+          </span>
+          <span>ঠিকানাঃ রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা)</span>
+          <span>অথবা কল করুনঃ 01989-491248, </span>
+          <span>Gmail: bestcomputer.jhenaidah@gmail.com</span>
         </div>
       </div>
     </div>

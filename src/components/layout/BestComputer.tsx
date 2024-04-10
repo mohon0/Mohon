@@ -22,8 +22,9 @@ export function BestComputer() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="bg-background">
-          Best Computer T.C.
+        <Button variant="ghost" className="space-x-2 bg-background">
+          <span>Best Computer T.C.</span>
+          <span className="h-2 w-2 animate-ping rounded-full bg-primary"></span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">

@@ -129,17 +129,6 @@ module.exports = {
             transform: "scale(0.6)",
           },
         },
-
-        text: {
-          "0%, 100%": {
-            "background-size": "200% 200%",
-            "background-position": "left center",
-          },
-          "50%": {
-            "background-size": "200% 200%",
-            "background-position": "right center",
-          },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -150,10 +139,9 @@ module.exports = {
         animate3: "animate3 1s linear infinite 0.5s",
         animate4: "animate4 1s linear infinite 0.75s",
         mouse: "mouse 2s infinite",
-        scroll: "scroll forwards 70s linear infinite",
+        scroll: "scroll forwards 80s linear infinite",
         move: "move 4s linear infinite",
         ani: "ani 1.6s linear infinite",
-        text: "text 5s ease infinite",
       },
     },
   },
