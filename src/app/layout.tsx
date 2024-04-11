@@ -53,7 +53,9 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
       <html lang="en">
         <body className={inter.className}>
           <Provider session={session}>
-            <div className="min-h-screen">{children}</div>
+            <div>
+              <main className="min-h-screen">{children}</main>
+            </div>
           </Provider>
           <ReactQueryDevtools initialIsOpen={false} />
         </body>
