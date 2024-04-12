@@ -57,11 +57,15 @@ export default function Navbar() {
                 legacyBehavior
                 passHref
               >
-                <Button variant="secondary">Dashboard</Button>
+                <Button variant="ghost" className="bg-background">
+                  Dashboard
+                </Button>
               </Link>
             ) : (
               <Link href="/signin" legacyBehavior passHref>
-                <Button variant="secondary">LogIn</Button>
+                <Button variant="ghost" className="bg-background">
+                  LogIn
+                </Button>
               </Link>
             )}
           </div>
