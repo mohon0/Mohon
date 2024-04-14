@@ -29,8 +29,8 @@ export default function ScrollNotice() {
     }
   }, []);
   return (
-    <div className="ml-28 mr-16 grid grid-cols-12">
-      <div className="col-span-2 flex items-center justify-center gap-2 rounded-md bg-cyan-600 p-1">
+    <div className="mx-auto flex flex-col gap-4 lg:ml-28 lg:mr-16 lg:grid lg:grid-cols-12 lg:gap-0">
+      <div className="col-span-2 mx-auto flex w-8/12 items-center justify-center gap-2 rounded-md bg-cyan-600 p-1 lg:w-full">
         <Image src={logo} alt="logo" className="h-16 w-16"></Image>
         <div className="animate-pulse text-lg font-bold text-fuchsia-900">
           <p>বেস্ট কম্পিউটার</p>
@@ -40,16 +40,17 @@ export default function ScrollNotice() {
       <div className="col-span-10 flex items-center border-b-2 border-r-2 border-t-2 border-primary">
         <div className="scroller overflow-hidden">
           <div className="scroller__inner text-accent-forground flex animate-scroll gap-4 text-lg">
-            <span>সবাইকে দক্ষ করে গড়ে তোলায় আমাদের একমাত্র লক্ষ্য।</span>
-            <span>
-              ঝিনাইদহ শহরে একমাত্র আমরাই আপনাদের সার্বক্ষণিক পাশে আছি।
-            </span>
-            <span>
-              আপনাদের যে কোন সমস্যা জানাতে সরাসরি চলে আসুন আমাদের অফিসে।
-            </span>
-            <span>ঠিকানাঃ রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা)</span>
-            <span>অথবা কল করুনঃ 01989-491248, </span>
-            <span>Gmail: bestcomputer.jhenaidah@gmail.com</span>
+            <span>আসসালামু আলাইকুম</span>
+            <span>বেস্ট কম্পিউটার ট্রেনিং সেন্টারের পক্ষ</span>
+            <span>থেকে আপনাকে স্বাগতম।</span>
+            <span>বেস্ট কম্পিউটার ট্রেনিং সেন্টারের</span>
+            <span>সকল নোটিশ পেতে ও আবেদন করতে উপরে দেওয়া </span>
+            <span>(Best Computer T.C) Navbar এ ক্লিক করুন।</span>
+            <span>প্রয়োজনে সরাসরি যোগাযোগ করুনঃ-</span>
+            <span>রফি টাওয়ার (১০ তলা ভবনো ৪র্থ তলা),</span>
+            <span>পায়রা চত্ত্বর ঝিনাইদহ। মোবাইলঃ</span>
+            <span>০১৯৮৯-৪৯১২৪৮, ০১৭৯৯-৫৭৪৫৭০</span>
+            <span> ধন্যবাদ</span>
           </div>
         </div>
       </div>
