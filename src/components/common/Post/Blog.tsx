@@ -136,7 +136,6 @@ export default function Blog({ params }: PageProps) {
 
   const inputString = data.category;
   const formattedCategory = formatString(inputString);
-
   const userInfo = session?.user?.email;
 
   return (
