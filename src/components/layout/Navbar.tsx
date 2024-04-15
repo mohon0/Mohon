@@ -38,11 +38,11 @@ export default function Navbar() {
       <Link href="/" className="text-2xl font-bold text-primary">
         MOHON
       </Link>
-      <div className="flex items-center gap-10">
+      <div className="flex items-center gap-2">
         <div className="hidden items-center gap-6 lg:flex [&>*]:cursor-pointer ">
           <NavigationMenuDemo />
         </div>
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-2">
           <div className="hidden md:block">
             <ActionButton />
           </div>

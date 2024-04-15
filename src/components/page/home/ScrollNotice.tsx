@@ -39,7 +39,7 @@ export default function ScrollNotice() {
       </div>
       <div className="col-span-10 flex items-center border-b-2 border-r-2 border-t-2 border-primary">
         <div className="scroller overflow-hidden">
-          <div className="scroller__inner text-accent-forground flex animate-scroll gap-4 text-lg">
+          <div className="scroller__inner text-accent-forground flex animate-scroll gap-2 text-xl">
             <span>আসসালামু আলাইকুম</span>
             <span>বেস্ট কম্পিউটার ট্রেনিং সেন্টারের পক্ষ</span>
             <span>থেকে আপনাকে স্বাগতম।</span>
@@ -47,10 +47,10 @@ export default function ScrollNotice() {
             <span>সকল নোটিশ পেতে ও আবেদন করতে উপরে দেওয়া </span>
             <span>(Best Computer T.C) Navbar এ ক্লিক করুন।</span>
             <span>প্রয়োজনে সরাসরি যোগাযোগ করুনঃ-</span>
-            <span>রফি টাওয়ার (১০ তলা ভবনো ৪র্থ তলা),</span>
+            <span>রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা),</span>
             <span>পায়রা চত্ত্বর ঝিনাইদহ। মোবাইলঃ</span>
             <span>০১৯৮৯-৪৯১২৪৮, ০১৭৯৯-৫৭৪৫৭০</span>
-            <span> ধন্যবাদ</span>
+            <span> ধন্যবাদ । </span>
           </div>
         </div>
       </div>
