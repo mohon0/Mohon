@@ -22,11 +22,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const data = await req.formData();
     const titleEntry = data.get("title");
-    const cover = data.get("image");
+    // const cover = data.get("image");
     const categoriesEntry = data.get("category");
     const contentEntry = data.get("content");
+    const imageUrlEntry = data.get("imageUrl");
 
-    if (!titleEntry || !cover || !categoriesEntry) {
+    console.log(data);
+
+    // Replace cover with imageUrl
+
+    if (!titleEntry || !imageUrlEntry || !categoriesEntry) {
       return new NextResponse("Missing title, file or categories", {
         status: 400,
       });
@@ -45,6 +50,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
     } else if (categoriesEntry instanceof File) {
       categories = categoriesEntry.name;
     }
+    let imageUrl = "";
+    if (typeof imageUrlEntry === "string") {
+      imageUrl = imageUrlEntry;
+    } else if (imageUrlEntry instanceof File) {
+      imageUrl = imageUrlEntry.name;
+    }
 
     let content = "";
     if (typeof contentEntry === "string") {
@@ -53,24 +64,27 @@ export async function POST(req: NextRequest, res: NextResponse) {
       content = contentEntry.name;
     }
 
-    const coverBlob = cover as Blob;
+    // const coverBlob = cover as Blob;
 
-    const buffer = Buffer.from(await coverBlob.arrayBuffer());
-    const filename = Date.now() + coverBlob.name.replaceAll(" ", "_");
+    // const buffer = Buffer.from(await coverBlob.arrayBuffer());
+    // const filename = Date.now() + coverBlob.name.replaceAll(" ", "_");
 
     try {
       // Upload file to Firebase storage
-      const storageRef = ref(storage, "uploads/" + filename);
-      await uploadBytes(storageRef, buffer);
+      // const storageRef = ref(storage, "uploads/" + filename);
+      // await uploadBytes(storageRef, buffer);
 
       // Get download URL from Firebase storage
-      const downloadURL = await getDownloadURL(storageRef);
+      // const downloadURL = await getDownloadURL(storageRef);
 
       // Create a new post using Prisma
+
+      const newImageUrl =
+        "http://drive.google.com/uc?export=view&id=" + imageUrl;
       const newPost = await Prisma.post.create({
         data: {
           title,
-          coverImage: downloadURL,
+          coverImage: newImageUrl,
           category: categories,
           content,
           author: { connect: { id: token.sub } },

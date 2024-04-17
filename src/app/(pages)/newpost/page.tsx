@@ -28,9 +28,6 @@ export default function NewPostPage() {
   const { status, data: session } = useSession();
   const router = useRouter();
   const admin = process.env.NEXT_PUBLIC_ADMIN;
-  if (session) {
-    console.log(session);
-  }
 
   if (status === "loading") {
     return <Loading />;
@@ -65,7 +62,7 @@ export default function NewPostPage() {
 
   return (
     <Formik
-      initialValues={{ title: "", categories: "", content: "" }}
+      initialValues={{ title: "", categories: "", content: "", imageUrl: "" }}
       validationSchema={Yup.object({
         title: Yup.string()
           .matches(
@@ -79,11 +76,13 @@ export default function NewPostPage() {
         content: Yup.string(),
       })}
       onSubmit={async (values) => {
+        console.log(values);
         const formData = new FormData();
         formData.append("title", values.title);
         formData.append("category", values.categories);
         formData.append("content", values.content);
-        formData.append("image", image as Blob);
+        // formData.append("image", image as Blob);
+        formData.append("imageUrl", values.imageUrl);
 
         try {
           setIsSubmitting(true);
@@ -126,8 +125,15 @@ export default function NewPostPage() {
               placeholder="Input Post Title"
             />
             <div className="flex flex-col gap-1.5">
-              <Label>Featured Image:</Label>
-              <input
+              {/* <Label>Featured Image:</Label> */}
+
+              <FormikInput
+                label="Featured Image:"
+                name="imageUrl"
+                type="text"
+                placeholder="Input gdrive image id"
+              />
+              {/* <input
                 type="file"
                 className="rounded-md border p-2"
                 onChange={handleFile}
@@ -135,7 +141,7 @@ export default function NewPostPage() {
               />
               {imageError && (
                 <p className="text-sm text-red-600">{imageError}</p>
-              )}
+              )} */}
             </div>
             <Label>Categories:</Label>
             <Field as={Categories} name="categories" />
