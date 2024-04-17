@@ -16,14 +16,14 @@ import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { ChangeEventHandler, useState } from "react";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 
 export default function NewPostPage() {
-  const [image, setImage] = useState<File | null>(null);
-  const [imageError, setImageError] = useState("");
+  // const [image, setImage] = useState<File | null>(null);
+  // const [imageError, setImageError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { status, data: session } = useSession();
   const router = useRouter();
@@ -39,21 +39,21 @@ export default function NewPostPage() {
   if (session?.user?.email !== admin) {
     return <p>You don&#39;t have permission to access this page.</p>;
   }
-  const MAX_IMAGE_SIZE_KB = 1000;
-  const handleFile: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      if (file.size > MAX_IMAGE_SIZE_KB * 1024) {
-        setImageError("file size exceeds the maximum allowed size");
-        toast.error(
-          `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`,
-        );
-      } else {
-        setImage(file);
-        setImageError("");
-      }
-    }
-  };
+  // const MAX_IMAGE_SIZE_KB = 1000;
+  // const handleFile: ChangeEventHandler<HTMLInputElement> = (event) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     if (file.size > MAX_IMAGE_SIZE_KB * 1024) {
+  //       setImageError("file size exceeds the maximum allowed size");
+  //       toast.error(
+  //         `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`,
+  //       );
+  //     } else {
+  //       setImage(file);
+  //       setImageError("");
+  //     }
+  //   }
+  // };
 
   // Function to properly encode a string for URLs
   const encodeForUrl = (str: string) => {
@@ -72,6 +72,7 @@ export default function NewPostPage() {
           .min(4, "Title Must be at least 4 characters")
           .max(80, "Title can not be more than 80 characters")
           .required("Title is required"),
+        imageUrl: Yup.string().required(),
         categories: Yup.string().required("Category is required"),
         content: Yup.string(),
       })}

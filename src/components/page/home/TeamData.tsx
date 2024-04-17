@@ -2,8 +2,6 @@ import Pic1 from "@/images/team/img1.jpg";
 import Pic10 from "@/images/team/img10.jpg";
 import Pic11 from "@/images/team/img11.jpg";
 import Pic12 from "@/images/team/img12.jpg";
-import Pic13 from "@/images/team/img13.jpg";
-import Pic14 from "@/images/team/img14.jpg";
 import Pic15 from "@/images/team/img15.jpg";
 import Pic2 from "@/images/team/img2.jpg";
 import Pic3 from "@/images/team/img3.jpg";
@@ -12,13 +10,13 @@ import Pic5 from "@/images/team/img5.jpg";
 import Pic6 from "@/images/team/img6.jpg";
 import Pic7 from "@/images/team/img7.jpg";
 import Pic8 from "@/images/team/img8.jpg";
-import Pic9 from "@/images/team/img9.jpg";
+import Pic9 from "@/images/team/img9.webp";
 
 export const TeamData = [
   {
     id: 1,
-    name: "Md. Shobuz",
-    post: "Web Designer",
+    name: "Md. Mizanur",
+    post: "T-shirt Designer",
     facebook: "https:facebook.com/demo",
     twitter: "https:twitter.com/demo",
     linkedin: "https:linkedin/in/demo",
@@ -71,8 +69,8 @@ export const TeamData = [
   },
   {
     id: 7,
-    name: "Abdur Rahman",
-    post: "Web Designer",
+    name: "Md. Naime",
+    post: "Motion Designer",
     facebook: "https/facebook.com/demo",
     twitter: "https:twitter.com/demo",
     linkedin: "https:linkedin/in/demo",
@@ -89,8 +87,8 @@ export const TeamData = [
   },
   {
     id: 9,
-    name: "Fozle Rabby",
-    post: "SEO Expert",
+    name: "Surovi Khatun",
+    post: "T-shirt Designer",
     facebook: "https/facebook.com/demo",
     twitter: "https:twitter.com/demo",
     linkedin: "https:linkedin/in/demo",
@@ -122,24 +120,6 @@ export const TeamData = [
     twitter: "https:twitter.com/demo",
     linkedin: "https:linkedin/in/demo",
     img: Pic12,
-  },
-  {
-    id: 13,
-    name: "Likhon",
-    post: "Video Editor",
-    facebook: "https/facebook.com/demo",
-    twitter: "https:twitter.com/demo",
-    linkedin: "https:linkedin/in/demo",
-    img: Pic13,
-  },
-  {
-    id: 14,
-    name: "Md Shamrat Shah",
-    post: "Data Entry Expert",
-    facebook: "https/facebook.com/demo",
-    twitter: "https:twitter.com/demo",
-    linkedin: "https:linkedin/in/demo",
-    img: Pic14,
   },
   {
     id: 15,
