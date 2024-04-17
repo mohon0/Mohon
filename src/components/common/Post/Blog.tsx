@@ -127,13 +127,6 @@ export default function Blog({ params }: PageProps) {
     return formattedString;
   }
 
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = data.coverImage;
-    link.download = "downloaded_image.jpg";
-    link.click();
-  };
-
   const inputString = data.category;
   const formattedCategory = formatString(inputString);
   const userInfo = session?.user?.email;
@@ -226,12 +219,6 @@ export default function Blog({ params }: PageProps) {
             </div>
 
             <div className="mt-[32rem]">
-              <Button
-                onClick={handleDownload}
-                className="mx-auto my-6 flex items-center justify-center"
-              >
-                Download Image
-              </Button>
               <div
                 className={`mb-12 mt-10 list-decimal rounded-lg md:mx-0 md:mt-16 md:text-lg ${styles["post-content"]}`}
                 dangerouslySetInnerHTML={{ __html: data.content }}

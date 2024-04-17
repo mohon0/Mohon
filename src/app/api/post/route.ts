@@ -62,12 +62,15 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       });
     }
 
+    const newImageUrl =
+      "http://drive.google.com/uc?export=view&id=" + data.imageUrl;
+
     const updatedPost = await Prisma.post.update({
       where: { id: data.id },
       data: {
         title: data.title,
         category: data.categories,
-        coverImage: data.coverImage,
+        coverImage: newImageUrl,
         content: data.content,
       },
     });
