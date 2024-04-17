@@ -24,9 +24,11 @@ export default function ProjectSlider() {
         </div>
       ) : isError ? (
         <p>Error loading posts. Please try again later.</p>
+      ) : data === "No posts found" ? (
+        <p>No posts found.</p>
       ) : (
         <div>
-          {data.posts.length > 0 ? (
+          {data.post && data.posts.length > 0 ? (
             <Swiper
               modules={[Autoplay, FreeMode, Pagination]}
               grabCursor={true}

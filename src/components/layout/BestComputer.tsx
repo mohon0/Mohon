@@ -12,12 +12,15 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { GrDocumentPerformance } from "react-icons/gr";
 import { MdEditDocument } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
 
 export function BestComputer() {
+  const { data: session } = useSession();
+  const admin = process.env.NEXT_PUBLIC_ADMIN;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -44,6 +47,26 @@ export function BestComputer() {
             <DropdownMenuShortcut>
               <GrDocumentPerformance />
             </DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            {session?.user ? (
+              <Link
+                href={
+                  session.user.email === admin
+                    ? "/admin-dashboard"
+                    : "/dashboard"
+                }
+                legacyBehavior
+                passHref
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <Link href="/signin" legacyBehavior passHref>
+                Student LogIn
+              </Link>
+            )}
+            <DropdownMenuShortcut></DropdownMenuShortcut>
           </DropdownMenuItem>
           <Link href="/application">
             <DropdownMenuItem className="flex justify-between">
