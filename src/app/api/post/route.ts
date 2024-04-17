@@ -1,7 +1,4 @@
-import checkIfImageExists from "@/components/helper/backEnd/ImageCheck";
 import { Prisma } from "@/components/helper/backEnd/Prisma";
-import storage from "@/utils/firebaseConfig";
-import { deleteObject, ref } from "firebase/storage";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -86,13 +83,13 @@ export async function PUT(req: NextRequest, res: NextResponse) {
 
 export async function DELETE(req: NextRequest, res: NextResponse) {
   try {
-    // Step 1: Authenticate the user
     const token = await getToken({ req, secret });
-    const userId = token?.sub;
 
-    if (!token || !userId) {
-      // User is not authenticated
-      return new NextResponse("User not authenticated", { status: 401 });
+    if (!token) {
+      return new NextResponse("Your are not authenticated");
+    }
+    if (token.email !== admin) {
+      return new NextResponse("Only admin has access to this.");
     }
 
     const search = req.nextUrl.searchParams;
@@ -120,29 +117,12 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
       return new NextResponse("Post not found", { status: 404 });
     }
 
-    const authorId = post.author.id;
-
-    // Step 3: Check authorization
-    if (userId !== authorId) {
-      return new NextResponse(
-        "Unauthorized: You can only delete your own posts",
-        { status: 401 },
-      );
-    }
-
     // Step 4: Delete associated comments first
     await Prisma.comment.deleteMany({
       where: {
         postId: postId,
       },
     });
-
-    // Step 5: Delete associated Image
-
-    if (await checkIfImageExists(post.coverImage)) {
-      const storageRefToDelete = ref(storage, post.coverImage);
-      await deleteObject(storageRefToDelete);
-    }
 
     // Step 6: Delete the post
     const deletedPost = await Prisma.post.delete({
