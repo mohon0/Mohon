@@ -22,8 +22,6 @@ import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 
 export default function NewPostPage() {
-  // const [image, setImage] = useState<File | null>(null);
-  // const [imageError, setImageError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { status, data: session } = useSession();
   const router = useRouter();
@@ -39,21 +37,6 @@ export default function NewPostPage() {
   if (session?.user?.email !== admin) {
     return <p>You don&#39;t have permission to access this page.</p>;
   }
-  // const MAX_IMAGE_SIZE_KB = 1000;
-  // const handleFile: ChangeEventHandler<HTMLInputElement> = (event) => {
-  //   const file = event.target.files?.[0];
-  //   if (file) {
-  //     if (file.size > MAX_IMAGE_SIZE_KB * 1024) {
-  //       setImageError("file size exceeds the maximum allowed size");
-  //       toast.error(
-  //         `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`,
-  //       );
-  //     } else {
-  //       setImage(file);
-  //       setImageError("");
-  //     }
-  //   }
-  // };
 
   // Function to properly encode a string for URLs
   const encodeForUrl = (str: string) => {
@@ -77,18 +60,10 @@ export default function NewPostPage() {
         content: Yup.string(),
       })}
       onSubmit={async (values) => {
-        console.log(values);
-        const formData = new FormData();
-        formData.append("title", values.title);
-        formData.append("category", values.categories);
-        formData.append("content", values.content);
-        // formData.append("image", image as Blob);
-        formData.append("imageUrl", values.imageUrl);
-
         try {
           setIsSubmitting(true);
           toast.loading("Please wait...");
-          const response = await axios.post("/api/post", formData);
+          const response = await axios.post("/api/post", values);
 
           if (response.status === 201) {
             toast.dismiss();
@@ -126,23 +101,12 @@ export default function NewPostPage() {
               placeholder="Input Post Title"
             />
             <div className="flex flex-col gap-1.5">
-              {/* <Label>Featured Image:</Label> */}
-
               <FormikInput
                 label="Featured Image:"
                 name="imageUrl"
                 type="text"
                 placeholder="Input gdrive image id"
               />
-              {/* <input
-                type="file"
-                className="rounded-md border p-2"
-                onChange={handleFile}
-                required
-              />
-              {imageError && (
-                <p className="text-sm text-red-600">{imageError}</p>
-              )} */}
             </div>
             <Label>Categories:</Label>
             <Field as={Categories} name="categories" />

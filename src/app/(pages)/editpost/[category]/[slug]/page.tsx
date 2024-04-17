@@ -11,7 +11,6 @@ import axios from "axios";
 import { Form, Formik } from "formik";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
@@ -21,7 +20,6 @@ interface PageProps {
 }
 
 function EditPost({ params }: PageProps) {
-  const [image, setImage] = useState<File | null>(null);
   const router = useRouter();
   const { status, data: session } = useSession();
   const admin = process.env.NEXT_PUBLIC_ADMIN;
@@ -49,17 +47,20 @@ function EditPost({ params }: PageProps) {
     return <div>You are not authorized to access this page.</div>;
   }
 
-  const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      setImage(files[0]);
-    }
-  };
-
   // Function to properly encode a string for URLs
   const encodeForUrl = (str: string) => {
     return encodeURIComponent(str.replace(/\s+/g, "_")).toLowerCase();
   };
+  function extractIdFromUrl(url: string): string | undefined {
+    const params = new URLSearchParams(url.split("?")[1]);
+    const id = params.get("id");
+    if (id === null) {
+      return undefined;
+    }
+    return id;
+  }
+
+  const ImageId = extractIdFromUrl(data.coverImage);
 
   return (
     <Formik
@@ -67,6 +68,8 @@ function EditPost({ params }: PageProps) {
         title: data.title,
         categories: data.category,
         content: data.content,
+        imageUrl: ImageId,
+        id: data.id,
       }}
       validationSchema={Yup.object({
         title: Yup.string()
@@ -79,20 +82,12 @@ function EditPost({ params }: PageProps) {
           .required("Title is required"),
         categories: Yup.string().required("Category is required"),
         content: Yup.string(),
+        imageUrl: Yup.string().required(),
       })}
       onSubmit={async (values) => {
         try {
-          const formData = new FormData();
-          formData.append("title", values.title);
-          formData.append("categories", values.categories);
-          formData.append("content", values.content);
-          formData.append("id", data.id);
-          formData.append("userId", data.author.id);
-          if (image) {
-            formData.append("image", image as Blob);
-          }
           toast.loading("Please wait...");
-          const response = await axios.put("/api/post", formData);
+          const response = await axios.put("/api/post", values);
           console.log(response);
           if (response.status === 200) {
             toast.dismiss();
@@ -119,11 +114,11 @@ function EditPost({ params }: PageProps) {
           <CardContent className="flex flex-col gap-4">
             <FormikInput label="Title:" name="title" type="text" id="title" />
             <div className="flex flex-col gap-1.5">
-              <Label>Featured Image:</Label>
-              <input
-                type="file"
-                onChange={(event) => handleImage(event)}
-                className="rounded-md border p-2"
+              <FormikInput
+                label="Featured Image:"
+                name="imageUrl"
+                type="text"
+                placeholder="Input gdrive image id"
               />
             </div>
             <Label>Categories:</Label>

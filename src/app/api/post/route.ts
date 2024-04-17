@@ -1,103 +1,48 @@
 import checkIfImageExists from "@/components/helper/backEnd/ImageCheck";
 import { Prisma } from "@/components/helper/backEnd/Prisma";
 import storage from "@/utils/firebaseConfig";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from "firebase/storage";
+import { deleteObject, ref } from "firebase/storage";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 const secret = process.env.NEXTAUTH_SECRET;
+const admin = process.env.NEXT_PUBLIC_ADMIN;
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const token = await getToken({ req, secret });
 
     if (!token) {
-      return new NextResponse("User not logged in");
+      return new NextResponse("Your are not authenticated");
+    }
+    if (token.email !== admin) {
+      return new NextResponse("Only admin has access to this.");
     }
 
-    const data = await req.formData();
-    const titleEntry = data.get("title");
-    // const cover = data.get("image");
-    const categoriesEntry = data.get("category");
-    const contentEntry = data.get("content");
-    const imageUrlEntry = data.get("imageUrl");
+    const data = await req.json();
 
-    console.log(data);
-
-    // Replace cover with imageUrl
-
-    if (!titleEntry || !imageUrlEntry || !categoriesEntry) {
-      return new NextResponse("Missing title, file or categories", {
+    if (!data.title || !data.imageUrl || !data.categories) {
+      return new NextResponse("Missing title, imageId or categories", {
         status: 400,
       });
     }
 
-    let title = "";
-    if (typeof titleEntry === "string") {
-      title = titleEntry;
-    } else if (titleEntry instanceof File) {
-      title = titleEntry.name;
-    }
+    // Create a new post using Prisma
 
-    let categories = "";
-    if (typeof categoriesEntry === "string") {
-      categories = categoriesEntry;
-    } else if (categoriesEntry instanceof File) {
-      categories = categoriesEntry.name;
-    }
-    let imageUrl = "";
-    if (typeof imageUrlEntry === "string") {
-      imageUrl = imageUrlEntry;
-    } else if (imageUrlEntry instanceof File) {
-      imageUrl = imageUrlEntry.name;
-    }
+    const newImageUrl =
+      "http://drive.google.com/uc?export=view&id=" + data.imageUrl;
+    const newPost = await Prisma.post.create({
+      data: {
+        title: data.title,
+        coverImage: newImageUrl,
+        category: data.categories,
+        content: data.content,
+        author: { connect: { id: token.sub } },
+      },
+    });
 
-    let content = "";
-    if (typeof contentEntry === "string") {
-      content = contentEntry;
-    } else if (contentEntry instanceof File) {
-      content = contentEntry.name;
-    }
-
-    // const coverBlob = cover as Blob;
-
-    // const buffer = Buffer.from(await coverBlob.arrayBuffer());
-    // const filename = Date.now() + coverBlob.name.replaceAll(" ", "_");
-
-    try {
-      // Upload file to Firebase storage
-      // const storageRef = ref(storage, "uploads/" + filename);
-      // await uploadBytes(storageRef, buffer);
-
-      // Get download URL from Firebase storage
-      // const downloadURL = await getDownloadURL(storageRef);
-
-      // Create a new post using Prisma
-
-      const newImageUrl =
-        "http://drive.google.com/uc?export=view&id=" + imageUrl;
-      const newPost = await Prisma.post.create({
-        data: {
-          title,
-          coverImage: newImageUrl,
-          category: categories,
-          content,
-          author: { connect: { id: token.sub } },
-        },
-      });
-
-      return new NextResponse(JSON.stringify(newPost), { status: 201 });
-    } catch (error) {
-      console.error("Error occurred while uploading the file: ", error);
-      return new NextResponse("File upload failed", { status: 500 });
-    }
+    return new NextResponse(JSON.stringify(newPost), { status: 201 });
   } catch (error) {
-    console.error("Error:", error);
     return new NextResponse("An error occurred", { status: 500 });
   }
 }
@@ -107,76 +52,27 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     const token = await getToken({ req, secret });
 
     if (!token) {
-      return new NextResponse("You are not logged in");
+      return new NextResponse("Your are not authenticated");
+    }
+    if (token.email !== admin) {
+      return new NextResponse("Only admin has access to this.");
     }
 
-    const body = await req.formData();
-
-    const title = body.get("title");
-    const content = body.get("content");
-    const categories = body.get("categories");
-    const userId = body.get("userId");
-    const id = body.get("id");
-
-    if (!id) {
-      return new NextResponse("Invalid post ID", { status: 400 });
-    }
-
-    // Convert id to string
-    const postId = id.toString();
-
-    // Compare userId with token.sub
-    if (userId !== token.sub) {
-      return new NextResponse("You are not the author of this post");
-    }
-
-    const coverImageBlob = body.get("image") as Blob | null;
-
-    let coverImageURL = null;
-    if (coverImageBlob) {
-      const buffer = Buffer.from(await coverImageBlob.arrayBuffer());
-      const filename = Date.now() + coverImageBlob.name.replaceAll(" ", "_");
-
-      // Upload file to Firebase storage
-      const storageRef = ref(storage, "uploads/" + filename);
-      await uploadBytes(storageRef, buffer);
-
-      // Get download URL from Firebase storage
-      coverImageURL = await getDownloadURL(storageRef);
-
-      // Delete previous image from Firebase storage
-      if (coverImageURL && postId) {
-        const previousPost = await Prisma.post.findUnique({
-          where: { id: postId },
-          select: { coverImage: true },
-        });
-
-        if (previousPost?.coverImage) {
-          const previousImageRef = ref(storage, previousPost.coverImage); // Create a reference from URL
-          await deleteObject(previousImageRef);
-        }
-      }
-    }
-
-    // Update the post using Prisma
-    const updatedPostData: {
-      title: string;
-      content: string;
-      category: string;
-      coverImage?: string;
-    } = {
-      title: title as string,
-      content: content as string,
-      category: categories as string,
-    };
-
-    if (coverImageURL !== null) {
-      updatedPostData.coverImage = coverImageURL;
+    const data = await req.json();
+    if (!data.title || !data.imageUrl || !data.categories || !data.id) {
+      return new NextResponse("Missing title, imageId or categories", {
+        status: 400,
+      });
     }
 
     const updatedPost = await Prisma.post.update({
-      where: { id: postId },
-      data: updatedPostData,
+      where: { id: data.id },
+      data: {
+        title: data.title,
+        category: data.categories,
+        coverImage: data.coverImage,
+        content: data.content,
+      },
     });
 
     return new NextResponse(JSON.stringify(updatedPost), {
@@ -184,7 +80,6 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Error:", error);
     return new NextResponse("An error occurred", { status: 500 });
   }
 }
