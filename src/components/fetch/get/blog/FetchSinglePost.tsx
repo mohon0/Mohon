@@ -10,7 +10,9 @@ export function FetchSinglePost({ category, slug }: props) {
   return useQuery({
     queryKey: ["Single Post", category, slug],
     queryFn: async () => {
-      const response = await axios.get(`/api/${category}/${slug}`);
+      const response = await axios.get(
+        `/api/post?category=${category}&title=${slug}`,
+      );
       return response.data;
     },
   });

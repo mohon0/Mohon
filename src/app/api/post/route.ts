@@ -1,9 +1,63 @@
+import DecodeTitleFromUrl from "@/components/helper/backEnd/DecodeTitleFromUrl";
 import { Prisma } from "@/components/helper/backEnd/Prisma";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 const secret = process.env.NEXTAUTH_SECRET;
 const admin = process.env.NEXT_PUBLIC_ADMIN;
+
+export async function GET(req: NextRequest, res: NextResponse) {
+  try {
+    const url = new URL(req.url);
+    const queryParams = new URLSearchParams(url.search);
+    const category = queryParams.get("category");
+    const encodedTitle = queryParams.get("title") || "";
+
+    if (!category || !encodedTitle) {
+      return new NextResponse("No category or title provided");
+    }
+    const title = DecodeTitleFromUrl(encodedTitle);
+    console.log(title, category);
+    const postData = await Prisma.post.findFirst({
+      where: {
+        category: {
+          equals: category,
+          mode: "insensitive",
+        },
+        title: {
+          equals: title,
+          mode: "insensitive",
+        },
+      },
+      select: {
+        id: true,
+        title: true,
+        coverImage: true,
+        category: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true,
+        author: {
+          select: {
+            name: true,
+            email: true,
+            image: true,
+            id: true,
+          },
+        },
+      },
+    });
+
+    if (postData) {
+      return new NextResponse(JSON.stringify(postData));
+    } else {
+      return new NextResponse("No Post Found", { status: 404 });
+    }
+  } catch (error) {
+    console.log(error);
+    return new NextResponse("An error occurred", { status: 500 });
+  }
+}
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
