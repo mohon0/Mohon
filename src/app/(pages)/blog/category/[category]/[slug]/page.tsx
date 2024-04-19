@@ -16,7 +16,9 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { category, slug } = params;
   const siteurl = process.env.NEXT_PUBLIC_SITE_URL;
-  const response = await axios.get(`${siteurl}/api/${category}/${slug}`);
+  const response = await axios.get(
+    `${siteurl}/api/post?category=${category}&title=${slug}`,
+  );
   const cleanedContent = stripHtmlTags(response.data.content);
   const dynamicDescription = cleanedContent.substring(0, 150);
 
