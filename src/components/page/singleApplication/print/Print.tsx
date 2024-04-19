@@ -63,7 +63,7 @@ export default function Print({ application }: SingleApplicationUserType) {
         </div>
 
         <div className="my-1 grid grid-cols-3">
-          <div className="flex items-center gap-3 px-2">
+          <div className="flex items-center gap-3 pl-12">
             <div className="font-bold text-white print:text-black">SL No: </div>
             <div className="h-7 w-20 border"></div>
           </div>
