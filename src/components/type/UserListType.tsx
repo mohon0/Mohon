@@ -7,6 +7,8 @@ export interface UserListType {
   applications: [
     {
       image: string;
+      bloodGroup: string;
+      fullAddress: string;
     },
   ];
 }
