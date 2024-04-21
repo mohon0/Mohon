@@ -47,7 +47,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
       take: pageSize,
     });
 
-    const totalUsersCount = await prisma.user.count();
+    const totalUsersCount = await prisma.user.count({
+      where: {
+        name: {
+          contains: searchName,
+          mode: "insensitive",
+        },
+      },
+    });
 
     if (allUsers.length > 0) {
       return new NextResponse(

@@ -20,6 +20,7 @@ import { BsGridFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaClipboardList, FaUserEdit, FaUsers } from "react-icons/fa";
 import { FaPenToSquare, FaPowerOff } from "react-icons/fa6";
+import { IoLocation } from "react-icons/io5";
 
 export default function SideBar() {
   const pathname = usePathname();
@@ -47,7 +48,7 @@ export default function SideBar() {
           </p>
         </Link>
         <div className="mx-4 mt-6">
-          <div className="mx-2 mt-6 flex flex-col gap-5">
+          <div className="mx-2 mt-6 flex flex-col gap-4">
             <Link href="/admin-dashboard">
               <Button
                 className="flex w-full items-center justify-start gap-4"
@@ -107,6 +108,19 @@ export default function SideBar() {
               >
                 <FaUsers />
                 <span>User</span>
+              </Button>
+            </Link>
+            <Link href="/address/page/1">
+              <Button
+                className="flex w-full items-center justify-start gap-4"
+                variant={
+                  /^\/address\/page\/\d+$/.test(pathname)
+                    ? "default"
+                    : "outline"
+                }
+              >
+                <IoLocation />
+                <span>Address</span>
               </Button>
             </Link>
           </div>

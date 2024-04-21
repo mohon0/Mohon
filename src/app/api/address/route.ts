@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const url = new URL(req.url);
+    console.log(url.search);
     const queryParams = new URLSearchParams(url.search);
     const page = queryParams.get("page")
       ? parseInt(queryParams.get("page")!, 10)
@@ -13,45 +14,59 @@ export async function GET(req: NextRequest, res: NextResponse) {
       ? parseInt(queryParams.get("pageSize")!, 10)
       : 6;
 
-    const sortBy = queryParams.get("sortBy");
+    const searchName = queryParams.get("search") || "";
+
+    const searchParams = url.search.slice(1).split("&");
+    let filterBy = "All";
+
+    searchParams.forEach((param) => {
+      const [key, value] = param.split("=");
+      if (key === "filterBy") {
+        filterBy = decodeURIComponent(value);
+      }
+    });
 
     const skipCount = (page - 1) * pageSize;
 
-    const searchName = queryParams.get("search") || "";
+    let whereClause: any = {};
 
-    const allUsers = await prisma.user.findMany({
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        image: true,
-        phoneNumber: true,
-        createdAt: true,
-        applications: {
-          select: {
-            image: true,
-            bloodGroup: true,
-            fullAddress: true,
-            firstName: true,
-            lastName: true,
+    if (filterBy !== "All") {
+      whereClause.bloodGroup = {
+        in: filterBy.split(","),
+      };
+    }
+
+    if (searchName) {
+      whereClause.AND = [
+        {
+          fullAddress: {
+            contains: searchName,
+            mode: "insensitive",
           },
         },
-      },
-      where: {
-        name: {
-          contains: searchName,
-          mode: "insensitive",
-        },
-      },
-      orderBy: {
-        createdAt: sortBy === "oldest" ? "asc" : "desc",
-      },
+        ...(whereClause.AND || []),
+      ];
+    }
 
+    const allUsers = await prisma.application.findMany({
+      select: {
+        id: true,
+        email: true,
+        image: true,
+        createdAt: true,
+        bloodGroup: true,
+        fullAddress: true,
+        firstName: true,
+        lastName: true,
+      },
+      where: whereClause,
       skip: skipCount,
       take: pageSize,
     });
 
-    const totalUsersCount = await prisma.user.count();
+    const totalUsersCount = await prisma.application.count({
+      where: whereClause,
+    });
 
     if (allUsers.length > 0) {
       return new NextResponse(
@@ -64,7 +79,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
       return new NextResponse("No users found.", { status: 200 });
     }
   } catch (error) {
-    console.error("Error fetching users:", error);
     return new NextResponse("Internal Server Error", {
       status: 500,
       headers: { "Content-Type": "text/plain" },
