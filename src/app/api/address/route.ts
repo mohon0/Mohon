@@ -53,6 +53,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         id: true,
         email: true,
         image: true,
+        mobileNumber: true,
         createdAt: true,
         bloodGroup: true,
         fullAddress: true,

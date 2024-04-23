@@ -3,7 +3,9 @@ export interface AddressListType {
   name: string;
   email: string;
   image: string;
-  phoneNumber: string;
+  mobileNumber: string;
   bloodGroup: string;
   fullAddress: string;
+  firstName: string;
+  lastName: string;
 }

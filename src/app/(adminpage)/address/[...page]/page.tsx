@@ -63,6 +63,7 @@ const Users: React.FC = () => {
                   <SelectItem value="A+">A+</SelectItem>
                   <SelectItem value="A-">A-</SelectItem>
                   <SelectItem value="B+">B+</SelectItem>
+                  <SelectItem value="B-">B-</SelectItem>
                   <SelectItem value="AB+">AB+</SelectItem>
                   <SelectItem value="AB-">AB-</SelectItem>
                   <SelectItem value="O+">O+</SelectItem>
@@ -70,7 +71,7 @@ const Users: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-center md:w-1/2">
+            <div className="relative flex items-center md:w-1/2">
               <Input
                 type="text"
                 placeholder="Search By Address..."
@@ -91,10 +92,10 @@ const Users: React.FC = () => {
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {data.users.map((user: AddressListType) => (
                   <div
-                    className=" relative col-span-1 flex flex-col items-center justify-center gap-1 rounded border p-4 hover:border-primary"
+                    className=" relative col-span-1 flex flex-col justify-center gap-1 rounded border p-4 hover:border-primary"
                     key={user.id}
                   >
-                    <div>
+                    <div className="mx-auto">
                       {user.image ? (
                         <Image
                           src={user.image}
@@ -110,8 +111,8 @@ const Users: React.FC = () => {
                       )}
                     </div>
 
-                    <p className="mt-2 text-xl font-bold text-primary">
-                      {user.name}
+                    <p className="mx-auto mt-2 text-xl font-bold text-primary">
+                      {user.firstName + " " + user.lastName}
                     </p>
                     {user.email && (
                       <div>
@@ -123,13 +124,13 @@ const Users: React.FC = () => {
                         </span>
                       </div>
                     )}
-                    {user.phoneNumber && (
+                    {user.mobileNumber && (
                       <div>
                         <span className="text-md mr-2 text-primary">
                           Phone:
                         </span>
                         <span className="text-md text-secondary-foreground">
-                          {user.phoneNumber}
+                          {user.mobileNumber}
                         </span>
                       </div>
                     )}
@@ -151,7 +152,7 @@ const Users: React.FC = () => {
                     )}
 
                     <Link
-                      href={`/user/userid/${user.id}`}
+                      href={`/application-list/singleapplication/${user.id}`}
                       className="flex w-full"
                     >
                       <Button className="flex w-full" variant="outline">
@@ -166,7 +167,7 @@ const Users: React.FC = () => {
                   data !== "No users found." &&
                   data.totalUsersCount > pageSize && (
                     <PaginationUi
-                      link="user"
+                      link="address"
                       currentPage={page}
                       totalPages={Math.ceil(
                         Number(data.totalUsersCount) / pageSize,
