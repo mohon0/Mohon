@@ -113,6 +113,13 @@ export default function Menu() {
               </Link>
             </SheetClose>
             <SheetClose asChild>
+              <Link href="/blood-donate">
+                <Button variant="outline" className="flex w-full">
+                  Blood Donate
+                </Button>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
               <Link href="/application">
                 <Button variant="outline" className="flex w-full">
                   Application

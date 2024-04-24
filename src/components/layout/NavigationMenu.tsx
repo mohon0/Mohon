@@ -57,6 +57,13 @@ export function NavigationMenuDemo() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/blood-donate" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Blood Donate
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
         <BestComputer />
       </NavigationMenuList>
     </NavigationMenu>
