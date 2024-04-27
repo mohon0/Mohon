@@ -31,6 +31,7 @@ const Application: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const MAX_IMAGE_SIZE_KB = 100;
+  const currentYear = new Date().getFullYear();
 
   const handleFileSelect = (file: File) => {
     if (file.size > MAX_IMAGE_SIZE_KB * 1024) {
@@ -113,7 +114,13 @@ const Application: React.FC = () => {
           board: Yup.string().required("Required"),
           rollNumber: Yup.number().required("Required"),
           regNumber: Yup.number().required("Required"),
-          passingYear: Yup.number().required("Required").max(2023).min(1990),
+          passingYear: Yup.number()
+            .required("Required")
+            .max(
+              currentYear,
+              `Year must be less than or equal to ${currentYear}`,
+            )
+            .min(1990),
           gpa: Yup.string().required("Required"),
           nid: Yup.number().required("Required"),
           nationality: Yup.string().required("Required"),
