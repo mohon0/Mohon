@@ -1,5 +1,8 @@
 "use client";
 import { bangladeshDistricts } from "@/components/page/application/District";
+import BloodDonateNotice from "@/components/page/blood-donate/BloodDonateNotice";
+import MemberModel from "@/components/page/blood-donate/MemberModel";
+import { MemberModelData } from "@/components/page/blood-donate/MemberModelData";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,8 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import img from "@/images/hero/blood-donate.jpeg";
-import img1 from "@/images/hero/logo1.png";
+import { Separator } from "@/components/ui/separator";
+import img from "@/images/blood/logo.png";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useState } from "react";
@@ -135,8 +138,12 @@ export default function BloodDonation() {
 
   return (
     <div>
-      <div className="flex flex-col items-center justify-center gap-6">
+      <BloodDonateNotice />
+      <div className="mt-6 flex flex-col items-center justify-center gap-6">
         <Image src={img} alt="" width="100" height="100" />
+        <p className="text-center text-2xl font-bold text-primary md:text-3xl">
+          আমরা পেরেছি, আমরাই পারবো, <br /> রক্ত দিয়ে অসহায় মানুষের পাশে দাড়াবো
+        </p>
         <Button
           variant="outline"
           size="lg"
@@ -144,6 +151,11 @@ export default function BloodDonation() {
         >
           Blood Donation Form
         </Button>
+        <p className="text-xl">রক্তযোদ্ধা পরিবার, ঝিনাইদহ।</p>
+        <p className="text-center">
+          রক্তযোদ্ধা পরিবার, ঝিনাইদহ। অফিসঃ রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা),
+          পায়রা চত্ত্বর, ঝিনাইদহ।
+        </p>
       </div>
       <div className="mt-10 flex items-center justify-center">
         <Form {...form}>
@@ -151,40 +163,31 @@ export default function BloodDonation() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex w-2/3 flex-col"
           >
-            <div className="grid grid-cols-2 gap-x-10 gap-y-2">
-              <div className=" space-y-10">
-                <div className="flex items-center gap-4">
-                  <Image src={img1} alt="" width="100" />
-                  <div>
-                    <p className="text-xl font-bold">John duo</p>
-                    <p>title of the user</p>
-                    <p>+001230239233</p>
-                  </div>
+            <div className="grid gap-x-10 gap-y-2 md:grid-cols-2">
+              <div className="space-y-4 md:order-2">
+                <div className="flex items-center justify-center md:justify-end">
+                  <Label
+                    htmlFor="picture"
+                    className="flex flex-col items-center justify-center rounded border border-primary px-6 py-10"
+                  >
+                    <p>Upload Image</p>
+                    <p>Optional</p>
+                  </Label>
+                  <input
+                    type="file"
+                    id="picture"
+                    className="hidden p-2"
+                    onChange={handleFileChange}
+                  />
                 </div>
-                <div className="flex items-center gap-4">
-                  <Image src={img1} alt="" width="100" />
-                  <div>
-                    <p className="text-xl font-bold">John duo</p>
-                    <p>title of the user</p>
-                    <p>+001230239233</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Image src={img1} alt="" width="100" />
-                  <div>
-                    <p className="text-xl font-bold">John duo</p>
-                    <p>title of the user</p>
-                    <p>+001230239233</p>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-4">
                 <FormField
                   control={form.control}
                   name="fullName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Donar Full Name</FormLabel>
+                      <FormLabel>
+                        Donar Full Name (রক্ত দাতার সম্পূর্ণ নাম)
+                      </FormLabel>
                       <FormControl>
                         <Input placeholder="Full Name" {...field} />
                       </FormControl>
@@ -193,21 +196,13 @@ export default function BloodDonation() {
                     </FormItem>
                   )}
                 />
-                <div>
-                  <Label>Donar Image(optional)</Label>
-                  <input
-                    type="file"
-                    className="rounded border p-2"
-                    onChange={handleFileChange}
-                  />
-                </div>
 
                 <FormField
                   control={form.control}
                   name="birthDay"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Date of Birth</FormLabel>
+                      <FormLabel>Date of Birth (জন্ম তারিখ)</FormLabel>
                       <FormControl>
                         <Input placeholder="04/03/1998" {...field} />
                       </FormControl>
@@ -220,7 +215,7 @@ export default function BloodDonation() {
                   name="bloodGroup"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Blood Group</FormLabel>
+                      <FormLabel>Blood Group (রক্তের গ্রুপ)</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
@@ -250,7 +245,7 @@ export default function BloodDonation() {
                   name="Occupation"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Occupation</FormLabel>
+                      <FormLabel>Occupation (পেশা)</FormLabel>
                       <FormControl>
                         <Input placeholder="Occupation" {...field} />
                       </FormControl>
@@ -263,7 +258,7 @@ export default function BloodDonation() {
                   name="number"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Mobile Number</FormLabel>
+                      <FormLabel>Mobile Number (মোবাইল নং)</FormLabel>
                       <FormControl>
                         <Input placeholder="01700000023" {...field} />
                       </FormControl>
@@ -276,7 +271,7 @@ export default function BloodDonation() {
                   name="number2"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Mobile Number 2</FormLabel>
+                      <FormLabel>Mobile Number 2 (মোবাইল নং ২ )</FormLabel>
                       <FormControl>
                         <Input placeholder="Optional" {...field} />
                       </FormControl>
@@ -289,7 +284,7 @@ export default function BloodDonation() {
                   name="address"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Full Address</FormLabel>
+                      <FormLabel>Full Address (সম্পূর্ণ ঠিকানা)</FormLabel>
                       <FormControl>
                         <Input placeholder="Full Address" {...field} />
                       </FormControl>
@@ -302,7 +297,7 @@ export default function BloodDonation() {
                   name="district"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>District</FormLabel>
+                      <FormLabel>District (জেলা)</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
@@ -329,7 +324,10 @@ export default function BloodDonation() {
                   name="donatedBefore"
                   render={({ field }) => (
                     <FormItem className="space-y-3">
-                      <FormLabel>Do you ever donated blood before?</FormLabel>
+                      <FormLabel>
+                        Do you ever donated blood before? (আপনি কি আগে কখনো রক্ত
+                        দিয়েছেন?)
+                      </FormLabel>
                       <FormControl>
                         <RadioGroup
                           onValueChange={field.onChange}
@@ -340,13 +338,17 @@ export default function BloodDonation() {
                             <FormControl>
                               <RadioGroupItem value="Yes" />
                             </FormControl>
-                            <FormLabel className="font-normal">Yes</FormLabel>
+                            <FormLabel className="font-normal">
+                              Yes (হ্যাঁ)
+                            </FormLabel>
                           </FormItem>
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>
                               <RadioGroupItem value="No" />
                             </FormControl>
-                            <FormLabel className="font-normal">No</FormLabel>
+                            <FormLabel className="font-normal">
+                              No (না)
+                            </FormLabel>
                           </FormItem>
                         </RadioGroup>
                       </FormControl>
@@ -359,7 +361,10 @@ export default function BloodDonation() {
                   name="diseases"
                   render={({ field }) => (
                     <FormItem className="space-y-3">
-                      <FormLabel>Do you suffer from any diseases?</FormLabel>
+                      <FormLabel>
+                        Do you suffer from any diseases? (আপনি কি কোন রোগে
+                        ভুগছেন?)
+                      </FormLabel>
                       <FormControl>
                         <RadioGroup
                           onValueChange={field.onChange}
@@ -370,13 +375,17 @@ export default function BloodDonation() {
                             <FormControl>
                               <RadioGroupItem value="Yes" />
                             </FormControl>
-                            <FormLabel className="font-normal">Yes</FormLabel>
+                            <FormLabel className="font-normal">
+                              Yes (হ্যাঁ)
+                            </FormLabel>
                           </FormItem>
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>
                               <RadioGroupItem value="No" />
                             </FormControl>
-                            <FormLabel className="font-normal">No</FormLabel>
+                            <FormLabel className="font-normal">
+                              No (না)
+                            </FormLabel>
                           </FormItem>
                         </RadioGroup>
                       </FormControl>
@@ -389,7 +398,9 @@ export default function BloodDonation() {
                   name="allergies"
                   render={({ field }) => (
                     <FormItem className="space-y-3">
-                      <FormLabel>Do you have allergies?</FormLabel>
+                      <FormLabel>
+                        Do you have allergies? (আপনার কি এলার্জি আছে?)
+                      </FormLabel>
                       <FormControl>
                         <RadioGroup
                           onValueChange={field.onChange}
@@ -400,13 +411,17 @@ export default function BloodDonation() {
                             <FormControl>
                               <RadioGroupItem value="Yes" />
                             </FormControl>
-                            <FormLabel className="font-normal">Yes</FormLabel>
+                            <FormLabel className="font-normal">
+                              Yes (হ্যাঁ)
+                            </FormLabel>
                           </FormItem>
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>
                               <RadioGroupItem value="No" />
                             </FormControl>
-                            <FormLabel className="font-normal">No</FormLabel>
+                            <FormLabel className="font-normal">
+                              No (না)
+                            </FormLabel>
                           </FormItem>
                         </RadioGroup>
                       </FormControl>
@@ -415,11 +430,38 @@ export default function BloodDonation() {
                   )}
                 />
               </div>
+
+              <Button
+                type="submit"
+                size="lg"
+                className="mx-auto mt-12 flex items-center  justify-center px-20 md:hidden"
+              >
+                Submit
+              </Button>
+              <div className="flex justify-between md:order-1">
+                <div className=" mt-16 space-y-10 ">
+                  <p className="text-xl font-bold">
+                    জরুরী প্রয়োজনে যোগাযোগ করুন
+                  </p>
+                  {MemberModelData.map((member) => (
+                    <MemberModel
+                      key={member.id}
+                      name={member.name}
+                      title={member.title}
+                      img={member.img}
+                      number={member.number}
+                      number2={member.number2}
+                    />
+                  ))}
+                </div>
+                <Separator orientation="vertical" className="hidden md:block" />
+              </div>
             </div>
+
             <Button
               type="submit"
               size="lg"
-              className=" mx-auto mt-12 flex  items-center justify-center px-20"
+              className="mx-auto mt-12 hidden items-center justify-center px-20 md:flex"
             >
               Submit
             </Button>
