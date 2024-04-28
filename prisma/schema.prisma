@@ -148,3 +148,20 @@ model duration {
   id              String  @id @default(auto()) @map("_id") @db.ObjectId
   button          String
 }
+
+model BloodDonation {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  birthDate          String
+  bloodGroup         String
+  address            String
+  allergies          String
+  donatedBefore      String
+  diseases           String
+  district           String
+  occupation         String
+  number             String
+  number2            String?
+  image              String?
+
+}

@@ -16,13 +16,13 @@ export const MemberModelData = [
     name: "মোঃ সুমন ",
     title: "সহ-সভাপতি",
     number: "০১৩০৩-৯৫৩৪৪১",
-    img: img2,
+    img: img3,
   },
   {
     id: 3,
     name: "মোঃ হাবিুর রহমান ",
     title: "সাধারণ সম্পাদক",
     number: "০১৫৭১-২০৯১৭৮",
-    img: img3,
+    img: img2,
   },
 ];

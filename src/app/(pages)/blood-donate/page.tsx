@@ -25,6 +25,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import img from "@/images/blood/logo.png";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -82,58 +83,51 @@ export default function BloodDonation() {
   const [imageError, setImageError] = useState(false);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0]; // Get the selected file
+    const file = event.target.files && event.target.files[0];
     if (file) {
-      // Check if a file is selected
-      const isFileSizeValid = fileSizeValidator(MAX_IMAGE_SIZE_KB)(file); // Validate file size
+      const isFileSizeValid = fileSizeValidator(MAX_IMAGE_SIZE_KB)(file);
       if (isFileSizeValid === true) {
-        // File size is valid
-        setImage(file); // Update the component state with the selected file
-        setImageError(false); // Clear any previous image error
+        setImage(file);
+        setImageError(false);
       } else {
-        // File size exceeds the maximum allowed size
-        setImage(null); // Clear the selected image
-        setImageError(true); // Set image error flag to true
+        setImage(null);
+        setImageError(true);
         toast.error(`Image size must be less than 100KB`);
       }
     }
   };
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    // Check if an image is selected
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     const formData = new FormData();
     if (image) {
-      formData.append("image", image); // Append the image file to the form data
+      formData.append("image", image);
     }
     if (imageError) {
       toast.error("Image size must be less than 100KB");
       return;
     }
 
-    // Append other form fields to the form data
     Object.entries(data).forEach(([key, value]) => {
       formData.append(key, value);
     });
 
-    // // Send the form data to the server (replace this with your actual submission logic)
-    // fetch("your-submit-url", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       toast.success("Form submitted successfully");
-    //       console.log(data);
-    //     } else {
-    //       toast.error("Failed to submit form");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error submitting form:", error);
-    //     toast.error("Error submitting form");
-    //   });
+    toast.loading("Please wait...");
 
-    console.log(formData);
+    try {
+      const response = await axios.post("/api/blood-donate", formData);
+
+      toast.dismiss();
+      if (response.status === 201) {
+        form.reset();
+        setImage(null);
+        toast.success("Form has been successfully submitted");
+      } else {
+        toast.error("Form failed to be submitted");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Failed to submit form");
+    }
   }
 
   return (
@@ -141,18 +135,18 @@ export default function BloodDonation() {
       <BloodDonateNotice />
       <div className="mt-6 flex flex-col items-center justify-center gap-6">
         <Image src={img} alt="" width="100" height="100" />
-        <p className="text-center text-2xl font-bold text-primary md:text-3xl">
+        <p className="mx-2 text-center text-xl font-bold text-primary md:text-3xl">
           আমরা পেরেছি, আমরাই পারবো, <br /> রক্ত দিয়ে অসহায় মানুষের পাশে দাড়াবো
         </p>
         <Button
           variant="outline"
           size="lg"
-          className="border border-primary px-8 py-3 text-xl font-bold"
+          className="border border-primary px-8 py-3 font-bold md:text-xl"
         >
           Blood Donation Form
         </Button>
-        <p className="text-xl">রক্তযোদ্ধা পরিবার, ঝিনাইদহ।</p>
-        <p className="text-center">
+        <p className="mx-2 text-xl">রক্তযোদ্ধা পরিবার, ঝিনাইদহ।</p>
+        <p className="mx-2 text-center">
           রক্তযোদ্ধা পরিবার, ঝিনাইদহ। অফিসঃ রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা),
           পায়রা চত্ত্বর, ঝিনাইদহ।
         </p>
