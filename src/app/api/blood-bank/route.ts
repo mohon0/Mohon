@@ -9,8 +9,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const bloodGroupParam = searchParams[0];
     const bloodGroup = bloodGroupParam.split("=")[1];
 
-    console.log("Extracted blood group:", bloodGroup);
-
     let whereClause = {};
 
     // If bloodGroup is not provided or set to "All", show all applications

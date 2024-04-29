@@ -13,7 +13,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const formData = await req.formData();
 
     const name = getStringValue(formData, "fullName");
-    const birthDate = getStringValue(formData, "birthDate");
+    const birthDate = getStringValue(formData, "birthDay");
     const bloodGroup = getStringValue(formData, "bloodGroup");
     const allergies = getStringValue(formData, "allergies");
     const donatedBefore = getStringValue(formData, "donatedBefore");
@@ -70,5 +70,72 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return new NextResponse("Internal Server Error", { status: 500 });
   } finally {
     Prisma.$disconnect();
+  }
+}
+
+export async function GET(req: NextRequest, res: NextResponse) {
+  try {
+    const url = new URL(req.url);
+    const queryParams = new URLSearchParams(url.search);
+    const page = queryParams.get("page")
+      ? parseInt(queryParams.get("page")!, 10)
+      : 1;
+    const pageSize = queryParams.get("pageSize")
+      ? parseInt(queryParams.get("pageSize")!, 10)
+      : 6;
+
+    const skipCount = (page - 1) * pageSize;
+
+    const searchName = queryParams.get("search") || "";
+
+    const allUsers = await Prisma.bloodDonation.findMany({
+      select: {
+        id: true,
+        name: true,
+        image: true,
+        number: true,
+        number2: true,
+        diseases: true,
+        district: true,
+        birthDate: true,
+        bloodGroup: true,
+        donatedBefore: true,
+      },
+      where: {
+        name: {
+          contains: searchName,
+          mode: "insensitive",
+        },
+      },
+
+      skip: skipCount,
+      take: pageSize,
+    });
+
+    const totalUsersCount = await Prisma.user.count({
+      where: {
+        name: {
+          contains: searchName,
+          mode: "insensitive",
+        },
+      },
+    });
+
+    if (allUsers.length > 0) {
+      return new NextResponse(
+        JSON.stringify({ users: allUsers, totalUsersCount }),
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+    } else {
+      return new NextResponse("No users found.", { status: 200 });
+    }
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return new NextResponse("Internal Server Error", {
+      status: 500,
+      headers: { "Content-Type": "text/plain" },
+    });
   }
 }

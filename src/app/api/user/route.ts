@@ -27,6 +27,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         image: true,
         phoneNumber: true,
         createdAt: true,
+        status: true,
         applications: {
           select: {
             image: true,

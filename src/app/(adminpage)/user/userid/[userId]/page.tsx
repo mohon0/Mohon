@@ -37,8 +37,6 @@ export default function SingleUser() {
     return "Error loading Dashboard";
   }
 
-  const admin = process.env.NEXT_PUBLIC_ADMIN;
-
   return (
     <div className="flex flex-col md:gap-10">
       {!isLoading && status === "authenticated" ? (
@@ -87,7 +85,7 @@ export default function SingleUser() {
                       {data.userData.name}
                     </CardTitle>
                     <Badge>
-                      {admin === data.userData.email ? "Admin" : "Member"}
+                      {data.userData.status && data.userData.status}
                     </Badge>
                   </div>
                 </CardHeader>

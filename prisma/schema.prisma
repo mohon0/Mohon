@@ -50,6 +50,7 @@ model User {
   instagram          String?
   linkedin           String?
   github             String?
+  status             String? @default("Member")
   accounts           Account[]
   sessions           Session[]
   posts              Post[]

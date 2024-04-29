@@ -147,8 +147,7 @@ export default function BloodDonation() {
         </Button>
         <p className="mx-2 text-xl">রক্তযোদ্ধা পরিবার, ঝিনাইদহ।</p>
         <p className="mx-2 text-center">
-          রক্তযোদ্ধা পরিবার, ঝিনাইদহ। অফিসঃ রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা),
-          পায়রা চত্ত্বর, ঝিনাইদহ।
+          অফিসঃ রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা), পায়রা চত্ত্বর, ঝিনাইদহ।
         </p>
       </div>
       <div className="mt-10 flex items-center justify-center">

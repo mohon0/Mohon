@@ -44,6 +44,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         linkedin: true,
         github: true,
         instagram: true,
+        status: true,
         bio: true,
         _count: {
           select: {
