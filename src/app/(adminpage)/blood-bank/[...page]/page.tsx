@@ -2,8 +2,8 @@
 import Loading from "@/components/common/loading/Loading";
 import PaginationUi from "@/components/core/PaginationUi";
 import { FetchBloodBank } from "@/components/fetch/get/bloodBank/FetchBloodBank";
-import ApplicationDataCard from "@/components/page/applicationlist/ApplicationDataCard";
-import { ApplicationListType } from "@/components/type/ApplicationListType";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -44,9 +44,6 @@ export default function List() {
 
   return (
     <div className="mx-2">
-      <div className="text-center text-3xl font-bold md:text-5xl">
-        All Application
-      </div>
       <div>
         <div className="text-center text-3xl font-bold md:text-5xl">
           Blood Bank
@@ -99,23 +96,82 @@ export default function List() {
             <p>Error loading applications. No Application Found.</p>
           ) : data === "No Application Found." ? (
             "No Application Found"
-          ) : data.application && data.application.length > 0 ? (
+          ) : data.users && data.users.length > 0 ? (
             <div>
               <div className="grid grid-cols-1 gap-3 gap-y-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-x-4">
-                {data.application.map((app: ApplicationListType) => (
-                  <ApplicationDataCard
-                    key={app.id}
-                    id={app.id}
-                    duration={app.duration}
-                    firstName={app.firstName}
-                    lastName={app.lastName}
-                    course={app.course}
-                    image={app.image}
-                    status={app.status}
-                    createdAt={app.createdAt}
-                    certificate={app.certificate}
-                    refetch={refetch}
-                  />
+                {data.users.map((user: any) => (
+                  <Card key={user.id}>
+                    <CardContent>
+                      <Avatar className="mx-auto h-20 w-20">
+                        <AvatarImage src={user.image} alt="@shadcn" />
+                        <AvatarFallback>No Image</AvatarFallback>
+                      </Avatar>
+
+                      <div className="mt-4">
+                        <p className="font-bold uppercase text-primary">
+                          {user.name}
+                        </p>
+                        <p>
+                          <span className=" text-muted-foreground">
+                            Blood Group:{" "}
+                          </span>
+                          {user.bloodGroup}
+                        </p>
+                        <p>
+                          <span className=" text-muted-foreground">
+                            District:{" "}
+                          </span>
+                          {user.district}
+                        </p>
+                        <p>
+                          <span className=" text-muted-foreground">
+                            Number:{" "}
+                          </span>
+                          {user.number}
+                        </p>
+                        {user.number2 && (
+                          <p>
+                            <span className=" text-muted-foreground">
+                              Number:{" "}
+                            </span>
+                            {user.number2}
+                          </p>
+                        )}
+                        {user.birthDate && (
+                          <p>
+                            <span className=" text-muted-foreground">
+                              BirthDate:{" "}
+                            </span>
+                            {user.birthDate}
+                          </p>
+                        )}
+                        <p>
+                          <span className=" text-muted-foreground">
+                            Donated Before:{" "}
+                          </span>
+                          {user.donatedBefore}
+                        </p>
+                        <p>
+                          <span className=" text-muted-foreground">
+                            Any Diseases:{" "}
+                          </span>
+                          {user.diseases}
+                        </p>
+                        <p>
+                          <span className=" text-muted-foreground">
+                            Allergies:{" "}
+                          </span>
+                          {user.allergies}
+                        </p>
+                        <p>
+                          <span className=" text-muted-foreground">
+                            Address:{" "}
+                          </span>
+                          {user.address}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
               <div className="mt-10">
