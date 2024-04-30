@@ -164,7 +164,6 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
       { status: 200 },
     );
   } catch (error) {
-    console.error("Error deleting user:", error);
     return new NextResponse("Error: Internal server error", { status: 500 });
   } finally {
     await prisma.$disconnect();

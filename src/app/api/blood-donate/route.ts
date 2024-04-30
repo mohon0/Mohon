@@ -1,7 +1,17 @@
+import checkIfImageExists from "@/components/helper/backEnd/ImageCheck";
 import { Prisma } from "@/components/helper/backEnd/Prisma";
 import storage from "@/utils/firebaseConfig";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
+import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+
+const secret = process.env.NEXTAUTH_SECRET;
+const admin = process.env.NEXT_PUBLIC_ADMIN;
 
 function getStringValue(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -141,10 +151,67 @@ export async function GET(req: NextRequest, res: NextResponse) {
       return new NextResponse("No users found.", { status: 200 });
     }
   } catch (error) {
-    console.error("Error fetching users:", error);
     return new NextResponse("Internal Server Error", {
       status: 500,
       headers: { "Content-Type": "text/plain" },
     });
+  } finally {
+    Prisma.$disconnect();
+  }
+}
+
+export async function DELETE(req: NextRequest, res: NextResponse) {
+  try {
+    const token = await getToken({ req, secret });
+    if (!token) {
+      return new NextResponse("Your are not authenticated");
+    }
+    if (token.email !== admin) {
+      return new NextResponse("Only admin has access to this.");
+    }
+    const url = new URL(req.url);
+    const queryParams = new URLSearchParams(url.search);
+    const id = queryParams.get("id");
+    if (!id) {
+      return new NextResponse("Post not found", { status: 404 });
+    }
+
+    // Step 2: Fetch the user details
+    const user = await Prisma.bloodDonation.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+        image: true,
+      },
+    });
+
+    if (!user) {
+      return new NextResponse("User not found", { status: 404 });
+    }
+
+    if (user?.image) {
+      if (await checkIfImageExists(user.image)) {
+        const storageRefToDelete = ref(storage, user.image);
+        await deleteObject(storageRefToDelete);
+      }
+    }
+    const deleteUser = await Prisma.bloodDonation.delete({
+      where: {
+        id: id,
+      },
+    });
+    return new NextResponse(
+      JSON.stringify({ message: "User deleted successfully" }),
+      { status: 200 },
+    );
+  } catch (error) {
+    return new NextResponse("Internal Server Error", {
+      status: 500,
+      headers: { "Content-Type": "text/plain" },
+    });
+  } finally {
+    Prisma.$disconnect();
   }
 }

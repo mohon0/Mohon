@@ -2,7 +2,19 @@
 import Loading from "@/components/common/loading/Loading";
 import PaginationUi from "@/components/core/PaginationUi";
 import { FetchBloodBank } from "@/components/fetch/get/bloodBank/FetchBloodBank";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,11 +27,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { ToastContainer } from "react-toastify";
+import { FaEdit, FaSearch } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa6";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function List() {
@@ -33,12 +47,25 @@ export default function List() {
   const pageSize = 16;
 
   const handleFilterChange = (value: string) => setBloodGroup(value);
-  const { data, isError, isFetching } = FetchBloodBank({
+  const { data, isError, refetch, isFetching } = FetchBloodBank({
     currentPage: page,
     pageSize,
     searchInput,
     bloodGroup,
   });
+
+  const confirmDelete = async (id: string) => {
+    toast.loading("Please wait...");
+    const response = await axios.delete(`/api/blood-donate?id=${id}`);
+    if (response.status === 200) {
+      toast.dismiss();
+      toast.success("Deleted successfully");
+      refetch();
+    } else {
+      toast.dismiss();
+      toast.error("Error deleting application");
+    }
+  };
 
   return (
     <div className="mx-2">
@@ -100,10 +127,41 @@ export default function List() {
                 {data.users.map((user: any) => (
                   <Card key={user.id}>
                     <CardContent>
-                      <Avatar className="mx-auto h-20 w-20">
-                        <AvatarImage src={user.image} alt="@shadcn" />
-                        <AvatarFallback>No Image</AvatarFallback>
-                      </Avatar>
+                      <div className="mt-2 flex justify-between">
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="destructive" size="icon">
+                              <FaTrash size="12" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Are you absolutely sure?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Application data will be deleted from the
+                                database.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => confirmDelete(user.id)}
+                              >
+                                Delete
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                        <Avatar className="mx-auto h-20 w-20">
+                          <AvatarImage src={user.image} alt="@shadcn" />
+                          <AvatarFallback>No Image</AvatarFallback>
+                        </Avatar>
+                        <Button size="icon" variant="secondary">
+                          <FaEdit />
+                        </Button>
+                      </div>
 
                       <div className="mt-4">
                         <p className="font-bold uppercase text-primary">
@@ -191,6 +249,7 @@ export default function List() {
       ) : (
         "You don't have permission to access this page."
       )}
+      <ToastContainer position="top-center" theme="dark" />
     </div>
   );
 }
