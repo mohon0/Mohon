@@ -26,20 +26,19 @@ export default function List() {
   const { data: session } = useSession();
   const params = useParams();
   const [page, setPage] = useState<number>(Number(params.page[1]) || 1);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [certificate, setCertificate] = useState("All");
+  const [bloodGroup, setBloodGroup] = useState("All");
   const [searchInput, setSearchInput] = useState("");
   const email = session?.user?.email;
   const admin = process.env.NEXT_PUBLIC_ADMIN;
   const pageSize = 16;
 
-  const { data, isError, refetch, isFetching } = FetchBloodBank({
+  const handleFilterChange = (value: string) => setBloodGroup(value);
+  const { data, isError, isFetching } = FetchBloodBank({
     currentPage: page,
     pageSize,
     searchInput,
+    bloodGroup,
   });
-
-  const handleFilterChange = (value: string) => setSelectedCategory(value);
 
   return (
     <div className="mx-2">

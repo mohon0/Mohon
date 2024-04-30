@@ -87,6 +87,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const skipCount = (page - 1) * pageSize;
 
     const searchName = queryParams.get("search") || "";
+    let bloodGroup = (queryParams.get("bloodGroup") || "All").trim();
+    if (bloodGroup && bloodGroup !== "All") {
+      if (!bloodGroup.includes("-")) {
+        bloodGroup = bloodGroup + "+";
+      }
+    }
 
     const allUsers = await Prisma.bloodDonation.findMany({
       select: {
@@ -108,8 +114,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
           contains: searchName,
           mode: "insensitive",
         },
+        ...(bloodGroup !== "All" && { bloodGroup: { equals: bloodGroup } }),
       },
-
       skip: skipCount,
       take: pageSize,
     });
@@ -120,6 +126,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
           contains: searchName,
           mode: "insensitive",
         },
+        ...(bloodGroup !== "All" && { bloodGroup: { equals: bloodGroup } }),
       },
     });
 

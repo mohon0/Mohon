@@ -15,7 +15,7 @@ export function FetchAddress({
   searchInput,
 }: props) {
   return useQuery({
-    queryKey: ["all User Data", currentPage, filterBy, searchInput, pageSize],
+    queryKey: ["address", currentPage, filterBy, searchInput, pageSize],
     queryFn: async () => {
       const response = await axios.get(
         `/api/address?page=${currentPage}&filterBy=${filterBy}&pageSize=${pageSize}&search=${searchInput}`,
