@@ -28,11 +28,10 @@ export default function List() {
   const [page, setPage] = useState<number>(Number(params.page[1]) || 1);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [certificate, setCertificate] = useState("All");
-  const [sortBy, setSortBy] = useState("newest");
   const [searchInput, setSearchInput] = useState("");
   const email = session?.user?.email;
   const admin = process.env.NEXT_PUBLIC_ADMIN;
-  const pageSize = 12;
+  const pageSize = 16;
 
   const { data, isError, refetch, isFetching } = FetchBloodBank({
     currentPage: page,
@@ -175,18 +174,14 @@ export default function List() {
                 ))}
               </div>
               <div className="mt-10">
-                {data &&
-                  data !== "No posts found" &&
-                  data.totalPostsCount > pageSize && (
-                    <PaginationUi
-                      link="application-list"
-                      currentPage={page}
-                      totalPages={Math.ceil(
-                        Number(data.totalPostsCount) / pageSize,
-                      )}
-                      setCurrentPage={(newPage) => setPage(newPage)}
-                    />
-                  )}
+                {data && data !== "No posts found" && data.count > pageSize && (
+                  <PaginationUi
+                    link="blood-bank"
+                    currentPage={page}
+                    totalPages={Math.ceil(Number(data.count) / pageSize)}
+                    setCurrentPage={(newPage) => setPage(newPage)}
+                  />
+                )}
               </div>
               <ToastContainer position="top-center" theme="dark" />
             </div>

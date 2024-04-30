@@ -114,7 +114,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       take: pageSize,
     });
 
-    const totalUsersCount = await Prisma.user.count({
+    const totalUsersCount = await Prisma.bloodDonation.count({
       where: {
         name: {
           contains: searchName,
@@ -125,7 +125,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     if (allUsers.length > 0) {
       return new NextResponse(
-        JSON.stringify({ users: allUsers, totalUsersCount }),
+        JSON.stringify({ users: allUsers, count: totalUsersCount }),
         {
           headers: { "Content-Type": "application/json" },
         },
