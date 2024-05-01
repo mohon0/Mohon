@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/select";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { FaEdit, FaSearch } from "react-icons/fa";
@@ -158,9 +159,11 @@ export default function List() {
                           <AvatarImage src={user.image} alt="@shadcn" />
                           <AvatarFallback>No Image</AvatarFallback>
                         </Avatar>
-                        <Button size="icon" variant="secondary">
-                          <FaEdit />
-                        </Button>
+                        <Link href={`/editbloodbank/${user.id}`}>
+                          <Button size="icon" variant="secondary">
+                            <FaEdit />
+                          </Button>
+                        </Link>
                       </div>
 
                       <div className="mt-4">
