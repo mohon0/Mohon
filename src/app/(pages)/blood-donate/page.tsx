@@ -27,6 +27,7 @@ import img from "@/images/blood/logo.png";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
@@ -64,6 +65,7 @@ const FormSchema = z.object({
   number2: z.string().optional(),
 });
 export default function BloodDonation() {
+  const route = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -121,6 +123,9 @@ export default function BloodDonation() {
         form.reset();
         setImage(null);
         toast.success("Form has been successfully submitted");
+        setTimeout(() => {
+          route.back();
+        }, 2000);
       } else {
         toast.error("Form failed to be submitted");
       }

@@ -4,7 +4,6 @@ import { PrismaClient } from "@prisma/client";
 import {
   deleteObject,
   getDownloadURL,
-  getMetadata,
   ref,
   uploadBytes,
 } from "firebase/storage";
@@ -14,26 +13,6 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 const secret = process.env.NEXTAUTH_SECRET;
 const admin = process.env.NEXT_PUBLIC_ADMIN;
-
-// Function to check if an image exists in Firebase Storage
-async function imageExists(imagePath: string | undefined) {
-  const storageRef = ref(storage, imagePath);
-
-  try {
-    // Get metadata for the file
-    const metadata = await getMetadata(storageRef);
-    return metadata.size > 0; // If size is greater than 0, the file exists.
-  } catch (error) {
-    if ((error as any).code === "storage/object-not-found") {
-      // If the error code is "object-not-found," the file doesn't exist.
-      return false;
-    } else {
-      // Handle other errors here
-      console.error("Error checking image existence:", error);
-      throw error;
-    }
-  }
-}
 
 function getStringValue(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -248,7 +227,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
 
     // Check if the user has the right to delete the application
     if (userId === application.userId || userEmail === admin) {
-      if (await imageExists(application.image)) {
+      if (await checkIfImageExists(application.image)) {
         // Delete the previous cover image
         const storageRefToDelete = ref(storage, application.image);
         await deleteObject(storageRefToDelete);

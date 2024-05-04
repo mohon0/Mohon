@@ -5,7 +5,7 @@ interface props {
   id: string;
 }
 
-export function FetchSingleDonar({ id }: props) {
+export function FetchSingleDonar(id: string | string[]) {
   return useQuery({
     queryKey: ["Single donar", id],
     queryFn: async () => {
