@@ -1,55 +1,53 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma } from "@/components/helper/backEnd/Prisma";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
 const secret = process.env.NEXTAUTH_SECRET;
 const Admin = process.env.NEXT_PUBLIC_ADMIN;
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
-    const data = await prisma.duration.findFirst({});
-
+    const url = new URL(req.url);
+    const queryParams = new URLSearchParams(url.search);
+    const searchName = queryParams.get("search") || "";
+    const data = await Prisma.duration.findFirst({});
     return new NextResponse(JSON.stringify(data));
   } catch (error) {
     console.error("Error fetching data:", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return new NextResponse("Failed to fetch data", { status: 500 });
   } finally {
-    await prisma.$disconnect();
+    await Prisma.$disconnect();
   }
 }
 
-export async function PUT(req: NextRequest, res: NextResponse) {
+export async function PATCH(req: NextRequest, res: NextResponse) {
   try {
-    // Authenticate user and retrieve token
     const token = await getToken({ req, secret });
     const email = token?.email;
 
     if (!token) {
-      // User is not authenticated
-      return new NextResponse("User not logged in");
+      return new NextResponse("User not logged in", { status: 401 });
     }
     if (email !== Admin) {
-      return new NextResponse("Only admin can access this");
+      return new NextResponse("Unauthorized access", { status: 403 });
     }
-    const { button } = await req.json();
-    if (typeof button === "string") {
-      const data = await prisma.duration.update({
-        where: {
-          id: "6572cabe088598503406b0a3",
-        },
-        data: {
-          button: button,
-        },
-      });
 
-      return new NextResponse("button enabled");
-    } else {
+    const { button } = await req.json();
+
+    if (typeof button !== "string") {
       return new NextResponse("Button data must be a string", { status: 400 });
     }
+
+    const data = await Prisma.duration.update({
+      where: { id: "6572cabe088598503406b0a3" },
+      data: { button: button },
+    });
+
+    return new NextResponse("Button updated successfully");
   } catch (error) {
-    return new NextResponse("error", { status: 400 });
+    console.error("Error updating data:", error);
+    return new NextResponse("Failed to update data", { status: 500 });
   } finally {
-    await prisma.$disconnect();
+    await Prisma.$disconnect();
   }
 }

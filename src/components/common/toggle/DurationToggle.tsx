@@ -1,4 +1,5 @@
-"use client";
+import { FetchDuration } from "@/components/fetch/get/application/FetchDuration";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,18 +9,19 @@ import { Switch } from "../../ui/switch";
 export default function DurationToggle() {
   const [visibility, setVisibility] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { refetch } = FetchDuration();
 
   useEffect(() => {
     const apiUrl = `api/duration`;
 
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        setVisibility(data.button === "On");
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        setVisibility(response.data.button === "On");
         setLoading(false);
       })
-      .catch(() => {
-        console.error("Error fetching data");
+      .catch((error) => {
+        toast.error("Failed to fetch data");
         setLoading(false);
       });
   }, []);
@@ -29,30 +31,28 @@ export default function DurationToggle() {
 
     try {
       toast.loading("Please wait...");
-      const response = await fetch("api/duration", {
-        method: "PUT",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ button: newData ? "On" : "Off" }),
-      });
-      if (response.ok) {
+      const response = await axios.patch(
+        "api/duration",
+        { button: newData ? "On" : "Off" },
+        { withCredentials: true },
+      );
+
+      if (response.status === 200) {
         toast.dismiss();
         setVisibility(newData);
+        refetch();
         toast.success("Status updated successfully");
-        window.location.reload();
       }
     } catch (error) {
+      toast.dismiss();
       toast.error("Error updating status");
-      console.error("Error updating visibility:", error);
     }
   };
 
   return (
     <>
       {loading ? (
-        <p>loading...</p>
+        <p>Loading...</p>
       ) : (
         <div className="flex items-center space-x-2">
           <Switch
@@ -61,7 +61,7 @@ export default function DurationToggle() {
             onCheckedChange={handleSwitchChange}
           />
           <Label htmlFor="free">Free Apply Open</Label>
-          <ToastContainer position="top-center" autoClose={3000} />
+          <ToastContainer position="top-center" autoClose={3000} theme="dark" />
         </div>
       )}
     </>

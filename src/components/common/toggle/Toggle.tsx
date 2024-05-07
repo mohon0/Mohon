@@ -1,4 +1,5 @@
 "use client";
+import { FetchActionButtonData } from "@/components/fetch/get/visibility/FetchActionButtonData";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,6 +9,7 @@ import { Switch } from "../../ui/switch";
 export default function Toggle() {
   const [visibility, setVisibility] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { refetch } = FetchActionButtonData();
 
   useEffect(() => {
     const apiUrl = `api/visibility`;
@@ -30,7 +32,7 @@ export default function Toggle() {
     try {
       toast.loading("Please wait...");
       const response = await fetch("api/visibility", {
-        method: "PUT",
+        method: "PATCH",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +43,7 @@ export default function Toggle() {
         toast.dismiss();
         setVisibility(newData);
         toast.success("Status updated successfully");
-        window.location.reload();
+        refetch();
       }
     } catch (error) {
       toast.error("Error updating status");

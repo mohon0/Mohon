@@ -19,7 +19,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 }
 
-export async function PUT(req: NextRequest, res: NextResponse) {
+export async function PATCH(req: NextRequest, res: NextResponse) {
   try {
     // Authenticate user and retrieve token
     const token = await getToken({ req, secret });
