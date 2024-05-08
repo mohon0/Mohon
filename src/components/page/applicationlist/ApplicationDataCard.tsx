@@ -253,11 +253,19 @@ export default function ApplicationDataCard(app: ExtendedApplicationListType) {
         </div>
       </div>
       <Link
-        href={`/application-list/singleapplication/${app.id}`}
+        href={`/application-list/payment-report/${app.id}`}
         className="mt-6 flex w-full"
       >
-        <Button variant="secondary" className="w-full">
-          View Details
+        <Button variant="outline" className="w-full">
+          Payment Report
+        </Button>
+      </Link>
+      <Link
+        href={`/application-list/singleapplication/${app.id}`}
+        className="mt-2 flex w-full"
+      >
+        <Button variant="secondary" className="w-full text-primary">
+          Application Details
         </Button>
       </Link>
       <ToastContainer theme="dark" position="top-center" />
