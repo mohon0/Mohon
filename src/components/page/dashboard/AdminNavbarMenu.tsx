@@ -6,10 +6,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { BiDonateBlood } from "react-icons/bi";
 import { BsGridFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaClipboardList, FaUserEdit, FaUsers } from "react-icons/fa";
 import { FaPenToSquare, FaPowerOff } from "react-icons/fa6";
+import { IoLocation } from "react-icons/io5";
 
 export default function AdminNavbarMenu() {
   const [NavOpen, setNavOpen] = useState(false);
@@ -130,6 +132,32 @@ export default function AdminNavbarMenu() {
               >
                 <FaUsers />
                 <span>User</span>
+              </Button>
+            </Link>
+            <Link href="/address/page/1">
+              <Button
+                className="flex w-full items-center justify-start gap-4"
+                variant={
+                  /^\/address\/page\/\d+$/.test(pathname)
+                    ? "default"
+                    : "outline"
+                }
+              >
+                <IoLocation />
+                <span>Address</span>
+              </Button>
+            </Link>
+            <Link href="/blood-bank/page/1">
+              <Button
+                className="flex w-full items-center justify-start gap-4"
+                variant={
+                  /^\/blood-bank\/page\/\d+$/.test(pathname)
+                    ? "default"
+                    : "outline"
+                }
+              >
+                <BiDonateBlood />
+                <span>Blood Bank</span>
               </Button>
             </Link>
           </div>
