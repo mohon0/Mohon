@@ -139,6 +139,7 @@ model Application {
   updatedAt              DateTime @updatedAt
   userId                 String   @db.ObjectId
   user                   User     @relation(fields: [userId], references: [id])
+  payments               Transaction[]
 }
 
 model ApplyVisibility {
@@ -165,4 +166,15 @@ model BloodDonation {
   number2            String?
   image              String?
 
+}
+
+
+model Transaction {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  month       String
+  trxId       String
+  amount      Float
+  createdAt   DateTime @default(now())
+  application Application @relation(fields: [applicationId], references: [id])
+  applicationId String @db.ObjectId
 }
