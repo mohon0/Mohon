@@ -113,13 +113,15 @@ export default function PaymentReport() {
     <>
       <Card className="mx-auto lg:w-2/3">
         <CardContent className="flex flex-col items-center justify-center gap-4 md:flex-row md:items-start md:justify-normal md:gap-10">
-          <Image
-            src={data.image}
-            alt=""
-            width={200}
-            height={200}
-            className="mt-3 w-24 rounded-sm md:w-32 lg:w-40"
-          />
+          {data.image && (
+            <Image
+              src={data.image}
+              alt=""
+              width={200}
+              height={200}
+              className="mt-3 w-24 rounded-sm md:w-32 lg:w-40"
+            />
+          )}
           <div className="mt-2">
             <p className="text-2xl font-bold uppercase text-primary">
               {data.firstName} {data.lastName}
