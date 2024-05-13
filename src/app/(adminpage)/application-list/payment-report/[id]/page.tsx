@@ -1,19 +1,9 @@
 "use client";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 import Loading from "@/components/common/loading/Loading";
 import { FetchPaymentReport } from "@/components/fetch/get/application/FetchPaymentReport";
-import DateFormatter from "@/components/helper/hooks/DateFormtter";
 import DeletePaymentSummary from "@/components/page/applicationlist/payment-report/DeletePaymentSummary";
-import { PaymentReportType } from "@/components/type/PaymentReportType";
+import PaymentSummaryTable from "@/components/page/applicationlist/payment-report/PaymentSummaryTable";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -46,13 +36,17 @@ export default function PaymentReport() {
   const id = params.id;
   const { isLoading, data, isError, refetch } = FetchPaymentReport(id);
   const FormSchema = z.object({
-    trxId: z.string().min(2),
-    month: z.string().min(2),
-    year: z.string().min(2),
+    trxId: z.string().min(2, "trxId is required "),
+    month: z.string().min(2, "month is required"),
+    year: z.string().min(2, "year is required"),
     amount: z
       .string()
-      .regex(/^\d+(\.\d+)?$/)
-      .min(2),
+      .regex(
+        /^\d+(\.\d+)?$/,
+        "Amount must be numerical and can not be negative or empty",
+      )
+      .min(2, "Amount is required")
+      .max(10),
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -115,11 +109,6 @@ export default function PaymentReport() {
     </SelectItem>
   ));
 
-  const totalAmount = data.payments.reduce(
-    (acc: number, payment: PaymentReportType) => acc + payment.amount,
-    0,
-  );
-
   return (
     <>
       <Card className="mx-auto w-2/3">
@@ -164,10 +153,7 @@ export default function PaymentReport() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Month</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select Month" />
@@ -197,11 +183,8 @@ export default function PaymentReport() {
               name="year"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Year</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <FormLabel>Select Year</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Year" />
@@ -230,41 +213,7 @@ export default function PaymentReport() {
             <Button type="submit">Submit</Button>
           </form>
         </Form>
-        <div className="mt-10">
-          <p className="mb-10 text-center text-4xl font-bold">
-            Payment Summary
-          </p>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">TrxID</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Month</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.payments.map((payment: PaymentReportType) => (
-                <TableRow key={payment.id}>
-                  <TableCell className="font-medium">{payment.trxId}</TableCell>
-                  <TableCell>{DateFormatter(payment.createdAt)}</TableCell>
-                  <TableCell>{payment.month}</TableCell>
-                  <TableCell className="text-right">
-                    &#x09F3; {payment.amount}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell colSpan={3}>Total</TableCell>
-                <TableCell className="text-right">
-                  &#x09F3; {totalAmount.toFixed(2)}
-                </TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </div>
+        <PaymentSummaryTable data={data.payments} />
       </div>
       <DeletePaymentSummary data={data.payments} id={id} />
       <ToastContainer theme="dark" position="top-center" />
