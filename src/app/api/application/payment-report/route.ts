@@ -60,3 +60,23 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return new NextResponse("Server error", { status: 500 });
   }
 }
+export async function DELETE(req: NextRequest, res: NextResponse) {
+  try {
+    const url = new URL(req.url);
+    const queryParams = new URLSearchParams(url.search);
+
+    const id = queryParams.get("id");
+    if (!id) {
+      return new NextResponse("Invalid query parameter");
+    }
+
+    const response = await Prisma.transaction.delete({
+      where: {
+        id: id,
+      },
+    });
+    return new NextResponse(JSON.stringify(response), { status: 200 });
+  } catch (error) {
+    return new NextResponse("Server error", { status: 500 });
+  }
+}

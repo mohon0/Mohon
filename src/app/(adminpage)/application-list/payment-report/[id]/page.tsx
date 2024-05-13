@@ -12,6 +12,7 @@ import {
 import Loading from "@/components/common/loading/Loading";
 import { FetchPaymentReport } from "@/components/fetch/get/application/FetchPaymentReport";
 import DateFormatter from "@/components/helper/hooks/DateFormtter";
+import DeletePaymentSummary from "@/components/page/applicationlist/payment-report/DeletePaymentSummary";
 import { PaymentReportType } from "@/components/type/PaymentReportType";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -265,6 +266,7 @@ export default function PaymentReport() {
           </Table>
         </div>
       </div>
+      <DeletePaymentSummary data={data.payments} id={id} />
       <ToastContainer theme="dark" position="top-center" />
     </>
   );
