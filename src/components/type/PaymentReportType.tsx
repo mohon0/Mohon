@@ -4,4 +4,5 @@ export interface PaymentReportType {
   month: string;
   createdAt: string;
   amount: number;
+  year: string;
 }

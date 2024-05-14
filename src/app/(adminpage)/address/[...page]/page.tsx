@@ -29,7 +29,7 @@ const Users: React.FC = () => {
   const [searchInput, setSearchInput] = useState("");
   const [filterBy, setFilterBy] = useState("All");
 
-  const pageSize = 18;
+  const pageSize = 20;
   const admin = process.env.NEXT_PUBLIC_ADMIN;
   const email = session?.user?.email;
 
@@ -44,7 +44,7 @@ const Users: React.FC = () => {
     setFilterBy(value);
   };
   return (
-    <div className="mx-2 md:mx-10 lg:mx-16">
+    <div className="mx-2">
       {status === "authenticated" && email === admin ? (
         <div>
           <h1 className="mb-10 flex items-center justify-center text-4xl font-bold uppercase text-primary">
@@ -89,7 +89,7 @@ const Users: React.FC = () => {
             "No User Found"
           ) : (
             <>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
                 {data.users.map((user: AddressListType) => (
                   <div
                     className=" relative col-span-1 flex flex-col justify-center gap-1 rounded border p-4 hover:border-primary"

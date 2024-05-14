@@ -74,20 +74,6 @@ export default function PaymentReport() {
   }
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const { trxId, amount } = data;
-    const currentDate = new Date();
-    const month = currentDate.toLocaleString("default", { month: "numeric" });
-    const day = currentDate.getDate().toString().padStart(2, "0");
-    const year = String(currentDate.getFullYear()).padStart(4, "0");
-
-    const formattedDate = `${month}/${day}/${year}`;
-
-    const dataWithoutYear = {
-      trxId,
-      month: `${data.month} ${data.year}`,
-      amount,
-      date: formattedDate,
-    };
     toast.loading("Please wait...");
     const response = await axios.post(
       `/api/application/payment-report?id=${id}`,

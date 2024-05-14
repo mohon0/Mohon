@@ -58,6 +58,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
         where: whereClause,
         skip: skipCount,
         take: pageSize,
+        orderBy: {
+          createdAt: "desc",
+        },
       }),
       prisma.application.count({ where: whereClause }),
     ]);

@@ -172,6 +172,7 @@ model BloodDonation {
 model Transaction {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   month       String
+  year        String
   trxId       String
   amount      Float
   createdAt   String

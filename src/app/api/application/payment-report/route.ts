@@ -32,6 +32,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     return new NextResponse(JSON.stringify(response), { status: 200 });
   } catch (error) {
+    console.log(error);
     return new NextResponse("Server error", { status: 500 });
   }
 }
@@ -52,6 +53,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         trxId: body.trxId,
         month: body.month,
         amount: amount,
+        year: body.year,
         applicationId: id,
         createdAt: body.date,
       },

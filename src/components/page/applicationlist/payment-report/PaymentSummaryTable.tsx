@@ -1,4 +1,3 @@
-import DateFormatter from "@/components/helper/hooks/DateFormtter";
 import { PaymentReportType } from "@/components/type/PaymentReportType";
 import {
   Table,
@@ -35,7 +34,9 @@ const PaymentSummaryTable: React.FC<Props> = ({ data }) => {
             <TableRow key={payment.id}>
               <TableCell className="font-medium">{payment.trxId}</TableCell>
               <TableCell>{payment.createdAt}</TableCell>
-              <TableCell>{payment.month}</TableCell>
+              <TableCell>
+                {payment.month} {payment.year}
+              </TableCell>
               <TableCell className="text-right">
                 &#x09F3; {payment.amount}
               </TableCell>
