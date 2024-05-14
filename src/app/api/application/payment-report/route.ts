@@ -53,6 +53,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         month: body.month,
         amount: amount,
         applicationId: id,
+        createdAt: body.date,
       },
     });
     return new NextResponse(JSON.stringify(response), { status: 201 });

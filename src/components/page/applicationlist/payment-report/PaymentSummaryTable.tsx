@@ -34,7 +34,7 @@ const PaymentSummaryTable: React.FC<Props> = ({ data }) => {
           {data.map((payment) => (
             <TableRow key={payment.id}>
               <TableCell className="font-medium">{payment.trxId}</TableCell>
-              <TableCell>{DateFormatter(payment.createdAt)}</TableCell>
+              <TableCell>{payment.createdAt}</TableCell>
               <TableCell>{payment.month}</TableCell>
               <TableCell className="text-right">
                 &#x09F3; {payment.amount}

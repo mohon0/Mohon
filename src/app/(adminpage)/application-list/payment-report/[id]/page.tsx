@@ -47,6 +47,12 @@ export default function PaymentReport() {
       )
       .min(2, "Amount is required")
       .max(10),
+    date: z
+      .string()
+      .regex(
+        /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+        "Date must be in the format DD/MM/YYYY",
+      ),
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -56,6 +62,7 @@ export default function PaymentReport() {
       amount: "",
       month: "",
       year: "",
+      date: "",
     },
   });
 
@@ -84,7 +91,7 @@ export default function PaymentReport() {
     toast.loading("Please wait...");
     const response = await axios.post(
       `/api/application/payment-report?id=${id}`,
-      dataWithoutYear,
+      data,
     );
     if (response.status === 201) {
       toast.dismiss();
@@ -150,6 +157,19 @@ export default function PaymentReport() {
                   <FormLabel>TrxId</FormLabel>
                   <FormControl>
                     <Input placeholder="TransactionID" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Date</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Date" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
