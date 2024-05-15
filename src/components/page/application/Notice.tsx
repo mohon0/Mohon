@@ -1,46 +1,16 @@
-"use client";
-import React, { useEffect } from "react";
+import React from "react";
+import Marquee from "react-fast-marquee";
 
 const Notice: React.FC = () => {
-  useEffect(() => {
-    const scrollers = document.querySelectorAll(".scroller");
-
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      addAnimation();
-    }
-
-    function addAnimation() {
-      scrollers.forEach((scroller) => {
-        scroller.setAttribute("data-animated", "true");
-
-        const scrollerInner = scroller.querySelector(
-          ".scroller__inner",
-        ) as HTMLElement;
-        const scrollerContent = Array.from(scrollerInner.children);
-
-        scrollerContent.forEach((item) => {
-          const duplicatedItem = item.cloneNode(true) as HTMLElement;
-          duplicatedItem.setAttribute("aria-hidden", "true");
-          scrollerInner.appendChild(duplicatedItem);
-        });
-      });
-    }
-  }, []);
-
   return (
     <div className="mx-2 mt-20 border border-primary py-2 md:mx-10 lg:mx-20">
-      <div className="scroller overflow-hidden">
-        <div className="scroller__inner text-accent-forground flex animate-scroll gap-4">
-          <span>সবাইকে দক্ষ করে গড়ে তোলায় আমাদের একমাত্র লক্ষ্য।</span>
-          <span>ঝিনাইদহ শহরে একমাত্র আমরাই আপনাদের সার্বক্ষণিক পাশে আছি।</span>
-          <span>
-            আপনাদের যে কোন সমস্যা জানাতে সরাসরি চলে আসুন আমাদের অফিসে।
-          </span>
-          <span>ঠিকানাঃ রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা)</span>
-          <span>অথবা কল করুনঃ 01989-491248, </span>
-          <span>Gmail: bestcomputer.jhenaidah@gmail.com</span>
-        </div>
-      </div>
+      <Marquee pauseOnHover={true}>
+        সবাইকে দক্ষ করে গড়ে তোলায় আমাদের একমাত্র লক্ষ্য। ঝিনাইদহ শহরে একমাত্র
+        আমরাই আপনাদের সার্বক্ষণিক পাশে আছি। আপনাদের যে কোন সমস্যা জানাতে সরাসরি
+        চলে আসুন আমাদের অফিসে। ঠিকানাঃ রফি টাওয়ার (১০ তলা ভবনের ৪র্থ তলা) অথবা
+        কল করুনঃ 01989-491248, Gmail: bestcomputer.jhenaidah@gmail.com সবাইকে
+        দক্ষ করে গড়ে তোলায় আমাদের একমাত্র লক্ষ্য।
+      </Marquee>
     </div>
   );
 };

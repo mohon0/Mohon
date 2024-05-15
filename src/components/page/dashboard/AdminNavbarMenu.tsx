@@ -11,6 +11,7 @@ import { BsGridFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaClipboardList, FaUserEdit, FaUsers } from "react-icons/fa";
 import { FaPenToSquare, FaPowerOff } from "react-icons/fa6";
+import { GiMoneyStack } from "react-icons/gi";
 import { IoLocation } from "react-icons/io5";
 
 export default function AdminNavbarMenu() {
@@ -158,6 +159,20 @@ export default function AdminNavbarMenu() {
               >
                 <BiDonateBlood />
                 <span>Blood Bank</span>
+              </Button>
+            </Link>
+            <Link href="/application-list/payment-report/66437d0303f83ef132f17be9">
+              <Button
+                className="flex w-full items-center justify-start gap-4"
+                variant={
+                  pathname ===
+                  "/application-list/payment-report/66437d0303f83ef132f17be9"
+                    ? "default"
+                    : "outline"
+                }
+              >
+                <GiMoneyStack />
+                <span>Office Cost</span>
               </Button>
             </Link>
           </div>

@@ -15,26 +15,21 @@ import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import { BiDonateBlood } from "react-icons/bi";
 import { BsGridFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaClipboardList, FaUserEdit, FaUsers } from "react-icons/fa";
 import { FaPenToSquare, FaPowerOff } from "react-icons/fa6";
+import { GiMoneyStack } from "react-icons/gi";
 import { IoLocation } from "react-icons/io5";
 
 export default function SideBar() {
   const pathname = usePathname();
   const { data: session } = useSession();
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const name = session?.user?.name || "MOHON";
   const fallback = name.slice(0, 2);
   const image = session?.user?.image;
-
-  const handleDelete = async () => {
-    setShowConfirmation(true);
-  };
 
   const handleLogout = () => {
     signOut({ redirect: true, callbackUrl: "/" });
@@ -135,6 +130,20 @@ export default function SideBar() {
               >
                 <BiDonateBlood />
                 <span>Blood Bank</span>
+              </Button>
+            </Link>
+            <Link href="/application-list/payment-report/66437d0303f83ef132f17be9">
+              <Button
+                className="flex w-full items-center justify-start gap-4"
+                variant={
+                  pathname ===
+                  "/application-list/payment-report/66437d0303f83ef132f17be9"
+                    ? "default"
+                    : "outline"
+                }
+              >
+                <GiMoneyStack />
+                <span>Office Cost</span>
               </Button>
             </Link>
           </div>
