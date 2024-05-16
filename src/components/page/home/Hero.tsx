@@ -34,7 +34,7 @@ export default function Hero() {
 
           <div className="my-4 flex flex-wrap gap-10 text-xl text-slate-300 md:text-4xl">
             <Link
-              href="https://facebook.com/md.freelancermohon"
+              href="https://facebook.com/www.md.mohon"
               target="_blank"
               aria-label="Facebook"
             >

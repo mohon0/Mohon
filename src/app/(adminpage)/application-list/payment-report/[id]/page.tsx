@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -32,6 +33,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
 
 export default function PaymentReport() {
+  const admin = process.env.NEXT_PUBLIC_ADMIN;
+  const { status, data: session } = useSession();
   const params = useParams();
   const id = params.id;
   const { isLoading, data, isError, refetch } = FetchPaymentReport(id);
@@ -65,6 +68,12 @@ export default function PaymentReport() {
       date: "",
     },
   });
+  if (status === "loading") {
+    return <Loading />;
+  }
+  if (status === "unauthenticated") {
+    return "You are not authenticated";
+  }
 
   if (isLoading) {
     return <Loading />;
@@ -104,133 +113,145 @@ export default function PaymentReport() {
 
   return (
     <>
-      <Card className="mx-auto lg:w-2/3">
-        <CardContent className="flex flex-col items-center justify-center gap-4 md:flex-row md:items-start md:justify-normal md:gap-10">
-          {data.image && (
-            <Image
-              src={data.image}
-              alt=""
-              width={200}
-              height={200}
-              className="mt-3 w-24 rounded-sm md:w-32 lg:w-40"
-            />
-          )}
-          <div className="mt-2">
-            <p className="text-2xl font-bold uppercase text-primary">
-              {data.firstName} {data.lastName}
+      {session?.user?.email === admin ? (
+        <>
+          <Card className="mx-auto lg:w-2/3">
+            <CardContent className="flex flex-col items-center justify-center gap-4 md:flex-row md:items-start md:justify-normal md:gap-10">
+              {data.image && (
+                <Image
+                  src={data.image}
+                  alt=""
+                  width={200}
+                  height={200}
+                  className="mt-3 w-24 rounded-sm md:w-32 lg:w-40"
+                />
+              )}
+              <div className="mt-2">
+                <p className="text-2xl font-bold uppercase text-primary">
+                  {data.firstName} {data.lastName}
+                </p>
+                <p>{data.fullAddress}</p>
+                <p>{data.mobileNumber}</p>
+                <p>{data.email}</p>
+              </div>
+            </CardContent>
+          </Card>
+          <div className="mt-10">
+            <p className="mt-0 text-center text-2xl font-bold">
+              Make Payment Report
             </p>
-            <p>{data.fullAddress}</p>
-            <p>{data.mobileNumber}</p>
-            <p>{data.email}</p>
+
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="mx-auto mt-4 space-y-2 md:w-2/3"
+              >
+                <FormField
+                  control={form.control}
+                  name="trxId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>TrxId</FormLabel>
+                      <FormControl>
+                        <Input placeholder="TransactionID" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="date"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Date</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Date" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="month"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Month</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select Month" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="January">January</SelectItem>
+                          <SelectItem value="February">February</SelectItem>
+                          <SelectItem value="March">March</SelectItem>
+                          <SelectItem value="April">April</SelectItem>
+                          <SelectItem value="May">May</SelectItem>
+                          <SelectItem value="June">June</SelectItem>
+                          <SelectItem value="July">July</SelectItem>
+                          <SelectItem value="August">August</SelectItem>
+                          <SelectItem value="September">September</SelectItem>
+                          <SelectItem value="October">October</SelectItem>
+                          <SelectItem value="November">November</SelectItem>
+                          <SelectItem value="December">December</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="year"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Select Year</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Year" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>{yearOptions}</SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="amount"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Amount</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Amount" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit">Submit</Button>
+              </form>
+            </Form>
+            <PaymentSummaryTable data={data.payments} />
           </div>
-        </CardContent>
-      </Card>
-      <div className="mt-10">
-        <p className="mt-0 text-center text-2xl font-bold">
-          Make Payment Report
-        </p>
-
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="mx-auto mt-4 space-y-2 md:w-2/3"
-          >
-            <FormField
-              control={form.control}
-              name="trxId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>TrxId</FormLabel>
-                  <FormControl>
-                    <Input placeholder="TransactionID" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Date</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="month"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Month</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select Month" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="January">January</SelectItem>
-                      <SelectItem value="February">February</SelectItem>
-                      <SelectItem value="March">March</SelectItem>
-                      <SelectItem value="April">April</SelectItem>
-                      <SelectItem value="May">May</SelectItem>
-                      <SelectItem value="June">June</SelectItem>
-                      <SelectItem value="July">July</SelectItem>
-                      <SelectItem value="August">August</SelectItem>
-                      <SelectItem value="September">September</SelectItem>
-                      <SelectItem value="October">October</SelectItem>
-                      <SelectItem value="November">November</SelectItem>
-                      <SelectItem value="December">December</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="year"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Select Year</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Year" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>{yearOptions}</SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="amount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Amount</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Amount" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form>
-        <PaymentSummaryTable data={data.payments} />
-      </div>
-      <DeletePaymentSummary data={data.payments} id={id} />
-      <ToastContainer theme="dark" position="top-center" />
+          <DeletePaymentSummary data={data.payments} id={id} />
+          <ToastContainer theme="dark" position="top-center" />
+        </>
+      ) : (
+        "Your don't have permission to access this page"
+      )}
     </>
   );
 }

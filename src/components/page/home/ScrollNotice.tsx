@@ -7,7 +7,7 @@ export default function ScrollNotice() {
     <div className="mx-4 flex grid-cols-1 flex-col items-center justify-center gap-4 md:grid md:grid-cols-12   md:gap-0 lg:mx-10">
       <div className=" flex w-full items-center justify-center gap-2 rounded-md bg-cyan-600 p-1 md:col-span-3 lg:col-span-2">
         <Image src={logo} alt="logo" className="h-16 w-16"></Image>
-        <div className="animate-pulse text-lg font-bold text-fuchsia-900">
+        <div className="animate-pulse text-lg font-bold text-white">
           <p>বেস্ট কম্পিউটার</p>
           <p>ট্রেনিং সেন্টার</p>
         </div>
