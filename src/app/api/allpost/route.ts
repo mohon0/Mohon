@@ -19,6 +19,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const category = queryParams.get("category");
     const search = queryParams.get("search");
 
+    console.log(category)
+
     const skipCount = (page - 1) * pageSize;
 
     // Build the where condition for filtering by category and searching by title

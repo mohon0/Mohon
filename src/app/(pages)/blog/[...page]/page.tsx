@@ -1,4 +1,5 @@
 "use client";
+import { Options } from "@/components/common/Post/Options";
 import PostModel from "@/components/common/Post/PostModel";
 import Loading from "@/components/common/loading/Loading";
 import PaginationUi from "@/components/core/PaginationUi";
@@ -23,13 +24,14 @@ export default function Blog() {
   const params = useParams();
   const [page, setPage] = useState<number>(Number(params.page[1]) || 1);
   const [sortBy, setSortBy] = useState("newest");
+  const [filterBy, setFilterBy] = useState("all");
   const [searchInput, setSearchInput] = useState("");
   const pageSize = 16;
 
   const { isLoading, data, isError } = FetchAllPost({
     currentPage: page,
     pageSize,
-    selectedCategory: "all",
+    selectedCategory: filterBy,
     sortBy,
     searchInput,
   });
@@ -39,6 +41,11 @@ export default function Blog() {
   const handleSelectChange = (value: string) => {
     setSortBy(value);
   };
+  const handleFilterChange = (value: string) => {
+    setFilterBy(value);
+  };
+
+  const sortedOptions = Options.sort((a, b) => a.localeCompare(b));
 
   return (
     <>
@@ -46,6 +53,32 @@ export default function Blog() {
         <div className="text-3xl font-bold md:text-5xl">My Latest Updates</div>
         <div className="flex flex-col items-center justify-center gap-3 md:flex-row md:gap-4 lg:w-8/12 lg:gap-10">
           {/* Sort by dropdown */}
+          <div className="flex items-center justify-center gap-2">
+            <Label htmlFor="sortPosts">FilterBy:</Label>
+            <Select onValueChange={handleFilterChange} defaultValue="all">
+              <SelectTrigger className="w-40">
+                <SelectValue placeholder="Updated Time" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Updated Time</SelectLabel>
+
+                  <SelectItem value="all" onSelect={() => setSortBy("all")}>
+                    All
+                  </SelectItem>
+                  {sortedOptions.map((categories) => (
+                    <SelectItem
+                      key={categories}
+                      value={categories.toLowerCase().replace(/\s+/g, "_")}
+                      onSelect={() => handleSelectChange(categories)}
+                    >
+                      {categories}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="flex items-center justify-center gap-2">
             <Label htmlFor="sortPosts">SortBy:</Label>
             <Select onValueChange={handleSelectChange} defaultValue="newest">
