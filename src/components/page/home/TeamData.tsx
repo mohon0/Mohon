@@ -10,7 +10,7 @@ import Pic5 from "@/images/team/img5.jpg";
 import Pic6 from "@/images/team/img6.jpg";
 import Pic7 from "@/images/team/img7.jpg";
 import Pic8 from "@/images/team/img8.jpg";
-import Pic9 from "@/images/team/img9.webp";
+import Pic9 from "@/images/team/img9.jpeg";
 
 export const TeamData = [
   {
@@ -87,8 +87,8 @@ export const TeamData = [
   },
   {
     id: 9,
-    name: "Surovi Khatun",
-    post: "T-shirt Designer",
+    name: "Md. Rakib Hasan",
+    post: "Graphics Designer",
     facebook: "https/facebook.com/demo",
     twitter: "https:twitter.com/demo",
     linkedin: "https:linkedin/in/demo",
