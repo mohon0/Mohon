@@ -24,7 +24,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         mobileNumber: true,
         payments: {
           orderBy: {
-            createdAt: "desc",
+            createdAt: "asc",
           },
         },
       },
