@@ -174,8 +174,9 @@ model Transaction {
   month       String
   year        String
   trxId       String
+  createdAt   DateTime @default(now())
   amount      Float
-  createdAt   String
+  time        String
   application Application @relation(fields: [applicationId], references: [id])
   applicationId String @db.ObjectId
 }

@@ -1,5 +1,4 @@
 import { FetchPaymentReport } from "@/components/fetch/get/application/FetchPaymentReport";
-import DateFormatter from "@/components/helper/hooks/DateFormtter";
 import { PaymentReportType } from "@/components/type/PaymentReportType";
 import { Button } from "@/components/ui/button";
 import {
@@ -90,9 +89,9 @@ export default function DeletePaymentSummary({
                     {data.map((payment: PaymentReportType) => (
                       <SelectItem key={payment.id} value={payment.id}>
                         <p>
-                          TrxId: {payment.trxId} createdAt:{" "}
-                          {DateFormatter(payment.createdAt)} Month:{" "}
-                          {payment.month} Amount: {payment.amount}
+                          TrxId: {payment.trxId} date: {payment.time} Month:{" "}
+                          {payment.month}
+                          {payment.year} Amount: {payment.amount}
                         </p>
                       </SelectItem>
                     ))}

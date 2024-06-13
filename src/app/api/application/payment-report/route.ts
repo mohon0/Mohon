@@ -24,7 +24,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         mobileNumber: true,
         payments: {
           orderBy: {
-            createdAt: "asc",
+            createdAt: "desc",
           },
         },
       },
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         amount: amount,
         year: body.year,
         applicationId: id,
-        createdAt: body.date,
+        time: body.date,
       },
     });
     return new NextResponse(JSON.stringify(response), { status: 201 });
