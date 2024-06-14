@@ -43,7 +43,7 @@ export default function List() {
     sortBy,
     searchInput,
     certificate,
-    free: "false",
+    free: "true",
   });
 
   const handleSelectChange = (value: string) => setSortBy(value);
@@ -53,13 +53,15 @@ export default function List() {
   return (
     <div className="mx-2">
       <div className="mb-10 flex items-center justify-center gap-10">
-        <Button variant="default">All Application</Button>
-        <Link href="/free-application-list/page/1">
-          <Button variant="outline">Free Application</Button>
+        <Link href="/application-list/page/1">
+          <Button variant="outline">All Application</Button>
         </Link>
+        <Button variant="default">
+          Free Application
+        </Button>
       </div>
       <div className="text-center text-3xl font-bold md:text-5xl">
-        All Application
+        Free Application
       </div>
       <div className="my-10 flex w-full flex-col  items-center justify-center gap-3 md:gap-2 lg:flex-row lg:gap-10">
         {/* Filter and Sort dropdowns */}

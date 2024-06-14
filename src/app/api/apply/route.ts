@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
     const queryParams = new URLSearchParams(url.search);
@@ -19,6 +19,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const status = queryParams.get("category");
     const search = queryParams.get("search");
     const certificate = queryParams.get("certificate");
+    const free = queryParams.get("free");
 
     const skipCount = (page - 1) * pageSize;
 
@@ -60,15 +61,24 @@ export async function GET(req: NextRequest, res: NextResponse) {
           }
         : {}),
       ...(certificate && certificate !== "All" ? { certificate } : {}),
+      ...(free === "true"
+        ? { duration: "free" }
+        : free === "false"
+          ? { duration: { not: "free" } }
+          : {}),
     };
 
     // Calculate the total number of posts without pagination
     const totalPostsCount = await prisma.application.count({ where });
 
     if (totalPostsCount === 0) {
-      return new NextResponse("No Application Found.", {
-        status: 200,
-      });
+      return new NextResponse(
+        JSON.stringify({ message: "No Application Found." }),
+        {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        },
+      );
     }
 
     // Attempt to fetch data from the database
@@ -94,6 +104,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     // Return a success response
     return new NextResponse(JSON.stringify({ application, totalPostsCount }), {
+      status: 200,
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
@@ -102,11 +113,21 @@ export async function GET(req: NextRequest, res: NextResponse) {
     // Check if the error is a PrismaClientKnownRequestError
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       // Return a response with a more specific error message and a 500 status code
-      return new NextResponse("Error while fetching application data", {
-        status: 500,
-      });
+      return new NextResponse(
+        JSON.stringify({ error: "Error while fetching application data" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        },
+      );
     }
 
-    return new NextResponse("Internal server error", { status: 400 });
+    return new NextResponse(
+      JSON.stringify({ error: "Internal server error" }),
+      {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   }
 }
