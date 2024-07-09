@@ -16,7 +16,7 @@ export default function BlogChart() {
   const { isLoading, data: chartData, isError } = FetchUserChart();
   return (
     <>
-      <div className="mt-20">
+      <div>
         {isLoading ? (
           <Loading />
         ) : isError ? (

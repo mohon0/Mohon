@@ -13,7 +13,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
       _count: true,
     });
 
-    return new NextResponse(JSON.stringify(response));
+    const totalApplicationCount = await prisma.application.count();
+
+    return NextResponse.json({
+      groupedResults: response,
+      totalApplicationCount,
+    });
   } catch (error) {
     console.error("Error retrieving post counts:", error);
     return new NextResponse("API is not working", { status: 500 });

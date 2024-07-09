@@ -20,7 +20,7 @@ export default function AdminDashboard() {
       ) : status === "unauthenticated" ? (
         "Your are not authenticated"
       ) : status === "authenticated" && session.user?.email === admin ? (
-        <div className="mt-20 md:mt-6">
+        <div className="mt-20 space-y-20 md:mt-6">
           <div className="flex items-center justify-center">
             <p className="text-2xl font-extrabold md:text-4xl">Dashboard</p>
           </div>
