@@ -21,10 +21,10 @@ export default function Home() {
       <div className="mt-20">
         <Hero />
       </div>
-      <Services />
-      <Tools />
       <ScrollNotice />
       <Projects />
+      <Services />
+      <Tools />
       <Team />
       <Cta />
       <Testimonial />
