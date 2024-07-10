@@ -21,9 +21,9 @@ export default function Home() {
       <div className="mt-20">
         <Hero />
       </div>
-      <ScrollNotice />
       <Services />
       <Tools />
+      <ScrollNotice />
       <Projects />
       <Team />
       <Cta />

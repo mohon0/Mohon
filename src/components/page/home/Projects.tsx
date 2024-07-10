@@ -7,7 +7,7 @@ export default function Projects() {
       className="flex flex-col items-center justify-center lg:gap-10"
       id="project"
     >
-      <SectionHeader text="What I Have Build" title="Recent Projects" />
+      <SectionHeader title="Our Student" />
       <ProjectSlider />
     </div>
   );

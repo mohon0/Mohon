@@ -5,7 +5,7 @@ export default function SectionHeader({
   text,
   title,
 }: {
-  text: string;
+  text?: string;
   title: string;
 }) {
   const cardVariants: Variants = {

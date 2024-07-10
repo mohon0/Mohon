@@ -6,7 +6,7 @@ export function FetchHomePageRecentProject() {
     queryKey: ["Home Page Recent Projects"],
     queryFn: async () => {
       const response = await axios.get(
-        `api/allpost?page=1&pageSize=5&category=projects`,
+        `api/allpost?page=1&pageSize=20&category=projects`,
       );
       return response.data;
     },

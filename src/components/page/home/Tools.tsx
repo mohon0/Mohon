@@ -5,7 +5,7 @@ import ToolsItems from "./ToolsItems";
 export default function Tools() {
   return (
     <div
-      className="mx-3  my-28 flex flex-col justify-center gap-16  md:mx-10 lg:mr-28"
+      className="mx-3  my-20 flex flex-col justify-center gap-16  md:mx-10 lg:mr-28"
       id="tools"
     >
       <SectionHeader text="What I Use" title="Tools & Skills" />
