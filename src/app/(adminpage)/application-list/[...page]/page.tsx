@@ -173,6 +173,7 @@ export default function List() {
                     status={app.status}
                     createdAt={app.createdAt}
                     certificate={app.certificate}
+                    mobileNumber={app.mobileNumber}
                     refetch={refetch}
                   />
                 ))}

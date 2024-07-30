@@ -93,6 +93,7 @@ export async function GET(req: NextRequest) {
         duration: true,
         createdAt: true,
         certificate: true,
+        mobileNumber: true,
       },
       orderBy: {
         createdAt: sortBy === "oldest" ? "asc" : "desc",

@@ -184,6 +184,10 @@ export default function ApplicationDataCard(app: ExtendedApplicationListType) {
           {formatDate(app.createdAt)}
         </p>
         <p>
+          <span className="font-bold text-secondary-foreground">Number: </span>
+          {app.mobileNumber}
+        </p>
+        <p>
           <span className="font-bold text-secondary-foreground">Status: </span>
           <span
             className={

@@ -56,9 +56,7 @@ export default function List() {
         <Link href="/application-list/page/1">
           <Button variant="outline">All Application</Button>
         </Link>
-        <Button variant="default">
-          Free Application
-        </Button>
+        <Button variant="default">Free Application</Button>
       </div>
       <div className="text-center text-3xl font-bold md:text-5xl">
         Free Application
@@ -175,6 +173,7 @@ export default function List() {
                     status={app.status}
                     createdAt={app.createdAt}
                     certificate={app.certificate}
+                    mobileNumber={app.mobileNumber}
                     refetch={refetch}
                   />
                 ))}

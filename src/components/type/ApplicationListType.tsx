@@ -8,4 +8,5 @@ export interface ApplicationListType {
   status: string;
   createdAt: string;
   certificate: string;
+  mobileNumber: string;
 }
