@@ -111,115 +111,120 @@ export default function Dashboard() {
                   </AlertDialog>
                 </div>
               </div>
-              <div className="md:w-8/12">
-                <CardHeader>
-                  <div className="flex items-center gap-8">
-                    <CardTitle className="text-2xl font-extrabold">
-                      {data.user.name}
-                    </CardTitle>
-                    <Badge>
-                      {admin === data.user.email ? "Admin" : "Member"}
-                    </Badge>
-                  </div>
-                </CardHeader>
+              <div className="flex flex-col items-start gap-20 md:flex-row">
+                <div>
+                  <CardHeader>
+                    <div className="flex items-center gap-8">
+                      <CardTitle className="text-2xl font-extrabold">
+                        {data.user.name}
+                      </CardTitle>
+                      <Badge>
+                        {admin === data.user.email ? "Admin" : "Member"}
+                      </Badge>
+                    </div>
+                  </CardHeader>
 
-                <CardContent>
-                  <div>
-                    <div className="flex items-center gap-4">
-                      <span>Email:</span>
-                      <span>{data.user.email}</span>
+                  <CardContent>
+                    <div>
+                      <div className="flex items-center gap-4">
+                        <span>Email:</span>
+                        <span>{data.user.email}</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span>Mobile:</span>
+                        <span>{data.user.phoneNumber}</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span>Member Since:</span>
+                        <span>{formatDate(data.user.createdAt)}</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span>Total Post:</span>
+                        <span>{data.user._count.posts}</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span>Total Comment:</span>
+                        <span>{data.user._count.comments}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <span>Mobile:</span>
-                      <span>{data.user.phoneNumber}</span>
+                    <div
+                      className="mt-3 text-muted-foreground"
+                      dangerouslySetInnerHTML={{ __html: data.user.bio }}
+                    />
+                  </CardContent>
+                  <CardFooter className="flex flex-wrap">
+                    {(data.user.facebook ||
+                      data.user.twitter ||
+                      data.user.linkedin ||
+                      data.user.instagram ||
+                      data.user.github) && <div>Connect with me:</div>}
+                    <div className="flex flex-wrap gap-4 pl-4 text-muted-foreground hover:[&>*]:text-foreground">
+                      {data.user.facebook && (
+                        <Link
+                          href={`https://${data.user.facebook}`}
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          <ToolTipHookDown
+                            text="Facebook"
+                            icon={<FaFacebook size={20} />}
+                          />
+                        </Link>
+                      )}
+                      {data.user.twitter && (
+                        <Link
+                          href={`https://${data.user.twitter}`}
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          <ToolTipHookDown
+                            text="Twitter"
+                            icon={<FaTwitter size={20} />}
+                          />
+                        </Link>
+                      )}
+                      {data.user.linkedin && (
+                        <Link
+                          href={`https://${data.user.linkedin}`}
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          <ToolTipHookDown
+                            text="LinkedIn"
+                            icon={<FaLinkedin size={20} />}
+                          />
+                        </Link>
+                      )}
+                      {data.user.instagram && (
+                        <Link
+                          href={`https://${data.user.instagram}`}
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          <ToolTipHookDown
+                            text="Instagram"
+                            icon={<FaInstagram size={20} />}
+                          />
+                        </Link>
+                      )}
+                      {data.user.github && (
+                        <Link
+                          href={`https://${data.user.github}`}
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          <ToolTipHookDown
+                            text="GitHub"
+                            icon={<FaGithub size={20} />}
+                          />
+                        </Link>
+                      )}
                     </div>
-                    <div className="flex items-center gap-4">
-                      <span>Member Since:</span>
-                      <span>{formatDate(data.user.createdAt)}</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span>Total Post:</span>
-                      <span>{data.user._count.posts}</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span>Total Comment:</span>
-                      <span>{data.user._count.comments}</span>
-                    </div>
-                  </div>
-                  <div
-                    className="mt-3 text-muted-foreground"
-                    dangerouslySetInnerHTML={{ __html: data.user.bio }}
-                  />
-                </CardContent>
-                <CardFooter className="flex flex-wrap">
-                  {(data.user.facebook ||
-                    data.user.twitter ||
-                    data.user.linkedin ||
-                    data.user.instagram ||
-                    data.user.github) && <div>Connect with me:</div>}
-                  <div className="flex flex-wrap gap-4 pl-4 text-muted-foreground hover:[&>*]:text-foreground">
-                    {data.user.facebook && (
-                      <Link
-                        href={`https://${data.user.facebook}`}
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        <ToolTipHookDown
-                          text="Facebook"
-                          icon={<FaFacebook size={20} />}
-                        />
-                      </Link>
-                    )}
-                    {data.user.twitter && (
-                      <Link
-                        href={`https://${data.user.twitter}`}
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        <ToolTipHookDown
-                          text="Twitter"
-                          icon={<FaTwitter size={20} />}
-                        />
-                      </Link>
-                    )}
-                    {data.user.linkedin && (
-                      <Link
-                        href={`https://${data.user.linkedin}`}
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        <ToolTipHookDown
-                          text="LinkedIn"
-                          icon={<FaLinkedin size={20} />}
-                        />
-                      </Link>
-                    )}
-                    {data.user.instagram && (
-                      <Link
-                        href={`https://${data.user.instagram}`}
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        <ToolTipHookDown
-                          text="Instagram"
-                          icon={<FaInstagram size={20} />}
-                        />
-                      </Link>
-                    )}
-                    {data.user.github && (
-                      <Link
-                        href={`https://${data.user.github}`}
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        <ToolTipHookDown
-                          text="GitHub"
-                          icon={<FaGithub size={20} />}
-                        />
-                      </Link>
-                    )}
-                  </div>
-                </CardFooter>
+                    <Link className="md:hidden" href="/application">
+                      <Button>Application</Button>
+                    </Link>
+                  </CardFooter>
+                </div>
               </div>
             </Card>
 

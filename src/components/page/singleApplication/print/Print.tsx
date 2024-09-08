@@ -210,7 +210,7 @@ export default function Print({ application }: SingleApplicationUserType) {
           </div>
         </div>
         <div className="fixed bottom-0 hidden w-full bg-cyan-600 p-2 text-center text-white print:block">
-          <p>www.freelancermohon.online</p>
+          <p>www.bestcomputerjhe.online</p>
         </div>
 
         <Image
