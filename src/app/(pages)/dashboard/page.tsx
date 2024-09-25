@@ -225,6 +225,10 @@ export default function Dashboard() {
                     </Link>
                   </CardFooter>
                 </div>
+
+                <Link className="mt-7 hidden md:block" href="/application">
+                  <Button>Application</Button>
+                </Link>
               </div>
             </Card>
 
