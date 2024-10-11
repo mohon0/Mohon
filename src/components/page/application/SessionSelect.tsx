@@ -10,7 +10,7 @@ import {
 import { useField } from "formik";
 
 export default function SessionSelect() {
-  const [field, meta, helpers] = useField("session");
+  const [field, meta, helpers] = useField<string>("session");
 
   const handleSelectChange = (value: string) => {
     helpers.setValue(value);
@@ -20,9 +20,17 @@ export default function SessionSelect() {
     const currentYear = new Date().getFullYear();
     const options = [];
 
-    for (let year = currentYear; year >= 1998; year--) {
+    // Include next year sessions first
+    options.push(`${currentYear + 1} July-Dec`, `${currentYear + 1} Jan-June`);
+
+    // Include current year sessions
+    options.push(`${currentYear} July-Dec`, `${currentYear} Jan-June`);
+
+    // Include previous year sessions
+    for (let year = currentYear - 1; year >= 2010; year--) {
       options.push(`${year} July-Dec`, `${year} Jan-June`);
     }
+
     return options;
   };
 
@@ -35,7 +43,6 @@ export default function SessionSelect() {
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Session</SelectLabel>
-            {/* Render session options dynamically */}
             {generateSessionOptions().map((option, index) => (
               <SelectItem key={index} value={option}>
                 {option}
