@@ -136,7 +136,7 @@ export default function BloodDonation() {
   }
 
   return (
-    <div>
+    <div className="mx-3 ">
       <BloodDonateNotice />
       <div className="mt-6 flex flex-col items-center justify-center gap-6">
         <Image src={img} alt="" width="100" height="100" />
@@ -159,7 +159,7 @@ export default function BloodDonation() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex w-2/3 flex-col"
+            className="flex flex-col md:w-2/3"
           >
             <div className="grid gap-x-10 gap-y-2 md:grid-cols-2">
               <div className="space-y-4 md:order-2">
@@ -436,7 +436,7 @@ export default function BloodDonation() {
               >
                 Submit
               </Button>
-              <div className="flex justify-between md:order-1">
+              <div className="flex justify-center md:order-1 md:justify-between">
                 <div className=" mt-16 space-y-10 ">
                   <p className="text-xl font-bold">
                     জরুরী প্রয়োজনে যোগাযোগ করুন

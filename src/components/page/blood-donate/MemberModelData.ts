@@ -20,7 +20,7 @@ export const MemberModelData = [
   },
   {
     id: 3,
-    name: "মোঃ হাবিুর রহমান ",
+    name: "হাবিবুর রহমান",
     title: "সাধারণ সম্পাদক",
     number: "০১৫৭১-২০৯১৭৮",
     img: img2,
