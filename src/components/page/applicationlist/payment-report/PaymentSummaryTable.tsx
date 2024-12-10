@@ -23,20 +23,20 @@ const PaymentSummaryTable: React.FC<Props> = ({ data }) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">TrxID</TableHead>
             <TableHead>Date</TableHead>
             <TableHead>Month</TableHead>
+            <TableHead className="">Comment</TableHead>
             <TableHead className="text-right">Amount</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {data.map((payment) => (
             <TableRow key={payment.id}>
-              <TableCell className="font-medium">{payment.trxId}</TableCell>
               <TableCell>{payment.time}</TableCell>
               <TableCell>
                 {payment.month} {payment.year}
               </TableCell>
+              <TableCell className="font-medium">{payment.trxId}</TableCell>
               <TableCell className="text-right">
                 &#x09F3; {payment.amount}
               </TableCell>

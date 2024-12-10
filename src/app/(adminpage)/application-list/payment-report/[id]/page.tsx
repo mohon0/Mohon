@@ -39,17 +39,19 @@ export default function PaymentReport() {
   const id = params.id;
   const { isLoading, data, isError, refetch } = FetchPaymentReport(id);
   const FormSchema = z.object({
-    trxId: z.string().min(2, "trxId is required "),
+    trxId: z
+      .string()
+      .min(2, "Comment is required ")
+      .max(70, "Comment can only be less than 70 characters"),
     month: z.string().min(2, "month is required"),
     year: z.string().min(2, "year is required"),
     amount: z
       .string()
-      .regex(
-        /^\d+(\.\d+)?$/,
-        "Amount must be numerical and can not be negative or empty",
-      )
-      .min(2, "Amount is required")
-      .max(10),
+      .regex(/^(-?\d+(\.\d+)?)$/, "Amount must be numerical")
+      .refine((value) => {
+        const numberValue = parseFloat(value);
+        return numberValue >= -100000 && numberValue <= 100000;
+      }, "Amount must be between -100000 and 100000"),
     date: z
       .string()
       .regex(
@@ -151,9 +153,9 @@ export default function PaymentReport() {
                   name="trxId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>TrxId</FormLabel>
+                      <FormLabel>Comment</FormLabel>
                       <FormControl>
-                        <Input placeholder="TransactionID" {...field} />
+                        <Input placeholder="Comment" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
